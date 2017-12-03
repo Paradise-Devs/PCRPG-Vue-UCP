@@ -28,7 +28,6 @@
         },
         methods: {
             navbarHandler (direction, going) {
-                console.log('Nav: direction: { x: ' + direction.x + ', y: ' + direction.y + ' } and going: ' + going)
                 if(going == "out" && direction.y == "down") {
                     this.isActive = true
                 }

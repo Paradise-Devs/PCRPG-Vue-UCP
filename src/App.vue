@@ -24,7 +24,6 @@
 		},
 		methods: {
             viewHandler (direction, going) {
-				console.log('View: direction: { x: ' + direction.x + ', y: ' + direction.y + ' } and going: ' + going)
                 if(going == "in" && direction.y == "up") {
                     this.$root.$emit('unfixNav')
                 }
