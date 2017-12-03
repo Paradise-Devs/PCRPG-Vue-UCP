@@ -12,6 +12,7 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "animated-vue": "^0.5.3",
+    "animejs": "^2.2.0",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.3.0",
     "poi": "^9.5.5",

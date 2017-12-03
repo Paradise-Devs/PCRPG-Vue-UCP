@@ -10,6 +10,7 @@ import BootstrapVue from 'bootstrap-vue'
 import AnimatedVue from 'animated-vue'
 import VueWaypoint from 'vue-waypoint'
 import VueScrollTo  from 'vue-scrollto'
+import anime from 'animejs'
 
 // registering apps
 Vue.use(BootstrapVue)
