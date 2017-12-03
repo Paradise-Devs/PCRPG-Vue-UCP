@@ -18,8 +18,6 @@
     "vue": "^2.5.2",
     "vue-awesome": "^2.3.4",
     "vue-awesome-swiper": "^3.0.4",
-    "vue-flickity": "^1.0.9",
-    "vue-l-carousel": "^1.0.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
