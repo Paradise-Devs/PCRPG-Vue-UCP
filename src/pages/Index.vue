@@ -1,5 +1,5 @@
 <template>
-	<div id="index">
+	<div id="indexContent">
 		<b-container class="main-content" fluid>
 			<img src="../assets/logo.png">
 			<h1>{{ this.$route.name }}</h1>
@@ -19,7 +19,7 @@
 		padding-top: 0px;
 		position: relative;
 		z-index: 2;
-		height: 1000px;
+		height: 1500px;
 		background-color: #161616;
 	}
 </style>

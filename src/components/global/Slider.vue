@@ -5,8 +5,6 @@
                 <div class="slide-image" :style="{ 'background-image': 'url(' + slide.url + ')' }"></div>
             </swiper-slide>
             <div class="swiper-pagination"  slot="pagination"></div>
-            <div class="swiper-button-prev" slot="button-prev"><icon name="angle-left"></icon></div>
-            <div class="swiper-button-next" slot="button-next"><icon name="angle-right"></icon></div>
         </swiper>
     </div>
 </template>
@@ -81,33 +79,6 @@
 
     .swiper-container-horizontal > .swiper-pagination-bullets {
         bottom: 60px;
-    }
-
-    [class^="swiper-button"] {
-        top: 45%;
-        background: none;
-        opacity: .2;
-        transition: ease-in 200ms;
-    }
-
-    [class^="swiper-button"]:hover {
-        opacity: 1;
-    }
-
-    .swiper-button-next {
-        right: 100px;
-    }
-
-    .swiper-button-prev {
-        left: -20px;
-    }
-
-    .swiper-button-next svg, .swiper-button-prev svg {
-        width: 140px;
-        height: 140px;
-        color: #fff;
-        -webkit-filter: drop-shadow( 0px 0px 4px #000 ); 
-            filter: drop-shadow( 0px 0px 4px #000 );
     }
 
     @keyframes move {
