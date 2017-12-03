@@ -4,10 +4,7 @@
             <v-waypoint @waypoint="navbarHandler"></v-waypoint>
             <b-container class="bv-example-row">
                 <b-row>
-                    <b-col md="7">
-                        
-                    </b-col>
-                    <b-col md="5" right>
+                    <b-col md="5" offset-md="7" right>
                         <router-link to="/">Início</router-link>
                         <router-link to="/blog">Blog</router-link>
                         <router-link to="/patchnotes">Changelog</router-link>
