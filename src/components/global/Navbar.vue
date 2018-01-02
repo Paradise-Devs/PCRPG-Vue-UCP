@@ -15,6 +15,7 @@
                             <router-link to="/blog">Blog</router-link>
                             <router-link to="/patchnotes">Changelog</router-link>
                             <router-link to="/commits">Desenvolvimento</router-link>
+                            <router-link to="/roadmap">Roadmap</router-link>
                         </b-col>
                     </b-row>
                 </b-container>
@@ -28,6 +29,8 @@
 </template>
 
 <script>
+    import 'vue-awesome/icons/angle-up'
+    
     export default {
         data: () => {
             return {
@@ -65,20 +68,18 @@
         height: 50px;
         width: 100%;
         bottom: 0px;
-        line-height: 50px;
+        line-height: 45px;
         background: rgba(0, 0, 0, .5);
-        background: -webkit-linear-gradient(transparent, #161616);
-        background: -o-linear-gradient(transparent, #161616);
-        background: -moz-linear-gradient(transparent, #161616);
-        background: linear-gradient(transparent, #161616);
         transition: ease-in 200ms;
+        border-top: 1px solid #111;
     }
 
     nav.fixed {
         position: fixed;
         top: 0;
+        border: none;
         width: 100%;
-        background-color: #2A2A2A;
+        background-color: #171819;
         margin-top: 0px;
         height: 50px;
         z-index: 999;
@@ -102,8 +103,7 @@
     }
 
     nav a.router-link-exact-active {
-        color: #fff;
-        font-weight: 600;
+        color: #00b0ff;
         opacity: 1;
     }
 

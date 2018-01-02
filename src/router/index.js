@@ -6,6 +6,7 @@ import IndexView from '@/pages/Index'
 import BlogView from '@/pages/Blog'
 import PatchnotesView from '@/pages/Patchnotes'
 import CommitsView from '@/pages/Commits'
+import RoadmapView from '@/pages/Roadmap'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
 			path: '/commits',
 			name: 'Commits',
 			component: CommitsView
+		},
+		{
+			path: '/roadmap',
+			name: 'Roadmap',
+			component: RoadmapView
 		}
 	]
 })

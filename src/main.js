@@ -5,12 +5,12 @@ import App from './App'
 import router from './router'
 
 // dependencies
-import Icon from 'vue-awesome/components/Icon'
 import BootstrapVue from 'bootstrap-vue'
 import AnimatedVue from 'animated-vue'
 import VueWaypoint from 'vue-waypoint'
 import VueScrollTo  from 'vue-scrollto'
 import anime from 'animejs'
+import Icon from 'vue-awesome/components/Icon'
 
 // registering apps
 Vue.use(BootstrapVue)
@@ -18,7 +18,6 @@ Vue.use(AnimatedVue)
 Vue.use(VueWaypoint)
 Vue.use(VueScrollTo)
 
-// registering components
 Vue.component('icon', Icon)
 
 Vue.config.productionTip = false

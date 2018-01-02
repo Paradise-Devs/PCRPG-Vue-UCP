@@ -61,11 +61,11 @@
         position: fixed;
     }
 
-    .swiper-container {
+    .parallax .swiper-container {
         height: 100%;
     }
 
-    .swiper-slide .slide-image {
+    .parallax .swiper-slide .slide-image {
         width: 100%;
         height: 100vh;
         background-position: center center;
@@ -73,11 +73,11 @@
         background-size: cover;
     }
 
-    .swiper-slide.swiper-slide-active {
+    .parallax .swiper-slide.swiper-slide-active {
         animation: move 30s infinite ease-in-out;
     }
 
-    .swiper-container-horizontal > .swiper-pagination-bullets {
+    .parallax .swiper-container-horizontal > .swiper-pagination-bullets {
         bottom: 60px;
     }
 
