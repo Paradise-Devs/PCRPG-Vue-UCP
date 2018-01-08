@@ -4,8 +4,8 @@
             <div class="content">
                 <h2 class="title">Bem vindo ao PC:RPG</h2>        
                 <div class="subtitle">
-                    Paradise City é um servidor em desenvolvimento de GTA V que simula a vida real.<br/>
-                    Confira as <a href="http://pc-rpg.com.br/forum/t/regras">regras</a> antes de iniciar uma discussão.
+                    Paradise City é um servidor RPG no GTA V.<br/>
+                    Explore, trabalhe, conquiste e faça sua vida em Los Santos!
                 </div>
             </div>
         </div>
