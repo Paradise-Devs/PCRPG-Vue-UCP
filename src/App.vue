@@ -4,7 +4,8 @@
 			<navbar/>
 			<hero/>
 		</header>
-		<router-view></router-view>
+		<router-view/>
+		<appfooter/>
 	</div>
 </template>
 
@@ -14,11 +15,12 @@
 
 	import navbar from '@/components/global/Navbar'
 	import hero from '@/components/global/Hero'
+	import appfooter from '@/components/global/Footer'
 
 	export default {
 		name: 'app',
 		components: {
-			navbar, hero
+			navbar, hero, appfooter
 		},
 		methods: {
             viewHandler (direction, going) {
