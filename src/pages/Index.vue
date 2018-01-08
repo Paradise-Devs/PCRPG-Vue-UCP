@@ -1,6 +1,6 @@
 <template>
 	<div id="indexContent">
-		<b-container class="main-content" fluid>
+		<b-container fluid>
 			
 		</b-container>
 	</div>
@@ -15,5 +15,7 @@
 </script>
 
 <style>
-	
+	#indexContent {
+		min-height: 63vh;
+	}
 </style>

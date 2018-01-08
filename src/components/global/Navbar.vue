@@ -6,7 +6,7 @@
                     <b-row>
                         <b-col md="2">
                             <router-link to="/" class="header-logo">
-                                <img src="https://pc-rpg.com.br/forum/assets/logo-tjwsbbzz.png" alt="PC:RPG">
+                                <img src="../../assets/images/logos/logo-text.png" alt="PC:RPG">
                             </router-link>
                         </b-col>
                         <b-col md="10" class="right-items">

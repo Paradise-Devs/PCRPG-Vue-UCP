@@ -1,7 +1,6 @@
 <template>
 	<div id="index">
 		<b-container class="main-content" fluid>
-			<img src="../assets/logo.png">
 			<h1>{{ this.$route.name }}</h1>
 		</b-container>
 	</div>

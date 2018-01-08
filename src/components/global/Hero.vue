@@ -1,6 +1,6 @@
 <template>
     <div class="hero">
-        <div class="container">
+        <b-container>
             <div class="content">
                 <h2 class="title">Bem vindo ao PC:RPG</h2>        
                 <div class="subtitle">
@@ -8,7 +8,7 @@
                     Explore, trabalhe, conquiste e faça sua vida em Los Santos!
                 </div>
             </div>
-        </div>
+        </b-container>
     </div>
 </template>
 
@@ -28,7 +28,7 @@
         color: #6c7d93;
         position: relative;
         width: 100%;
-        background-position: 0% 0%;
+        background-position: 50% 50%;
         background-repeat: no-repeat;
         background-size: cover;
         animation: move 60s infinite ease-in-out;
