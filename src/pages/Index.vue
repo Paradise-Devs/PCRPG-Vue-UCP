@@ -13,7 +13,7 @@
 						<swiper-slide v-for="news in newsSlides" :key="news.id">
 							<router-link :to="news.link"></router-link>
 							<div class="news-image" :style="{ 'background-image': 'url(' + news.img + ')' }"></div>
-							<b-badge variant="primary" :class="news.tag">
+							<b-badge :class="news.tag">
 								{{ news.tag }}
 							</b-badge>
 							<div class="overlay">
@@ -65,11 +65,19 @@
                 },
                 newsSlides: [
                     {
-                        img: require('../assets/images/slider/2.png'),
 						text: 'testing',
 						type: 'blog',
 						tag: 'devblog',
 						title: 'Devblog #1',
+						desc: 'Neste devblog, falaremos um pouco sobre o desenvolvimento inicial do servidor, ideias e planejamento para o futuro.',
+						link: 'blog/taltaltatla',
+						date: '14/08/2017'
+					},
+					{
+						text: 'testing',
+						type: 'blog',
+						tag: 'devblog',
+						title: 'Devblog #2',
 						desc: 'Neste devblog, falaremos um pouco sobre o desenvolvimento inicial do servidor, ideias e planejamento para o futuro.',
 						link: 'blog/taltaltatla',
 						date: '14/08/2017'
@@ -78,7 +86,6 @@
             }
 		},
 		methods: {
-
 		}
     }
 </script>

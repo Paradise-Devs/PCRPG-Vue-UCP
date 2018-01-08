@@ -1,10 +1,9 @@
 <template>
 	<div id="app">
 		<div class="header">
-			<slider/>
 			<navbar/>
+			<hero/>
 		</div>
-		<v-waypoint @waypoint="viewHandler"></v-waypoint>
 		<router-view></router-view>
 	</div>
 </template>
@@ -12,14 +11,14 @@
 <script>
 	import 'bootstrap/dist/css/bootstrap.css'
 	import 'animate.css/animate.css'
-	
-	import slider from '@/components/global/Slider'
+
 	import navbar from '@/components/global/Navbar'
+	import hero from '@/components/global/Hero'
 
 	export default {
 		name: 'app',
 		components: {
-			slider, navbar
+			navbar, hero
 		},
 		methods: {
             viewHandler (direction, going) {
@@ -27,7 +26,7 @@
                     this.$root.$emit('unfixNav')
                 }
             }
-        }		
+        }
 	}
 </script>
 
@@ -52,7 +51,20 @@
 	}
 	
 	body {
-		overflow-x: hidden;
+		background: #14191f;
+		color: #ddd;
+		font-family: "Open Sans",Helvetica,Arial,sans-serif;
+		font-size: inherit;
+		line-height: 1.5;
+		overflow-y: scroll;
+	}
+
+	.container {
+		margin-right: auto;
+		margin-left: auto;
+		padding-left: 15px;
+		padding-right: 15px;
+		max-width: 1100px;
 	}
 
 	.badge {
