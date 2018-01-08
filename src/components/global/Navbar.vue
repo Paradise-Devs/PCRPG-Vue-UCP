@@ -130,9 +130,12 @@
         opacity: 1;
     }
 
+    nav a:not(.router-link-exact-active):hover {
+        color:#394bb2;
+    }
+
     nav a:hover {
         text-decoration: none;
-        color:#394bb2;
     }
 
     nav a:not(:last-child) {
