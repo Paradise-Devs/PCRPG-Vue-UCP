@@ -21,14 +21,7 @@
 		name: 'app',
 		components: {
 			navbar, hero, appfooter
-		},
-		methods: {
-            viewHandler (direction, going) {
-                if(going == "in" && direction.y == "up") {
-                    this.$root.$emit('unfixNav')
-                }
-            }
-        }
+		}
 	}
 </script>
 
