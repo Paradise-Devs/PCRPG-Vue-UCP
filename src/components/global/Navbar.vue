@@ -14,7 +14,7 @@
                             <router-link to="/patchnotes">Patchnotes</router-link>
                             <router-link to="/commits">Desenvolvimento</router-link>
                             <a href="/forum">Fórum</a>
-                            <separator></separator>
+                            <separator/>
                             <a href="#">Cadastre-se</a>
                             <a href="#">Login</a>
                         </b-col>
@@ -22,7 +22,8 @@
                 </b-container>
             </nav>
         </animated-fade-in>
-        <a href="#" v-scroll-to="'#app'" id="toTop" :style="{ display: isShow }" @click="restartState">
+        <spacefix/>
+        <a href="#" v-scroll-to="'#app'" id="toTop" :style="{ display: scrolled }">
             <icon name="angle-up"></icon>
             <span class="screen-reader-text">Voltar ao topo</span>
         </a>
@@ -31,7 +32,6 @@
 
 <script>
     import Vue from 'vue'
-    import jQuery from 'jQuery'
     import 'vue-awesome/icons/angle-up'
 
     new Vue();
@@ -39,8 +39,6 @@
     export default {
         data: () => {
             return {
-                isShow: 'none',
-                isFixed: false,
                 scrolled: false
             }
         },
@@ -50,8 +48,10 @@
                 var navbar = document.getElementById("navbar");
                 if(scrollpos > 50) {
                     navbar.classList.add('scrolled');
+                    this.scrolled = true;
                 } else {
                     navbar.classList.remove('scrolled');
+                    this.scrolled = false;
                 }
             }
         },
@@ -66,6 +66,10 @@
     Vue.component('separator', {
         template: '<div class="separator"></div>'
     })
+
+    Vue.component('spacefix', {
+        template: '<div class="clearfix"></div>'
+    })
 </script>
 
 <style>
@@ -79,6 +83,11 @@
         position: fixed;
         background-color: #14181F;
         transition: all .2s ease-in-out 0s;
+    }
+
+    .clearfix {
+        display: block;
+        height: 52px;
     }
 
     nav.scrolled {

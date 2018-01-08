@@ -1,9 +1,9 @@
 <template>
 	<div id="app">
-		<div class="header">
+		<header>
 			<navbar/>
 			<hero/>
-		</div>
+		</header>
 		<router-view></router-view>
 	</div>
 </template>
@@ -44,11 +44,6 @@
 		color: #2c3e50;
 		position: relative;
 	}
-
-	.header {
-		position: relative;
-		height: 100vh;
-	}
 	
 	body {
 		background: #14191f;
@@ -82,45 +77,14 @@
 		padding: 120px 0px 0px;
 	}
 
-	.main-content {
-		position: relative;
-		z-index: 2;
-		height: 1500px;
-		background-color: #1E2021;
+	a {
+		cursor: pointer;
+		color: #526cff;
+		text-decoration: none;
 	}
 
-	.block-title .title-content h1 {
-		color: #fff;
-		text-transform: uppercase;
-		font-weight: 400;
-		text-transform: uppercase;
-		color: #f5f5f5;
-		font-size: 30px;
-		position: relative;
-		margin-bottom: 0;
-		line-height: 35px;
-	}
-
-	.block-title .title-content h1 span {
-		color: #00b0ff;
-	}
-
-	.block-title .title-content small {
-		color: #aaa;
-	}
-
-	.title-content {
-		position: relative;
-		padding-left: 20px;
-	}
-
-	.block-title .title-content::before {
-		background-color: #00b0ff;
-		content: "";
-		position: absolute;
-		height: 100%;
-		width: 4px;
-		left: 0;
-		top: 0;
+	a:hover {
+		text-decoration: underline;
+		color: #526cff;
 	}
 </style>
