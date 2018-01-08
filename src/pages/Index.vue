@@ -1,6 +1,6 @@
 <template>
 	<div id="indexContent">
-		<b-container fluid>
+		<b-container>
 			
 		</b-container>
 	</div>
@@ -8,9 +8,6 @@
 
 <script>
 	export default {
-        name: 'Slider',
-		methods: {
-		}
     }
 </script>
 

@@ -1,24 +1,18 @@
 <template>
-	<div id="index">
-		<b-container class="main-content" fluid>
-			<h1>{{ this.$route.name }}</h1>
+	<div id="patchnotesContent">
+		<b-container>
+			
 		</b-container>
 	</div>
 </template>
 
 <script>
-
+	export default {
+    }
 </script>
 
 <style>
-	.main-content {
-		padding-left: 30px;
-		padding-right: 30px;
-		padding-bottom: 0px;
-		padding-top: 0px;
-		position: relative;
-		z-index: 2;
-		height: 1000px;
-		background-color: #161616;
+	#patchnotesContent {
+		min-height: 63vh;
 	}
 </style>
