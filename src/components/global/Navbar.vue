@@ -45,25 +45,13 @@
             }
         },
         methods: {
-            restartState: function(event) {
-                this.isFixed = false
-                this.isShow = 'none'
-            },
-            navbarHandler (direction, going) {
-                if(going == "out" && direction.y == "down") {
-                    this.isFixed = true
-                    this.isShow = 'block'
-                }
-            },
             handleScroll () {
                 var scrollpos = window.scrollY;
                 var navbar = document.getElementById("navbar");
                 if(scrollpos > 50) {
                     navbar.classList.add('scrolled');
-                    console.log('scrollou +50');
                 } else {
                     navbar.classList.remove('scrolled');
-                    console.log('scrollou -50');
                 }
             }
         },
