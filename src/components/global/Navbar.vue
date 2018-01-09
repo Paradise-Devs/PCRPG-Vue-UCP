@@ -46,7 +46,7 @@
             handleScroll () {
                 var scrollpos = window.scrollY;
                 var navbar = document.getElementById("navbar");
-                if(scrollpos > 50) {
+                if(scrollpos > 10) {
                     navbar.classList.add('scrolled');
                     this.scrolled = true;
                 } else {
