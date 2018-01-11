@@ -1,0 +1,109 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Input;
+
+use App\Version;
+
+class CommitController extends Controller
+{
+    public function index()
+    {
+        $client = new Client(['base_uri' => 'https://gitlab.com/']);
+        $projects = $client->request('GET', 'api/v4/projects/3406108?statistics=true',
+        [
+            'headers' => [
+                'PRIVATE-TOKEN'     => 'Uyazy3QPxKsf_qiVzmah'
+                ],
+        ]);
+
+        $commits = $client->request('GET', 'api/v4/projects/3406108/repository/commits?per_page=20',
+        [
+            'headers' => [
+                'PRIVATE-TOKEN'     => 'Uyazy3QPxKsf_qiVzmah'
+                ]
+        ]);
+
+        return view('pages.commits', ['commits' => json_decode($commits->getBody()->getContents()), 'project' => json_decode($projects->getBody()->getContents())]);
+    }
+
+    public function getCommits(Request $request)
+    {
+        $page = $request->input('page');
+        $client = new Client(['base_uri' => 'https://gitlab.com/']);
+        $commits = $client->request('GET', 'api/v4/projects/3406108/repository/commits?per_page=20&page=' . $page,
+        [
+            'headers' => [
+                'PRIVATE-TOKEN'     => '9uBezKz2o_eXQPe9pGxc'
+                ]
+        ]);
+        return $commits->getBody()->getContents();
+    }
+}
+<script>
+    $(document).ready(function() {
+    var currentPage = 1;
+    var isLoading = false;
+    var initialCommit = false;
+    var win = $(window);
+
+    // Each time the user scrolls
+    win.scroll(function() {
+        // End of the document reached?
+        if ($(window).scrollTop() + $('maincontent').height() > $(document).height() - 50 && isLoading == false && initialCommit == false) {
+
+            isLoading = true;
+            $('#loading').show();
+
+            $.ajax({
+                url: '/getcommits',
+                type: "GET",
+                dataType : 'json',
+                data: { page: ++currentPage },
+                success: function(data)
+                {
+                    console.log(data);
+                    isLoading = false;
+                    $('#loading').hide();
+
+                    if (data.length < 1)
+                    {
+                        initialCommit = true;
+                        $('#EOF').show();
+                    }
+                    else
+                    {
+                        for (var i = 0; i < data.length; i++)
+                        {
+                            $('.commit-content').append('<tr class="commit-item">' +
+                                '<td><img class="avatar" src="assets/avatars/' + data[i].author_email + '.png" width="40" height="40"></td>' +
+                                '<td class="commit-container">' +
+                                    '<author>' + data[i].author_name + '</author>' +
+                                    '<separator>|</separator>' +
+                                    '<hour>' + moment(data[i].created_at).format('DD/MM/YYYY') + '</hour>' +
+                                    '<description>' + data[i].title + '</description>' +
+                                '</td>' +
+                            '</tr>');
+                        }
+                    }
+                },
+                error: function(data)
+                {
+                    $('#loading').hide();
+                }
+
+            });
+        }
+    });
+
+    //
+
+    var timeDiff = Math.abs(new Date() - new Date(2017, 4, 30));
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    $('#days_of_progress').html(diffDays);
+});
+</script>
+@endsection

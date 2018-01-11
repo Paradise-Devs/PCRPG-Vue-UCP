@@ -13,6 +13,6 @@
 
 <style>
 	#indexContent {
-		min-height: 63vh;
+		min-height: 66vh;
 	}
 </style>

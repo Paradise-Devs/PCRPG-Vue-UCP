@@ -14,8 +14,8 @@
 
 <script>
     export default {
-            name: 'Slider',
-            methods: {
+        name: 'Slider',
+        methods: {
 		}
     }
 </script>

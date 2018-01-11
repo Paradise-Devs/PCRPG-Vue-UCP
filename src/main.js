@@ -5,18 +5,25 @@ import App from './App'
 import router from './router'
 
 // dependencies
-import BootstrapVue from 'bootstrap-vue'
-import AnimatedVue from 'animated-vue'
+import VueBootstrap from 'bootstrap-vue'
+import VueAnimated from 'animated-vue'
 import VueWaypoint from 'vue-waypoint'
 import VueScrollTo  from 'vue-scrollto'
+import VueMoment from 'vue-moment'
 import anime from 'animejs'
 import Icon from 'vue-awesome/components/Icon'
 
 // registering apps
-Vue.use(BootstrapVue)
-Vue.use(AnimatedVue)
+Vue.use(VueBootstrap)
+Vue.use(VueAnimated)
 Vue.use(VueWaypoint)
 Vue.use(VueScrollTo)
+
+const locale = require('moment')
+require('moment/locale/pt-br')
+Vue.use(VueMoment, {
+	locale
+});
 
 Vue.component('icon', Icon)
 

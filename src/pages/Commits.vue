@@ -5,52 +5,16 @@
 				<p class="info">
 					Acompanhe o desenvolvimento do servidor em tempo real.
 				</p>
-				<b-row class="commit">
+				<b-row class="commit" v-for="commit in commits" :key="commit.id">
 					<b-col cols="2" class="userinfo">
-						<img src="../assets/images/devs/sync.png"/>
+						<img :src="require('../assets/images/devs/' + commit.author_email + '.png')" v-b-tooltip.hover title="w" />
 						<ul>
-							<li class="devname">Sync</li>
+							<li class="devname">{{ commit.author_name }}</li>
 						</ul>
 					</b-col>
 					<b-col cols="10" class="message">
-						Merge branch 'master' of https://gitlab.com/pc-rpg/gamemode
-						<span class="date">08/01/2017 - 00:15</span>
-					</b-col>
-				</b-row>
-				<b-row class="commit">
-					<b-col cols="2" class="userinfo">
-						<img src="../assets/images/devs/sync.png"/>
-						<ul>
-							<li class="devname">Sync</li>
-						</ul>
-					</b-col>
-					<b-col cols="10" class="message">
-						Corrige problema de drop de item
-						<span class="date">08/01/2017 - 00:15</span>
-					</b-col>
-				</b-row>
-				<b-row class="commit">
-					<b-col cols="2" class="userinfo">
-						<img src="../assets/images/devs/los.png"/>
-						<ul>
-							<li class="devname">Lós</li>
-						</ul>
-					</b-col>
-					<b-col cols="10" class="message">
-						Adiciona função para selecionar quantidade de itens a ser dropados caso tenha mais de 1
-						<span class="date">08/01/2017 - 00:15</span>
-					</b-col>
-				</b-row>
-				<b-row class="commit">
-					<b-col cols="2" class="userinfo">
-						<img src="../assets/images/devs/los.png"/>
-						<ul>
-							<li class="devname">Lós</li>
-						</ul>
-					</b-col>
-					<b-col cols="10" class="message">
-						Adiciona função para selecionar quantidade de itens a ser dropados caso tenha mais de 1
-						<span class="date">08/01/2017 - 00:15</span>
+						{{ commit.message }}
+						<span class="date">{{ commit.created_at | moment("from", "now", true) }} atrás</span>
 					</b-col>
 				</b-row>
 			</div>
@@ -59,8 +23,31 @@
 </template>
 
 <script>
+	import axios from 'axios';
+
+	var apiConfig = {
+		headers: { 'Private-Token': 'Uyazy3QPxKsf_qiVzmah' }
+	}
+
 	export default {
-    }
+		data: function() {
+			return {
+				commits: [ ]
+			}
+		},
+		computed: {
+
+		},
+		mounted() {
+			axios.get('https://gitlab.com/api/v4/projects/3881528/repository/commits?per_page=5', apiConfig)
+			.then(response => {
+				this.commits = response.data
+			})
+			.catch(e => {
+				console.log(e)
+			})
+		}
+	}
 </script>
 
 <style>
