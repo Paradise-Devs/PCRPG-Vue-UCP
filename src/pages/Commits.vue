@@ -17,6 +17,9 @@
 						<span class="date">{{ commit.created_at | moment("from", "now", true) }} atrás</span>
 					</b-col>
 				</b-row>
+				<mugen-scroll :handler="getCommits" :should-handle="!loading">
+					loading...
+				</mugen-scroll>
 			</div>
 		</b-container>
 	</div>
@@ -24,29 +27,33 @@
 
 <script>
 	import axios from 'axios';
+	import MugenScroll from 'vue-mugen-scroll'
 
-	var apiConfig = {
-		headers: { 'Private-Token': 'Uyazy3QPxKsf_qiVzmah' }
-	}
+	var currentPage = 1;
 
 	export default {
-		data: function() {
+		data() {
 			return {
+				loading: false,
 				commits: [ ]
 			}
 		},
-		computed: {
-
+		methods: {
+			getCommits() {
+				this.loading = true
+				axios.get('https://gitlab.com/api/v4/projects/3881528/repository/commits?private_token=Uyazy3QPxKsf_qiVzmah&page=1&per_page=999')
+				.then(response => {
+					this.commits = response.data;
+				})
+				.catch(e => {
+					console.log(e);
+				});
+				this.loading = false
+			},
 		},
-		mounted() {
-			axios.get('https://gitlab.com/api/v4/projects/3881528/repository/commits?per_page=5', apiConfig)
-			.then(response => {
-				this.commits = response.data
-			})
-			.catch(e => {
-				console.log(e)
-			})
-		}
+		components: {
+			MugenScroll,
+		},
 	}
 </script>
 

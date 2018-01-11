@@ -10,6 +10,7 @@ import VueAnimated from 'animated-vue'
 import VueWaypoint from 'vue-waypoint'
 import VueScrollTo  from 'vue-scrollto'
 import VueMoment from 'vue-moment'
+import VueInfiniteScroll from 'vue-infinite-scroll'
 import anime from 'animejs'
 import Icon from 'vue-awesome/components/Icon'
 
