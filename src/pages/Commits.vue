@@ -17,9 +17,7 @@
 						<span class="date">{{ commit.created_at | moment("from", "now", true) }} atrás</span>
 					</b-col>
 				</b-row>
-				<mugen-scroll :handler="getCommits" :should-handle="!loading">
-					loading...
-				</mugen-scroll>
+				<infinite-loading @infinite="getCommits" spinner="spiral"></infinite-loading>
 			</div>
 		</b-container>
 	</div>
@@ -27,9 +25,11 @@
 
 <script>
 	import axios from 'axios';
-	import MugenScroll from 'vue-mugen-scroll'
+	import InfiniteLoading  from 'vue-infinite-loading';
 
 	var currentPage = 1;
+
+	var commitsApi = 'https://gitlab.com/api/v4/projects/3881528/repository/commits?private_token=Uyazy3QPxKsf_qiVzmah&page=1&per_page=10';
 
 	export default {
 		data() {
@@ -39,20 +39,29 @@
 			}
 		},
 		methods: {
-			getCommits() {
-				this.loading = true
-				axios.get('https://gitlab.com/api/v4/projects/3881528/repository/commits?private_token=Uyazy3QPxKsf_qiVzmah&page=1&per_page=999')
+			getCommits($state) {
+				axios.get(commitsApi, {
+					params: {
+						page: currentPage
+					}
+				})
 				.then(response => {
-					this.commits = response.data;
+					if(response.data.length > 0) {
+						currentPage++;
+						this.commits = this.commits.concat(response.data);
+						$state.loaded();
+					} else {
+						$state.complete();
+					}
 				})
 				.catch(e => {
 					console.log(e);
+					$state.loaded();
 				});
-				this.loading = false
 			},
 		},
 		components: {
-			MugenScroll,
+			InfiniteLoading
 		},
 	}
 </script>
