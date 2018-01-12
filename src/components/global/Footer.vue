@@ -3,7 +3,7 @@
         <b-container class="">
 			<b-row>
                 <b-col cols="6" md="6" class="column">
-                    Paradise City RPG é uma propriedade intelectual não registrada da <a href="https://wullo.ws/" target="_blank">Wullo Web Services</a> e não possui vinculos com a Rockstar Games.
+                    Paradise City RPG é uma propriedade intelectual da <a href="https://wullo.ws/" target="_blank">Wullo Web Services</a> e não possui vinculos com a Rockstar Games.
                 </b-col>
                 <b-col cols="6" md="6" class="column social">
                     <div class="social-networks">
