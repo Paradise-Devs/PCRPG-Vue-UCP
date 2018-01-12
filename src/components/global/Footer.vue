@@ -9,7 +9,7 @@
                     <div class="social-networks">
                         <a href="https://fb.com/paradisecityrpg/" v-b-tooltip.hover title="Facebook"><icon name="facebook" scale="1.2" /></a>
                         <a href="https://twitter.com/paradisecityrpg" v-b-tooltip.hover title="Twitter"><icon name="twitter" scale="1.2" /></a>
-                        <a href="https://i.imgur.com/Solwvn4.png" v-b-tooltip.hover title="YouTube"><icon name="youtube-play" scale="1.2" /></a>
+                        <a href="https://www.youtube.com/channel/UCGo6hd688I7PS3NzRa01yiw" v-b-tooltip.hover title="YouTube"><icon name="youtube-play" scale="1.2" /></a>
                         <a href="https://discordapp.com/invite/hpvRGZe" v-b-tooltip.hover title="Discord"><icon name="group" scale="1.2" /></a>
                     </div>
                 </b-col>
