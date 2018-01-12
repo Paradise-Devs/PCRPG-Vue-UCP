@@ -19,7 +19,7 @@
 					</b-col>
 					<b-col cols="10" class="message">
 						{{ commit.message }}
-						<span class="date">{{ commit.created_at | moment("from", "now", true) }} atrás</span>
+						<span class="date">{{ commit.created_at | moment }}</span>
 					</b-col>
 				</b-row>
 				<infinite-loading @infinite="getCommits" spinner="spiral">
@@ -33,8 +33,7 @@
 <script>
 	import axios from 'axios';
 	import InfiniteLoading  from 'vue-infinite-loading';
-
-	var currentPage = 1;
+	import moment from 'moment';
 
 	var baseuri = 'https://gitlab.com/api/v4/projects/3881528';
 	var statsApi = baseuri + '?statistics=true&private_token=Uyazy3QPxKsf_qiVzmah';
@@ -43,6 +42,7 @@
 	export default {
 		data() {
 			return {
+				currentPage: 1,
 				loading: false,
 				totalcommits: 2,
 				commits: [ ],
@@ -53,12 +53,12 @@
 			getCommits($state) {
 				axios.get(commitsApi, {
 					params: {
-						page: currentPage
+						page: this.currentPage
 					}
 				})
 				.then(response => {
 					if(response.data.length > 0) {
-						currentPage++;
+						this.currentPage++;
 						this.commits = this.commits.concat(response.data);
 						$state.loaded();
 					} else {
@@ -71,11 +71,15 @@
 				});
 			},
 		},
+		filters: {
+			moment: function(time) {
+				return moment(time).fromNow();
+			}
+		},
 		mounted() {
 			axios.get(statsApi)
 			.then(response => {
 				this.stats = response.data.statistics;
-				console.log(response.data);
 			})
 			.catch(e => {
 				console.log(e);
