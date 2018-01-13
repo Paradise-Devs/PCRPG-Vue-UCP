@@ -12,7 +12,9 @@
 					</paginate>
 					<paginate-links 
 						for="news" 
-						:show-step-links="true">
+						:show-step-links="true"
+						:hide-single-page="true"
+					>
 					</paginate-links>
 				</b-col>
 				<b-col cols="4" class="patchnotes">
