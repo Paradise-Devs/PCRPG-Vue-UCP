@@ -15,7 +15,7 @@
                             <a href="/forum">Fórum</a>
                             <separator/>
                             <a href="#">Cadastre-se</a>
-                            <a href="#">Login</a>
+                            <a href="#">Entrar</a>
                         </b-col>
                     </b-row>
                 </b-container>
