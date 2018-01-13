@@ -21,15 +21,6 @@
 
     export default {
         props:['patch'],
-		mounted() {
-			/*axios.post('http://forum.pc-rpg.com.br/api/token', {
-				identification: "Los",
-				password: "784612"
-			})
-			.then(response => {
-				console.log(response.data);
-			})*/
-		},
 		filters: {
 			moment: function(time) {
 				return moment(time).fromNow();
