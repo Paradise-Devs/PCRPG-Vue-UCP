@@ -184,8 +184,4 @@
 		align-items: center;
 		justify-content: center;
 	}
-
-	.news {
-
-	}
 </style>

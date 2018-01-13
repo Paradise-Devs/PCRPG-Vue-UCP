@@ -223,7 +223,7 @@
 
 	.post .comments {
 		margin-top: 21px;
-		margin-right: -80px;
+		margin-right: -70px;
 		width: 55px;
 		color: #6c7d93;
 		font-size: 14px;
