@@ -5,29 +5,11 @@
 			<b-row>
 				<b-col cols="8">
 					<h3 class="content-title">Últimas novidades</h3>
-					<div class="post" v-for="post in post" :key="post.id">
-						<a :href="'forum/u/' + post.author" class="author">
-							<img class="avatar" :src="post.avatar">
-						</a>
-						<a :href="'forum/d/' + post.link" class="content">
-							<h3>{{ post.title }}</h3>
-							<ul class="info">
-								<li class="tags">
-									<span class="tag">
-										<span :style="post.tag.color, post.tag.bg" class="label">
-											<span class="tag-text">{{ post.tag.text }}</span>
-										</span>
-									</span>
-								</li>
-								<li class="created">
-									<span>
-										<span class="username">Los</span> iniciou {{ post.created | moment }}
-									</span>
-								</li>
-							</ul>
-						</a>
-						<span class="comments"><icon name="comment-o"/> 0</span>
-					</div>
+					<news 
+						v-for="post in post" 
+						:key="post.id"
+						:post='post'
+					/>
 				</b-col>
 				<b-col cols="4" class="patchnotes">
 					<h3>Notas de atualização</h3>
@@ -50,9 +32,7 @@
 	import 'vue-awesome/icons/comment-o'
 
 	import serverinfo from '@/components/index/ServerInfo.vue'
-
-	var serverApi = 'http://master.mta-v.net/api/servers/detailed';
-	var forumApi = 'http://forum.pc-rpg.com.br/api'
+	import news from '@/components/index/News.vue'
 
 	export default {
 		data() {
@@ -63,12 +43,11 @@
 						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
 						link: '16-novo-site-f-rum',
 						title: 'Novo site + Fórum',
-						tag: {
-							color: 'color: rgb(41, 121, 255);',
-							bg: 'background-color: rgb(41, 121, 255);',
-							text: 'Anúncios'
-						},
-						created: '2018-01-13T00:59:26-02:00'
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 3
                     }
 				],
 				patchnotes: [ 
@@ -109,7 +88,7 @@
 			}
 		},
 		components: {
-			serverinfo
+			serverinfo, news
 		}
     }
 </script>
