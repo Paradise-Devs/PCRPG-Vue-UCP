@@ -1,0 +1,77 @@
+<template>
+    <b-container class="server-info">
+        <vue-spinner :loading="serverInfoLoading" color="#303846" size="10px"></vue-spinner>
+        <b-row class="loaded" v-if="server.processed">
+            <b-col cols="2">
+                <span class="status online" v-if="server.online">Servidor Online</span>
+                <span class="status offline" v-else>Servidor Offline</span>
+            </b-col>
+            <b-col cols="8" class="name" v-if="server.online">
+                <span>{{ server.serverName }}</span>
+            </b-col>
+            <b-col cols="2" class="players" v-if="server.online">
+                <span>Jogadores: {{ server.currentPlayers }}/{{ server.maxPlayers}}</span>
+            </b-col>
+        </b-row>
+    </b-container>
+</template>
+
+<script>
+    import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+    import axios from 'axios';
+
+    var serverApi = 'http://master.mta-v.net/api/servers/detailed';
+
+    export default {
+        data() {
+            return {
+                serverInfoLoading: false,
+				serverInfoProcessed: false,
+				foundServer: false,
+				timerServerInfo: '',
+				server: {
+					processed: false,
+					online: false,
+				},
+            }
+        },
+        methods: {
+			loadServerInfo() {
+				this.serverInfoLoading = true;
+				this.server.processed = false;
+
+				axios.get(serverApi)
+				.then(response => {
+					for (let i = 0; i < response.data.list.length; i++) {
+						if (response.data.list[i].resolvedIP == "176.57.141.110:4499") {
+							this.server = response.data.list[i];
+							this.foundServer = true;
+							this.server.processed = true;
+							this.server.online = true;
+							this.serverInfoLoading = false;
+							break;
+						} else {
+							this.foundServer = false;
+							this.serverInfoLoading = false;
+							this.server.processed = true;
+							this.server.online = false;
+						}
+					}
+				})
+				.catch(e => {
+					console.log(e);
+				});
+			}
+        },
+        beforeDestroy() {
+			clearInterval(this.timerServerInfo)
+		},
+		mounted() {
+            this.loadServerInfo();
+            this.timerServerInfo = setInterval(this.loadServerInfo, 60000)
+        },
+        components: {
+			'vue-spinner': PulseLoader
+		}
+    }
+</script>
