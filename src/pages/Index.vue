@@ -82,11 +82,6 @@
 				console.log(response.data);
 			})*/
 		},
-		filters: {
-			moment: function(time) {
-				return moment(time).fromNow();
-			}
-		},
 		components: {
 			serverinfo, news, patchnotes
 		}
