@@ -2,6 +2,13 @@
     <div class="post">
         <a :href="'forum/d/' + patch.link" class="content">
             <h3>{{ patch.title }}</h3>
+			<ul class="info">
+                <li class="created">
+                    <span>
+                        {{ patch.created | moment }}
+                    </span>
+                </li>
+            </ul>
         </a>
         <span class="comments"><icon name="comment-o"/> 0</span>
     </div>
@@ -34,9 +41,5 @@
 <style>
 	.patchnotes .post {
 		padding-left: 20px;
-	}
-
-	.patchnotes .post .comments {
-		margin-top: 14px;
 	}
 </style>

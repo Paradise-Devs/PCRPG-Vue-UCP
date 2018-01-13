@@ -140,18 +140,21 @@
 						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
 						link: '16-novo-site-f-rum',
 						title: 'v1.2.4',
+						created: '2018-01-13T00:59:26-02:00',
 					},
 					{
                         author: "Los",
 						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
 						link: '16-novo-site-f-rum',
 						title: 'v1.2.2',
+						created: '2018-01-13T00:59:26-02:00',
 					},
 					{
                         author: "Los",
 						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
 						link: '16-novo-site-f-rum',
 						title: 'v1.2.1 - b2',
+						created: '2018-01-13T00:59:26-02:00',
                     }
 				],
 				paginate: ['news']
