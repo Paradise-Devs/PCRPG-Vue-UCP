@@ -130,36 +130,6 @@
 		justify-content: center;
 	}
 
-	.server-info {
-		margin: 40px 0px;
-		padding: 10px;
-		min-height: 47px;
-		max-height: 47px;
-		border-radius: 5px;
-		border: 1px solid #303846;
-	}
-
-	.server-info .status {
-		text-transform: uppercase;
-	}
-
-	.server-info .status.online {
-		color: #00e676;
-	}
-
-	.server-info .status.online {
-		color: #00e676;
-	}
-
-	.server-info .name {
-		text-align: center;
-	}
-
-	.server-info .players {
-		width: 100%;
-		text-align: right;
-	}
-
 	/*news*/
 	.post {
         padding-left: 62px;
