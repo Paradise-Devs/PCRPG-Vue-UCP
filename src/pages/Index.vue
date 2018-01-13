@@ -108,9 +108,6 @@
 				return moment(time).fromNow();
 			}
 		},
-		beforeDestroy() {
-			clearInterval(this.timerServerInfo)
-		},
 		components: {
 			serverinfo
 		}
