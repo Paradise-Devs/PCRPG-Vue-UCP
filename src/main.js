@@ -13,12 +13,14 @@ import VueMoment from 'vue-moment'
 import VueInfiniteScroll from 'vue-infinite-scroll'
 import anime from 'animejs'
 import Icon from 'vue-awesome/components/Icon'
+import VuePaginate from 'vue-paginate'
 
 // registering apps
 Vue.use(VueBootstrap)
 Vue.use(VueAnimated)
 Vue.use(VueWaypoint)
 Vue.use(VueScrollTo)
+Vue.use(VuePaginate)
 
 const locale = require('moment')
 require('moment/locale/pt-br')

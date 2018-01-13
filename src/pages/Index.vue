@@ -5,11 +5,15 @@
 			<b-row>
 				<b-col cols="8">
 					<h3 class="content-title">Últimas novidades</h3>
-					<news 
-						v-for="post in post" 
-						:key="post.id"
-						:post='post'
-					/>
+					<paginate name="news" :list="posts" :per="4">
+						<li v-for="post in paginated('news')" :key="post.id">
+							<news :post='post' />
+						</li>
+					</paginate>
+					<paginate-links 
+						for="news" 
+						:show-step-links="true">
+					</paginate-links>
 				</b-col>
 				<b-col cols="4" class="patchnotes">
 					<h3>Notas de atualização</h3>
@@ -17,6 +21,7 @@
 						v-for="patch in patchnotes" 
 						:key="patch.id"
 						:patch='patch'
+						class="patchnotes"
 					/>
 				</b-col>
 			</b-row>
@@ -37,7 +42,7 @@
 	export default {
 		data() {
 			return {
-				post: [ 
+				posts: [ 
                     {
                         author: "Los",
 						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
@@ -47,8 +52,85 @@
 						tagbg: 'background-color: rgb(41, 121, 255);',
 						tagtext: 'Anúncios',
 						created: '2018-01-13T00:59:26-02:00',
-						comments: 3
-                    }
+						comments: 1512
+					},
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'Novo site + Fórum',
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 1231
+					},
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'Novo site + Fórum',
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 3543
+					},
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'Novo site + Fórum',
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 34634
+					},
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'Novo site + Fórum',
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 3453
+					},
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'Novo site + Fórum',
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 233
+					},
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'Novo site + Fórum',
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 76867
+					},
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'Novo site + Fórum',
+						tagcolor: 'color: rgb(41, 121, 255);',
+						tagbg: 'background-color: rgb(41, 121, 255);',
+						tagtext: 'Anúncios',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 87683
+                    },
 				],
 				patchnotes: [ 
                     {
@@ -70,7 +152,7 @@
 						title: 'v1.2.1 - b2',
                     }
 				],
-				comments: 5
+				paginate: ['news']
 			}
 		},
 		mounted() {
@@ -99,5 +181,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.news {
+
 	}
 </style>
