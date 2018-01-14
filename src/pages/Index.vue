@@ -41,6 +41,9 @@
 			</b-row>
 		</b-container>
 		<stats/>
+		<b-container>
+			<joinus/>
+		</b-container>
 	</div>
 </template>
 
@@ -54,6 +57,7 @@
 	import news from '@/components/index/News.vue'
 	import patchnotes from '@/components/index/Patchnotes.vue'
 	import stats from '@/components/index/Statistics.vue'
+	import joinus from '@/components/index/JoinUS.vue'
 
 	export default {
 		data() {
@@ -193,7 +197,7 @@
 			})*/
 		},
 		components: {
-			serverinfo, news, patchnotes, stats
+			serverinfo, news, patchnotes, stats, joinus
 		}
     }
 </script>
