@@ -40,6 +40,7 @@
 				</b-col>				
 			</b-row>
 		</b-container>
+		<stats/>
 	</div>
 </template>
 
@@ -52,6 +53,7 @@
 	import serverinfo from '@/components/index/ServerInfo.vue'
 	import news from '@/components/index/News.vue'
 	import patchnotes from '@/components/index/Patchnotes.vue'
+	import stats from '@/components/index/Statistics.vue'
 
 	export default {
 		data() {
@@ -191,16 +193,12 @@
 			})*/
 		},
 		components: {
-			serverinfo, news, patchnotes
+			serverinfo, news, patchnotes, stats
 		}
     }
 </script>
 
 <style>
-	#indexContent {
-		min-height: 66vh;
-	}
-
 	.v-spinner {
 		width: 100%;
 		margin-top: 5px;
