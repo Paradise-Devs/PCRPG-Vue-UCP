@@ -4,28 +4,40 @@
 			<serverinfo/>
 			<b-row>
 				<b-col cols="8">
-					<h3 class="content-title">Últimas novidades</h3>
-					<paginate name="news" :list="posts" :per="4">
-						<li v-for="post in paginated('news')" :key="post.id">
-							<news :post='post' />
-						</li>
-					</paginate>
-					<paginate-links 
-						for="news" 
-						:show-step-links="true"
-						:hide-single-page="true"
-					>
-					</paginate-links>
+					<div class="block no-border">
+						<div class="block-header primary">
+							<h3>Últimas novidades</h3>
+						</div>
+						<div class="block-content">
+							<paginate name="news" :list="posts" :per="4">
+								<li v-for="post in paginated('news')" :key="post.id">
+									<news :post='post' />
+								</li>
+							</paginate>
+							<paginate-links 
+								for="news" 
+								:show-step-links="true"
+								:hide-single-page="true"
+							>
+							</paginate-links>
+						</div>
+					</div>
 				</b-col>
 				<b-col cols="4" class="patchnotes">
-					<h3>Notas de atualização</h3>
-					<patchnotes 
-						v-for="patch in patchnotes" 
-						:key="patch.id"
-						:patch='patch'
-						class="patchnotes"
-					/>
-				</b-col>
+					<div class="block no-bottom">
+						<div class="block-header">
+							<h3>Últimas atualizações</h3>
+						</div>
+						<div class="block-content">
+							<patchnotes 
+								v-for="patch in patchnotes" 
+								:key="patch.id"
+								:patch='patch'
+								class="patchnotes"
+							/>
+						</div>
+					</div>
+				</b-col>				
 			</b-row>
 		</b-container>
 	</div>
@@ -155,6 +167,15 @@
 						link: '16-novo-site-f-rum',
 						title: 'v1.2.1 - b2',
 						created: '2018-01-13T00:59:26-02:00',
+						comments: 999
+                    },
+					{
+                        author: "Los",
+						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
+						link: '16-novo-site-f-rum',
+						title: 'v1.2.1 - b2',
+						created: '2018-01-13T00:59:26-02:00',
+						comments: 2
                     }
 				],
 				paginate: ['news']

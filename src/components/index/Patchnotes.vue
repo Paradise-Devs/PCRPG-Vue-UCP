@@ -10,7 +10,7 @@
                 </li>
             </ul>
         </a>
-        <span class="comments"><icon name="comment-o"/> 0</span>
+        <span class="comments"><icon name="comment-o"/> {{ patch.comments }}</span>
     </div>
 </template>
 
@@ -30,7 +30,20 @@
 </script>
 
 <style>
+	.patchnotes .post:last-child {
+		border-bottom-left-radius: 4px;
+		border-bottom-right-radius: 4px;
+	}
+
 	.patchnotes .post {
 		padding-left: 20px;
+	}
+
+	.patchnotes .post .comments {
+		margin-right: -65px;
+	}
+
+	.patchnotes .post .comments .fa-icon {
+		margin-left: -25px;
 	}
 </style>

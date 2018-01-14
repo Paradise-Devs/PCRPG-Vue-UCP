@@ -6,13 +6,6 @@
         <a :href="'forum/d/' + post.link" class="content">
             <h3>{{ post.title }}</h3>
             <ul class="info">
-                <li class="tags">
-                    <span class="tag">
-                        <span :style="post.tagcolor, post.tagbg" class="label">
-                            <span class="tag-text">{{ post.tagtext }}</span>
-                        </span>
-                    </span>
-                </li>
                 <li class="created">
                     <span>
                         <span class="username">{{ post.author }}</span> iniciou {{ post.created | moment }}

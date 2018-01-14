@@ -78,7 +78,7 @@
 
 <style>
 	.server-info {
-		margin: 40px 0px;
+		margin: 30px 0px;
 		padding: 10px;
 		min-height: 47px;
 		max-height: 47px;

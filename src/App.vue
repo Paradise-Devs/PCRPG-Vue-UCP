@@ -89,13 +89,42 @@
 		list-style-type: none;
 	}
 
+	/* block */
+	.block .block-header {
+		background-color: #1B2028;
+		padding: 8px 10px;
+		text-align: center;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+	}
+
+	.block .block-content {
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		border: 1px solid #1B2028;
+		padding: 0px 0px 10px;
+	}
+
+	.block.no-bottom .block-content {
+		padding: 0px;
+	}
+
+	.block.no-border .block-content {
+		border: none;
+	}
+
+	.block .block-header h3 {
+		text-transform: uppercase;
+		font-size: 16px;
+		margin: 0px;
+	}
+
 	/* posts */
 	.post {
         padding-left: 62px;
         padding-right: 80px;
         position: relative;
         color: #6c7d93;
-		border-radius: 4px;
 		transition: background .2s;
     }
 
@@ -223,7 +252,7 @@
 
 	.post .comments {
 		margin-top: 21px;
-		margin-right: -70px;
+		margin-right: -50px;
 		width: 55px;
 		color: #6c7d93;
 		font-size: 14px;
@@ -234,7 +263,7 @@
 
 	.post .comments .fa-icon {
 		float: left;
-		margin-left: -21px;
+		margin-left: -25px;
 		margin-top: 2px;
 	}
 
