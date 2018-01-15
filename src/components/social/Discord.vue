@@ -4,7 +4,7 @@
         <div v-if="processed">
             <div class="block no-bottom">
                 <div class="block-header">
-                    <h3><font-awesome-icon :icon="['fab', 'discord']" /> {{ name }}</h3>
+                    <h3><fa :icon="['fab', 'discord']" /> {{ name }}</h3>
                 </div>
                 <div class="block-content">
                     <ul>
@@ -34,7 +34,7 @@
 
 <script>
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-    import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+    import fontawesome from '@fortawesome/vue-fontawesome'
     import discord from '@fortawesome/fontawesome-free-brands';
     import axios from 'axios';
     
@@ -73,7 +73,7 @@
             });
         },
         components: {
-			'vue-spinner': PulseLoader, FontAwesomeIcon 
+			'vue-spinner': PulseLoader, 'fa': fontawesome
 		}
     }
 </script>
