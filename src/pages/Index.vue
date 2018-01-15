@@ -24,7 +24,7 @@
 					</div>
 				</b-col>
 				<b-col cols="4" class="patchnotes">
-					<div class="block no-bottom">
+					<div class="block no-bottom no-footer">
 						<div class="block-header">
 							<h3>Últimas atualizações</h3>
 						</div>
