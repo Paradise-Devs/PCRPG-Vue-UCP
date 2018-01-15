@@ -98,11 +98,14 @@
 		border-top-right-radius: 5px;
 	}
 
-	.block .block-content {
+	.block.no-footer .block-content {
 		border-bottom-left-radius: 5px;
 		border-bottom-right-radius: 5px;
-		border: 1px solid #1B2028;
+	}
+
+	.block .block-content {
 		padding: 0px 0px 10px;
+		border: 1px solid #1B2028;
 	}
 
 	.block.no-bottom .block-content {
@@ -117,6 +120,13 @@
 		text-transform: uppercase;
 		font-size: 16px;
 		margin: 0px;
+	}
+
+	.block .block-footer {
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		background-color: #1B2028;
+		padding: 8px 10px;
 	}
 
 	/* posts */
@@ -303,5 +313,40 @@
 	.paginate-links li:last-child {
 		border-top-right-radius: 100px;
 		border-bottom-right-radius: 100px;
+	}
+
+	/* buttons */
+	.button {
+		text-decoration: none;
+		margin-bottom: 0;
+		text-align: center;
+		vertical-align: middle;
+		cursor: pointer;
+		white-space: nowrap;
+		line-height: 20px;
+		padding: 8px 13px;
+		border-radius: 4px;
+		user-select: none;
+		border: 0;
+	}
+
+	.button:hover {
+		text-decoration: none;
+	}
+
+	.button.block {
+		display: block;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.button.primary {
+		color: #fff;
+		background: #536dfe;
+	}
+
+	.button.primary:hover {
+		background-color: #3d5afe;
 	}
 </style>

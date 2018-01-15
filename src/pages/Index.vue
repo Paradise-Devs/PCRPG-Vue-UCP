@@ -42,7 +42,18 @@
 		</b-container>
 		<stats/>
 		<b-container>
-			<joinus/>
+			<div class="joinus">
+				<h2><b>#</b>Junte-se a nós</h2>
+				<b-row>
+					<b-col cols="4">
+						<discord/>
+					</b-col>
+					<b-col cols="4">
+					</b-col>
+					<b-col cols="4">
+					</b-col>
+				</b-row>
+			</div>
 		</b-container>
 	</div>
 </template>
@@ -57,7 +68,7 @@
 	import news from '@/components/index/News.vue'
 	import patchnotes from '@/components/index/Patchnotes.vue'
 	import stats from '@/components/index/Statistics.vue'
-	import joinus from '@/components/index/JoinUS.vue'
+	import discord from '@/components/social/Discord.vue'
 
 	export default {
 		data() {
@@ -197,7 +208,7 @@
 			})*/
 		},
 		components: {
-			serverinfo, news, patchnotes, stats, joinus
+			serverinfo, news, patchnotes, stats, discord
 		}
     }
 </script>
@@ -210,4 +221,30 @@
 		align-items: center;
 		justify-content: center;
 	}
+
+	.joinus {
+        margin: 30px 0px;
+    }
+
+    .joinus .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 367px;
+    }
+
+    .joinus h2 {
+        color: #526cff;
+        text-transform: uppercase;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .joinus h2 b {
+        color: #6c7d93;
+    }
+
+    .joinus .block .block-header svg {
+        margin-right: 5px;
+    }
 </style>
