@@ -12,7 +12,7 @@
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.0",
     "@fortawesome/fontawesome-free-brands": "^5.0.2",
-    "@fortawesome/fontawesome-free-solid": "^5.0.2",
+    "@fortawesome/fontawesome-free-solid": "^5.0.4",
     "@fortawesome/vue-fontawesome": "0.0.22",
     "animate.css": "^3.5.2",
     "animated-vue": "^0.5.3",
