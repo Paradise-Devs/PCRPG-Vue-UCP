@@ -7,10 +7,30 @@
                 </b-col>
                 <b-col cols="6" md="6" class="column social">
                     <div class="social-networks">
-                        <a href="https://fb.com/paradisecityrpg/" v-b-tooltip.hover title="Facebook"><icon name="facebook" scale="1.2" /></a>
-                        <a href="https://twitter.com/paradisecityrpg" v-b-tooltip.hover title="Twitter"><icon name="twitter" scale="1.2" /></a>
-                        <a href="https://www.youtube.com/channel/UCGo6hd688I7PS3NzRa01yiw" v-b-tooltip.hover title="YouTube"><icon name="youtube-play" scale="1.2" /></a>
-                        <a href="https://discordapp.com/invite/hpvRGZe" v-b-tooltip.hover title="Discord"><icon name="group" scale="1.2" /></a>
+                        <a 
+                            href="https://fb.com/paradisecityrpg/" 
+                            v-b-tooltip.hover title="Facebook"
+                        >
+                            <fa :icon="['fab', 'facebook-f']" size="lg"/>
+                        </a>
+                        <a 
+                            href="https://twitter.com/paradisecityrpg" 
+                            v-b-tooltip.hover title="Twitter"
+                        >
+                            <fa :icon="['fab', 'twitter']" size="lg" />
+                        </a>
+                        <a 
+                            href="https://www.youtube.com/channel/UCGo6hd688I7PS3NzRa01yiw"
+                            v-b-tooltip.hover title="YouTube"
+                        >
+                            <fa :icon="['fab', 'youtube']" size="lg" />
+                        </a>
+                        <a
+                            href="https://discordapp.com/invite/hpvRGZe"
+                            v-b-tooltip.hover title="Discord"
+                        >
+                            <fa :icon="['fab', 'discord']" size="lg" />
+                        </a>
                     </div>
                 </b-col>
             </b-row>
@@ -19,16 +39,17 @@
 </template>
 
 <script>
-    import 'vue-awesome/icons/facebook'
-    import 'vue-awesome/icons/twitter'
-    import 'vue-awesome/icons/group'
-    import 'vue-awesome/icons/heart'
-    import 'vue-awesome/icons/youtube-play'
+    import fontawesome from '@fortawesome/vue-fontawesome'
+    import twitter from '@fortawesome/fontawesome-free-brands';
+    import facebook from '@fortawesome/fontawesome-free-brands';
+    import youtube from '@fortawesome/fontawesome-free-brands';
+    import discord from '@fortawesome/fontawesome-free-brands';
 
     export default {
-            name: 'Footer',
-            methods: {
-		}
+        name: 'Footer',
+        components: {
+            'fa': fontawesome
+        }
     }
 </script>
 
@@ -81,11 +102,10 @@
         color: #fff;
         background-color: rgba(0, 0, 0, 0.4);
         opacity: .4;
-        border-radius: 100%;
         border: 0;
-        margin: 0 5px 10px;
-        width: 45px;
-        height: 45px;
+        margin: 0 8px 10px;
+        width: 60px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
