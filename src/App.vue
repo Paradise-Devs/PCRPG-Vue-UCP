@@ -153,10 +153,10 @@
     .post .author {
         text-decoration: none;
         float: left;
-        margin-top: 13px;
         margin-left: -50px;
         float: left;
-        margin-top: 13px;
+        margin-top: 15px;
+		position: relative;
     }
 
     .post .author .avatar {
@@ -167,11 +167,11 @@
         line-height: 36px;
         display: inline-block;
         box-sizing: content-box;
-        color: #fff;
         text-align: center;
         vertical-align: top;
         background-color: #1b2028;
         font-weight: normal;
+		border-color: transparent;
     }
 
 	.post .content {
@@ -348,5 +348,14 @@
 
 	.button.primary:hover {
 		background-color: #3d5afe;
+	}
+
+	/* spinner */
+	.v-spinner {
+		width: 100%;
+		margin-top: 5px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

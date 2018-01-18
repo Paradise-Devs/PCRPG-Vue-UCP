@@ -6,20 +6,23 @@
 				<b-col cols="8">
 					<div class="block no-border">
 						<div class="block-header primary">
-							<h3>Últimas novidades</h3>
+							<h3>Anúncios</h3>
 						</div>
 						<div class="block-content">
-							<paginate name="news" :list="posts" :per="4">
-								<li v-for="post in paginated('news')" :key="post.id">
-									<news :post='post' />
-								</li>
-							</paginate>
-							<paginate-links 
-								for="news" 
-								:show-step-links="true"
-								:hide-single-page="true"
-							>
-							</paginate-links>
+							<vue-spinner :loading="news.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
+							<div v-if="news.processed">
+								<paginate name="news" :list="posts" :per="4">
+									<li v-for="post in paginated('news')" :key="post.id">
+										<news :post='post' />
+									</li>
+								</paginate>
+								<paginate-links 
+									for="news" 
+									:show-step-links="true"
+									:hide-single-page="true"
+								>
+								</paginate-links>
+							</div>
 						</div>
 					</div>
 				</b-col>
@@ -64,162 +67,48 @@
 
 	import 'vue-awesome/icons/comment-o'
 
+	import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 	import serverinfo from '@/components/index/ServerInfo.vue'
 	import news from '@/components/index/News.vue'
 	import patchnotes from '@/components/index/Patchnotes.vue'
 	import stats from '@/components/index/Statistics.vue'
 	import discord from '@/components/social/Discord.vue'
 
+	var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
+	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios';
+
 	export default {
 		data() {
 			return {
-				posts: [ 
-                    {
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 1512
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 1231
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 3543
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 34634
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 3453
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 233
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 76867
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'Novo site + Fórum',
-						tagcolor: 'color: rgb(41, 121, 255);',
-						tagbg: 'background-color: rgb(41, 121, 255);',
-						tagtext: 'Anúncios',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 87683
-                    },
-				],
-				patchnotes: [ 
-                    {
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'v1.2.4',
-						created: '2018-01-13T00:59:26-02:00',
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'v1.2.2',
-						created: '2018-01-13T00:59:26-02:00',
-					},
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'v1.2.1 - b2',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 999
-                    },
-					{
-                        author: "Los",
-						avatar: 'http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png',
-						link: '16-novo-site-f-rum',
-						title: 'v1.2.1 - b2',
-						created: '2018-01-13T00:59:26-02:00',
-						comments: 2
-                    }
-				],
+				news: {
+					loading: false,
+					processed: false,
+				},
+				posts: [ ],
+				patchnotes: [  ],
 				paginate: ['news']
 			}
 		},
 		mounted() {
-			/*axios.post('http://forum.pc-rpg.com.br/api/token', {
-				identification: "Los",
-				password: "784612"
-			})
+			this.news.processed = false;
+			this.news.loading = true;
+
+			axios.get(newsDiscussions)
 			.then(response => {
-				console.log(response.data);
-			})*/
+				this.posts = response.data.data;
+				this.news.processed = true;
+				this.news.loading = false;
+			})
 		},
 		components: {
-			serverinfo, news, patchnotes, stats, discord
+			'vue-spinner': PulseLoader, serverinfo, news, patchnotes, stats, discord
 		}
     }
 </script>
 
 <style>
-	.v-spinner {
-		width: 100%;
-		margin-top: 5px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	.news-loader {
+		height: 64px;
 	}
 
 	.joinus {
@@ -246,5 +135,6 @@
 
     .joinus .block .block-header svg {
         margin-right: 5px;
+		display: inline;
     }
 </style>
