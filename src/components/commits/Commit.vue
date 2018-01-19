@@ -3,7 +3,7 @@
         <b-row class="commit">
             <b-col cols="2" class="userinfo">
                 <avatar-spinner :loading="avatarLoading" color="#303846" size="90px" class="avatar-loader"></avatar-spinner> 
-                <img :src="useravatar" v-b-tooltip.hover title="w"  v-if="avatarProcessed"/>
+                <img :src="useravatar" v-if="avatarProcessed"/>
                 <ul>
                     <li class="devname">{{ commit.author_name }}</li>
                 </ul>
