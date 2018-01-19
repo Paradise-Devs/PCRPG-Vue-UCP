@@ -81,8 +81,8 @@
 	import discord from '@/components/social/Discord.vue'
 
 	var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
-	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios';
-	var patchnotesApi = forumBaseURI + 'discussions?filter[q]=tag:patchnotes';
+	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios&sort=-startTime';
+	var patchnotesApi = forumBaseURI + 'discussions?filter[q]=tag:patchnotes&sort=-startTime';
 
 	export default {
 		data() {
