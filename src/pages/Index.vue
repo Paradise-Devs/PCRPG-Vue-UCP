@@ -27,17 +27,23 @@
 					</div>
 				</b-col>
 				<b-col cols="4" class="patchnotes">
-					<div class="block no-bottom no-footer">
+					<div class="block no-bottom">
 						<div class="block-header">
 							<h3>Últimas atualizações</h3>
 						</div>
-						<div class="block-content">
-							<patchnotes 
-								v-for="patch in patchnotes" 
-								:key="patch.id"
-								:patch='patch'
-								class="patchnotes"
-							/>
+						<div class="block-content patchnotes">
+							<vue-spinner :loading="patches.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
+							<div v-if="patches.processed">
+								<patchnotes 
+									v-for="patch in patchnotes.slice(0, 4)" 
+									:key="patch.id"
+									:patch='patch'
+								/>
+								<p v-if="patchnotes.length == 0">Ainda não lançamos nenhuma atualização. Por que não acompanha o <router-link to="/dev">desenvolvimento</router-link>?</p>
+							</div>
+						</div>
+						<div class="block-footer" v-if="patchnotes.length > 4">
+							<a href="http://forum.pc-rpg.com.br/t/patchnotes">Ver todas...</a>
 						</div>
 					</div>
 				</b-col>				
@@ -76,11 +82,16 @@
 
 	var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
 	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios';
+	var patchnotesApi = forumBaseURI + 'discussions?filter[q]=tag:patchnotes';
 
 	export default {
 		data() {
 			return {
 				news: {
+					loading: false,
+					processed: false,
+				},
+				patches: {
 					loading: false,
 					processed: false,
 				},
@@ -93,11 +104,21 @@
 			this.news.processed = false;
 			this.news.loading = true;
 
+			this.patches.processed = false;
+			this.patches.loading = true;
+
 			axios.get(newsDiscussions)
 			.then(response => {
 				this.posts = response.data.data;
 				this.news.processed = true;
 				this.news.loading = false;
+			})
+
+			axios.get(patchnotesApi)
+			.then(response => {
+				this.patchnotes = response.data.data;
+				this.patches.processed = true;
+				this.patches.loading = false;
 			})
 		},
 		components: {
@@ -137,4 +158,10 @@
         margin-right: 5px;
 		display: inline;
     }
+
+	.patchnotes p {
+		padding: 10px;
+		text-align: center;
+		margin: 0px;
+	}
 </style>

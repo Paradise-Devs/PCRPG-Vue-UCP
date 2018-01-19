@@ -1,16 +1,16 @@
 <template>
     <div class="post">
-        <a :href="'forum/d/' + patch.link" class="content">
-            <h3>{{ patch.title }}</h3>
+        <a :href="'forum/d/' + patch.id + '-' + patch.attributes.slug" class="content">
+            <h3>{{ patch.attributes.title }}</h3>
 			<ul class="info">
                 <li class="created">
                     <span>
-                        {{ patch.created | moment }}
+                        {{ patch.attributes.startTime | moment }}
                     </span>
                 </li>
             </ul>
         </a>
-        <span class="comments"><icon name="comment-o"/> {{ patch.comments }}</span>
+        <span class="comments"><icon name="comment-o"/> {{ patch.attributes.commentsCount }}</span>
     </div>
 </template>
 
@@ -30,11 +30,6 @@
 </script>
 
 <style>
-	.patchnotes .post:last-child {
-		border-bottom-left-radius: 4px;
-		border-bottom-right-radius: 4px;
-	}
-
 	.patchnotes .post {
 		padding-left: 20px;
 	}

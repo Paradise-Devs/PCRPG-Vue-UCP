@@ -127,8 +127,13 @@
 		border-bottom-right-radius: 5px;
 		background-color: #1B2028;
 		padding: 8px 10px;
+		text-align: center;
 	}
 
+	.block .block-footer a {
+		text-decoration: none;
+		
+	}
 	/* posts */
 	.post {
         padding-left: 62px;

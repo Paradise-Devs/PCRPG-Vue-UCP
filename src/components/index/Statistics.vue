@@ -33,7 +33,7 @@
 
 <style>
     .stats-wrapper {
-        margin-top: 10px;
+        margin-top: 20px;
         width: 100%;
         height: 250px;
         background-attachment: fixed;
