@@ -6,7 +6,7 @@
 				<b-col cols="8">
 					<div class="block no-border">
 						<div class="block-header primary">
-							<h3>Anúncios</h3>
+							<h3>Novidades</h3>
 						</div>
 						<div class="block-content">
 							<vue-spinner :loading="news.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
