@@ -11,7 +11,7 @@
                         </b-col>
                         <b-col md="10" class="right-items">
                             <router-link to="/">Início</router-link>
-                            <router-link to="/commits">Desenvolvimento</router-link>
+                            <router-link to="/dev">Desenvolvimento</router-link>
                             <a href="/forum">Fórum</a>
                             <separator/>
                             <a href="#">Cadastre-se</a>

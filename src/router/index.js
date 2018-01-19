@@ -4,7 +4,7 @@ import Router from 'vue-router'
 // views
 import IndexView from '@/pages/Index'
 import PatchnotesView from '@/pages/Patchnotes'
-import CommitsView from '@/pages/Commits'
+import DevelopmentView from '@/pages/Development'
 
 Vue.use(Router)
 
@@ -23,9 +23,9 @@ export default new Router({
 			component: PatchnotesView
 		},
 		{
-			path: '/commits',
-			name: 'Commits',
-			component: CommitsView
+			path: '/dev',
+			name: 'Development',
+			component: DevelopmentView
 		}
 	]
 })
