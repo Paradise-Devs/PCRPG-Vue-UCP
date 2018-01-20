@@ -80,7 +80,7 @@
 
 <style>
     .discord .block .block-content {
-        max-height: 280px;
+        max-height: 322px;
         overflow-x: auto;
     }
 
