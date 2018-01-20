@@ -1,6 +1,6 @@
 <template>
     <div class="post">
-        <a :href="'forum/d/' + patch.id + '-' + patch.attributes.slug" class="content">
+        <a :href="'http://forum.pc-rpg.com.br/' + patch.id + '-' + patch.attributes.slug" class="content">
             <h3>{{ patch.attributes.title }}</h3>
 			<ul class="info">
                 <li class="created">
