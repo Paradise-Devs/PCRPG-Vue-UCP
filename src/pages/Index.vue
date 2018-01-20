@@ -8,7 +8,7 @@
 						<div class="block-header primary">
 							<h3>Novidades</h3>
 						</div>
-						<div class="block-content">
+						<div class="block-content news">
 							<vue-spinner :loading="news.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
 							<div v-if="news.processed">
 								<paginate name="news" :list="posts" :per="4">
@@ -43,7 +43,7 @@
 							</div>
 						</div>
 						<div class="block-footer" v-if="patchnotes.length > 4">
-							<a href="http://forum.pc-rpg.com.br/t/patchnotes">Ver todas...</a>
+							<a href="http://forum.pc-rpg.com.br/t/patchnotes" class="button primary block">Ver todas...</a>
 						</div>
 					</div>
 				</b-col>				
@@ -58,6 +58,21 @@
 						<discord/>
 					</b-col>
 					<b-col cols="4">
+						<div class="block no-footer">
+							<div class="block-header primary">
+								<h3><fa :icon="['far', 'comments']" /> Últimas Discussões</h3>
+							</div>
+							<div class="block-content lastposts">
+								<vue-spinner :loading="lasPosts.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
+								<div v-if="lasPosts.processed">
+									<lastdiscussions 
+										v-for="post in lastposts.slice(0, 15)" 
+										:key="post.id"
+										:post='post'
+									/>
+								</div>
+							</div>
+						</div>
 					</b-col>
 					<b-col cols="4">
 					</b-col>
@@ -71,18 +86,22 @@
 	import axios from 'axios';
 	import moment from 'moment';
 
-	import 'vue-awesome/icons/comment-o'
 
-	import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
+	import fontawesome from '@fortawesome/vue-fontawesome'
+	import comments from '@fortawesome/fontawesome-free-regular';
+
+	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 	import serverinfo from '@/components/index/ServerInfo.vue'
 	import news from '@/components/index/News.vue'
 	import patchnotes from '@/components/index/Patchnotes.vue'
 	import stats from '@/components/index/Statistics.vue'
 	import discord from '@/components/social/Discord.vue'
+	import lastdiscussions from '@/components/index/LastDiscussions.vue'
 
 	var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
 	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios&sort=-startTime';
 	var patchnotesApi = forumBaseURI + 'discussions?filter[q]=tag:patchnotes&sort=-startTime';
+	var lastDiscussions = forumBaseURI + 'discussions?sort=-startTime';
 
 	export default {
 		data() {
@@ -95,8 +114,13 @@
 					loading: false,
 					processed: false,
 				},
+				lasPosts: {
+					loading: false,
+					processed: false,
+				},
 				posts: [ ],
 				patchnotes: [  ],
+				lastposts: [ ],
 				paginate: ['news']
 			}
 		},
@@ -106,6 +130,9 @@
 
 			this.patches.processed = false;
 			this.patches.loading = true;
+
+			this.lasPosts.processed = false;
+			this.lasPosts.loading = true;
 
 			axios.get(newsDiscussions)
 			.then(response => {
@@ -120,9 +147,23 @@
 				this.patches.processed = true;
 				this.patches.loading = false;
 			})
+
+			axios.get(lastDiscussions)
+			.then(response => {
+				this.lastposts = response.data.data;
+				this.lasPosts.processed = true;
+				this.lasPosts.loading = false;
+			})
 		},
 		components: {
-			'vue-spinner': PulseLoader, serverinfo, news, patchnotes, stats, discord
+			'vue-spinner': PulseLoader,
+			'fa': fontawesome,
+			serverinfo,
+			news,
+			patchnotes,
+			stats,
+			discord,
+			lastdiscussions
 		}
     }
 </script>
@@ -163,5 +204,14 @@
 		padding: 10px;
 		text-align: center;
 		margin: 0px;
+	}
+
+	.lastposts {
+		max-height: 374px;
+        overflow-x: auto;
+	}
+
+	.news .post, .lastposts .post {
+		padding-left: 62px;
 	}
 </style>
