@@ -75,6 +75,14 @@
 						</div>
 					</b-col>
 					<b-col cols="4">
+						<div class="block no-footer">
+							<div class="block-header primary">
+								<h3><fa :icon="['fas', 'users']" /> A equipe</h3>
+							</div>
+							<div class="block-content team">
+								<team/>
+							</div>
+						</div>
 					</b-col>
 				</b-row>
 			</div>
@@ -89,6 +97,7 @@
 
 	import fontawesome from '@fortawesome/vue-fontawesome'
 	import comments from '@fortawesome/fontawesome-free-regular';
+	import users from '@fortawesome/fontawesome-free-solid';
 
 	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 	import serverinfo from '@/components/index/ServerInfo.vue'
@@ -97,6 +106,7 @@
 	import stats from '@/components/index/Statistics.vue'
 	import discord from '@/components/social/Discord.vue'
 	import lastdiscussions from '@/components/index/LastDiscussions.vue'
+	import team from '@/components/index/Team.vue'
 
 	var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
 	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios&sort=-startTime';
@@ -163,12 +173,13 @@
 			patchnotes,
 			stats,
 			discord,
-			lastdiscussions
+			lastdiscussions,
+			team
 		}
     }
 </script>
 
-<style>
+<style scoped>
 	.news-loader {
 		height: 64px;
 	}
@@ -213,5 +224,12 @@
 
 	.news .post, .lastposts .post {
 		padding-left: 62px;
+	}
+
+	.joinus .team {
+		padding-bottom: 0px;
+		min-height: 374px;
+		max-height: 374px;
+        overflow-x: auto;
 	}
 </style>
