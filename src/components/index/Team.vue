@@ -1,21 +1,29 @@
 <template>
     <div role="tablist">
-        <div class="rank-name" v-b-toggle.admin>
-            Administradores
-            <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-            <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
-        </div>
-        <b-collapse visible accordion="team" id="admin">
-            admins
-        </b-collapse>
-
         <div class="rank-name" v-b-toggle.devs>
             Desenvolvedores
             <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
             <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
         </div>
         <b-collapse accordion="team" id="devs">
-            devs
+            <user 
+                v-for="user in devs" 
+                :key="user.id"
+                :user='user'
+            />
+        </b-collapse>
+
+        <div class="rank-name" v-b-toggle.admin>
+            Administradores
+            <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
+            <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+        </div>
+        <b-collapse visible accordion="team" id="admin">
+            <user 
+                v-for="user in admins" 
+                :key="user.id"
+                :user='user'
+            />
         </b-collapse>
 
         <div class="rank-name" v-b-toggle.mods>
@@ -24,7 +32,11 @@
             <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
         </div>
         <b-collapse accordion="team" id="mods">
-            mods
+            <user 
+                v-for="user in mods" 
+                :key="user.id"
+                :user='user'
+            />
         </b-collapse>
 
         <div class="rank-name" v-b-toggle.support>
@@ -33,7 +45,11 @@
             <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
         </div>
         <b-collapse accordion="team" id="support">
-            suporte
+            <user 
+                v-for="user in supports" 
+                :key="user.id"
+                :user='user'
+            />
         </b-collapse>
     </div>
 </template>
@@ -45,6 +61,8 @@
 
 	import angleDown from '@fortawesome/fontawesome-free-solid';
     import angleUp from '@fortawesome/fontawesome-free-solid';
+
+    import user from '@/components/index/User.vue'
     
     var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users';
     var groupsBaseURI = 'http://forum.pc-rpg.com.br/api/groups';
@@ -67,15 +85,15 @@
                     if(this.users[i].relationships.groups.data != null) {
                         for(var j = 0; j < this.users[i].relationships.groups.data.length; j++) {
                             if(this.users[i].relationships.groups.data[j].id == 1) {
-                                this.admins.push(this.users[i].attributes);
+                                this.devs.push(this.users[i].attributes);
                             }
 
                             if(this.users[i].relationships.groups.data[j].id == 4) {
                                 this.mods.push(this.users[i].attributes);
                             }
 
-                            if(this.users[i].relationships.groups.data[j].id == 6) {
-                                this.devs.push(this.users[i].attributes);
+                            if(this.users[i].relationships.groups.data[j].id == 8) {
+                                this.admins.push(this.users[i].attributes);
                             }
 
                             if(this.users[i].relationships.groups.data[j].id == 7) {
@@ -88,7 +106,8 @@
         },
         components: {
 			'vue-spinner': PulseLoader,
-			'fa': fontawesome
+            'fa': fontawesome,
+            user
 		}
     }
 </script>
