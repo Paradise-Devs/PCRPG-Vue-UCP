@@ -100,6 +100,14 @@
         cursor: pointer;
     }
 
+    .rank-name:hover {
+        background-color: #171B22;
+    }
+
+    .rank-name:not(:last-child) {
+        border-bottom: 1px solid #151920;
+    }
+
     .collapsed > .opened,
     :not(.collapsed) > .closed {
         display: none;
