@@ -128,6 +128,7 @@
 		background-color: #1B2028;
 		padding: 8px 10px;
 		text-align: center;
+		min-height: 52px;
 	}
 
 	.block .block-footer a {
@@ -362,5 +363,23 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	/* scrollbar */
+	.block .block-content::-webkit-scrollbar-track {
+		background-color: transparent;
+        box-shadow: none;
+	}
+
+	.block .block-content::-webkit-scrollbar {
+		background-color: transparent;
+        width: 6px;
+        right: -100px;
+	}
+
+	.block .block-content::-webkit-scrollbar-thumb {
+		background-color: #1B2028;
+        border: 0;
+        padding: 2px;
 	}
 </style>
