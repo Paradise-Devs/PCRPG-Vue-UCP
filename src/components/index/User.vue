@@ -8,7 +8,7 @@
             <h3>{{ user.username }}</h3>
             <ul class="info">
                 <li class="created">
-                    Visto pela última vez a {{ user.lastSeenTime | moment }}</span>
+                    Visto pela última vez a {{ user.lastSeenTime | moment }}
                 </li>
             </ul>
         </a>
