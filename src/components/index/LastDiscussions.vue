@@ -8,12 +8,13 @@
             <h3>{{ post.attributes.title }}</h3>
             <ul class="info">
                 <li class="created">
-                    <username-spinner :loading="avatarLoading" color="#303846" size="5px" class="username-loader"></username-spinner> 
+                    <dots-spinner :loading="avatarLoading" color="#303846" size="5px" class="username-loader"></dots-spinner> 
                     <span v-if="avatarProcessed">{{ post.attributes.startTime | moment }} • {{ post.attributes.commentsCount }} post<span v-if="post.attributes.commentsCount > 1">s</spaN></span>
                 </li>
             </ul>
         </a>
-        <b-badge class="tag" :style="{ backgroundColor: tags.bg }">{{ tags.text }}</b-badge>
+        <dots-spinner :loading="tagLoading" color="#303846" size="5px" class="tag-loader"></dots-spinner> 
+        <b-badge class="tag" :style="{ backgroundColor: tags.bg }" v-if="tagProcessed">{{ tags.text }}</b-badge>
     </div>
 </template>
 
@@ -36,6 +37,8 @@
                 useravatar: null,
                 avatarLoading: false,
                 avatarProcessed: false,
+                tagLoading: false,
+                tagProcessed: false,
                 tags: {
                     text: null,
                     bg: null
@@ -51,6 +54,9 @@
             this.avatarLoading = true;
             this.avatarProcessed = false;
 
+            this.tagLoading = true;
+            this.tagProcessed = false;
+
             axios.get(forumBaseURI + 'users/' + this.post.relationships.startUser.data.id)
             .then(response => {
                 this.username = response.data.data.attributes.username;
@@ -65,12 +71,14 @@
                     if(response.data.data[i].id == this.post.relationships.tags.data[0].id) {
                         this.tags.text = response.data.data[i].attributes.name;
                         this.tags.bg = response.data.data[i].attributes.color;
+                        this.tagProcessed = true;
+                        this.tagLoading = false;
                     }
                 }
             })
         },
         components: {
-            'avatar-spinner': BounceLoader, 'username-spinner': PulseLoader
+            'avatar-spinner': BounceLoader, 'dots-spinner': PulseLoader
         }
     }
 </script>
@@ -91,6 +99,27 @@
         position: absolute;
         right: 15px;
         top: 23px;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        border-radius: 4px;
+        font-size: 9px;
+        background-color: ;
+        display: inline-block;
+        text-transform: none;
+        padding: 5px 5px;
+        color: #000;
+        font-weight: 600;
+        transition: max-width .2s ease-in-out,-webkit-mask-image .2s;
+        -webkit-mask-image: linear-gradient(to right, #000 140px, rgba(0,0,0,0) 150px);
+    }
+    
+    .tag-loader {
+        width: 40px;
+        margin-right: 0;
+        position: absolute;
+        right: 15px;
+        top: 15px;
         max-width: 150px;
         white-space: nowrap;
         overflow: hidden;
