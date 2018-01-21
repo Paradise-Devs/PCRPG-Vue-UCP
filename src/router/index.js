@@ -7,15 +7,25 @@ import PatchnotesView from '@/pages/Patchnotes'
 import DevelopmentView from '@/pages/Development'
 import NotFoundView from '@/pages/errors/404'
 
+//User profile
+import User from '@/pages/userProfile/Index'
+import UserHome from '@/pages/userProfile/Home'
+
 Vue.use(Router)
 
 // routes
 export default new Router({
 	mode: 'history',
 	routes: [
-		{ path: '/', 			name: 'Index', 			component: IndexView },
-		{ path: '/patchnotes', 	name: 'Patchnotes', 	component: PatchnotesView },
-		{ path: '/dev', 		name: 'Development', 	component: DevelopmentView },
-		{ path: '*', 			name: '404', 			component: NotFoundView },
+		{ 	path: '/', 						component: IndexView },
+		{ 	path: '/patchnotes', 			component: PatchnotesView },
+		{ 	path: '/dev', 					component: DevelopmentView },
+		{ 	path: '/jogador/:username', 	component: User ,
+			children: [
+				{ path: '',			component: UserHome },
+		  	]
+		},
+		//{ 	path: '/grupo/:groupname', 		component: GroupView },
+		{ 	path: '*', 						component: NotFoundView },
 	]
 })
