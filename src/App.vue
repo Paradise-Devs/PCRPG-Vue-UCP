@@ -1,26 +1,50 @@
 <template>
-	<div id="app">
-		<header>
-			<navbar/>
-			<hero/>
-		</header>
-		<router-view/>
-		<appfooter/>
+	<div>
+		<div v-if="!loaded" class="loading">
+			<div class="container">
+				<spinner :loading="loading" color="#303846" size="90px"></spinner>
+				<h2>Estamos preparando um site incrível pra você!</h2>
+			</div>
+		</div>
+		<div v-else>
+			<header>
+				<navbar/>
+				<hero/>
+			</header>
+			<router-view/>
+			<appfooter/>
+		</div>
 	</div>
 </template>
 
 <script>
 	import 'bootstrap/dist/css/bootstrap.css'
 	import 'animate.css/animate.css'
+	import spinner from 'vue-spinner/src/MoonLoader.vue';
 
 	import navbar from '@/components/global/Navbar'
 	import hero from '@/components/global/Hero'
 	import appfooter from '@/components/global/Footer'
 
 	export default {
-		name: 'app',
+		data() {
+			return {
+				loading: true,
+				loaded: false
+			}
+		},
+		mounted() {
+			var _this = this;
+
+			setTimeout(function () {
+				_this.loaded = true;
+			}, 2500);
+		},
 		components: {
-			navbar, hero, appfooter
+			'spinner': spinner,
+			navbar,
+			hero,
+			appfooter
 		}
 	}
 </script>
@@ -39,7 +63,7 @@
 		color: #6c7d93;
 		position: relative;
 	}
-	
+
 	body {
 		background: #14191f;
 		color: #ddd;
@@ -47,6 +71,29 @@
 		font-size: inherit;
 		line-height: 1.5;
 		overflow-y: scroll;
+	}
+
+	.loading {
+		width: 99vw;
+		height: 99vh;
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.loading .container {
+		height: 300px;
+		position: relative;
+		display: flex;
+		justify-content: center !important;
+	}
+
+	.loading h2 {
+		position: absolute;
+		bottom: 0px;
+		color: #6c7d93;
+		align-self: center;
 	}
 
 	.container {
@@ -133,7 +180,7 @@
 
 	.block .block-footer a {
 		text-decoration: none;
-		
+
 	}
 	/* posts */
 	.post {
@@ -298,7 +345,7 @@
 		border: 1px solid rgba(48, 56, 70, .4);
 		margin-left: -1px;
 	}
-	
+
 	.paginate-links li.active {
 		background-color: #303846;
 	}
