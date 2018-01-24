@@ -38,7 +38,7 @@
 
 			setTimeout(function () {
 				_this.loaded = true;
-			}, 2500);
+			}, 4000);
 		},
 		components: {
 			'spinner': spinner,
@@ -66,7 +66,7 @@
 
 	body {
 		background: #14191f;
-		color: #ddd;
+		color: #6c7d93;
 		font-family: "Open Sans",Helvetica,Arial,sans-serif;
 		font-size: inherit;
 		line-height: 1.5;
