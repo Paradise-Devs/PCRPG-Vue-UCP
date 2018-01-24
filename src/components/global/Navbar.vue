@@ -14,8 +14,8 @@
                             <router-link to="/dev">Desenvolvimento</router-link>
                             <a href="/forum">Fórum</a>
                             <separator/>
-                            <a href="#">Cadastre-se</a>
-                            <a href="#">Entrar</a>
+                            <a href="#" v-b-modal.signupModal>Cadastre-se</a>
+                            <a href="#" v-b-modal.signinModal>Entrar</a>
                         </b-col>
                     </b-row>
                 </b-container>
@@ -23,9 +23,11 @@
         </animated-fade-in>
         <spacefix/>
         <a href="#" v-scroll-to="'#app'" id="toTop" :style="{ display: scrolled }">
-            <icon name="angle-up"></icon>
+			<icon name="angle-up"/>
             <span class="screen-reader-text">Voltar ao topo</span>
         </a>
+		<signin/>
+		<signup/>
     </div>
 </template>
 
@@ -33,8 +35,11 @@
     import Vue from 'vue'
     import 'vue-awesome/icons/angle-up'
 
+	import signin from '@/components/auth/SignIn'
+	import signup from '@/components/auth/SignUp'
+
     new Vue();
-    
+
     export default {
         data: () => {
             return {
@@ -59,7 +64,10 @@
         },
         destroyed () {
             window.removeEventListener('scroll', this.handleScroll);
-        }
+        },
+		components: {
+			signin, signup
+		}
     }
 
     Vue.component('separator', {
