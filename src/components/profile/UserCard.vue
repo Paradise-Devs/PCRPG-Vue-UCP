@@ -72,7 +72,6 @@
                 for(var i = 0; i < response.data.included.length; i++) {
                     if(response.data.included[i].type == 'groups') {
                         this.groupsData.push(response.data.included[i].attributes);
-                        console.log(this.groupsData);
                     }
                 }
                 this.playerFound = true;
