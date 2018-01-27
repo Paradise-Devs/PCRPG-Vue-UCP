@@ -40,7 +40,7 @@
 		</form>
 		<div class="modal-footer">
 			<p><a href="#">Esqueceu sua senha?</a></p>
-			<p>Não tem uma conta? <a href="#">Cadastre-se</a></p>
+			<p>Não tem uma conta? <a href="#" v-b-modal.signupModal>Cadastre-se</a></p>
 		</div>
 	</b-modal>
 </template>
@@ -48,6 +48,8 @@
 <script>
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import times from '@fortawesome/fontawesome-free-solid';
+
+	import signup from '@/components/auth/SignUp'
 
 	export default {
 		data() {
@@ -60,7 +62,8 @@
 			}
 		},
 		components: {
-			'fa': fontawesome
+			'fa': fontawesome,
+			signup
 		},
 		methods: {
 			hideModal: function() {
