@@ -25,7 +25,7 @@
                     </ul>
                 </div>
                 <div class="block-footer">
-                    <a :href="invitation" class="button primary block">Juntar-se!</a>
+                    <a :href="invitation" class="btn btn-primary btn-block">Juntar-se!</a>
                 </div>
             </div>
         </div>
@@ -37,13 +37,13 @@
     import fontawesome from '@fortawesome/vue-fontawesome'
     import discord from '@fortawesome/fontawesome-free-brands';
     import axios from 'axios';
-    
+
     var discordApi = 'https://discordapp.com/api/guilds/188111558218481664/widget.json';
 
     export default {
         data() {
             return {
-                members: [ 
+                members: [
                     {
                         game: null
                     }

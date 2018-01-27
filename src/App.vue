@@ -606,6 +606,7 @@
 		background-color: #1b2028;
 		border: 0;
 		font-family: "Open Sans",Helvetica,Arial,sans-serif;
+		font-size: inherit;
 	}
 
 	.btn:hover {

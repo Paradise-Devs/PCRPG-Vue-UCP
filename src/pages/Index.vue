@@ -16,8 +16,8 @@
 										<news :post='post' />
 									</li>
 								</paginate>
-								<paginate-links 
-									for="news" 
+								<paginate-links
+									for="news"
 									:show-step-links="true"
 									:hide-single-page="true"
 								>
@@ -34,8 +34,8 @@
 						<div class="block-content patchnotes">
 							<vue-spinner :loading="patches.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
 							<div v-if="patches.processed">
-								<patchnotes 
-									v-for="patch in patchnotes.slice(0, 4)" 
+								<patchnotes
+									v-for="patch in patchnotes.slice(0, 4)"
 									:key="patch.id"
 									:patch='patch'
 								/>
@@ -43,10 +43,10 @@
 							</div>
 						</div>
 						<div class="block-footer" v-if="patchnotes.length > 4">
-							<a href="http://forum.pc-rpg.com.br/t/patchnotes" class="button primary block">Ver todas...</a>
+							<a href="http://forum.pc-rpg.com.br/t/patchnotes" class="btn btn-primary btn-block">Ver todas...</a>
 						</div>
 					</div>
-				</b-col>				
+				</b-col>
 			</b-row>
 		</b-container>
 		<stats/>
@@ -65,8 +65,8 @@
 							<div class="block-content lastposts">
 								<vue-spinner :loading="lasPosts.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
 								<div v-if="lasPosts.processed">
-									<lastdiscussions 
-										v-for="post in lastposts.slice(0, 15)" 
+									<lastdiscussions
+										v-for="post in lastposts.slice(0, 15)"
 										:key="post.id"
 										:post='post'
 									/>
@@ -91,6 +91,7 @@
 </template>
 
 <script>
+	import Vue from 'vue'
 	import axios from 'axios';
 	import moment from 'moment';
 
@@ -149,21 +150,21 @@
 				this.posts = response.data.data;
 				this.news.processed = true;
 				this.news.loading = false;
-			})
+			});
 
 			axios.get(patchnotesApi)
 			.then(response => {
 				this.patchnotes = response.data.data;
 				this.patches.processed = true;
 				this.patches.loading = false;
-			})
+			});
 
 			axios.get(lastDiscussions)
 			.then(response => {
 				this.lastposts = response.data.data;
 				this.lasPosts.processed = true;
 				this.lasPosts.loading = false;
-			})
+			});
 		},
 		components: {
 			'vue-spinner': PulseLoader,
