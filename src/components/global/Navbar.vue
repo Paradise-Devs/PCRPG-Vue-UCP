@@ -38,9 +38,8 @@
 	import signin from '@/components/auth/SignIn'
 	import signup from '@/components/auth/SignUp'
 
-    new Vue();
-
-    export default {
+    // noinspection JSUnusedGlobalSymbols
+	export default {
         data: () => {
             return {
                 scrolled: false
@@ -68,15 +67,15 @@
 		components: {
 			signin, signup
 		}
-    }
+	}
 
     Vue.component('separator', {
         template: '<div class="separator"></div>'
-    })
+    });
 
     Vue.component('spacefix', {
         template: '<div class="clearfix"></div>'
-    })
+    });
 </script>
 
 <style>
