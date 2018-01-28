@@ -14,13 +14,16 @@ import VueInfiniteScroll from 'vue-infinite-scroll'
 import anime from 'animejs'
 import Icon from 'vue-awesome/components/Icon'
 import VuePaginate from 'vue-paginate'
+import axios from 'axios'
+
+Vue.router = router;
 
 // registering apps
-Vue.use(VueBootstrap)
-Vue.use(VueAnimated)
-Vue.use(VueWaypoint)
-Vue.use(VueScrollTo)
-Vue.use(VuePaginate)
+Vue.use(VueBootstrap);
+Vue.use(VueAnimated);
+Vue.use(VueWaypoint);
+Vue.use(VueScrollTo);
+Vue.use(VuePaginate);
 
 const locale = require('moment')
 require('moment/locale/pt-br')
@@ -32,13 +35,6 @@ Vue.component('icon', Icon)
 
 Vue.config.productionTip = false
 
-new Vue({
-	el: '#app',
-	router,
-	template: '<App/>',
-	components: { App }
-})
-
 Vue.use(VueScrollTo, {
 	container: "body",
 	duration: 500,
@@ -49,4 +45,11 @@ Vue.use(VueScrollTo, {
 	onCancel: false,
 	x: false,
 	y: true
-})
+});
+
+new Vue({
+	el: '#app',
+	router,
+	template: '<App/>',
+	components: { App }
+});

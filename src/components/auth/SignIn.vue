@@ -8,33 +8,39 @@
 			hide-header-close
 			hide-footer
 	>
+		<div class="modal-alert" v-if="error" ref="errorAlert">
+			<b-alert variant="danger" show>{{ error }}</b-alert>
+		</div>
+
 		<button class="modalclose" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
-		<form class="form-centered">
+		<form class="form-centered" v-on:submit.prevent="login()" @keyup="hideError()">
 			<b-form-group>
 				<b-form-input
-						type="text"
-						v-model="login.username"
-						ref="usernameField"
-						required
-						placeholder="Nome de usuário ou Email"
+					type="text"
+					v-model="userdata.username"
+					ref="usernameField"
+					required
+					placeholder="Nome de usuário ou Email"
+					autocomplete
 				/>
 			</b-form-group>
 			<b-form-group>
 				<b-form-input
-						type="text"
-						v-model="login.password"
-						required
-						placeholder="Senha"
+					type="password"
+					v-model="userdata.password"
+					required
+					placeholder="Senha"
+					autocomplete
 				/>
 			</b-form-group>
 			<b-form-group class="check">
 				<label class="checkbox">
-					<input type="checkbox" v-model="login.rememberme">Remember Me
+					<input type="checkbox" v-model="rememberme">Remember Me
 				</label>
 			</b-form-group>
 			<b-form-group>
-				<b-button type="submit" variant="primary" block class="loginButton">
-					<span class="btn-label">Entrar</span>
+				<b-button type="submit" variant="primary" :disabled="loading" block class="loginButton">
+					Entrar <vue-spinner :loading="loading" color="#303846" size="30px"></vue-spinner>
 				</b-button>
 			</b-form-group>
 		</form>
@@ -48,21 +54,30 @@
 <script>
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import times from '@fortawesome/fontawesome-free-solid';
+	import axios from 'axios';
 
 	import signup from '@/components/auth/SignUp'
+	import spinner from 'vue-spinner/src/MoonLoader.vue';
+
+	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 
 	export default {
 		data() {
 			return {
-				login: {
+				context: 'login context',
+
+				userdata: {
 					username: '',
-					password: '',
-					rememberme: false,
-				}
+					password: ''
+				},
+				rememberme: false,
+				error: null,
+				loading: false,
 			}
 		},
 		components: {
 			'fa': fontawesome,
+			'vue-spinner': spinner,
 			signup
 		},
 		methods: {
@@ -71,6 +86,30 @@
 			},
 			focusLogin: function() {
 				this.$refs.usernameField.focus()
+			},
+			login: function() {
+				this.loading = true;
+				var _this = this;
+
+				axios.post(loginAPI, {
+					username: this.userdata.username,
+					password: this.userdata.password,
+				})
+				.then(function (response) {
+					if(response.data.error) {
+						_this.error = response.data.error.message;
+						console.log(response.data.error);
+						_this.loading = false;
+					} else {
+
+					}
+					_this.loading = false;
+				})
+			},
+			hideError: function () {
+				if(this.error) {
+					this.error = null;
+				}
 			}
 		}
 	}
@@ -79,5 +118,12 @@
 <style scoped>
 	.form-group.check {
 		max-height: 19px;
+	}
+
+	.v-spinner {
+		position: absolute;
+		right: 10px;
+		top: 5px;
+		width: 30px;
 	}
 </style>

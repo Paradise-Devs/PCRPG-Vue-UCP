@@ -9,7 +9,7 @@
 			hide-footer
 	>
 		<button class="modalclose" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
-		<form class="form-centered">
+		<form class="form-centered" v-on:submit.prevent="onSubmit">
 			<b-form-group>
 				<b-form-input
 						type="text"
@@ -33,6 +33,7 @@
 						v-model="signup.password"
 						required
 						placeholder="Senha"
+						v-on:keyup.enter="submit"
 				/>
 			</b-form-group>
 			<b-form-group>
@@ -52,6 +53,8 @@
 	import times from '@fortawesome/fontawesome-free-solid';
 
 	import signin from '@/components/auth/SignIn'
+
+	var usersAPI = 'http://dev.pc-rpg.com.br/api/v1/register';
 
 	export default {
 		data() {

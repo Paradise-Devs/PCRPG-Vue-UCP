@@ -11,11 +11,12 @@ import NotFoundView from '@/pages/errors/404'
 import User from '@/pages/userProfile/Index'
 import UserHome from '@/pages/userProfile/Home'
 
-Vue.use(Router)
+Vue.use(Router);
 
 // routes
 export default new Router({
 	mode: 'history',
+	cors: true,
 	routes: [
 		{ 	path: '/', 						component: IndexView },
 		{ 	path: '/patchnotes', 			component: PatchnotesView },
