@@ -21,7 +21,7 @@
 					ref="usernameField"
 					required
 					placeholder="Nome de usuário ou Email"
-					autocomplete
+					autocomplete="on"
 				/>
 			</b-form-group>
 			<b-form-group>
@@ -30,7 +30,7 @@
 					v-model="userdata.password"
 					required
 					placeholder="Senha"
-					autocomplete
+					autocomplete="on"
 				/>
 			</b-form-group>
 			<b-form-group class="check">
@@ -100,9 +100,8 @@
 						_this.error = response.data.error.message;
 						console.log(response.data.error);
 						_this.loading = false;
-					} else {
-
 					}
+
 					_this.loading = false;
 				})
 			},

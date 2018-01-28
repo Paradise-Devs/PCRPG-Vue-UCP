@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
 	<div id="app">
 		<div v-if="!loaded" class="loading">
@@ -531,6 +532,7 @@
 
 	.form-centered .b-form-group {
 		margin-bottom: 12px;
+		position: relative;
 	}
 
 	.form-centered .form-control[type=text],
@@ -600,8 +602,31 @@
 		outline: none;
 	}
 
+	.form-control.disabled, .form-control[disabled],
+	.form-control[readonly], fieldset[disabled] .form-control {
+		cursor: default;
+		opacity: 0.5;
+	}
+
 	.form-group:last-child {
 		margin-bottom: 0 !important;
+	}
+
+	.was-validated .form-control:valid,
+	.form-control.is-valid,
+	.was-validated .custom-select:valid,
+	.custom-select.is-valid {
+		border: 2px solid #00e676;
+		outline: none;
+	}
+
+	.was-validated .form-control:invalid,
+	.form-control.is-invalid,
+	.was-validated .custom-select:invalid,
+	.custom-select.is-invalid {
+		border: 2px solid #dc3545;
+		color: #dc3545;
+		outline: none;
 	}
 
 	/* buttons */

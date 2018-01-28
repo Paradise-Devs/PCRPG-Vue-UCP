@@ -15,6 +15,9 @@ import anime from 'animejs'
 import Icon from 'vue-awesome/components/Icon'
 import VuePaginate from 'vue-paginate'
 import axios from 'axios'
+import VeeValidate, { Validator } from 'vee-validate';
+import ptbr from 'vee-validate/dist/locale/pt_BR';
+Validator.localize('pt_BR', ptbr);
 
 Vue.router = router;
 
@@ -24,6 +27,7 @@ Vue.use(VueAnimated);
 Vue.use(VueWaypoint);
 Vue.use(VueScrollTo);
 Vue.use(VuePaginate);
+Vue.use(VeeValidate);
 
 const locale = require('moment')
 require('moment/locale/pt-br')
