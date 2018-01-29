@@ -55,6 +55,7 @@
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import times from '@fortawesome/fontawesome-free-solid';
 	import axios from 'axios';
+	import { store } from '@/vuex/store'
 
 	import signup from '@/components/auth/SignUp'
 	import spinner from 'vue-spinner/src/MoonLoader.vue';
@@ -68,7 +69,8 @@
 
 				userdata: {
 					username: '',
-					password: ''
+					password: '',
+					token: null
 				},
 				rememberme: false,
 				error: null,
@@ -78,7 +80,8 @@
 		components: {
 			'fa': fontawesome,
 			'vue-spinner': spinner,
-			signup
+			signup,
+			store
 		},
 		methods: {
 			hideModal: function() {
@@ -102,7 +105,13 @@
 						_this.loading = false;
 					}
 
-					_this.loading = false;
+					_this.token = "testing";
+					store.dispatch('login', _this.userdata).then(() => {
+						console.log(store.state.user);
+						_this.$router.push(_this.$route.query.redirect || '/dev');
+						_this.loading = false;
+						_this.hideModal();
+					})
 				})
 			},
 			hideError: function () {
