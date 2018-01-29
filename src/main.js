@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './vuex/store'
 
 // dependencies
 import VueBootstrap from 'bootstrap-vue'
@@ -54,6 +55,7 @@ Vue.use(VueScrollTo, {
 new Vue({
 	el: '#app',
 	router,
+	store,
 	template: '<App/>',
 	components: { App }
 });
