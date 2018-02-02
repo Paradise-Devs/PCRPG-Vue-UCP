@@ -219,12 +219,17 @@
 	}
 
 	.lastposts {
+		min-height: 374px;
 		max-height: 374px;
         overflow-x: auto;
 	}
 
 	.news .post, .lastposts .post {
 		padding-left: 62px;
+	}
+
+	.lastposts .news-loader {
+		height: 332px;
 	}
 
 	.joinus .team {
