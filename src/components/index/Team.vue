@@ -6,8 +6,8 @@
             <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
         </div>
         <b-collapse accordion="team" id="devs">
-            <user 
-                v-for="user in devs" 
+            <user
+                v-for="user in devs"
                 :key="user.id"
                 :user='user'
             />
@@ -18,9 +18,9 @@
             <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
             <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
         </div>
-        <b-collapse visible accordion="team" id="admin">
-            <user 
-                v-for="user in admins" 
+        <b-collapse accordion="team" id="admin">
+            <user
+                v-for="user in admins"
                 :key="user.id"
                 :user='user'
             />
@@ -32,8 +32,8 @@
             <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
         </div>
         <b-collapse accordion="team" id="mods">
-            <user 
-                v-for="user in mods" 
+            <user
+                v-for="user in mods"
                 :key="user.id"
                 :user='user'
             />
@@ -45,8 +45,8 @@
             <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
         </div>
         <b-collapse accordion="team" id="support">
-            <user 
-                v-for="user in supports" 
+            <user
+                v-for="user in supports"
                 :key="user.id"
                 :user='user'
             />
@@ -63,10 +63,10 @@
     import angleUp from '@fortawesome/fontawesome-free-solid';
 
     import user from '@/components/index/User.vue'
-    
+
     var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users';
     var groupsBaseURI = 'http://forum.pc-rpg.com.br/api/groups';
-    
+
     export default {
         data() {
 			return {
