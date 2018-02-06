@@ -105,9 +105,8 @@
 						_this.loading = false;
 					}
 
-					_this.token = "testing";
+					_this.userdata.token = response.data.token;
 					store.dispatch('login', _this.userdata).then(() => {
-						console.log(store.state.user);
 						_this.$router.push(_this.$route.query.redirect || '/dev');
 						_this.loading = false;
 						_this.hideModal();
