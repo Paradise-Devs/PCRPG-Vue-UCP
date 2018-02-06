@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
     <div>
         <animated-fade-in>
@@ -14,8 +15,23 @@
                             <router-link to="/dev">Desenvolvimento</router-link>
                             <a href="/forum">Fórum</a>
                             <separator/>
-                            <a href="#" v-b-modal.signupModal>Cadastre-se</a>
-                            <a href="#" v-b-modal.signinModal>Entrar</a>
+							<div v-if="!isLoggedIn">
+								<a href="#" v-b-modal.signupModal>Cadastre-se</a>
+								<a href="#" v-b-modal.signinModal>Entrar</a>
+							</div>
+							<div class="controls" v-else>
+								<b-dropdown no-caret class="notifications">
+									<template slot="button-content">
+										<fa :icon="['fas', 'bell']" />
+									</template>
+								</b-dropdown>
+								<b-dropdown no-caret>
+									<template slot="button-content">
+										<img class="avatar" src="http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png"/>
+										<span class="Button-label">Los</span>
+									</template>
+								</b-dropdown>
+							</div>
                         </b-col>
                     </b-row>
                 </b-container>
@@ -34,15 +50,19 @@
 <script>
     import Vue from 'vue'
     import 'vue-awesome/icons/angle-up'
+	import { store } from '@/vuex/store'
 
 	import signin from '@/components/auth/SignIn'
 	import signup from '@/components/auth/SignUp'
 
-    // noinspection JSUnusedGlobalSymbols
+	import fontawesome from '@fortawesome/vue-fontawesome'
+	import bell from '@fortawesome/fontawesome-free-solid';
+
 	export default {
         data: () => {
             return {
-                scrolled: false
+            	user: store.state.user,
+                scrolled: false,
             }
         },
         methods: {
@@ -58,6 +78,11 @@
                 }
             }
         },
+		computed: {
+			isLoggedIn() {
+				return store.getters.isLoggedIn;
+			}
+		},
         created () {
             window.addEventListener('scroll', this.handleScroll);
         },
@@ -65,7 +90,8 @@
             window.removeEventListener('scroll', this.handleScroll);
         },
 		components: {
-			signin, signup
+			signin, signup, store,
+			'fa': fontawesome,
 		}
 	}
 
@@ -106,7 +132,7 @@
         height: 20px;
         opacity: .1;
         padding-right: 0px;
-        margin-right: 25px;
+        margin-right: 15px;
     }
 
     nav .header-logo {
@@ -155,6 +181,71 @@
         vertical-align: middle;
         text-align: right;
     }
+
+	nav .controls {
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	nav .controls .dropdown {
+		position: relative;
+	}
+
+	nav .controls .notifications.dropdown .btn{
+		position: relative;
+		width: 36px;
+		text-align: center;
+		padding: 8px 0;
+	}
+
+	nav .controls .dropdown .btn {
+		background-color: transparent;
+		position: relative;
+		float: left;
+		border-radius: 18px !important;
+		border: 0;
+		color: #6c7d93;
+		font-family: inherit;
+		font-size: inherit;
+	}
+
+	nav .controls .dropdown .btn:hover, nav .controls .dropdown .btn:focus {
+		background-color: #101418;
+		border: 0;
+		box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
+		outline: none;
+	}
+
+	nav .controls .dropdown .btn:active {
+		background-color: #060709;
+		border: 0;
+		box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
+		outline: none;
+	}
+
+	nav .controls .dropdown .btn svg {
+		font-size: 16px;
+		margin: 0;
+	}
+
+	nav .controls .dropdown .btn .avatar {
+		margin: -2px 5px -2px -6px;
+		width: 24px;
+		height: 24px;
+		border-radius: 24px;
+		font-size: 12px;
+		line-height: 24px;
+		display: inline-block;
+		box-sizing: content-box;
+		color: #fff;
+		text-align: center;
+		vertical-align: top;
+		background-color: #1b2028;
+		font-weight: normal;
+	}
 
     #toTop {
         background-color: #333;
