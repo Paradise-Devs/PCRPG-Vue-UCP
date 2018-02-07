@@ -25,12 +25,16 @@
 										<fa :icon="['fas', 'bell']" />
 									</template>
 								</b-dropdown>
-								<b-dropdown no-caret>
+								<b-dropdown no-caret right>
 									<template slot="button-content">
 										<img class="avatar" :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
 										<div class="noAvatar" v-else> ? </div>
 										<span class="Button-label">{{ user.attributes.username }}</span>
 									</template>
+									<b-dropdown-item :href="'http://forum.pc-rpg.com.br/u/' + user.attributes.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
+									<b-dropdown-item href="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
+									<b-dropdown-divider></b-dropdown-divider>
+									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
 								</b-dropdown>
 							</div>
                         </b-col>
@@ -58,6 +62,9 @@
 
 	import fontawesome from '@fortawesome/vue-fontawesome'
 	import bell from '@fortawesome/fontawesome-free-solid';
+	import user from '@fortawesome/fontawesome-free-solid';
+	import cog from '@fortawesome/fontawesome-free-solid';
+	import signOutAlt from '@fortawesome/fontawesome-free-solid';
 
 	export default {
         data: () => {
@@ -79,6 +86,11 @@
                     this.scrolled = false;
                 }
             },
+			logout: function () {
+				store.dispatch('logout').then(() => {
+					this.$router.push(this.$route.query.redirect || '/');
+				})
+			}
         },
 		computed: {
 			isLoggedIn() {
@@ -283,7 +295,60 @@
 		font-weight: normal;
 	}
 
-    #toTop {
+	nav .dropdown-menu {
+		z-index: 1030;
+		min-width: 160px;
+		padding: 8px 0;
+		margin: 7px 0;
+		background-color: #14191f;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		border-radius: 4px;
+		color: #ddd;
+		font-size: 13px;
+		line-height: 1.5;
+		-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+		box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+	}
+
+	nav .dropdown-item {
+		padding: 8px 15px 8px 40px;
+		color: #ddd;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		text-align: left;
+		font-weight: normal;
+		text-decoration: none;
+	}
+
+	nav .dropdown-item:hover, nav .dropdown-item:focus, nav .dropdown-item:active {
+		background: #1b2028;
+		color: #ddd !important;
+		outline: none;
+	}
+
+	nav .dropdown-item svg {
+		float: left;
+		margin-left: -25px;
+		margin-top: 2px;
+		width: 1.28571429em;
+		text-align: center;
+	}
+
+	nav .dropdown-divider {
+		margin: 8px 0;
+		background-color: #1b2028;
+		height: 1px;
+		border: 0;
+	}
+
+	#toTop {
         background-color: #333;
         border-radius: 4px 4px 0 0;
         bottom: 0;

@@ -19,8 +19,7 @@ export const store = new Vuex.Store({
 			})
 		},
 		logout({ commit }) {
-			localStorage.removeItem("token");
-			commit(LOGOUT);
+			commit('LOGOUT');
 		}
 	},
 	mutations: {
