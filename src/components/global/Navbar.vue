@@ -63,11 +63,12 @@
         data: () => {
             return {
             	user: store.state.user,
+				userLoggedIn: null,
                 scrolled: false,
             }
         },
         methods: {
-            handleScroll () {
+            handleScroll: function () {
                 var scrollpos = window.scrollY;
                 var navbar = document.getElementById("navbar");
                 if(scrollpos > 10) {
@@ -81,10 +82,17 @@
         },
 		computed: {
 			isLoggedIn() {
-				return store.getters.isLoggedIn;
+				this.userLoggedIn = store.getters.isLoggedIn;
+				return this.userLoggedIn;
 			},
 		},
-        created () {
+		mounted() {
+			this.$root.$on('initNavLoading', () => {
+				this.isFixed = false
+				this.isShow = 'none'
+			})
+		},
+        created() {
             window.addEventListener('scroll', this.handleScroll);
 
 			store.watch(

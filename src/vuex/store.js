@@ -25,12 +25,10 @@ export const store = new Vuex.Store({
 	},
 	mutations: {
 		LOGIN (state, token) {
-			state.isLoggedIn = true;
 			state.token = token;
 			localStorage.setItem("token", token);
 		},
 		LOGOUT (state) {
-			state.isLoggedIn = false;
 			state.token = null;
 			localStorage.removeItem("token");
 		},
