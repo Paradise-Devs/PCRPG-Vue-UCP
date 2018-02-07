@@ -187,9 +187,8 @@
 						email: this.data.attributes.email,
 					})
 					.then((data) => {
-						this.data.attributes.token = "testing";
+						_this.userdata.token = response.data.token;
 						store.dispatch('login', this.data.attributes).then(() => {
-							console.log(store.state.user);
 							this.$router.push(this.$route.query.redirect || '/dev');
 							this.loading = false;
 							this.hideModal();

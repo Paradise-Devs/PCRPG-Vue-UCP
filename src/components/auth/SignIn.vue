@@ -61,6 +61,7 @@
 	import spinner from 'vue-spinner/src/MoonLoader.vue';
 
 	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+	var forumAPI = 'http://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
@@ -103,20 +104,39 @@
 						_this.error = response.data.error.message;
 						console.log(response.data.error);
 						_this.loading = false;
+						reject()
+					} else {
+						_this.userdata.token = response.data.token;
+						_this.authUser();
 					}
-
-					_this.userdata.token = response.data.token;
-					store.dispatch('login', _this.userdata).then(() => {
-						_this.$router.push(_this.$route.query.redirect || '/dev');
-						_this.loading = false;
-						_this.hideModal();
-					})
 				})
 			},
 			hideError: function () {
 				if(this.error) {
 					this.error = null;
 				}
+			},
+			authUser: function() {
+				var _this = this;
+
+				new Promise((resolve) => {
+					setTimeout(() => {
+						axios.get(forumAPI + this.userdata.username)
+						.then(response => {
+							this.userdata.attributes = response.data.data.attributes;
+						})
+					}, 2000)
+				})
+
+				new Promise((resolve) => {
+					setTimeout(() => {
+						store.dispatch('login', _this.userdata).then(() => {
+							_this.$router.push(_this.$route.query.redirect || '/dev');
+							_this.hideModal();
+							_this.loading = false;
+						})
+					}, 4000)
+				})
 			}
 		}
 	}

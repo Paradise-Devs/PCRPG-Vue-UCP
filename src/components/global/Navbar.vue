@@ -27,8 +27,9 @@
 								</b-dropdown>
 								<b-dropdown no-caret>
 									<template slot="button-content">
-										<img class="avatar" src="http://forum.pc-rpg.com.br/assets/avatars/yfxszgvijojyjf8l.png"/>
-										<span class="Button-label">Los</span>
+										<img class="avatar" :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
+										<div class="noAvatar" v-else> ? </div>
+										<span class="Button-label">{{ user.attributes.username }}</span>
 									</template>
 								</b-dropdown>
 							</div>
@@ -76,15 +77,24 @@
                     navbar.classList.remove('scrolled');
                     this.scrolled = false;
                 }
-            }
+            },
         },
 		computed: {
 			isLoggedIn() {
 				return store.getters.isLoggedIn;
-			}
+			},
 		},
         created () {
             window.addEventListener('scroll', this.handleScroll);
+
+			store.watch(
+				(state)=>{
+					return store.getters.isLoggedIn
+				},
+				(oldValue, newValue)=>{
+					this.user = store.state.user;
+				}
+			)
         },
         destroyed () {
             window.removeEventListener('scroll', this.handleScroll);
@@ -188,6 +198,24 @@
 		margin: 0;
 		padding: 0;
 		list-style: none;
+	}
+
+	nav .controls .noAvatar {
+		display: inline-block;
+		-webkit-box-sizing: content-box;
+		box-sizing: content-box;
+		text-align: center;
+		vertical-align: top;
+		background-color: #1b2028;
+		font-weight: normal;
+		border-color: transparent;
+		color: #6c7d93;
+		font-size: 14px;
+		margin: -2px 5px -2px -6px;
+		width: 24px;
+		height: 24px;
+		line-height: 24px;
+		border-radius: 24px;
 	}
 
 	nav .controls .dropdown {
