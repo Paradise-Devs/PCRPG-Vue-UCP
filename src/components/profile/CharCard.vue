@@ -24,7 +24,7 @@
                 </tr>
             </table>
             <footer>
-                <router-link :to="username + '/char/' + char.name" class="button primary block">Ver personagem</router-link>
+                <router-link :to="username + '/char/' + char.name" class="btn btn-primary btn-block">Ver personagem</router-link>
             </footer>
         </div>
     </b-col>
@@ -106,8 +106,16 @@
         border-bottom-left-radius: 5px;
 		border-bottom-right-radius: 5px;
 		background-color: #1B2028;
-		padding: 8px 10px;
 		text-align: center;
-		max-height: 52px;
+		height: auto;
     }
+
+	.char .btn {
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		padding: 12px 0;
+	}
 </style>

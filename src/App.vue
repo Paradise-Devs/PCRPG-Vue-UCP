@@ -61,7 +61,7 @@
 							store.dispatch('login', _this.userdata).then(() => {
 								_this.dataLoaded = true;
 								_this.fullyLoaded = true;
-							})
+					 		})
 						}, 4000)
 					})
 				} else {
