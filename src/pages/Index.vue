@@ -41,7 +41,7 @@
 	import users from '@fortawesome/fontawesome-free-solid';
 
 	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-	import serverinfo from '@/components/serverinfo/bar.vue'
+	import serverinfo from '@/components/server-info/bar.vue'
 	import news from '@/components/news/block.vue'
 	import patchnotes from '@/components/patchnotes/block.vue'
 	import lastdiscussions from '@/components/last-discussions/block.vue'
