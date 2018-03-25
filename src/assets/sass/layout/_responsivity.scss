@@ -1,0 +1,35 @@
+@mixin maxWidth($w) {
+    @media screen and (max-width: $w + px) {
+        @content;
+    }
+}
+
+@mixin minWidth($w) {
+    @media screen and (min-width: $w + px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (min-width: #{$mob-width}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{$tab-width}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$desk-width}) {
+        @content;
+    }
+}
+
+@mixin desktop-large {
+    @media (min-width: #{$desklarge-width}) {
+        @content;
+    }
+}

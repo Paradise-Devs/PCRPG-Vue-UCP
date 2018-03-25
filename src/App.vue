@@ -1,8 +1,8 @@
 <!--suppress ALL -->
 <template>
-	<div id="app">
-		<div v-if="!fullyLoaded" class="loading">
-			<div class="container">
+	<div id="app" >
+		<div v-if="!fullyLoaded" class="loader">
+			<div class="loader__container">
 				<spinner :loading="loading" color="#303846" size="90px"></spinner>
 				<h2 v-if="!siteLoaded">Carregando site...</h2>
 				<h2 v-if="siteLoaded && !dataLoaded">Carregando sua conta...</h2>
@@ -88,9 +88,8 @@
 	}
 </script>
 
-<style>
-	@import 'https://fonts.googleapis.com/css?family=Barlow';
-	@import "//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,600";
+<style lang="scss">
+	@import './assets/sass/main.scss';
 
 	button:focus, input:focus, textarea:focus, a:focus { outline: none; }
 
@@ -105,33 +104,10 @@
 	body {
 		background: #14191f;
 		color: #6c7d93;
-		overflow-y: scroll;
+		overflow-y: auto;
 		font-family: "Open Sans",Helvetica,Arial,sans-serif;
 		font-size: 13px;
 		line-height: 1.5;
-	}
-
-	.loading {
-		width: 99vw;
-		height: 99vh;
-		overflow: hidden;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.loading .container {
-		height: 300px;
-		position: relative;
-		display: flex;
-		justify-content: center !important;
-	}
-
-	.loading h2 {
-		position: absolute;
-		bottom: 0px;
-		color: #6c7d93;
-		align-self: center;
 	}
 
 	.container {
