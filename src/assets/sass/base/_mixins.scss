@@ -19,6 +19,25 @@
 	height: $h;
 }
 
+@mixin center($position: relative) {
+	position: $position;
+	left: 50%;
+ 	top: 50%;
+  	transform: translateX(-50%) translateY(-50%);
+}
+
+@mixin centerX($position: relative) {
+	position: $position;
+ 	left: 50%;
+  	transform: translateX(-50%);
+}
+
+@mixin centerY($position: relative) {
+	position: $position;
+ 	top: 50%;
+  	transform: translateY(-50%);
+}
+
 @mixin transition-duration($time) {
 	-webkit-transition: all $time ease-in;
 	-moz-transition: all $time ease-in;

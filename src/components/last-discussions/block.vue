@@ -1,10 +1,10 @@
 <template>
-    <div class="block no-footer lastposts">
-        <div class="block-header primary">
+    <div class="block lastposts">
+        <div class="block__header">
             <h3><fa :icon="['far', 'comments']" /> Últimas Discussões</h3>
         </div>
-        <div class="block-content">
-            <vue-spinner :loading="lastPosts.loading" color="#303846" size="10px" class="news-loader"></vue-spinner>
+        <div class="block__content block__content--footerless">
+            <vue-spinner :loading="lastPosts.loading" color="#303846" size="10px" class="loader"></vue-spinner>
             <div v-if="lastPosts.processed">
                 <post
                     v-for="post in lastPosts.posts.slice(0, 15)"
@@ -59,12 +59,12 @@
 
 <style lang="scss" scoped>
 	.lastposts {
-        .block-content {
+        .block__content {
             min-height: 374px;
             max-height: 374px;
             overflow-x: auto;
 
-            .news-loader {
+            .loader {
                 height: 332px;
             }
 

@@ -2,29 +2,29 @@
     <div class="discord">
         <vue-spinner :loading="loading" color="#303846" size="10px"></vue-spinner>
         <div v-if="processed">
-            <div class="block no-bottom">
-                <div class="block-header">
+            <div class="block">
+                <div class="block__header">
                     <h3><fa :icon="['fab', 'discord']" /> {{ name }}</h3>
                 </div>
-                <div class="block-content">
-                    <ul>
+                <div class="block__content">
+                    <ul class="user__list">
                         <li class="user" v-for="member in members" :key="member.id">
-                            <div class="content">
+                            <div class="user__content">
                                 <img :src="member.avatar_url"/>
-                                <ul class="info">
-                                    <li class="username">{{ member.username }}</li>
-                                    <li class="game" v-if="member.game">Jogando {{ member.game.name}}</li>
-                                    <li class="status" v-else>
-                                        <span class="online" v-if="member.status == 'online'">online</span>
-                                        <span class="away" v-if="member.status == 'idle'">ausente</span>
-                                        <span class="busy" v-if="member.status == 'dnd'">ocupado</span>
+                                <ul class="user__info">
+                                    <li class="user__info__name">{{ member.username }}</li>
+                                    <li class="user__info__game" v-if="member.game">Jogando {{ member.game.name}}</li>
+                                    <li class="user__info__status" v-else>
+                                        <span class="user__info__status--online" v-if="member.status == 'online'">online</span>
+                                        <span class="user__info__status--away" v-if="member.status == 'idle'">ausente</span>
+                                        <span class="user__info__status--busy" v-if="member.status == 'dnd'">ocupado</span>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <div class="block-footer">
+                <div class="block__footer">
                     <a :href="invitation" class="btn btn-primary btn-block">Juntar-se!</a>
                 </div>
             </div>
@@ -81,54 +81,56 @@
 <style lang="scss">
     .discord {
         .block {
-            .block-content {
+            .block__content {
                 max-height: 322px;
                 overflow-x: auto;
 
-                .user {
-                    height: 55px;
-                    padding: 10px;
+                .user__list {
+                    .user {
+                        height: 55px;
+                        padding: 10px;
 
-                    .content {
-                        position: relative;
+                        &__content {
+                            position: relative;
 
-                        img {
-                            max-width: 38px;
-                            border-radius: 100px;
-                            position: absolute;
-                            top: 2px;
-                            left: 0px;
-                        }
-                    }
-
-                    .info {
-                        vertical-align: top;
-                        margin: -3px 48px 0px;
-                        height: 38px;
-
-                        .username {
-                            margin: 0px;
-                            padding: 0px;
+                            img {
+                                max-width: 38px;
+                                border-radius: 100px;
+                                position: absolute;
+                                top: 2px;
+                                left: 0px;
+                            }
                         }
 
-                        .game {
-                            font-size: 12px;
-                            margin-top: -5px;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            width: 260px;
-                            color: #526cff;
+                        &__info {
+                            vertical-align: top;
+                            margin: -3px 48px 0px;
+                            height: 38px;
+
+                            &__name {
+                                margin: 0px;
+                                padding: 0px;
+                            }
+
+                            &__game {
+                                font-size: 12px;
+                                margin-top: -5px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                width: 260px;
+                                color: #526cff;
+                            }
+
+                            &__status {
+                                &--online { color: #00e676; }
+                                &--away { color: #ffab40; }
+                                &--busy { color: #ff5252; }
+                            }
                         }
 
-                        .status {
-                            .online { color: #00e676; }
-                            .away { color: #ffab40; }
-                            .busy { color: #ff5252; }
+                        &:hover {
+                            background: #171d23;
                         }
-                    }
-
-                    &:hover {
-                        background: #171d23;
                     }
                 }
             }

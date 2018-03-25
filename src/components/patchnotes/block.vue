@@ -1,9 +1,9 @@
 <template>
-    <div class="block no-bottom patchnotes">
-        <div class="block-header">
+    <div class="block patchnotes">
+        <div class="block__header">
             <h3>Últimas atualizações</h3>
         </div>
-        <div class="block-content">
+        <div class="block__content">
             <vue-spinner :loading="patches.loading" color="#303846" size="10px" class="loader"></vue-spinner>
             <div v-if="patches.processed">
                 <post
@@ -14,7 +14,7 @@
                 <p v-if="patches.posts.length == 0">Ainda não lançamos nenhuma atualização. Por que não acompanha o <router-link to="/dev">desenvolvimento</router-link>?</p>
             </div>
         </div>
-        <div class="block-footer" v-if="patches.posts.length > 4">
+        <div class="block__footer" v-if="patches.posts.length > 4">
             <a href="http://forum.pc-rpg.com.br/t/patchnotes" class="btn btn-primary btn-block">Ver todas...</a>
         </div>
     </div>

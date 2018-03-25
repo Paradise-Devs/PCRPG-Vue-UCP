@@ -1,9 +1,9 @@
 <template>
-    <div class="block no-border news">
-        <div class="block-header primary">
+    <div class="block news">
+        <div class="block__header">
             <h3>Novidades</h3>
         </div>
-        <div class="block-content">
+        <div class="block__content block__content--borderless">
             <vue-spinner :loading="news.loading" color="#303846" size="10px" class="loader"></vue-spinner>
             <div v-if="news.processed">
                 <paginate name="news" :list="news.posts" :per="4">

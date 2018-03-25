@@ -1,5 +1,5 @@
 <template>
-	<div id="indexContent">
+	<div>
 		<b-container>
 			<serverinfo/>
 			<b-row>

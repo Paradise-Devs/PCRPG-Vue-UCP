@@ -64,6 +64,7 @@
 
 <style lang="scss" scoped>
     .post {
+        padding-left: 65px;
         .content {
             .info {
                 .created {

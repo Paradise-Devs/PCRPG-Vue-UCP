@@ -1,11 +1,11 @@
 <template>
-    <div class="block no-footer team">
-        <div class="block-header primary">
+    <div class="block team">
+        <div class="block__header">
             <h3><fa :icon="['fas', 'users']" /> A equipe</h3>
         </div>
-        <div class="block-content">
+        <div class="block__content">
             <div role="tablist">
-                <div class="rank-name" v-b-toggle.devs>
+                <div class="rank" v-b-toggle.devs>
                     Desenvolvedores
                     <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
                     <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
@@ -18,7 +18,7 @@
                     />
                 </b-collapse>
 
-                <div class="rank-name" v-b-toggle.admin>
+                <div class="rank" v-b-toggle.admin>
                     Administradores
                     <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
                     <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
@@ -31,7 +31,7 @@
                     />
                 </b-collapse>
 
-                <div class="rank-name" v-b-toggle.mods>
+                <div class="rank" v-b-toggle.mods>
                     Moderadores
                     <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
                     <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
@@ -44,7 +44,7 @@
                     />
                 </b-collapse>
 
-                <div class="rank-name" v-b-toggle.support>
+                <div class="rank" v-b-toggle.support>
                     Suporte
                     <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
                     <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
@@ -121,13 +121,13 @@
 
 <style lang="scss" scoped>
     .team {
-        .block-content {
+        .block__content {
             padding-bottom: 0px;
             min-height: 374px;
             max-height: 374px;
             overflow-x: auto;
 
-            .rank-name {
+            .rank {
                 background-color: #181c24;
                 padding: 5px 10px;
                 cursor: pointer;

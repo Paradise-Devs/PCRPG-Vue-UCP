@@ -1,6 +1,6 @@
 <!--suppress ALL -->
 <template>
-	<div id="app" >
+	<div id="pcrpg">
 		<div v-if="!fullyLoaded" class="loader">
 			<div class="loader__container">
 				<spinner :loading="loading" color="#303846" size="90px"></spinner>
@@ -91,120 +91,12 @@
 <style lang="scss">
 	@import './assets/sass/main.scss';
 
-	button:focus, input:focus, textarea:focus, a:focus { outline: none; }
-
-	#app {
-		font-family: Barlow;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		color: #6c7d93;
-		position: relative;
-	}
-
-	body {
-		background: #14191f;
-		color: #6c7d93;
-		overflow-y: auto;
-		font-family: "Open Sans",Helvetica,Arial,sans-serif;
-		font-size: 13px;
-		line-height: 1.5;
-	}
-
-	.container {
-		margin-right: auto;
-		margin-left: auto;
-		padding-left: 15px;
-		padding-right: 15px;
-		max-width: 1100px;
-	}
-
 	.badge {
 		font-family: Roboto;
 		font-weight: 400;
 		border-radius: 0px;
 	}
 
-	section {
-		max-width: 1170px;
-		position: relative;
-		width: 100%;
-		margin: 0 auto;
-		position: relative;
-		padding: 120px 0px 0px;
-	}
-
-	a {
-		cursor: pointer;
-		color: #526cff;
-		text-decoration: none;
-	}
-
-	a:hover {
-		text-decoration: underline;
-		color: #526cff;
-	}
-
-	p {
-		margin: 0 0 10px;
-	}
-
-	ul {
-		margin: 0px;
-		padding: 0px;
-		list-style-type: none;
-	}
-
-	/* block */
-	.block .block-header {
-		background-color: #1B2028;
-		padding: 8px 10px;
-		text-align: center;
-		border-top-left-radius: 5px;
-		border-top-right-radius: 5px;
-	}
-
-	.block .block-header svg {
-		margin-right: 5px;
-		display: inline;
-	}
-
-	.block.no-footer .block-content {
-		border-bottom-left-radius: 5px;
-		border-bottom-right-radius: 5px;
-	}
-
-	.block .block-content {
-		padding: 0px 0px 10px;
-		border: 1px solid #1B2028;
-	}
-
-	.block.no-bottom .block-content {
-		padding: 0px;
-	}
-
-	.block.no-border .block-content {
-		border: none;
-	}
-
-	.block .block-header h3 {
-		text-transform: uppercase;
-		font-size: 16px;
-		margin: 0px;
-	}
-
-	.block .block-footer {
-		border-bottom-left-radius: 5px;
-		border-bottom-right-radius: 5px;
-		background-color: #1B2028;
-		padding: 8px 10px;
-		text-align: center;
-		min-height: 52px;
-	}
-
-	.block .block-footer a {
-		text-decoration: none;
-
-	}
 	/* posts */
 	.post {
         padding-left: 62px;
@@ -398,24 +290,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-
-	/* scrollbar */
-	.block .block-content::-webkit-scrollbar-track {
-		background-color: transparent;
-        box-shadow: none;
-	}
-
-	.block .block-content::-webkit-scrollbar {
-		background-color: transparent;
-        width: 6px;
-        right: -100px;
-	}
-
-	.block .block-content::-webkit-scrollbar-thumb {
-		background-color: #1B2028;
-        border: 0;
-        padding: 2px;
 	}
 
 	/* modals */
