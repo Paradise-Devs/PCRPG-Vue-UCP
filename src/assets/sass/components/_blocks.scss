@@ -42,7 +42,7 @@
         }
 
         &::-webkit-scrollbar-thumb {
-            background-color: #1B2028;
+            background-color: $gray-dark;
             border: 0;
             padding: 2px;
         }
@@ -51,7 +51,7 @@
     .block__footer {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
-        background-color: #1B2028;
+        background-color: $gray-dark;
         padding: 8px 10px;
         text-align: center;
         min-height: 52px;

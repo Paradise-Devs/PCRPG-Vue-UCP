@@ -1,16 +1,16 @@
 <template>
     <div class="post">
-        <a :href="'http://forum.pc-rpg.com.br/' + patch.id + '-' + patch.attributes.slug" class="content">
-            <h3>{{ patch.attributes.title }}</h3>
-			<ul class="info">
-                <li class="created">
+        <a :href="'http://forum.pc-rpg.com.br/' + patch.id + '-' + patch.attributes.slug" class="post__content">
+            <h3 class="post__content__title">{{ patch.attributes.title }}</h3>
+			<ul class="post__content__info">
+                <li class="post__created">
                     <span>
                         {{ patch.attributes.startTime | moment }}
                     </span>
                 </li>
             </ul>
         </a>
-        <span class="comments"><icon name="comment-o"/> {{ patch.attributes.commentsCount }}</span>
+        <span class="post__comments"><icon name="comment-o"/> {{ patch.attributes.commentsCount }}</span>
     </div>
 </template>
 
@@ -33,7 +33,7 @@
     .post {
         padding-left: 20px;
 
-        .comments {
+        .post__comments {
             margin-right: -65px;
 
             .fa-icon {

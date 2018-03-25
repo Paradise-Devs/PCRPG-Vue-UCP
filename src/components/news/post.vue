@@ -1,19 +1,19 @@
 <template>
     <div class="post">
-        <a :href="'http://forum.pc-rpg.com.br/u/' + username" class="author">
-            <avatar-spinner :loading="avatarLoading" color="#303846" size="38px" class="avatar-loader"></avatar-spinner> 
-            <img class="avatar" :src="useravatar">
+        <a :href="'http://forum.pc-rpg.com.br/u/' + username" class="post__author">
+            <avatar-spinner :loading="avatarLoading" color="#303846" size="38px" class="avatar__loader"></avatar-spinner> 
+            <img class="post__author__avatar" :src="useravatar">
         </a>
-        <a :href="'http://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="content">
-            <h3>{{ post.attributes.title }}</h3>
-            <ul class="info">
-                <li class="created">
-                    <username-spinner :loading="avatarLoading" color="#303846" size="5px" class="username-loader"></username-spinner> 
+        <a :href="'http://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="post__content">
+            <h3 class="post__content__title">{{ post.attributes.title }}</h3>
+            <ul class="post__content__info">
+                <li class="post__created">
+                    <username-spinner :loading="avatarLoading" color="#303846" size="5px" class="username__loader"></username-spinner> 
                     <span v-if="avatarProcessed"><b>{{ username }}</b> iniciou {{ post.attributes.startTime | moment }}</span>
                 </li>
             </ul>
         </a>
-        <span class="comments"><icon name="comment-o"/> {{ post.attributes.commentsCount }}</span>
+        <span class="post__comments"><icon name="comment-o"/> {{ post.attributes.commentsCount }}</span>
     </div>
 </template>
 
@@ -65,10 +65,10 @@
 <style lang="scss" scoped>
     .post {
         padding-left: 65px;
-        .content {
-            .info {
-                .created {
-                    .username-loader {
+        .post__content {
+            .post__info {
+                .post__created {
+                    .username__loader {
                         width: 30px;
                         margin-top: 0px;
                         position: relative;
@@ -78,8 +78,8 @@
                 }
             }
         }
-        .author {
-            .avatar-loader {
+        .post__author {
+            .avatar__loader {
                 width: 38px;
                 height: 38px;
                 position: absolute;

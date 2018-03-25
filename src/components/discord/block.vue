@@ -79,6 +79,8 @@
 </script>
 
 <style lang="scss">
+    @import '../../assets/sass/base/variables.scss';
+
     .discord {
         .block {
             .block__content {
@@ -118,18 +120,18 @@
                                 white-space: nowrap;
                                 overflow: hidden;
                                 width: 260px;
-                                color: #526cff;
+                                color: $blue;
                             }
 
                             &__status {
-                                &--online { color: #00e676; }
-                                &--away { color: #ffab40; }
-                                &--busy { color: #ff5252; }
+                                &--online { color: $green; }
+                                &--away { color: $orange; }
+                                &--busy { color: $red; }
                             }
                         }
 
                         &:hover {
-                            background: #171d23;
+                            background: $gray-hover;
                         }
                     }
                 }

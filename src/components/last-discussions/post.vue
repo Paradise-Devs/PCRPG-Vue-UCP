@@ -1,20 +1,20 @@
 <template>
     <div class="post">
-        <a :href="'http://forum.pc-rpg.com.br/u/' + username" class="author">
-            <avatar-spinner :loading="avatarLoading" color="#303846" size="38px" class="avatar-loader"></avatar-spinner> 
-            <img class="avatar" :src="useravatar">
+        <a :href="'http://forum.pc-rpg.com.br/u/' + username" class="post__author">
+            <avatar-spinner :loading="avatarLoading" color="#303846" size="38px" class="avatar__loader"></avatar-spinner> 
+            <img class="post__author__avatar" :src="useravatar">
         </a>
-        <a :href="'http://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="content">
-            <h3>{{ post.attributes.title }}</h3>
-            <ul class="info">
-                <li class="created">
-                    <dots-spinner :loading="avatarLoading" color="#303846" size="5px" class="username-loader"></dots-spinner> 
+        <a :href="'http://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="post__content">
+            <h3 class="post__content__title">{{ post.attributes.title }}</h3>
+            <ul class="post__content__info">
+                <li class="post__created">
+                    <dots-spinner :loading="avatarLoading" color="#303846" size="5px" class="username__loader"></dots-spinner> 
                     <span v-if="avatarProcessed">{{ post.attributes.startTime | moment }} • {{ post.attributes.commentsCount }} post<span v-if="post.attributes.commentsCount > 1">s</spaN></span>
                 </li>
             </ul>
         </a>
-        <dots-spinner :loading="tagLoading" color="#303846" size="5px" class="tag-loader"></dots-spinner> 
-        <b-badge class="tag" :style="{ backgroundColor: tags.bg }" v-if="tagProcessed">{{ tags.text }}</b-badge>
+        <dots-spinner :loading="tagLoading" color="#303846" size="5px" class="tag__loader"></dots-spinner> 
+        <b-badge class="post__tag" :style="{ backgroundColor: tags.bg }" v-if="tagProcessed">{{ tags.text }}</b-badge>
     </div>
 </template>
 
@@ -84,35 +84,17 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../assets/sass/base/variables.scss';
+
     .post {
         padding-right: 0px;
 
-        .content {
-            h3 {
+        &__content {
+            &__title {
                 white-space: nowrap;
                 overflow: hidden;
                 max-width: 180px;
             }
-        }
-
-        .badge {
-            margin-right: 0;
-            position: absolute;
-            right: 15px;
-            top: 23px;
-            max-width: 150px;
-            white-space: nowrap;
-            overflow: hidden;
-            border-radius: 4px;
-            font-size: 9px;
-            background-color: transparent;
-            display: inline-block;
-            text-transform: none;
-            padding: 5px 5px;
-            color: #000;
-            font-weight: 600;
-            transition: max-width .2s ease-in-out,-webkit-mask-image .2s;
-            -webkit-mask-image: linear-gradient(to right, #000 140px, rgba(0,0,0,0) 150px);
         }
 
         .tag-loader {
@@ -130,10 +112,8 @@
             display: inline-block;
             text-transform: none;
             padding: 5px 5px;
-            color: #000;
+            color: $black;
             font-weight: 600;
-            transition: max-width .2s ease-in-out,-webkit-mask-image .2s;
-            -webkit-mask-image: linear-gradient(to right, #000 140px, rgba(0,0,0,0) 150px);
         }
     }
 </style>
