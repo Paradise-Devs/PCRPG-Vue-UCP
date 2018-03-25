@@ -1,24 +1,22 @@
 <template>
-	<div id="commitsContent">
+	<div class="commits">
 		<b-container>
-			<div class="commits">
-				<b-row>
-					<b-col cols="6">
-						Acompanhe o desenvolvimento do servidor em tempo real.
-					</b-col>
-					<b-col cols="6" class="stats">
-						Commits: <b>{{ stats.commit_count }}</b>
-					</b-col>
-				</b-row>
-				<commits 
-					v-for="commit in commits" 
-					:key="commit.id"
-					:commit='commit'
-				/>
-				<infinite-loading @infinite="getCommits" spinner="spiral">
-					<span slot="no-more">Aqui foi onde tudo começou.</span>
-				</infinite-loading>
-			</div>
+			<b-row>
+				<b-col cols="6">
+					Acompanhe o desenvolvimento do servidor em tempo real.
+				</b-col>
+				<b-col cols="6" class="stats">
+					Commits: <b>{{ stats.commit_count }}</b>
+				</b-col>
+			</b-row>
+			<commits 
+				v-for="commit in commits" 
+				:key="commit.id"
+				:commit='commit'
+			/>
+			<infinite-loading @infinite="getCommits" spinner="spiral">
+				<span slot="no-more">Aqui foi onde tudo começou.</span>
+			</infinite-loading>
 		</b-container>
 	</div>
 </template>
@@ -30,8 +28,8 @@
 	import commits from '@/components/commits/Commit.vue'
 
 	var baseuri = 'https://gitlab.com/api/v4/projects/5181298';
-	var statsApi = baseuri + '?statistics=true&private_token=Uyazy3QPxKsf_qiVzmah';
-	var commitsApi = baseuri + '/repository/commits?private_token=Uyazy3QPxKsf_qiVzmah&page=1&per_page=10';
+	var statsApi = baseuri + '?statistics=true&private_token=qn42srqy59sVqMtCnaYp';
+	var commitsApi = baseuri + '/repository/commits?ref_name=development&private_token=qn42srqy59sVqMtCnaYp&page=1&per_page=10';
 
 	export default {
 		data() {
@@ -81,9 +79,13 @@
 	}
 </script>
 
-<style>
-	#commitsContent {
+<style lang="scss" scoped>
+	.commits {
 		min-height: 63vh;
-		padding: 40px 0px;
+		margin: 40px 0px;
+
+		.stats {
+			float: right;
+		}
 	}
 </style>
