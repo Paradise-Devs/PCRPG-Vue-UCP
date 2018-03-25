@@ -3,15 +3,21 @@ $black: #000;
 $bg-color: #14191f;
 $gray-dark: #1B2028;
 $gray-hover: #171d23;
+$gray-lt: #303846;
 $gray: #6c7d93;
 $blue: #526cff;
+$blue-hover: #3a57fe;
+$blue-active: #2042FE;
 $green: #00e676;
 $orange: #ffab40;
 $red: #ff5252;
+$white-lt: #ddd;
+$white: #fff;
 
 //fonts
 $font-regular: 'Barlow';
 $font-roboto: 'Roboto';
+$font-open: "Open Sans", Helvetica, Arial, sans-serif;
 
 //breakpoints
 $mob-width: 240px;
@@ -22,3 +28,5 @@ $desklarge-width: 1280px;
 //Grid system
 $grid-columns: 12;
 $grid-max-width: 970px;
+
+//83 109 254

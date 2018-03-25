@@ -12,7 +12,7 @@
 			<b-alert variant="danger" show>{{ error }}</b-alert>
 		</div>
 
-		<button class="modalclose" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
+		<button class="modal-close" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
 		<form class="form-centered" v-on:submit.prevent="login()" @keyup="hideError()">
 			<b-form-group>
 				<b-form-input
