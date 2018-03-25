@@ -25,7 +25,7 @@
 	import axios from 'axios';
 	import InfiniteLoading  from 'vue-infinite-loading';
 
-	import commits from '@/components/commits/Commit.vue'
+	import commits from '@/components/commits/commit.vue'
 
 	var baseuri = 'https://gitlab.com/api/v4/projects/5181298';
 	var statsApi = baseuri + '?statistics=true&private_token=qn42srqy59sVqMtCnaYp';
@@ -85,7 +85,7 @@
 		margin: 40px 0px;
 
 		.stats {
-			float: right;
+			text-align: right;
 		}
 	}
 </style>
