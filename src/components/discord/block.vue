@@ -90,7 +90,7 @@
                 .user__list {
                     .user {
                         height: 55px;
-                        padding: 10px;
+                        padding: 6px 10px;
 
                         &__content {
                             position: relative;
@@ -106,7 +106,7 @@
 
                         &__info {
                             vertical-align: top;
-                            margin: -3px 48px 0px;
+                            margin: -12px 48px 0px;
                             height: 38px;
 
                             &__name {
@@ -116,11 +116,14 @@
 
                             &__game {
                                 font-size: 12px;
-                                margin-top: -5px;
                                 white-space: nowrap;
                                 overflow: hidden;
                                 width: 260px;
                                 color: $blue;
+                            }
+
+                            li {
+                                display: block;
                             }
 
                             &__status {
