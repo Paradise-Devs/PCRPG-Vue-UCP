@@ -78,86 +78,60 @@
     }
 </script>
 
-<style>
-    .discord .block .block-content {
-        max-height: 322px;
-        overflow-x: auto;
+<style lang="scss">
+    .discord {
+        .block {
+            .block-content {
+                max-height: 322px;
+                overflow-x: auto;
+
+                .user {
+                    height: 55px;
+                    padding: 10px;
+
+                    .content {
+                        position: relative;
+
+                        img {
+                            max-width: 38px;
+                            border-radius: 100px;
+                            position: absolute;
+                            top: 2px;
+                            left: 0px;
+                        }
+                    }
+
+                    .info {
+                        vertical-align: top;
+                        margin: -3px 48px 0px;
+                        height: 38px;
+
+                        .username {
+                            margin: 0px;
+                            padding: 0px;
+                        }
+
+                        .game {
+                            font-size: 12px;
+                            margin-top: -5px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            width: 260px;
+                            color: #526cff;
+                        }
+
+                        .status {
+                            .online { color: #00e676; }
+                            .away { color: #ffab40; }
+                            .busy { color: #ff5252; }
+                        }
+                    }
+
+                    &:hover {
+                        background: #171d23;
+                    }
+                }
+            }
+        }
     }
-
-    .discord .user img {
-        max-width: 38px;
-        border-radius: 100px;
-        position: absolute;
-        top: 2px;
-        left: 0px;
-    }
-
-    .discord .user {
-        height: 55px;
-        padding: 10px;
-    }
-
-    .discord .user .content {
-        position: relative;
-    }
-
-    .discord .user:hover {
-        background: #171d23;
-    }
-
-    .discord .user .info {
-        vertical-align: top;
-        margin: -3px 48px 0px;
-        height: 38px;
-    }
-
-    .discord .user .info .username {
-        margin: 0px;
-        padding: 0px;
-    }
-
-    .discord .user .info .game {
-        font-size: 12px;
-        margin-top: -5px;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 260px;
-        color: #526cff;
-    }
-
-    .discord .user .info .status {
-        font-size: 12px;
-        opacity: .5;
-        margin-top: -5px;
-    }
-
-    .discord .user .info .status .online {
-        color: #00e676;
-    }
-
-    .discord .user .info .status .away {
-        color: #ffab40;
-    }
-
-    .discord .user .info .status .busy {
-        color: #ff5252;
-    }
-
-    /* scrollbar */
-	.discord .block .block-content::-webkit-scrollbar-track {
-		background-color: transparent;
-        box-shadow: none;
-	}
-
-	.discord .block .block-content::-webkit-scrollbar {
-		background-color: transparent;
-        width: 6px;
-        right: -100px;
-	}
-
-	.discord .block .block-content::-webkit-scrollbar-thumb {
-		background-color: #1B2028;
-        border: 0;
-        padding: 2px;
-	}
 </style>

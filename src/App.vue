@@ -187,6 +187,11 @@
 		border-top-right-radius: 5px;
 	}
 
+	.block .block-header svg {
+		margin-right: 5px;
+		display: inline;
+	}
+
 	.block.no-footer .block-content {
 		border-bottom-left-radius: 5px;
 		border-bottom-right-radius: 5px;
@@ -735,7 +740,7 @@
 	.btn-primary.disabled,
 	.btn-primary[disabled],
 	fieldset[disabled] .btn-primary {
-		background-color: #536dfe+;
+		background-color: #536dfe;
 	}
 
 	/* alerts */

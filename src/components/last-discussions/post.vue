@@ -83,56 +83,57 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .post {
         padding-right: 0px;
-    }
 
-    .post h3 {
-        white-space: nowrap;
-        overflow: hidden;
-        max-width: 180px;
-    }
+        .content {
+            h3 {
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 180px;
+            }
+        }
 
-    .badge {
-        margin-right: 0;
-        position: absolute;
-        right: 15px;
-        top: 23px;
-        max-width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        border-radius: 4px;
-        font-size: 9px;
-        background-color: ;
-        display: inline-block;
-        text-transform: none;
-        padding: 5px 5px;
-        color: #000;
-        font-weight: 600;
-        transition: max-width .2s ease-in-out,-webkit-mask-image .2s;
-        -webkit-mask-image: linear-gradient(to right, #000 140px, rgba(0,0,0,0) 150px);
-    }
-    
-    .tag-loader {
-        width: 40px;
-        margin-right: 0;
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        max-width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        border-radius: 4px;
-        font-size: 9px;
-        background-color: ;
-        display: inline-block;
-        text-transform: none;
-        padding: 5px 5px;
-        color: #000;
-        font-weight: 600;
-        transition: max-width .2s ease-in-out,-webkit-mask-image .2s;
-        -webkit-mask-image: linear-gradient(to right, #000 140px, rgba(0,0,0,0) 150px);
+        .badge {
+            margin-right: 0;
+            position: absolute;
+            right: 15px;
+            top: 23px;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-radius: 4px;
+            font-size: 9px;
+            background-color: transparent;
+            display: inline-block;
+            text-transform: none;
+            padding: 5px 5px;
+            color: #000;
+            font-weight: 600;
+            transition: max-width .2s ease-in-out,-webkit-mask-image .2s;
+            -webkit-mask-image: linear-gradient(to right, #000 140px, rgba(0,0,0,0) 150px);
+        }
+
+        .tag-loader {
+            width: 40px;
+            margin-right: 0;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-radius: 4px;
+            font-size: 9px;
+            background-color: transparent;
+            display: inline-block;
+            text-transform: none;
+            padding: 5px 5px;
+            color: #000;
+            font-weight: 600;
+            transition: max-width .2s ease-in-out,-webkit-mask-image .2s;
+            -webkit-mask-image: linear-gradient(to right, #000 140px, rgba(0,0,0,0) 150px);
+        }
     }
 </style>
-

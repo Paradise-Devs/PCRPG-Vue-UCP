@@ -62,27 +62,36 @@
     }
 </script>
 
-<style>
-    .post .author .avatar-loader {
-        width: 38px;
-        height: 38px;
-        position: absolute;
-        top: -6px;
-        left: -1px;
-        vertical-align: top;
-        border-radius: 36px;
-        font-size: 18px;
-        line-height: 36px;
-        display: inline-block;
-        box-sizing: content-box;
-        background-color: #1b2028;
-    }
-
-    .post .username-loader {
-        width: 30px;
-        margin-top: 0px;
-        position: relative;
-        top: -1px;
-        display: inline-flex;
+<style lang="scss" scoped>
+    .post {
+        .content {
+            .info {
+                .created {
+                    .username-loader {
+                        width: 30px;
+                        margin-top: 0px;
+                        position: relative;
+                        top: -1px;
+                        display: inline-flex;
+                    }
+                }
+            }
+        }
+        .author {
+            .avatar-loader {
+                width: 38px;
+                height: 38px;
+                position: absolute;
+                top: -6px;
+                left: -1px;
+                vertical-align: top;
+                border-radius: 36px;
+                font-size: 18px;
+                line-height: 36px;
+                display: inline-block;
+                box-sizing: content-box;
+                background-color: #1b2028;
+            }
+        }
     }
 </style>

@@ -29,16 +29,16 @@
     }
 </script>
 
-<style>
-	.patchnotes .post {
-		padding-left: 20px;
-	}
+<style lang="scss">
+    .post {
+        padding-left: 20px;
 
-	.patchnotes .post .comments {
-		margin-right: -65px;
-	}
+        .comments {
+            margin-right: -65px;
 
-	.patchnotes .post .comments .fa-icon {
-		margin-left: -25px;
-	}
+            .fa-icon {
+                margin-left: -25px;
+            }
+        }
+    }
 </style>
