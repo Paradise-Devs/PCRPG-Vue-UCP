@@ -1,16 +1,16 @@
 <!--suppress ALL -->
 <template>
-    <div>
+    <div class="nav">
         <animated-fade-in>
-            <nav id="navbar">
-                <b-container class="bv-example-row">
+            <nav id="navbar" class="navbar">
+                <b-container>
                     <b-row>
-                        <b-col md="2">
-                            <router-link to="/" class="header-logo">
+                        <b-col>
+                            <router-link to="/" class="navbar__logo">
                                 <img src="../../assets/images/logos/logo-text.png" alt="PC:RPG">
                             </router-link>
                         </b-col>
-                        <b-col md="10" class="right-items">
+                        <b-col md="8" class="navbar__menu navbar__menu--desk">
                             <router-link to="/">Início</router-link>
                             <router-link to="/dev">Desenvolvimento</router-link>
                             <a href="/forum">Fórum</a>
@@ -19,21 +19,21 @@
 								<a href="#" v-b-modal.signupModal>Cadastre-se</a>
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
-							<div class="controls" v-else>
-								<b-dropdown no-caret class="notifications">
+							<div class="navbar__menu__user" v-else>
+								<b-dropdown no-caret class="navbar__menu__user__notifications">
 									<template slot="button-content">
 										<fa :icon="['fas', 'bell']" />
 									</template>
 								</b-dropdown>
-								<b-dropdown no-caret right>
+								<b-dropdown no-caret right class="navbar__menu__user__info">
 									<template slot="button-content">
-										<img class="avatar" :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
-										<div class="noAvatar" v-else> ? </div>
+										<img class="navbar__menu__user__info__avatar" :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
+										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
 										<span class="Button-label">{{ user.attributes.username }}</span>
 									</template>
 									<b-dropdown-item :href="'http://forum.pc-rpg.com.br/u/' + user.attributes.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
 									<b-dropdown-item href="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
-									<b-dropdown-divider></b-dropdown-divider>
+									<b-dropdown-divider/>
 									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
 								</b-dropdown>
 							</div>
@@ -49,29 +49,79 @@
         </a>
 		<signin/>
 		<signup/>
+		<overlay/>
+		<div class="nav__menu--mobile" id="toggleMobNav">
+			<div class="navbar__menu__button">
+				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
+				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
+			</div>
+		</div>
+		<div class="nav__mobile__menu" id="navMenu">
+			<div class="nav__mobile__menu__signin" v-if="!isLoggedIn">
+				<a href="#" v-b-modal.signupModal @click="closeMobNav">Cadastre-se</a>
+				<span>ou</span>
+				<a href="#" v-b-modal.signinModal @click="closeMobNav">Entre</a>
+			</div>
+			<div class="nav__mobile__menu__user" v-else>
+				<a href="#" @click="logout" class="logout"><fa :icon="['fas', 'sign-out-alt']"/></a>
+				<div class="nav__mobile__menu__user__info__avatar">
+					<img :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
+					<div class="empty" v-else> ? </div>
+				</div>
+				<div class="nav__mobile__menu__user__info__name">
+					Olá, {{ user.attributes.username }}!
+				</div>
+				<div class="nav__mobile__menu__user__info__tags">
+					<b-badge 
+						v-for="group in groups"
+						:key="group.id"
+						:style="{ borderColor: group.color }"
+					>
+						<span class="icon" :style="{ backgroundColor: group.color }"> 
+							<fa :icon="['fas', group.icon]" />
+						</span>
+						<span :style="{ color: group.color }">{{ group.nameSingular}}</span>
+					</b-badge>
+            	</div>
+			</div>
+			<div class="nav__mobile__menu__links">
+				<h6 class="separator separator--general">Navegação geral</h6>
+				<router-link to="/" @click="closeMobNav"><fa :icon="['fas', 'home']"/>Início</router-link>
+				<router-link to="/dev"><fa :icon="['fas', 'code']"/>Desenvolvimento</router-link>
+				<a href="/forum"><fa :icon="['fas', 'comments']"/>Fórum</a>
+				<div class="nav__mobile__menu__links__user" v-if="isLoggedIn">
+					<h6 class="separator">Sua conta</h6>
+					<router-link :to="'/jogador/' + user.attributes.username"><fa :icon="['fas', 'user']"/>Seu perfil</router-link>
+					<router-link to="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</router-link>
+				</div>
+			</div>
+		</div>
     </div>
 </template>
 
 <script>
-    import Vue from 'vue'
-    import 'vue-awesome/icons/angle-up'
-	import { store } from '@/vuex/store'
+    import Vue from 'vue';
+	import axios from 'axios';
+    import 'vue-awesome/icons/angle-up';
+	import { store } from '@/vuex/store';
 
-	import signin from '@/components/auth/SignIn'
-	import signup from '@/components/auth/SignUp'
+	import signin from '@/components/auth/SignIn';
+	import signup from '@/components/auth/SignUp';
 
-	import fontawesome from '@fortawesome/vue-fontawesome'
-	import bell from '@fortawesome/fontawesome-free-solid';
-	import user from '@fortawesome/fontawesome-free-solid';
-	import cog from '@fortawesome/fontawesome-free-solid';
-	import signOutAlt from '@fortawesome/fontawesome-free-solid';
+	import fontawesome from '@fortawesome/vue-fontawesome';
+	import { bell, user, cog, signOutAlt, bars, times, home, code, comments } from '@fortawesome/fontawesome-free-solid';
+
+	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
 
 	export default {
         data: () => {
             return {
-            	user: store.state.user,
+				user: store.state.user,
+				groups: [ ],
 				userLoggedIn: null,
-                scrolled: false,
+				scrolled: false,
+				value: 500,
+				maxValue: 5000
             }
         },
         methods: {
@@ -79,10 +129,10 @@
                 var scrollpos = window.scrollY;
                 var navbar = document.getElementById("navbar");
                 if(scrollpos > 10) {
-                    navbar.classList.add('scrolled');
+                    navbar.classList.add('navbar--scrolled');
                     this.scrolled = true;
                 } else {
-                    navbar.classList.remove('scrolled');
+                    navbar.classList.remove('navbar--scrolled');
                     this.scrolled = false;
                 }
             },
@@ -90,8 +140,68 @@
 				store.dispatch('logout').then(() => {
 					this.$router.push(this.$route.query.redirect || '/');
 				})
+			},
+			openMobNav: function () {
+				var navbar = document.getElementById("navbar");
+				var navToggleButton = document.getElementById("toggleMobNav");
+				var navOpenIcon = document.getElementById("openNav");
+				var navCloseIcon = document.getElementById("closeNav");
+				var navOverlay = document.getElementById("navOverlay");
+				var navMenu = document.getElementById("navMenu");
+				var body = document.getElementsByTagName("body")[0];
+
+				navbar.classList.add('navbar__mobile--opened');
+				navbar.classList.remove('navbar__mobile--closed');
+				navCloseIcon.classList.remove('navbar__menu__icon--hidden');
+				navOpenIcon.classList.add('navbar__menu__icon--hidden');
+				navToggleButton.classList.remove('nav__menu--mobile--closed');
+				navToggleButton.classList.add('nav__menu--mobile--opened');
+				navOverlay.classList.add('navbar__overlay--opened');
+				navMenu.classList.remove('nav__mobile__menu--closed');
+				navMenu.classList.add('nav__mobile__menu--opened');
+				body.classList.add('locked');
+
+				this.fadeIn(navCloseIcon);
+			},
+			closeMobNav: function () {
+				var navToggleButton = document.getElementById("toggleMobNav");
+				var navOpenIcon = document.getElementById("openNav");
+				var navCloseIcon = document.getElementById("closeNav");
+				var navOverlay = document.getElementById("navOverlay");
+				var body = document.getElementsByTagName("body")[0];
+
+				navCloseIcon.classList.add('navbar__menu__icon--hidden');
+				navOpenIcon.classList.remove('navbar__menu__icon--hidden');
+				navToggleButton.classList.remove('nav__menu--mobile--opened');
+				navToggleButton.classList.add('nav__menu--mobile--closed');
+				navOverlay.classList.remove('navbar__overlay--opened');
+				navMenu.classList.remove('nav__mobile__menu--opened');
+				navMenu.classList.add('nav__mobile__menu--closed');
+				body.classList.remove('locked');
+
+				this.fadeIn(navOpenIcon);
+			},
+			fadeIn: function (el) {
+				el.style.opacity = 0;
+
+				var last = +new Date();
+				var tick = function() {
+					el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+					last = +new Date();
+
+					if (+el.style.opacity < 1) {
+						(window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+					}
+				};
+
+				tick();
 			}
         },
+		watch:{
+			$route (to, from){
+				this.closeMobNav();
+			}
+		},
 		computed: {
 			isLoggedIn() {
 				this.userLoggedIn = store.getters.isLoggedIn;
@@ -99,10 +209,28 @@
 			},
 		},
 		mounted() {
+			var _this = this;
+
 			this.$root.$on('initNavLoading', () => {
 				this.isFixed = false
 				this.isShow = 'none'
 			})
+			
+			var closenav = document.getElementById('closeNav');
+			closenav.classList.add('navbar__menu__icon--hidden');
+
+			new Promise((resolve) => {
+				setTimeout(() => {
+					axios.get(usersBaseURI + _this.user.attributes.username)
+					.then(response => {
+						for(var i = 0; i < response.data.included.length; i++) {
+							if(response.data.included[i].type == 'groups') {
+								this.groups.push(response.data.included[i].attributes);
+							}
+						}
+					})
+				}, 2000)
+			});
 		},
         created() {
             window.addEventListener('scroll', this.handleScroll);
@@ -126,255 +254,14 @@
 	}
 
     Vue.component('separator', {
-        template: '<div class="separator"></div>'
+        template: '<div class="navbar__separator"></div>'
     });
 
     Vue.component('spacefix', {
-        template: '<div class="clearfix"></div>'
+        template: '<div class="navbar__clearfix"></div>'
+	});
+	
+	Vue.component('overlay', {
+        template: '<div class="navbar__overlay" id="navOverlay"></div>'
     });
 </script>
-
-<style>
-    nav {
-		padding: 8px;
-        height: 52px;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        position: fixed;
-        background-color: #14181F;
-        transition: all .2s ease-in-out 0s;
-    }
-
-    .clearfix {
-        display: block;
-        height: 52px;
-    }
-
-    nav.scrolled {
-        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-        transition: all .2s ease-in-out 0s;
-    }
-
-    nav .separator {
-        border-right: 1px solid #6c7d93;
-        height: 20px;
-        opacity: .1;
-        padding-right: 0px;
-        margin-right: 15px;
-    }
-
-    nav .header-logo {
-        float: left;
-        vertical-align: top;
-        font-size: 18px;
-        font-weight: normal;
-        margin: 0 15px 0 0;
-        line-height: 34px;
-    }
-
-    nav .header-logo img {
-        max-height: 30px;
-        vertical-align: middle;
-    }
-
-    nav a {
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 500;
-        color: #6c7d93;
-        transition: ease-in 200ms;
-    }
-
-    nav a.router-link-exact-active {
-        color: #526cff;;
-        opacity: 1;
-    }
-
-    nav a:not(.router-link-exact-active):hover {
-        color:#394bb2;
-    }
-
-    nav a:hover {
-        text-decoration: none;
-    }
-
-    nav a:not(:last-child) {
-        margin-right: 25px;
-    }
-
-    nav .right-items {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        vertical-align: middle;
-        text-align: right;
-    }
-
-	nav .controls {
-		display: inline-block;
-		vertical-align: middle;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-
-	nav .controls .noAvatar {
-		display: inline-block;
-		-webkit-box-sizing: content-box;
-		box-sizing: content-box;
-		text-align: center;
-		vertical-align: top;
-		background-color: #1b2028;
-		font-weight: normal;
-		border-color: transparent;
-		color: #6c7d93;
-		font-size: 14px;
-		margin: -2px 5px -2px -6px;
-		width: 24px;
-		height: 24px;
-		line-height: 24px;
-		border-radius: 24px;
-	}
-
-	nav .controls .dropdown {
-		position: relative;
-	}
-
-	nav .controls .notifications.dropdown .btn{
-		position: relative;
-		width: 36px;
-		text-align: center;
-		padding: 8px 0;
-	}
-
-	nav .controls .dropdown .btn {
-		background-color: transparent;
-		position: relative;
-		float: left;
-		border-radius: 18px !important;
-		border: 0;
-		color: #6c7d93;
-		font-family: inherit;
-		font-size: inherit;
-	}
-
-	nav .controls .dropdown .btn:hover, nav .controls .dropdown .btn:focus {
-		background-color: #101418;
-		border: 0;
-		box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
-		outline: none;
-	}
-
-	nav .controls .dropdown .btn:active {
-		background-color: #060709;
-		border: 0;
-		box-shadow: inset 0 3px 5px rgba(0,0,0,0.125);
-		outline: none;
-	}
-
-	nav .controls .dropdown .btn svg {
-		font-size: 16px;
-		margin: 0;
-	}
-
-	nav .controls .dropdown .btn .avatar {
-		margin: -2px 5px -2px -6px;
-		width: 24px;
-		height: 24px;
-		border-radius: 24px;
-		font-size: 12px;
-		line-height: 24px;
-		display: inline-block;
-		box-sizing: content-box;
-		color: #fff;
-		text-align: center;
-		vertical-align: top;
-		background-color: #1b2028;
-		font-weight: normal;
-	}
-
-	nav .dropdown-menu {
-		z-index: 1030;
-		min-width: 160px;
-		padding: 8px 0;
-		margin: 7px 0;
-		background-color: #14191f;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		border-radius: 4px;
-		color: #ddd;
-		font-size: 13px;
-		line-height: 1.5;
-		-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-		box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-	}
-
-	nav .dropdown-item {
-		padding: 8px 15px 8px 40px;
-		color: #ddd;
-		-webkit-border-radius: 0;
-		-moz-border-radius: 0;
-		border-radius: 0;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		-webkit-box-shadow: none;
-		-moz-box-shadow: none;
-		box-shadow: none;
-		text-align: left;
-		font-weight: normal;
-		text-decoration: none;
-	}
-
-	nav .dropdown-item:hover, nav .dropdown-item:focus, nav .dropdown-item:active {
-		background: #1b2028;
-		color: #ddd !important;
-		outline: none;
-	}
-
-	nav .dropdown-item svg {
-		float: left;
-		margin-left: -25px;
-		margin-top: 2px;
-		width: 1.28571429em;
-		text-align: center;
-	}
-
-	nav .dropdown-divider {
-		margin: 8px 0;
-		background-color: #1b2028;
-		height: 1px;
-		border: 0;
-	}
-
-	#toTop {
-        background-color: #333;
-        border-radius: 4px 4px 0 0;
-        bottom: 0;
-        height: 35px;
-        position: fixed;
-        right: 30px;
-        text-align: center;
-        text-transform: uppercase;
-        width: 48px;
-        display: none;
-        opacity: .9;
-        z-index: 10000;
-        transition: all .2s ease-in-out 0s;
-        line-height: 35px;
-        font-size: 22px;
-        padding-top: 5px;
-        border: 0px;
-        color: #fff;
-    }
-
-    #toTop:hover {
-        background-color: #2A2A2A;
-    }
-
-    #toTop svg {
-        height: 22px;
-        width: 22px;
-    }
-</style>

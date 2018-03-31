@@ -71,6 +71,7 @@
 				userdata: {
 					username: '',
 					password: '',
+					groups: [ ],
 					token: null
 				},
 				rememberme: false,
@@ -124,6 +125,12 @@
 						axios.get(forumAPI + this.userdata.username)
 						.then(response => {
 							this.userdata.attributes = response.data.data.attributes;
+
+							for(var i = 0; i < response.data.included.length; i++) {
+								if(response.data.included[i].type == 'groups') {
+									this.userdata.groups.push(response.data.included[i].attributes);
+								}
+							}
 						})
 					}, 2000)
 				})
