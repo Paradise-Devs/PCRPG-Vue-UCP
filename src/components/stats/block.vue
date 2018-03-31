@@ -1,7 +1,7 @@
 <template>
-    <div class="stats">
+    <div class="stats__block">
         <b-container>
-            <div class="stats__wrapper">
+            <div class="stats__block__wrapper">
                 <div class="stats__column">
                     <div class="number">1265</div>
                     <div class="desc">Jogadores</div>
@@ -30,7 +30,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .stats {
+    .stats__block {
         background-image: url('./parallax.jpg');
     }
 </style>
