@@ -150,13 +150,21 @@
 				var navMenu = document.getElementById("navMenu");
 				var body = document.getElementsByTagName("body")[0];
 
+				setTimeout(() => {
+					navOverlay.style.display = '';
+				}, 100)
+
+				setTimeout(() => {
+					navOverlay.classList.add('navbar__overlay--opened');
+				}, 200)
+
 				navbar.classList.add('navbar__mobile--opened');
 				navbar.classList.remove('navbar__mobile--closed');
 				navCloseIcon.classList.remove('navbar__menu__icon--hidden');
 				navOpenIcon.classList.add('navbar__menu__icon--hidden');
 				navToggleButton.classList.remove('nav__menu--mobile--closed');
 				navToggleButton.classList.add('nav__menu--mobile--opened');
-				navOverlay.classList.add('navbar__overlay--opened');
+				
 				navMenu.classList.remove('nav__mobile__menu--closed');
 				navMenu.classList.add('nav__mobile__menu--opened');
 				body.classList.add('locked');
@@ -170,11 +178,18 @@
 				var navOverlay = document.getElementById("navOverlay");
 				var body = document.getElementsByTagName("body")[0];
 
+				setTimeout(() => {
+					navOverlay.classList.remove('navbar__overlay--opened');
+				}, 100)
+
+				setTimeout(() => {
+					navOverlay.style.display = 'none';
+				}, 600)
+
 				navCloseIcon.classList.add('navbar__menu__icon--hidden');
 				navOpenIcon.classList.remove('navbar__menu__icon--hidden');
 				navToggleButton.classList.remove('nav__menu--mobile--opened');
 				navToggleButton.classList.add('nav__menu--mobile--closed');
-				navOverlay.classList.remove('navbar__overlay--opened');
 				navMenu.classList.remove('nav__mobile__menu--opened');
 				navMenu.classList.add('nav__mobile__menu--closed');
 				body.classList.remove('locked');
@@ -210,6 +225,8 @@
 		},
 		mounted() {
 			var _this = this;
+			var navOverlay = document.getElementById("navOverlay");
+			navOverlay.style.display = 'none';
 
 			this.$root.$on('initNavLoading', () => {
 				this.isFixed = false

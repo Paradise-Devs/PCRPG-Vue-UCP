@@ -15,6 +15,7 @@
 			</header>
 			<router-view/>
 			<appfooter/>
+			<overlay/>
 		</div>
 	</div>
 </template>
