@@ -189,7 +189,6 @@
 					.then((data) => {
 						_this.userdata.token = response.data.token;
 						store.dispatch('login', this.data.attributes).then(() => {
-							this.$router.push(this.$route.query.redirect || '/dev');
 							this.loading = false;
 							this.hideModal();
 						})

@@ -138,7 +138,6 @@
 				new Promise((resolve) => {
 					setTimeout(() => {
 						store.dispatch('login', _this.userdata).then(() => {
-							_this.$router.push(_this.$route.query.redirect || '/dev');
 							_this.hideModal();
 							_this.loading = false;
 						})
