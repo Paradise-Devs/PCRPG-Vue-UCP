@@ -3,10 +3,10 @@
 		<b-container>
 			<serverinfo/>
 			<b-row>
-				<b-col cols="8">
+				<b-col sm="12" md="8">
 					<news />
 				</b-col>
-				<b-col cols="4">
+				<b-col sm="12" md="4">
 					<patchnotes />
 				</b-col>
 			</b-row>
@@ -16,13 +16,13 @@
 			<div class="joinus">
 				<h2><b>#</b>Junte-se a nós</h2>
 				<b-row>
-					<b-col cols="4">
+					<b-col sm="12" md="4">
 						<discord/>
 					</b-col>
-					<b-col cols="4">
+					<b-col sm="12" md="4">
 						<lastdiscussions/>
 					</b-col>
-					<b-col cols="4">
+					<b-col sm="12" md="4">
 						<team/>
 					</b-col>
 				</b-row>
