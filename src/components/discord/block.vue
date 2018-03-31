@@ -82,6 +82,12 @@
     @import '../../assets/sass/base/variables.scss';
 
     .discord {
+        min-height: 409px;
+
+        .v-spinner {
+            height: 409px;
+        }
+
         .block {
             .block__content {
                 max-height: 322px;
