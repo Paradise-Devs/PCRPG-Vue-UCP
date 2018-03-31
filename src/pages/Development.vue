@@ -2,20 +2,22 @@
 	<div class="commits">
 		<b-container>
 			<b-row>
-				<b-col cols="6">
+				<b-col md="6">
 					Acompanhe o desenvolvimento do servidor em tempo real.
 				</b-col>
-				<b-col cols="6" class="stats">
+				<b-col md="6" class="stats">
 					Commits: <b>{{ stats.commit_count }}</b>
 				</b-col>
 			</b-row>
-			<commits 
-				v-for="commit in commits" 
-				:key="commit.id"
-				:commit='commit'
-			/>
-			<infinite-loading @infinite="getCommits" spinner="spiral">
-				<span slot="no-more">Aqui foi onde tudo começou.</span>
+			<div infinite-wrapper>
+				<commits 
+					v-for="commit in commits" 
+					:key="commit.id"
+					:commit='commit'
+				/>
+			</div>
+			<infinite-loading force-use-infinite-wrapper="true" @infinite="getCommits" spinner="spiral">
+				<span class="nomore" slot="no-more">Aqui foi onde tudo começou.</span>
 			</infinite-loading>
 		</b-container>
 	</div>
@@ -80,12 +82,31 @@
 </script>
 
 <style lang="scss" scoped>
+	@import '../assets/sass/base/variables.scss';
+	@import '../assets/sass/layout/responsivity.scss';
+
 	.commits {
 		min-height: 63vh;
-		margin: 40px 0px;
+		margin: 20px 0px;
+		text-align: center;
+
+		@include tablet {
+			text-align: left;
+			margin: 40px 0px;
+		}
 
 		.stats {
-			text-align: right;
+			margin-top: 10px;
+			text-align: center;
+
+			@include tablet {
+				margin: 0;
+				text-align: right;
+			}
+		}
+
+		.nomore {
+			color: $gray;
 		}
 	}
 </style>

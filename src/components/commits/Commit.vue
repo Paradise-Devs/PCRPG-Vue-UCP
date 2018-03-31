@@ -6,7 +6,7 @@
                 <img class="commit__user__avatar" :src="useravatar" v-if="avatarProcessed"/>
                 <span class="commit__user__name">{{ commit.author_name }}</span>
             </b-col>
-            <b-col cols="10" class="commit__message">
+            <b-col sm="12" md="10" class="commit__message">
                 {{ commit.message }}
                 <span class="commit__message__date">{{ commit.created_at | moment }}</span>
             </b-col>
@@ -37,12 +37,17 @@
             this.avatarLoading = true;
             this.avatarProcessed = false;
 
-            axios.get(userFindAPI + this.commit.author_email)
-            .then(response => {
-                this.useravatar = response.data[0].avatar_url;
-                this.avatarProcessed = true;
-                this.avatarLoading = false;
-            })
+            setTimeout(() => {
+                axios.get(userFindAPI + this.commit.author_email)
+                .then(response => {
+                    this.useravatar = response.data[0].avatar_url;
+                    this.avatarProcessed = true;
+                    this.avatarLoading = false;
+                })
+                .catch(error => {
+                    //ignorar os erros de sincronização
+                })
+            }, 4000);
         },
         filters: {
 			moment: function(time) {

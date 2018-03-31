@@ -1,29 +1,67 @@
 .commit {
-    margin: 30px 0px;
+    margin: 20px auto;
+    position: relative;
+    max-width: 90%;
+
+    @include tablet {
+        max-width: 100%;
+        margin: 30px 0px;
+    }
 
     .commit__user {
         text-align: center;
-        position: relative;
+        position: absolute;
+        z-index: 1;
+        max-width: 105px;
+        padding: 5px 15px;
+
+        @include tablet {
+            max-width: inherit;
+            position: inherit;
+        }
 
         .avatar__loader {
-            width: 90px;
-            height: 90px;
+            width: 60px;
+            height: 60px;
             vertical-align: top;
             border-radius: 100px;
-            margin-top: -2px;
+            margin-top: -1px;
             display: inline-block;
             box-sizing: content-box;
             background-color: #1b2028;
+
+            @include mobile {
+                .v-bounce {
+                    width: 60px !important;
+                    height: 60px !important;
+                }
+            }
+
+            @include tablet {
+                width: 90px;
+                height: 90px;
+            }
         }
 
         &__name {
             display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            @include tablet {
+
+            }
         }
 
         &__avatar {
-            max-width: 90px;
+            max-width: 60px;
             border: 4px solid #1B2028;
             border-radius: 100px;
+
+            @include tablet {
+                max-width: 90px;
+            }
         }
     }
 
@@ -31,9 +69,14 @@
         vertical-align: top;
         position: relative;
         background-color: #1B2028;
-        padding: 10px 20px;
+        padding: 10px 20px 10px 115px;
         border-radius: 5px;
-        height: 90px;
+        min-height: 90px;
+        text-align: left;
+
+        @include tablet {
+            padding: 10px 20px;
+        }
 
         &__date {
             position: absolute;
@@ -42,19 +85,20 @@
             color: #303846;
         }
 
-        &:before {
-            width: 0;
-            height: 0;
-            content:"";
-            top: 0px;
-            left: -25px;
-            position: absolute;
-            display: inline-block;
-            border-top: 15px solid #1B2028;
-            border-left: 15px solid transparent;
-            border-right: 15px solid #1B2028;
-            border-bottom: 15px solid transparent;
-            content: " ";
+        @include tablet {
+            &:before {
+                width: 0;
+                height: 0;
+                content:"";
+                top: 0px;
+                left: -25px;
+                position: absolute;
+                display: inline-block;
+                border-top: 15px solid #1B2028;
+                border-left: 15px solid transparent;
+                border-right: 15px solid #1B2028;
+                border-bottom: 15px solid transparent;
+            }
         }
     }
 
