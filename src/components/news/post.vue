@@ -7,7 +7,7 @@
         <a :href="'http://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="post__content">
             <h3 class="post__content__title">{{ post.attributes.title }}</h3>
             <ul class="post__content__info">
-                <li class="post__created">
+                <li class="post__content__info__created">
                     <username-spinner :loading="avatarLoading" color="#303846" size="5px" class="username__loader"></username-spinner> 
                     <span v-if="avatarProcessed"><b>{{ username }}</b> iniciou {{ post.attributes.startTime | moment }}</span>
                 </li>
@@ -65,9 +65,9 @@
 <style lang="scss" scoped>
     .post {
         padding-left: 65px;
-        .post__content {
-            .post__info {
-                .post__created {
+        &__content {
+            &__info {
+                &__created {
                     .username__loader {
                         width: 30px;
                         margin-top: 0px;
