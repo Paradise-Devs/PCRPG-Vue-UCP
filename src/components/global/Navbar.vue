@@ -214,7 +214,9 @@
         },
 		watch:{
 			$route (to, from){
-				this.closeMobNav();
+				if(window.innerWidth < 768) {
+					this.closeMobNav();
+				}
 			}
 		},
 		computed: {
