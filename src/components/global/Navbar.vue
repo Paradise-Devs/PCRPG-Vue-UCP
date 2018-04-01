@@ -7,7 +7,7 @@
                     <b-row>
                         <b-col>
                             <router-link to="/" class="navbar__logo">
-                                <img src="../../assets/images/logos/logo-text.png" alt="PC:RPG">
+                                <img src="./logo-text.png" alt="PC:RPG">
                             </router-link>
                         </b-col>
                         <b-col md="8" class="navbar__menu navbar__menu--desk">
