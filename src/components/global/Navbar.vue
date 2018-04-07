@@ -25,7 +25,7 @@
 										<fa :icon="['fas', 'bell']" />
 									</template>
 								</b-dropdown>
-								<b-dropdown no-caret right class="navbar__me-nu__user__info">
+								<b-dropdown no-caret right class="navbar__menu__user__info">
 									<template slot="button-content">
 										<img class="navbar__menu__user__info__avatar" :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>

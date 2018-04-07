@@ -91,8 +91,6 @@
 	import times from '@fortawesome/fontawesome-free-solid';
 	import axios from 'axios';
 	import { store } from '@/vuex/store'
-	import FlarumClient from 'flarum-client';
-	import cors from 'cors'
 
 	import signin from '@/components/auth/SignIn'
 	import moon from 'vue-spinner/src/MoonLoader.vue';
@@ -100,7 +98,6 @@
 
 	var usersAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
 	var registerAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
-	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 	var forumAPI = 'http://forum.pc-rpg.com.br/api/users/';
 
 	export default {
@@ -175,65 +172,6 @@
 					this.errorEmail = null;
 				}
 			},
-			login() {
-				var _this = this;
-
-				axios.post(loginAPI, {
-					username: this.data.attributes.username,
-					password: this.data.attributes.password,
-				})
-				.then(response => {
-					if(response.data.error) {
-						console.log(response.data.error);
-						_this.loading = false;
-						reject();
-					} else {
-						_this.data.attributes.token = response.data.token;
-						_this.authUser();
-					}
-				})
-			},
-			authUser() {
-				var _this = this;
-
-				/*new Promise((resolve) => {
-					setTimeout(() => {
-						axios.post(forumAPI, {
-							data: {
-								attributes: {
-									username: this.data.attributes.username,
-									password: this.data.attributes.password,
-									email: this.data.attributes.email,
-								}
-							},
-							headers: {
-								'Authorization': 'Token jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx',
-								'Content-Type': 'application/vnd.api+json'
-							},
-						})
-						.then(function (response) {
-							_this.$router.push(_this.$route.query.redirect || '/dev');
-							_this.loading = false;
-							_this.hideModal();
-
-						})
-						.catch(function (error) {
-							console.log(error);
-							_this.loading = false;
-						})
-					}, 2000)
-				})
-
-				new Promise((resolve) => {
-					setTimeout(() => {
-						store.dispatch('login', _this.data.attributes).then(() => {
-							_this.hideModal();
-							_this.loading = false;
-							console.log(_this.data.attributes);
-						})
-					}, 4000)
-				})*/
-			},
 			register: function () {
 				this.loading = true;
 
@@ -243,42 +181,20 @@
 				if(this.errorEmail === null && this.errorUsername === null) {
 					var _this = this;
 
-					/*axios.post(registerAPI, {
+					axios.post(registerAPI, {
 						username: this.data.attributes.username,
 						password: this.data.attributes.password,
 						email: this.data.attributes.email,
 					})
-					.then(response => {
-						_this.login();
+					.then((data) => {
+						_this.userdata.token = response.data.token;
+						store.dispatch('login', this.data.attributes).then(() => {
+							this.loading = false;
+							this.hideModal();
+						})
 					})
-					.catch(error => {
+					.catch(function (error) {
 						console.log(error);
-					})*/
-
-					/*const settings = {
-						"apiUrl": "http://forum.pc-rpg.com.br/api",
-						"adminUsername": "Los",
-						"adminPassword": "784612los"
-					}
-					const flarumClient = new FlarumClient(settings);
-						flarumClient.getUser('n0minal').then((user) => {
-						console.log(user);
-
-						0njfBxx7CdIn76ThVH4vHTL9zrEfsJzOy4hCm3YU
-					})*/
-					
-					axios.post("http://forum.pc-rpg.com.br/api/token", {
-						identification: "Los",
-						password: "784612los"
-					},
-					{
-						headers: {
-							"Access-Control-Allow-Origin": "*",
-							"Access-Control-Allow-Credentials": "true",
-						}
-					})
-					.then(response => {
-						console.log(response);
 					})
 
 					/*axios.post(forumAPI, {

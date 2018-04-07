@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './vuex/store'
-import cors from 'cors'
 
 // dependencies
 import VueBootstrap from 'bootstrap-vue'
@@ -30,7 +29,6 @@ Vue.use(VueWaypoint);
 Vue.use(VueScrollTo);
 Vue.use(VuePaginate);
 Vue.use(VeeValidate);
-Vue.use(cors);
 
 const locale = require('moment')
 require('moment/locale/pt-br')
