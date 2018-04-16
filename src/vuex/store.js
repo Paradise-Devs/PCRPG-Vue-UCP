@@ -6,13 +6,14 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
 	state: {
 		user: {},
-		token: null
+		token: null,
+		forumToken: null
 	},
 	actions: {
 		login({ commit }, userdata) {
 			return new Promise((resolve) => {
 				setTimeout(() => {
-					commit('LOGIN', userdata.token)
+					commit('LOGIN')
 					commit('SET_USER_DATA', userdata)
 					resolve()
 				}, 1000)
@@ -23,13 +24,17 @@ export const store = new Vuex.Store({
 		}
 	},
 	mutations: {
-		LOGIN (state, token) {
-			state.token = token;
-			localStorage.setItem("token", token);
+		LOGIN (state) {
+			state.token = state.user.token;
+			state.forumToken = state.user.forumToken;
+			localStorage.setItem("token", state.token);
+			localStorage.setItem("forumToken", state.forumToken);
 		},
 		LOGOUT (state) {
 			state.token = null;
+			state.forumToken = null;
 			localStorage.removeItem("token");
+			localStorage.removeItem("forumToken");
 		},
 		SET_USER_DATA (state, userdata) {
 			state.user = userdata;
