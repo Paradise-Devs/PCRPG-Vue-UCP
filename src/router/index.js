@@ -8,8 +8,7 @@ import DevelopmentView from '@/pages/Development'
 import NotFoundView from '@/pages/errors/404'
 
 //User profile
-import User from '@/pages/userProfile/Index'
-import UserHome from '@/pages/userProfile/Home'
+import UserProfileView from '@/pages/userProfile/Index'
 
 Vue.use(Router);
 
@@ -21,11 +20,7 @@ export default new Router({
 		{ 	path: '/', 						component: IndexView },
 		{ 	path: '/patchnotes', 			component: PatchnotesView },
 		{ 	path: '/dev', 					component: DevelopmentView },
-		{ 	path: '/jogador/:username', 	component: User ,
-			children: [
-				{ path: '',			component: UserHome },
-		  	]
-		},
+		{ 	path: '/jogador/:username', 	component: UserProfileView },
 		//{ 	path: '/grupo/:groupname', 		component: GroupView },
 		{ 	path: '*', 						component: NotFoundView },
 	]
