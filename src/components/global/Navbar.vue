@@ -27,11 +27,11 @@
 								</b-dropdown>
 								<b-dropdown no-caret right class="navbar__menu__user__info">
 									<template slot="button-content">
-										<img class="navbar__menu__user__info__avatar" :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
+										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.avatarUrl" v-if="user.forumAtt.avatarUrl != null" />
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
-										<span class="Button-label">{{ user.attributes.username }}</span>
+										<span class="Button-label">{{ user.username }}</span>
 									</template>
-									<b-dropdown-item :href="'http://forum.pc-rpg.com.br/u/' + user.attributes.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
+									<b-dropdown-item :href="'http://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
 									<b-dropdown-item href="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
 									<b-dropdown-divider/>
 									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
@@ -65,11 +65,11 @@
 			<div class="nav__mobile__menu__user" v-else>
 				<a href="#" @click="logout" class="logout"><fa :icon="['fas', 'sign-out-alt']"/></a>
 				<div class="nav__mobile__menu__user__info__avatar">
-					<img :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
+					<img :src="user.forumAtt.avatarUrl" v-if="user.forumAtt.avatarUrl != null" />
 					<div class="empty" v-else> ? </div>
 				</div>
 				<div class="nav__mobile__menu__user__info__name">
-					Olá, {{ user.attributes.username }}!
+					Olá, {{ user.username }}!
 				</div>
 				<div class="nav__mobile__menu__user__info__tags">
 					<b-badge 
@@ -91,7 +91,7 @@
 				<a href="/forum"><fa :icon="['fas', 'comments']"/>Fórum</a>
 				<div class="nav__mobile__menu__links__user" v-if="isLoggedIn">
 					<h6 class="separator">Sua conta</h6>
-					<router-link :to="'/jogador/' + user.attributes.username"><fa :icon="['fas', 'user']"/>Seu perfil</router-link>
+					<router-link :to="'/jogador/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</router-link>
 					<router-link to="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</router-link>
 				</div>
 			</div>
