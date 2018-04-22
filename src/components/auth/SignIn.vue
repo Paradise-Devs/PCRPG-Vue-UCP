@@ -138,7 +138,7 @@
 						headers: params
 					})
 					.then(response => {
-						this.user.forumAtt = response.data.data.attributes;
+						this.user.forumAtt = response.data.data;
 
 						for(var i = 0; i < response.data.data.relationships.groups.data.length; i++) {
 							this.user.groups.push(response.data.data.relationships.groups.data[i].attributes);

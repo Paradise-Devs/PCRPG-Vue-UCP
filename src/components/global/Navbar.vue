@@ -242,7 +242,7 @@
 			if(store.getters.isLoggedIn) {
 				new Promise((resolve) => {
 					setTimeout(() => {
-						axios.get(usersBaseURI + _this.user.attributes.username)
+						axios.get(usersBaseURI + _this.user.username)
 						.then(response => {
 							for(var i = 0; i < response.data.included.length; i++) {
 								if(response.data.included[i].type == 'groups') {

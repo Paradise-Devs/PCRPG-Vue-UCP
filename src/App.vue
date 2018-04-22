@@ -31,13 +31,15 @@
 	import hero from '@/components/global/Hero'
 	import appfooter from '@/components/global/Footer'
 
-	var forumAPI = 'http://forum.pc-rpg.com.br/api/users/';
+	var tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
+	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
 	var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
 
 	export default {
 		data() {
 			return {
-				userdata: { },
+				user: { },
 				loading: true,
 				siteLoaded: false,
 				dataLoaded: false,
@@ -47,48 +49,54 @@
 		methods: {
 			appLoaded: function() {
 				var _this = this;
-				this.userdata.token = localStorage.getItem("token");
-				if(this.userdata.token != "undefined") {
-					new Promise((resolve) => {
-						setTimeout(() => {
-							axios.get(forumAPI + 'Los')
-							.then(response => {
-								this.userdata.attributes = response.data.data.attributes;
-							})
-						}, 2000)
-					})
+				var token = localStorage.getItem("token");
 
-					new Promise((resolve) => {
-						setTimeout(() => {
-							store.dispatch('login', _this.userdata).then(() => {
-								_this.dataLoaded = true;
-								_this.fullyLoaded = true;
-					 		})
-						}, 4000)
+				if(token != null) {
+					axios.post(tokenAPI, {
+						token: token
+					})
+					.then(response => {
+						if(response.data.error) {
+							console.log(response.data.error);
+							_this.dataLoaded = true;
+							_this.fullyLoaded = true;
+							reject()
+						} else {
+							_this.user = response.data;
+							_this.user.token = response.headers['token-refresh'];
+							_this.getForumData();
+						}
+					})
+					.catch(error => {
+						console.log(error);
 					})
 				} else {
 					_this.dataLoaded = true;
 					_this.fullyLoaded = true;
 				}
+			},
+			getForumData: function(){
+				axios.get(usersBaseURI + this.user.username)
+				.then(response => {
+					this.user.forumAtt = response.data.data;
+					console.log(this.user);
+					this.authUser();
+				})
+				.catch(error => {
+					console.log(error);
+				})
+			},
+			authUser: function() {
+				store.dispatch('login', this.user).then(() => {
+					this.dataLoaded = true;
+					this.fullyLoaded = true;
+				})
 			}
 		},
 		mounted() {
 			var _this = this;
-			
-			axios.post(forumTokenEndpoint, {
-				identification: "Administrator",
-				password: "4QZPYp#DpkyP-Y4K"
-			})
-			.then(response => {
-				setTimeout(function () {
-					_this.appLoaded();
-					_this.siteLoaded = true;
-				}, 4000);
-			})
-			.catch(function (error) {
-				console.log(error);
-				_this.loading = false;
-			})
+			_this.appLoaded();
+			_this.siteLoaded = true;
 		},
 		components: {
 			'spinner': spinner,
