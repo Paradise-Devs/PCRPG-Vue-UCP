@@ -134,8 +134,6 @@
 				store.dispatch('login', this.user).then(() => {
 					this.loading = false;
 					this.hideModal();
-					console.log('login');
-					console.log(this.user);
 				});
 			}
 		}

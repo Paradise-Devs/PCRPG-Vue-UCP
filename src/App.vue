@@ -88,8 +88,6 @@
 				store.dispatch('login', this.user).then(() => {
 					this.dataLoaded = true;
 					this.fullyLoaded = true;
-					console.log('auto login');
-					console.log(this.user);
 				})
 			}
 		},
