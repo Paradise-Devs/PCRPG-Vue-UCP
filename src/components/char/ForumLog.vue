@@ -47,7 +47,7 @@
 				forumProcessed: false
 			}
 		},
-		beforeMount() {
+		/*beforeMount() {
 			var getData = new Promise(
 				function(resolve, reject) {
 					setTimeout(() => {
@@ -66,9 +66,7 @@
 					this.lastPosts = response.data.data;
 				})
 			)
-
-			console.log(this.username);
-		},
+		},*/
 		filters: {
 			moment: function(time) {
 				return moment(time).fromNow();

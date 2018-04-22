@@ -22,12 +22,12 @@
 			<b-form-group :state="null" >
 				<b-form-input
 					type="text"
-					v-model="data.attributes.username"
+					v-model="user.username"
 					ref="usernameField"
 					placeholder="Nome de usuário"
 					v-validate="{ required: true, regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 3, max: 15 }"
 					name="username"
-					:class="{ 'is-invalid': errors.has('username') || errorUsername, 'is-valid': !errors.has('username') && data.attributes.username.length != 0 }"
+					:class="{ 'is-invalid': errors.has('username') || errorUsername, 'is-valid': !errors.has('username') && user.username.length != 0 }"
 					:state="null"
 					@change="checkIfUserExists"
 					autocomplete="on"
@@ -39,11 +39,11 @@
 			<b-form-group :state="null" >
 				<b-form-input
 					type="email"
-					v-model="data.attributes.email"
+					v-model="user.email"
 					placeholder="Email"
 					v-validate="'required|email'"
 					name="email"
-					:class="{ 'is-invalid': errors.has('email') || errorEmail, 'is-valid': !errors.has('email') && data.attributes.email.length != 0 }"
+					:class="{ 'is-invalid': errors.has('email') || errorEmail, 'is-valid': !errors.has('email') && user.email.length != 0 }"
 					:state="null"
 					@change="checkIfEmailExists"
 					autocomplete="on"
@@ -55,12 +55,12 @@
 			<b-form-group :state="null" >
 				<b-form-input
 					type="password"
-					v-model="data.attributes.password"
+					v-model="user.password"
 					placeholder="Senha"
 					v-on:keyup.enter="submit"
-					v-validate="{ required: true, min: 6 }"
+					v-validate="{ required: true, min: 8 }"
 					name="password"
-					:class="{ 'is-invalid': errors.has('password'), 'is-valid': !errors.has('password') && data.attributes.password.length != 0 }"
+					:class="{ 'is-invalid': errors.has('password'), 'is-valid': !errors.has('password') && user.password.length != 0 }"
 					:state="null"
 					autocomplete="on"
 				/>
@@ -72,7 +72,7 @@
 					variant="primary"
 					:disabled="	loading || errorUsername != null || errorUsername != null ||
 								errors.has('password') || errors.has('email') || errors.has('username') ||
-								data.attributes.password.length === 0 ||data.attributes.email.length === 0 || data.attributes.username.length === 0"
+								user.password.length === 0 ||user.email.length === 0 || user.username.length === 0"
 					block
 					class="loginButton"
 				>
@@ -96,21 +96,24 @@
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 	import beat from 'vue-spinner/src/BeatLoader.vue';
 
-	var usersAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	var registerAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
-	var forumAPI = 'http://forum.pc-rpg.com.br/api/users/';
+	var usersEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
+	var registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
+	var loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+	var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
+	var forumUsersEndpoint = 'http://forum.pc-rpg.com.br/api/users';
 
 	export default {
 		data() {
 			return {
-				data: {
-					attributes: {
-						username: '',
-						password: '',
-						email: '',
-						token: null,
-					}
+				user: {
+					username: '',
+					password: '',
+					email: '',
+					token: null,
+					forumToken: null,
+					forumAtt: [ ]
 				},
+				masterToken: null,
 				errorUsername: null,
 				errorEmail: null,
 				loading: false,
@@ -125,6 +128,9 @@
 			signin,
 			store
 		},
+		mounted() {
+			this.getMasterToken();
+		},
 		methods: {
 			hideModal: function () {
 				this.$refs.signup.hide()
@@ -133,12 +139,13 @@
 				this.$refs.usernameField.focus();
 			},
 			checkIfUserExists: function () {
-				if(this.data.attributes.username.length >= 3) {
-					var _this = this;
+				if(this.user.username.length >= 3) {
+					let _this = this;
+
 					_this.usernameChecking = true;
 
-					axios.get(usersAPI + this.data.attributes.username)
-					.then(function (response) {
+					axios.get(usersEndpoint + this.user.username)
+					.then(response => {
 						if (response.data) {
 							_this.errorUsername = 'Este nome de usuário já está em uso';
 							_this.usernameChecking = false;
@@ -152,14 +159,15 @@
 				}
 			},
 			checkIfEmailExists: function () {
-				if(this.data.attributes.email.length >= 3) {
-					var _this = this;
+				if(this.user.email.length >= 3) {
+					let _this = this;
+
 					_this.emailChecking = true;
 
-					axios.get(usersAPI)
-					.then(function (response) {
+					axios.get(usersEndpoint)
+					.then(response => {
 						for (var i = 0; i < response.data.length; i++) {
-							if (response.data[i].email == _this.data.attributes.email) {
+							if (response.data[i].email == _this.user.email) {
 								_this.errorEmail = 'Este e-mail já está em uso';
 								_this.emailChecking = false;
 							} else {
@@ -178,49 +186,107 @@
 				this.checkIfUserExists();
 				this.checkIfEmailExists();
 
-				if(this.errorEmail === null && this.errorUsername === null) {
-					var _this = this;
+				let localUsername = this.user.username;
+				let localPassword = this.user.password;
+				let localEmail = this.user.email;
 
-					axios.post(registerAPI, {
-						username: this.data.attributes.username,
-						password: this.data.attributes.password,
-						email: this.data.attributes.email,
+				if(this.errorEmail === null && this.errorUsername === null) {
+					let _this = this;
+
+					axios.post(registerEndpoint, {
+						username: localUsername,
+						password: localPassword,
+						email: localEmail,
 					})
-					.then((data) => {
-						_this.userdata.token = response.data.token;
-						store.dispatch('login', this.data.attributes).then(() => {
-							this.loading = false;
-							this.hideModal();
-						})
+					.then(response => {						
+						_this.registerUserForumAccount(localUsername, localPassword, localEmail);
 					})
 					.catch(function (error) {
 						console.log(error);
 					})
+				}
+			},
+			getMasterToken: function() {
+				let _this = this;
 
-					/*axios.post(forumAPI, {
-						data: {
-							attributes: {
-								username: this.data.attributes.username,
-								password: this.data.attributes.password,
-								email: this.data.attributes.email,
-							}
-						},
-						headers: {
-							'Authorization': 'Token jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx',
-							'Content-Type': 'application/vnd.api+json'
-						},
-					})
-					.then(function (response) {
-						_this.$router.push(_this.$route.query.redirect || '/dev');
+				axios.post(forumTokenEndpoint, {
+					identification: "Administrator",
+					password: "4QZPYp#DpkyP-Y4K"
+				})
+				.then(response => {
+					 _this.masterToken = response.data.token;
+				})
+				.catch(function (error) {
+					console.log(error);
+					_this.loading = false;
+				})
+			},
+			registerUserForumAccount: function(usernameEx, passwordEx, emailEx) {
+				var _this = this;
+
+				axios.post(forumUsersEndpoint, {
+					data: {
+						attributes: {
+							username: usernameEx,
+							password: passwordEx,
+							email: emailEx,
+							isActivated: true
+						}
+					},
+				},
+				{
+					headers: {
+						"Authorization": "Token " + _this.masterToken
+					}
+				})
+				.then(response => {
+					_this.user.forumAtt = response.data.data.attributes;
+					_this.login(usernameEx, passwordEx);
+				})
+				.catch(errorEx => {
+					console.log(error);
+					_this.loading = false;
+				})
+			},
+			login: function(usernameEx, passwordEx) {
+				this.loading = true;
+				var _this = this;
+
+				axios.post(loginEndpoint, {
+					username: usernameEx,
+					password: passwordEx,
+				})
+				.then(response => {
+					if(response.data.error) {
+						_this.error = response.data.error.message;
+						console.log(response.data.error);
+						_this.loading = false;
+						reject()
+					} else {
+						_this.user.token = response.data.token;
+						_this.saveUserData(usernameEx, passwordEx);
+					}
+				})
+			},
+			saveUserData: function(usernameEx, passwordEx) {
+				let _this = this;
+				
+				axios.post(forumTokenEndpoint, {
+					identification: usernameEx,
+					password: passwordEx
+				})
+				.then(response => {
+					_this.user.forumToken = response.data.token;
+					
+					store.dispatch('login', this.user).then(() => {
 						_this.loading = false;
 						_this.hideModal();
-
-					})
-					.catch(function (error) {
-						console.log(error);
-						_this.loading = false;
-					})*/
-				}
+					});
+				})
+				.catch(function (error) {
+					console.log(error);
+					_this.loading = false;
+				})
 			}
 		}
 	}
