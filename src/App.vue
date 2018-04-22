@@ -32,6 +32,7 @@
 	import appfooter from '@/components/global/Footer'
 
 	var forumAPI = 'http://forum.pc-rpg.com.br/api/users/';
+	var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
 
 	export default {
 		data() {
@@ -47,7 +48,7 @@
 			appLoaded: function() {
 				var _this = this;
 				this.userdata.token = localStorage.getItem("token");
-				if(this.userdata.token != null) {
+				if(this.userdata.token != "undefined") {
 					new Promise((resolve) => {
 						setTimeout(() => {
 							axios.get(forumAPI + 'Los')
@@ -73,11 +74,21 @@
 		},
 		mounted() {
 			var _this = this;
-
-			setTimeout(function () {
-				_this.appLoaded();
-				_this.siteLoaded = true;
-			}, 4000);
+			
+			axios.post(forumTokenEndpoint, {
+				identification: "Administrator",
+				password: "4QZPYp#DpkyP-Y4K"
+			})
+			.then(response => {
+				setTimeout(function () {
+					_this.appLoaded();
+					_this.siteLoaded = true;
+				}, 4000);
+			})
+			.catch(function (error) {
+				console.log(error);
+				_this.loading = false;
+			})
 		},
 		components: {
 			'spinner': spinner,
