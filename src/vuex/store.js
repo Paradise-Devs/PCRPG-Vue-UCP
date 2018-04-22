@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
 	state: {
-		user: {}
+		user: {},
+		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx;'
 	},
 	actions: {
 		login({ commit }, userdata) {
@@ -24,13 +25,10 @@ export const store = new Vuex.Store({
 	mutations: {
 		LOGIN (state) {
 			localStorage.setItem("token", state.user.token);
-			localStorage.setItem("forumToken", state.user.forumToken);
 		},
 		LOGOUT (state) {
 			state.user.token = null;
-			state.user.forumToken = null;
 			localStorage.removeItem("token");
-			localStorage.removeItem("forumToken");
 		},
 		SET_USER_DATA (state, userdata) {
 			state.user = userdata;
@@ -39,7 +37,8 @@ export const store = new Vuex.Store({
 	getters: {
 		isLoggedIn: state => { return state.user.token != null },
 		getToken: state => { return state.user.token; },
-		getUserData: state => { return state.user; }
+		getUserData: state => { return state.user; },
+		getMasterToken: state => { return state.masterToken; }
 	}
 });
 

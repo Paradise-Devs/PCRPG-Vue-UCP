@@ -34,7 +34,6 @@
 	var tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
 	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
-	var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
 
 	export default {
 		data() {
@@ -79,7 +78,6 @@
 				axios.get(usersBaseURI + this.user.username)
 				.then(response => {
 					this.user.forumAtt = response.data.data;
-					console.log(this.user);
 					this.authUser();
 				})
 				.catch(error => {
@@ -90,6 +88,8 @@
 				store.dispatch('login', this.user).then(() => {
 					this.dataLoaded = true;
 					this.fullyLoaded = true;
+					console.log('auto login');
+					console.log(this.user);
 				})
 			}
 		},

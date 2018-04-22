@@ -62,7 +62,6 @@
 
 	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
-	var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
 
 	export default {
 		data() {
@@ -73,8 +72,6 @@
 					username: '',
 					password: '',
 					token: null,
-					forumToken: null,
-					groups: [ ],
 					forumAtt: [ ]
 				},
 				rememberme: false,
@@ -123,29 +120,10 @@
 			authUser: function() {
 				var _this = this;
 
-				axios.post(forumTokenEndpoint, {
-					identification: this.user.username,
-					password: this.user.password
-				})
+				axios.get(usersBaseURI + this.user.username)
 				.then(response => {
-					_this.user.forumToken = response.data.token;
-
-					var params = {
-						"Authorization": "Token " + response.data.token
-					};
-
-					axios.get(usersBaseURI + this.user.username, {
-						headers: params
-					})
-					.then(response => {
-						this.user.forumAtt = response.data.data;
-
-						for(var i = 0; i < response.data.data.relationships.groups.data.length; i++) {
-							this.user.groups.push(response.data.data.relationships.groups.data[i].attributes);
-						}
-
-						this.dispatchLogin();
-					})
+					this.user.forumAtt = response.data.data;
+					this.dispatchLogin();
 				})
 				.catch(function (error) {
 					console.log(error);
@@ -156,6 +134,8 @@
 				store.dispatch('login', this.user).then(() => {
 					this.loading = false;
 					this.hideModal();
+					console.log('login');
+					console.log(this.user);
 				});
 			}
 		}
