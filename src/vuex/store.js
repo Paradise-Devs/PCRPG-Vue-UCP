@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
 	state: {
 		user: {},
-		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx;'
+		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx; '
 	},
 	actions: {
 		login({ commit }, userdata) {

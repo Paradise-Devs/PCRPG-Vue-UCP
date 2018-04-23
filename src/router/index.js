@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 // views
 import IndexView from '@/pages/Index'
-import PatchnotesView from '@/pages/Patchnotes'
 import DevelopmentView from '@/pages/Development'
 import NotFoundView from '@/pages/errors/404'
 
@@ -18,7 +17,6 @@ export default new Router({
 	cors: true,
 	routes: [
 		{ 	path: '/', 						component: IndexView },
-		{ 	path: '/patchnotes', 			component: PatchnotesView },
 		{ 	path: '/dev', 					component: DevelopmentView },
 		{ 	path: '/jogador/:username', 	component: UserProfileView },
 		//{ 	path: '/grupo/:groupname', 		component: GroupView },
