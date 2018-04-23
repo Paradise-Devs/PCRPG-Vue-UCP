@@ -20,11 +20,6 @@
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
 							<div class="navbar__menu__user" v-else>
-								<b-dropdown no-caret class="navbar__menu__user__notifications">
-									<template slot="button-content">
-										<fa :icon="['fas', 'bell']" />
-									</template>
-								</b-dropdown>
 								<b-dropdown no-caret right class="navbar__menu__user__info">
 									<template slot="button-content">
 										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.avatarUrl" v-if="user.forumAtt.avatarUrl != null" />
