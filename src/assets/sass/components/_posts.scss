@@ -12,6 +12,13 @@
         margin-top: 15px;
         position: relative;
 
+        .avatar__loader {
+            position: absolute;
+            top: -6px;
+            transition: background .2s;
+            background-color: $bg-color;
+        }
+
         &__avatar {
             width: 36px;
             height: 36px;
@@ -55,8 +62,19 @@
             li {
                 display: inline;
                 @include ease-opacity(0.7);
+
+                .username__loader {
+                    width: 25px;
+                }
             }
         }
+    }
+
+    .tag__loader {
+        position: absolute;
+        right: 20px;
+        top: 17px;
+        width: 30px;
     }
 
     &__tag {
@@ -102,6 +120,11 @@
             .created {
                 opacity: 1;
             }
+        }
+
+        .avatar__loader {
+            transition: background .2s;
+            background-color: $gray-hover;
         }
     }
 
