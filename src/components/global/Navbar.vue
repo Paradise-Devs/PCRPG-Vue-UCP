@@ -10,7 +10,7 @@
                                 <img src="./logo-text.png" alt="PC:RPG">
                             </router-link>
                         </b-col>
-                        <b-col md="8" class="navbar__menu navbar__menu--desk">
+                        <b-col md="8" class="navbar__menu navbar__menu--desk" :key="userLoggedIn">
                             <router-link to="/">Início</router-link>
                             <router-link to="/dev">Desenvolvimento</router-link>
                             <a href="/forum">Fórum</a>
@@ -63,7 +63,6 @@
 				<a href="#" v-b-modal.signinModal @click="closeMobNav">Entre</a>
 			</div>
 			<div class="nav__mobile__menu__user" v-else>
-				<a href="#" @click="logout" class="logout"><fa :icon="['fas', 'sign-out-alt']"/></a>
 				<div class="nav__mobile__menu__user__info__avatar">
 					<img :src="user.forumAtt.avatarUrl" v-if="user.forumAtt.avatarUrl != null" />
 					<div class="empty" v-else> ? </div>
@@ -93,6 +92,7 @@
 					<h6 class="separator">Sua conta</h6>
 					<router-link :to="'/jogador/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</router-link>
 					<router-link to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</router-link>
+					<a href="#" @click="logout"><fa :icon="['fas', 'sign-out-alt']"/>Sair</a>
 				</div>
 			</div>
 		</div>

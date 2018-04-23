@@ -318,8 +318,7 @@
             background: -o-linear-gradient(top, $bg-color 30%, $gray-dark 75%);
             background: -webkit-gradient(linear, left top, left bottom, from($bg-color), color-stop(75%, $gray-dark));
             background: linear-gradient(to bottom, $bg-color 30%, $gray-dark 75%);
-            padding: 22px 0px;
-            height: 140px;
+            padding: 30px 0px 20px;
             width: 100%;
 
             a {
