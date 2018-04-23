@@ -3,13 +3,14 @@
         <div class="block__header">
             <h3>Novidades</h3>
         </div>
-        <div class="block__content block__content--borderless">
+        <div class="block__content" :class="[ news.posts.length > 0 ? 'block__content--borderless' : '']">
             <vue-spinner :loading="news.loading" color="#303846" size="10px" class="loader"></vue-spinner>
             <div v-if="news.processed">
                 <paginate name="news" :list="news.posts" :per="4">
                     <li v-for="post in paginated('news')" :key="post.id">
                         <post :post='post' />
                     </li>
+                    <p v-if="news.posts.length == 0">Ainda não temos nenhuma novidade. Fique ligado no <a href="https://forum.pc-rpg.com.br/" target="_blank">Fórum</a> para acompanhar as últimas notícias do servidor</p>
                 </paginate>
                 <paginate-links
                     for="news"
@@ -66,6 +67,12 @@
 
 <style lang="scss" scoped>
     .news {
+        p {
+			padding: 20px 0;
+			text-align: center;
+			margin: 0px;
+        }
+        
         .loader {
 		    height: 64px;
         }
