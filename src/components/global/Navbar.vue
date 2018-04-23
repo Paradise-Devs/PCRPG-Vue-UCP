@@ -65,7 +65,7 @@
 			<div class="nav__mobile__menu__user" v-else>
 				<div class="nav__mobile__menu__user__info__avatar">
 					<img :src="user.forumAtt.avatarUrl" v-if="user.forumAtt.avatarUrl != null" />
-					<div class="empty" v-else> ? </div>
+					<div class="nav__mobile__menu__user__info__avatar--empty" v-else> ? </div>
 				</div>
 				<div class="nav__mobile__menu__user__info__name">
 					Olá, {{ user.username }}!
