@@ -33,7 +33,7 @@
 
 	var tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
 	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
+	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
