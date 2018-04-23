@@ -63,6 +63,7 @@
 
 <script>
     import axios from 'axios';
+    import { store } from '@/vuex/store'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import fontawesome from '@fortawesome/vue-fontawesome'
 
@@ -86,42 +87,32 @@
             }
         },
         mounted() {
-            axios.post(forumTokenEndpoint, {
-				identification: "Administrator",
-				password: "4QZPYp#DpkyP-Y4K"
-			})
-			.then(response => {
-                var params = {
-                    "Authorization": "Token " + response.data.token
-                };
+            axios.get(usersBaseURI, {
+                headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
+            })
+            .then(response => {
+                this.users = response.data.data;
+                for(var i = 0; i < this.users.length; i++) {
+                    if(this.users[i].relationships.groups.data != null) {
+                        for(var j = 0; j < this.users[i].relationships.groups.data.length; j++) {
+                            if(this.users[i].relationships.groups.data[j].id == 1) {
+                                this.devs.push(this.users[i].attributes);
+                            }
 
-				axios.get(usersBaseURI, {
-                    headers: params
-                })
-                .then(response => {
-                    this.users = response.data.data;
-                    for(var i = 0; i < this.users.length; i++) {
-                        if(this.users[i].relationships.groups.data != null) {
-                            for(var j = 0; j < this.users[i].relationships.groups.data.length; j++) {
-                                if(this.users[i].relationships.groups.data[j].id == 1) {
-                                    this.devs.push(this.users[i].attributes);
-                                }
+                            if(this.users[i].relationships.groups.data[j].id == 5) {
+                                this.mods.push(this.users[i].attributes);
+                            }
 
-                                if(this.users[i].relationships.groups.data[j].id == 4) {
-                                    this.mods.push(this.users[i].attributes);
-                                }
+                            if(this.users[i].relationships.groups.data[j].id == 4) {
+                                this.admins.push(this.users[i].attributes);
+                            }
 
-                                if(this.users[i].relationships.groups.data[j].id == 8) {
-                                    this.admins.push(this.users[i].attributes);
-                                }
-
-                                if(this.users[i].relationships.groups.data[j].id == 7) {
-                                    this.supports.push(this.users[i].attributes);
-                                }
+                            if(this.users[i].relationships.groups.data[j].id == 6) {
+                                this.supports.push(this.users[i].attributes);
                             }
                         }
                     }
-                })
+                }
 			})
 			.catch(function (error) {
 				console.log(error);
