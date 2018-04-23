@@ -1,10 +1,10 @@
 <template>
     <div class="post">
-        <a :href="'http://forum.pc-rpg.com.br/u/' + username" class="post__author">
+        <a :href="'https://forum.pc-rpg.com.br/u/' + username" class="post__author">
             <avatar-spinner :loading="avatarLoading" color="#303846" size="38px" class="avatar__loader"></avatar-spinner> 
             <img class="post__author__avatar" :src="useravatar">
         </a>
-        <a :href="'http://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="post__content">
+        <a :href="'https://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="post__content">
             <h3 class="post__content__title">{{ post.attributes.title }}</h3>
             <ul class="post__content__info">
                 <li class="post__content__info__created">
@@ -25,7 +25,7 @@
     import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
     import 'vue-awesome/icons/comment-o'
 
-    var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
+    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
 
     export default {
         props: {

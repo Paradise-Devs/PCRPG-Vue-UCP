@@ -83,8 +83,8 @@
     import char from '@/components/char/card.vue'
     import forumlog from '@/components/char/ForumLog.vue'
     
-    var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
-    var groupsBaseURI = 'http://forum.pc-rpg.com.br/api/groups';
+    var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
+    var groupsBaseURI = 'https://forum.pc-rpg.com.br/api/groups';
 
     export default {
         data() {

@@ -31,7 +31,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import post from './post.vue'
 
-    var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
+    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
 	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios&sort=-startTime';
     
     export default {

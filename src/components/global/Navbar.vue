@@ -31,8 +31,8 @@
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
 										<span class="Button-label">{{ user.username }}</span>
 									</template>
-									<b-dropdown-item :href="'http://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
-									<b-dropdown-item href="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
+									<b-dropdown-item :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
+									<b-dropdown-item href="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
 									<b-dropdown-divider/>
 									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
 								</b-dropdown>
@@ -92,7 +92,7 @@
 				<div class="nav__mobile__menu__links__user" v-if="isLoggedIn">
 					<h6 class="separator">Sua conta</h6>
 					<router-link :to="'/jogador/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</router-link>
-					<router-link to="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</router-link>
+					<router-link to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</router-link>
 				</div>
 			</div>
 		</div>
@@ -111,7 +111,7 @@
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import { bell, user, cog, signOutAlt, bars, times, home, code, comments } from '@fortawesome/fontawesome-free-solid';
 
-	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
+	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
         data: () => {

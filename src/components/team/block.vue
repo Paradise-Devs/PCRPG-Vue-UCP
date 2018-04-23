@@ -71,9 +71,9 @@
 
     import user from './user.vue'
 
-    var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users';
-    var groupsBaseURI = 'http://forum.pc-rpg.com.br/api/groups';
-    var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
+    var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users';
+    var groupsBaseURI = 'https://forum.pc-rpg.com.br/api/groups';
+    var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';
 
     export default {
         data() {

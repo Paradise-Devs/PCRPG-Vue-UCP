@@ -33,7 +33,7 @@
 	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 	import fontawesome from '@fortawesome/vue-fontawesome'
 
-	var forumBaseURI =  'http://forum.pc-rpg.com.br/api/';
+	var forumBaseURI =  'https://forum.pc-rpg.com.br/api/';
 	var usersBaseURI = forumBaseURI + 'users/';
 	var lastDiscussions = forumBaseURI + 'discussions?filter[user]=';
 

@@ -72,7 +72,8 @@
 					variant="primary"
 					:disabled="	loading || errorUsername != null || errorUsername != null ||
 								errors.has('password') || errors.has('email') || errors.has('username') ||
-								user.password.length === 0 ||user.email.length === 0 || user.username.length === 0"
+								user.password.length === 0 ||user.email.length === 0 || user.username.length === 0 ||
+								emailChecking || usernameChecking"
 					block
 					class="loginButton"
 				>
@@ -99,8 +100,8 @@
 	var usersEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
 	var registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
 	var loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
-	var forumUsersEndpoint = 'http://forum.pc-rpg.com.br/api/users';
+	var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';
+	var forumUsersEndpoint = 'https://forum.pc-rpg.com.br/api/users';
 
 	export default {
 		data() {
@@ -110,10 +111,8 @@
 					password: '',
 					email: '',
 					token: null,
-					forumToken: null,
 					forumAtt: [ ]
 				},
-				masterToken: null,
 				errorUsername: null,
 				errorEmail: null,
 				loading: false,
@@ -127,9 +126,6 @@
 			'beatloader': beat,
 			signin,
 			store
-		},
-		mounted() {
-			this.getMasterToken();
 		},
 		methods: {
 			hideModal: function () {
@@ -206,21 +202,6 @@
 					})
 				}
 			},
-			getMasterToken: function() {
-				let _this = this;
-
-				axios.post(forumTokenEndpoint, {
-					identification: "Administrator",
-					password: "4QZPYp#DpkyP-Y4K"
-				})
-				.then(response => {
-					 _this.masterToken = response.data.token;
-				})
-				.catch(function (error) {
-					console.log(error);
-					_this.loading = false;
-				})
-			},
 			registerUserForumAccount: function(usernameEx, passwordEx, emailEx) {
 				var _this = this;
 
@@ -236,7 +217,7 @@
 				},
 				{
 					headers: {
-						"Authorization": "Token " + _this.masterToken
+						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
 					}
 				})
 				.then(response => {

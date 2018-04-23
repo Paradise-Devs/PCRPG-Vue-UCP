@@ -60,8 +60,8 @@
 	import signup from '@/components/auth/SignUp'
 	import spinner from 'vue-spinner/src/MoonLoader.vue';
 
-	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
+	var loginAPI = 'https://dev.pc-rpg.com.br:3000/api/v1/login/';
+	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
