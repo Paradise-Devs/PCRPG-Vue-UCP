@@ -25,6 +25,8 @@
 
     .block__content {
         border: 1px solid $gray-dark;
+        overflow-x: hidden;
+        overflow-y: auto;
 
         &--footerless {
             border-bottom-left-radius: 5px;
