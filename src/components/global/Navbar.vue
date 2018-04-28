@@ -22,7 +22,7 @@
 							<div class="navbar__menu__user" v-else>
 								<b-dropdown no-caret right class="navbar__menu__user__info">
 									<template slot="button-content">
-										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.avatarUrl" v-if="user.forumAtt.avatarUrl != null" />
+										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
 										<span class="Button-label">{{ user.username }}</span>
 									</template>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="nav__mobile__menu__user" v-else>
 				<div class="nav__mobile__menu__user__info__avatar">
-					<img :src="user.forumAtt.avatarUrl" v-if="user.forumAtt.avatarUrl != null" />
+					<img :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
 					<div class="nav__mobile__menu__user__info__avatar--empty" v-else> ? </div>
 				</div>
 				<div class="nav__mobile__menu__user__info__name">
@@ -222,12 +222,22 @@
 		},
 		mounted() {
 			var _this = this;
+			console.log(this.user);
 			var navOverlay = document.getElementById("navOverlay");
 			navOverlay.style.display = 'none';
 
 			this.$root.$on('initNavLoading', () => {
 				this.isFixed = false
 				this.isShow = 'none'
+			})
+
+			axios.get(usersBaseURI + _this.user.username)
+			.then(response => {
+				for(var i = 0; i < response.data.included.length; i++) {
+					if(response.data.included[i].type == 'groups') {
+						this.groups.push(response.data.included[i].attributes);
+					}
+				}
 			})
 			
 			var closenav = document.getElementById('closeNav');
