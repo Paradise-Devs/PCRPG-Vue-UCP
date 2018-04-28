@@ -33,7 +33,7 @@
     import post from './post.vue'
 
     var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
-	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:anuncios&sort=-startTime';
+	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:novidades&sort=-startTime';
     
     export default {
 		data() {
