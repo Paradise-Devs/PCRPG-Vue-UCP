@@ -47,7 +47,6 @@
 		},
 		methods: {
 			appLoaded: function() {
-				var _this = this;
 				var token = localStorage.getItem("token");
 
 				if(token != null) {
@@ -57,21 +56,21 @@
 					.then(response => {
 						if(response.data.error) {
 							console.log(response.data.error);
-							_this.dataLoaded = true;
-							_this.fullyLoaded = true;
+							this.dataLoaded = true;
+							this.fullyLoaded = true;
 							reject()
 						} else {
-							_this.user = response.data;
-							_this.user.token = response.headers['token-refresh'];
-							_this.getForumData();
+							this.user = response.data;
+							this.user.token = response.headers['token-refresh'];
+							this.getForumData();
 						}
 					})
 					.catch(error => {
 						console.log(error);
 					})
 				} else {
-					_this.dataLoaded = true;
-					_this.fullyLoaded = true;
+					this.dataLoaded = true;
+					this.fullyLoaded = true;
 				}
 			},
 			getForumData: function(){
@@ -92,9 +91,8 @@
 			}
 		},
 		mounted() {
-			var _this = this;
-			_this.appLoaded();
-			_this.siteLoaded = true;
+			this.appLoaded();
+			this.siteLoaded = true;
 		},
 		components: {
 			'spinner': spinner,
