@@ -5,11 +5,13 @@ import Router from 'vue-router'
 import IndexView from '@/pages/Index'
 import DevelopmentView from '@/pages/Development'
 import NotFoundView from '@/pages/errors/404'
+import UserProfileView from '@/pages/Profile'
 
 //UCP
 import UcpView from '@/pages/ucp/index'
 import UcpSettingsView from '@/pages/ucp/settings'
-import UserProfileView from '@/pages/ucp/profile'
+import UcpProfileView from '@/pages/ucp/profile'
+import UcpMessagesView from '@/pages/ucp/messages'
 
 Vue.use(Router);
 
@@ -23,6 +25,8 @@ export default new Router({
 		{ 	path: '/ucp', 					component: UcpView,
 			children: [
 				{ 	path: 'configuracoes', 	component: UcpSettingsView },
+				{ 	path: 'mensagens', 		component: UcpMessagesView },
+				{ 	path: 'perfil', 		component: UcpProfileView },
 			]
 		},
 		{ 	path: '/jogador/:username', 	component: UserProfileView },
