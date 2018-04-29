@@ -1,21 +1,47 @@
-# pcrpg
+<p align="center">
+    <img src="https://forum.pc-rpg.com.br/assets/favicon-pblwsrgt.png"/>
+</p>
+<p align="center">
+    <img src="https://img.shields.io/badge/build-passing-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/VueJS-2.5.9-brightgreen.svg"/>
+</p>
 
-> A Vue.js project
+# Paradise City RPG - Web
 
-## Build Setup
+Esse projeto trata-se do site do PC:RPG, desenvolvido com VueCLI.
 
-``` bash
-# install dependencies
+## O projeto
+
+Outros repositórios referente a este projeto:
+
+- [pc-rpg/rage](https://gitlab.com/pc-rpg/rage): Server - RageMP
+- [pc-rpg/rage-ws](https://gitlab.com/pc-rpg/rage-ws): Webservice
+
+## Tecnologias/Técnicas
+
+Esse projeto utiliza as seguintes tecnologias para dev:
+
+- SASS (Block Element Modifier arch)
+- Compass
+- VueJS
+- Javascript Vanilla
+
+## Ambiente de desenvolvimento
+
+Para iniciar esse projeto em development enviroment, é necessário fazer o download do repositório, abri-lo através do terminal e executar a seguinte sequência de comandos:
+
+Instalar dependências do node com
+```
 npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Iniciar o npm scripts
+```
+npm run dev
+```
+
+## Ambiente de produção
+
+Para compilarmos o projeto e enviarmos para produção, execute ```npm run build```.
+
+Será criado um diretório chamado ```dist/```, jogue-o no server http.
