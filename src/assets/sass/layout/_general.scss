@@ -63,17 +63,17 @@ ul {
 }
 
 .badge {
-    background-color: transparent !important;
+    background-color: transparent;
     border: 1px solid;
-    border-radius: 20px !important;
-    padding: 5px 10px 5px 30px !important;
+    border-radius: 20px;
+    padding: 5px 10px 5px 30px;
     vertical-align: middle;
     position: relative;
     color: #aaa;
     margin-right: 10px;
-    font-size: 12px !important;
+    font-size: 12px;
     font-family: $font-roboto;
-    font-weight: 400 !important;
+    font-weight: 400;
 
     .icon {
         position: absolute;
@@ -84,7 +84,7 @@ ul {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 20px 0px 0px 20px !important;
+        border-radius: 20px 0px 0px 20px;
         color: #14191F;
 
         svg {

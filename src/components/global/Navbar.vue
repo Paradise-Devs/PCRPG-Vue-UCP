@@ -45,13 +45,13 @@
 		<signin/>
 		<signup/>
 		<overlay/>
-		<div class="nav__menu--mobile" id="toggleMobNav">
+		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav" :key="userLoggedIn">
 			<div class="navbar__menu__button">
 				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
-				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
+				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
 			</div>
 		</div>
-		<div class="nav__mobile__menu" id="navMenu">
+		<div class="nav__mobile__menu" id="navMenu" :key="userLoggedIn">
 			<div class="nav__mobile__menu__signin" v-if="!isLoggedIn">
 				<a href="#" v-b-modal.signupModal @click="closeMobNav">Cadastre-se</a>
 				<span>ou</span>
@@ -134,6 +134,8 @@
 			logout: function () {
 				store.dispatch('logout').then(() => {
 					this.$router.push(this.$route.query.redirect || '/');
+					this.userLoggedIn = false;
+					this.closeMobNav();
 				})
 			},
 			openMobNav: function () {
@@ -217,6 +219,7 @@
 		computed: {
 			isLoggedIn() {
 				this.userLoggedIn = store.getters.isLoggedIn;
+				this.groups = [ ];
 				if(this.userLoggedIn) {
 					axios.get(usersBaseURI + this.user.username)
 					.then(response => {
