@@ -22,7 +22,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
     import axios from 'axios';
 
-    var serverApi = 'http://master.mta-v.net/api/servers/detailed';
+    var serverApi = 'https://cors-anywhere.herokuapp.com/http://master.mta-v.net/api/servers/detailed';
 
     export default {
         data() {

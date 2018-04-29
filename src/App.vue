@@ -37,8 +37,8 @@
 		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
 		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 	} else {
-		tokenAPI = 'http://prod.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'http://prod.pc-rpg.com.br:3000/api/v1/login/';
+		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
+		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
 	}
 
 	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
