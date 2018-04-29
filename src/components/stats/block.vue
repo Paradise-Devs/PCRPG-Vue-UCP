@@ -8,11 +8,11 @@
                 </div>
                 <div class="stats__column">
                     <div class="number">1265</div>
-                    <div class="desc">Empregos</div>
+                    <div class="desc">Personagens</div>
                 </div>
                 <div class="stats__column">
                     <div class="number">1265</div>
-                    <div class="desc">Gangues</div>
+                    <div class="desc">Facções</div>
                 </div>
                 <div class="stats__column">
                     <div class="number">1265</div>
