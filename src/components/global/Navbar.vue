@@ -2,7 +2,7 @@
 <template>
     <div class="nav">
         <animated-fade-in>
-            <nav id="navbar" class="navbar">
+            <nav id="navbar" class="navbar" :key="userLoggedIn">
                 <b-container>
                     <b-row>
                         <b-col>
@@ -10,12 +10,12 @@
                                 <img src="./logo-text.png" alt="PC:RPG">
                             </router-link>
                         </b-col>
-                        <b-col md="8" class="navbar__menu navbar__menu--desk" :key="userLoggedIn">
+                        <b-col md="8" class="navbar__menu navbar__menu--desk">
                             <router-link to="/">Início</router-link>
                             <router-link to="/dev">Desenvolvimento</router-link>
                             <a href="https://forum.pc-rpg.com.br">Fórum</a>
                             <separator/>
-							<div v-if="!isLoggedIn">
+							<div v-if="!userLoggedIn">
 								<a href="#" v-b-modal.signupModal>Cadastre-se</a>
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<div class="nav__mobile__menu" id="navMenu" :key="userLoggedIn">
-			<div class="nav__mobile__menu__signin" v-if="!isLoggedIn">
+			<div class="nav__mobile__menu__signin" v-if="!userLoggedIn">
 				<a href="#" v-b-modal.signupModal @click="closeMobNav">Cadastre-se</a>
 				<span>ou</span>
 				<a href="#" v-b-modal.signinModal @click="closeMobNav">Entre</a>
@@ -83,7 +83,7 @@
 				<router-link to="/" @click="closeMobNav"><fa :icon="['fas', 'home']"/>Início</router-link>
 				<router-link to="/dev"><fa :icon="['fas', 'code']"/>Desenvolvimento</router-link>
 				<a href="https://forum.pc-rpg.com.br"><fa :icon="['fas', 'comments']"/>Fórum</a>
-				<div class="nav__mobile__menu__links__user" v-if="isLoggedIn">
+				<div class="nav__mobile__menu__links__user" v-if="userLoggedIn">
 					<h6 class="separator">Sua conta</h6>
 					<a :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</a>
 					<a to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</a>
@@ -133,6 +133,7 @@
             },
 			logout: function () {
 				store.dispatch('logout').then(() => {
+					this.user = store.state.user;
 					this.$router.push(this.$route.query.redirect || '/');
 					this.userLoggedIn = false;
 					if(window.innerWidth < 768) {
@@ -216,24 +217,16 @@
 				if(window.innerWidth < 768) {
 					this.closeMobNav();
 				}
-			}
-		},
-		computed: {
-			isLoggedIn() {
-				this.userLoggedIn = store.getters.isLoggedIn;
-				this.groups = [ ];
-				if(this.userLoggedIn) {
-					axios.get(usersBaseURI + this.user.username)
-					.then(response => {
-						for(var i = 0; i < response.data.included.length; i++) {
-							if(response.data.included[i].type == 'groups') {
-								this.groups.push(response.data.included[i].attributes);
-							}
-						}
-					})
-				}
-				return this.userLoggedIn;
 			},
+			user: {
+				handler: function(val, oldVal) {
+					if(this.user.token == null) {
+						this.userLoggedIn = false;
+					} else {
+						this.userLoggedIn = true;
+					}
+				}, deep: true
+			}
 		},
 		mounted() {
 			var navOverlay = document.getElementById("navOverlay");
@@ -246,13 +239,19 @@
 			
 			var closenav = document.getElementById('closeNav');
 			closenav.classList.add('navbar__menu__icon--hidden');
+
+			if(this.user.token == null) {
+				this.userLoggedIn = false;
+			} else {
+				this.userLoggedIn = true;
+			}
 		},
         created() {
             window.addEventListener('scroll', this.handleScroll);
 
 			store.watch(
 				(state)=>{
-					return store.getters.isLoggedIn
+					return store.getters.getUserData
 				},
 				(oldValue, newValue)=>{
 					this.user = store.state.user;
