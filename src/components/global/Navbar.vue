@@ -135,7 +135,9 @@
 				store.dispatch('logout').then(() => {
 					this.$router.push(this.$route.query.redirect || '/');
 					this.userLoggedIn = false;
-					this.closeMobNav();
+					if(window.innerWidth < 768) {
+						this.closeMobNav();
+					}
 				})
 			},
 			openMobNav: function () {

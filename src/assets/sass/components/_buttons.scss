@@ -16,7 +16,7 @@
     background-color: $gray-dark;
     border: 0;
     font-family: $font-open;
-    font-size: inherit !important;
+    font-size: inherit;
     position: relative;
 
     &:hover {
@@ -27,7 +27,7 @@
     &-primary {
         color: $bg-color !important;
         background-color: $blue !important;
-        font-weight: bold;
+        font-weight: bold !important;
         padding-left: 20px;
 
         &:not([disabled]), &:not(.disabled) {
