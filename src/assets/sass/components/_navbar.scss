@@ -304,6 +304,9 @@
 
                 &--close {
                     color: $white;
+                    position: absolute;
+                    top: 25%;
+                    opacity: 0;
                 }
             }
         }
