@@ -67,6 +67,7 @@
             .form-control {
                 background-color: $bg-color;
                 color: $white-lt;
+                border: 0;
 
                 &:focus {
                     background-color: $bg-color;
