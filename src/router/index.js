@@ -20,8 +20,11 @@ export default new Router({
 	routes: [
 		{ 	path: '/', 						component: IndexView },
 		{ 	path: '/dev', 					component: DevelopmentView },
-		{ 	path: '/ucp', 					component: UcpView },
-		{ 	path: '/ucp/configuracoes', 	component: UcpSettingsView },
+		{ 	path: '/ucp', 					component: UcpView,
+			children: [
+				{ 	path: 'configuracoes', 	component: UcpSettingsView },
+			]
+		},
 		{ 	path: '/jogador/:username', 	component: UserProfileView },
 		//{ 	path: '/grupo/:groupname', 		component: GroupView },
 		{ 	path: '*', 						component: NotFoundView },
