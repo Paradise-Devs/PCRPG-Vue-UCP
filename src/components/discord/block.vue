@@ -91,7 +91,6 @@
         .block {
             .block__content {
                 max-height: 322px;
-                overflow-x: auto;
 
                 .user__list {
                     .user {

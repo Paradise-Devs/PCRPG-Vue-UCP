@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="block__footer" v-if="patches.posts.length > 4">
-            <a href="http://forum.pc-rpg.com.br/t/patchnotes" class="btn btn-primary btn-block">Ver todas...</a>
+            <a href="https://forum.pc-rpg.com.br/t/patchnotes" class="btn btn-primary btn-block">Ver todas...</a>
         </div>
     </div>
 </template>
@@ -29,7 +29,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import post from './post.vue'
 
-    var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
+    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
 	var patchnotes = forumBaseURI + 'discussions?filter[q]=tag:patchnotes&sort=-startTime';
 
     export default {

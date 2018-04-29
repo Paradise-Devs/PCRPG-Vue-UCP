@@ -20,7 +20,7 @@
     
     import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
 
-    var userFindAPI = 'https://gitlab.com/api/v4/projects/5181298/users?private_token=Uyazy3QPxKsf_qiVzmah&search=';
+    var userFindAPI = 'https://gitlab.com/api/v4/projects/6159796/users?private_token=Uyazy3QPxKsf_qiVzmah&search=';
 
     export default {
         props: {

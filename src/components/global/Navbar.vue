@@ -10,29 +10,24 @@
                                 <img src="./logo-text.png" alt="PC:RPG">
                             </router-link>
                         </b-col>
-                        <b-col md="8" class="navbar__menu navbar__menu--desk">
+                        <b-col md="8" class="navbar__menu navbar__menu--desk" :key="userLoggedIn">
                             <router-link to="/">Início</router-link>
                             <router-link to="/dev">Desenvolvimento</router-link>
-                            <a href="/forum">Fórum</a>
+                            <a href="https://forum.pc-rpg.com.br">Fórum</a>
                             <separator/>
 							<div v-if="!isLoggedIn">
 								<a href="#" v-b-modal.signupModal>Cadastre-se</a>
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
 							<div class="navbar__menu__user" v-else>
-								<b-dropdown no-caret class="navbar__menu__user__notifications">
-									<template slot="button-content">
-										<fa :icon="['fas', 'bell']" />
-									</template>
-								</b-dropdown>
 								<b-dropdown no-caret right class="navbar__menu__user__info">
 									<template slot="button-content">
-										<img class="navbar__menu__user__info__avatar" :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
+										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
-										<span class="Button-label">{{ user.attributes.username }}</span>
+										<span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
 									</template>
-									<b-dropdown-item :href="'http://forum.pc-rpg.com.br/u/' + user.attributes.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
-									<b-dropdown-item href="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
+									<b-dropdown-item :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
+									<b-dropdown-item href="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
 									<b-dropdown-divider/>
 									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
 								</b-dropdown>
@@ -50,26 +45,25 @@
 		<signin/>
 		<signup/>
 		<overlay/>
-		<div class="nav__menu--mobile" id="toggleMobNav">
+		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav" :key="userLoggedIn">
 			<div class="navbar__menu__button">
 				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
-				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
+				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
 			</div>
 		</div>
-		<div class="nav__mobile__menu" id="navMenu">
+		<div class="nav__mobile__menu" id="navMenu" :key="userLoggedIn">
 			<div class="nav__mobile__menu__signin" v-if="!isLoggedIn">
 				<a href="#" v-b-modal.signupModal @click="closeMobNav">Cadastre-se</a>
 				<span>ou</span>
 				<a href="#" v-b-modal.signinModal @click="closeMobNav">Entre</a>
 			</div>
 			<div class="nav__mobile__menu__user" v-else>
-				<a href="#" @click="logout" class="logout"><fa :icon="['fas', 'sign-out-alt']"/></a>
 				<div class="nav__mobile__menu__user__info__avatar">
-					<img :src="user.attributes.avatarUrl" v-if="user.attributes.avatarUrl != null" />
-					<div class="empty" v-else> ? </div>
+					<img :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
+					<div class="nav__mobile__menu__user__info__avatar--empty" v-else> ? </div>
 				</div>
 				<div class="nav__mobile__menu__user__info__name">
-					Olá, {{ user.attributes.username }}!
+					Olá, {{ user.forumAtt.attributes.username }}!
 				</div>
 				<div class="nav__mobile__menu__user__info__tags">
 					<b-badge 
@@ -88,11 +82,12 @@
 				<h6 class="separator separator--general">Navegação geral</h6>
 				<router-link to="/" @click="closeMobNav"><fa :icon="['fas', 'home']"/>Início</router-link>
 				<router-link to="/dev"><fa :icon="['fas', 'code']"/>Desenvolvimento</router-link>
-				<a href="/forum"><fa :icon="['fas', 'comments']"/>Fórum</a>
+				<a href="https://forum.pc-rpg.com.br"><fa :icon="['fas', 'comments']"/>Fórum</a>
 				<div class="nav__mobile__menu__links__user" v-if="isLoggedIn">
 					<h6 class="separator">Sua conta</h6>
-					<router-link :to="'/jogador/' + user.attributes.username"><fa :icon="['fas', 'user']"/>Seu perfil</router-link>
-					<router-link to="http://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</router-link>
+					<a :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</a>
+					<a to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</a>
+					<a href="#" @click="logout"><fa :icon="['fas', 'sign-out-alt']"/>Sair</a>
 				</div>
 			</div>
 		</div>
@@ -111,7 +106,7 @@
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import { bell, user, cog, signOutAlt, bars, times, home, code, comments } from '@fortawesome/fontawesome-free-solid';
 
-	var usersBaseURI = 'http://forum.pc-rpg.com.br/api/users/';
+	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
         data: () => {
@@ -139,6 +134,8 @@
 			logout: function () {
 				store.dispatch('logout').then(() => {
 					this.$router.push(this.$route.query.redirect || '/');
+					this.userLoggedIn = false;
+					this.closeMobNav();
 				})
 			},
 			openMobNav: function () {
@@ -222,11 +219,21 @@
 		computed: {
 			isLoggedIn() {
 				this.userLoggedIn = store.getters.isLoggedIn;
+				this.groups = [ ];
+				if(this.userLoggedIn) {
+					axios.get(usersBaseURI + this.user.username)
+					.then(response => {
+						for(var i = 0; i < response.data.included.length; i++) {
+							if(response.data.included[i].type == 'groups') {
+								this.groups.push(response.data.included[i].attributes);
+							}
+						}
+					})
+				}
 				return this.userLoggedIn;
 			},
 		},
 		mounted() {
-			var _this = this;
 			var navOverlay = document.getElementById("navOverlay");
 			navOverlay.style.display = 'none';
 
@@ -237,19 +244,6 @@
 			
 			var closenav = document.getElementById('closeNav');
 			closenav.classList.add('navbar__menu__icon--hidden');
-
-			new Promise((resolve) => {
-				setTimeout(() => {
-					axios.get(usersBaseURI + _this.user.attributes.username)
-					.then(response => {
-						for(var i = 0; i < response.data.included.length; i++) {
-							if(response.data.included[i].type == 'groups') {
-								this.groups.push(response.data.included[i].attributes);
-							}
-						}
-					})
-				}, 2000)
-			});
 		},
         created() {
             window.addEventListener('scroll', this.handleScroll);

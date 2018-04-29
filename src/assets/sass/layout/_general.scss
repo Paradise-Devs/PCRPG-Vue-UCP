@@ -13,11 +13,11 @@ button:focus, input:focus, textarea:focus, a:focus { outline: none; }
 }
 
 body {
-    background: $bg-color;
+    background: $bg-color !important;
     overflow-y: auto;
     overflow-x: hidden;
     font-family: "Open Sans",Helvetica,Arial,sans-serif;
-    font-size: 13px;
+    font-size: 13px !important;
     line-height: 1.5;
 
     &.locked {
@@ -36,7 +36,7 @@ body {
 a {
     cursor: pointer;
     color: #526cff;
-    text-decoration: none;
+    text-decoration: none !important;
 
     &:hover {
         text-decoration: underline;

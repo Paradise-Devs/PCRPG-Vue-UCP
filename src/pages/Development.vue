@@ -29,7 +29,7 @@
 
 	import commits from '@/components/commits/commit.vue'
 
-	var baseuri = 'https://gitlab.com/api/v4/projects/5181298';
+	var baseuri = 'https://gitlab.com/api/v4/projects/6159796';
 	var statsApi = baseuri + '?statistics=true&private_token=qn42srqy59sVqMtCnaYp';
 	var commitsApi = baseuri + '/repository/commits?ref_name=development&private_token=qn42srqy59sVqMtCnaYp&page=1&per_page=10';
 

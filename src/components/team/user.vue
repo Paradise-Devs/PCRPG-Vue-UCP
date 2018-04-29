@@ -1,10 +1,10 @@
 <template>
     <div class="user">
-        <a :href="'http://forum.pc-rpg.com.br/u/' + user.username" class="user__avatar">
+        <a :href="'https://forum.pc-rpg.com.br/u/' + user.username" class="user__avatar">
             <img class="user__avatar__img" :src="user.avatarUrl" v-if="user.avatarUrl != null">
             <div class="user__avatar--empty" v-else> ? </div>
         </a>
-        <a :href="'http://forum.pc-rpg.com.br/u/' + user.username" class="user__content">
+        <a :href="'https://forum.pc-rpg.com.br/u/' + user.username" class="user__content">
             <h3 class="user__name">{{ user.username }}</h3>
             <ul class="user__info">
                 <li>

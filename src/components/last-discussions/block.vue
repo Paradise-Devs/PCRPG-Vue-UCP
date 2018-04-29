@@ -25,7 +25,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import post from './post.vue'
 
-    var forumBaseURI = 'http://forum.pc-rpg.com.br/api/';
+    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
 	var lastDiscussions = forumBaseURI + 'discussions?sort=-startTime';
     
     export default {

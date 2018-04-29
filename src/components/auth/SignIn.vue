@@ -17,7 +17,7 @@
 			<b-form-group>
 				<b-form-input
 					type="text"
-					v-model="userdata.username"
+					v-model="user.username"
 					ref="usernameField"
 					required
 					placeholder="Nome de usuário ou Email"
@@ -27,7 +27,7 @@
 			<b-form-group>
 				<b-form-input
 					type="password"
-					v-model="userdata.password"
+					v-model="user.password"
 					required
 					placeholder="Senha"
 					autocomplete="on"
@@ -60,19 +60,26 @@
 	import signup from '@/components/auth/SignUp'
 	import spinner from 'vue-spinner/src/MoonLoader.vue';
 
-	var loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	var forumAPI = 'http://forum.pc-rpg.com.br/api/users/';
+	var loginAPI;
+
+	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
+		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+	} else {
+		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
+	}
+
+	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
 			return {
 				context: 'login context',
 
-				userdata: {
+				user: {
 					username: '',
 					password: '',
-					groups: [ ],
-					token: null
+					token: null,
+					forumAtt: [ ]
 				},
 				rememberme: false,
 				error: null,
@@ -97,8 +104,8 @@
 				var _this = this;
 
 				axios.post(loginAPI, {
-					username: this.userdata.username,
-					password: this.userdata.password,
+					username: this.user.username,
+					password: this.user.password,
 				})
 				.then(function (response) {
 					if(response.data.error) {
@@ -107,7 +114,7 @@
 						_this.loading = false;
 						reject()
 					} else {
-						_this.userdata.token = response.data.token;
+						_this.user.token = response.data.token;
 						_this.authUser();
 					}
 				})
@@ -120,29 +127,21 @@
 			authUser: function() {
 				var _this = this;
 
-				new Promise((resolve) => {
-					setTimeout(() => {
-						axios.get(forumAPI + this.userdata.username)
-						.then(response => {
-							this.userdata.attributes = response.data.data.attributes;
-
-							for(var i = 0; i < response.data.included.length; i++) {
-								if(response.data.included[i].type == 'groups') {
-									this.userdata.groups.push(response.data.included[i].attributes);
-								}
-							}
-						})
-					}, 2000)
+				axios.get(usersBaseURI + this.user.username)
+				.then(response => {
+					this.user.forumAtt = response.data.data;
+					this.dispatchLogin();
 				})
-
-				new Promise((resolve) => {
-					setTimeout(() => {
-						store.dispatch('login', _this.userdata).then(() => {
-							_this.hideModal();
-							_this.loading = false;
-						})
-					}, 4000)
+				.catch(function (error) {
+					console.log(error);
+					_this.loading = false;
 				})
+			},
+			dispatchLogin() {
+				store.dispatch('login', this.user).then(() => {
+					this.loading = false;
+					this.hideModal();
+				});
 			}
 		}
 	}

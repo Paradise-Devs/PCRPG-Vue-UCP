@@ -25,7 +25,7 @@
 					v-model="user.username"
 					ref="usernameField"
 					placeholder="Nome de usuário"
-					v-validate="{ required: true, regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 3, max: 15 }"
+					v-validate="{ required: true, regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 5, max: 15 }"
 					name="username"
 					:class="{ 'is-invalid': errors.has('username') || errorUsername, 'is-valid': !errors.has('username') && user.username.length != 0 }"
 					:state="null"
@@ -72,7 +72,8 @@
 					variant="primary"
 					:disabled="	loading || errorUsername != null || errorUsername != null ||
 								errors.has('password') || errors.has('email') || errors.has('username') ||
-								user.password.length === 0 ||user.email.length === 0 || user.username.length === 0"
+								user.password.length === 0 ||user.email.length === 0 || user.username.length === 0 ||
+								emailChecking || usernameChecking"
 					block
 					class="loginButton"
 				>
@@ -96,11 +97,20 @@
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 	import beat from 'vue-spinner/src/BeatLoader.vue';
 
-	var usersEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	var registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
-	var loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	var forumTokenEndpoint = 'http://forum.pc-rpg.com.br/api/token';
-	var forumUsersEndpoint = 'http://forum.pc-rpg.com.br/api/users';
+	var usersEndpoint, registerEndpoint, loginEndpoint;
+
+	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
+		usersEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
+		registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
+		loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+	} else {
+		usersEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
+		registerEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/register/';
+		loginEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
+	}
+
+	var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';
+	var forumUsersEndpoint = 'https://forum.pc-rpg.com.br/api/users';
 
 	export default {
 		data() {
@@ -110,10 +120,8 @@
 					password: '',
 					email: '',
 					token: null,
-					forumToken: null,
 					forumAtt: [ ]
 				},
-				masterToken: null,
 				errorUsername: null,
 				errorEmail: null,
 				loading: false,
@@ -128,9 +136,6 @@
 			signin,
 			store
 		},
-		mounted() {
-			this.getMasterToken();
-		},
 		methods: {
 			hideModal: function () {
 				this.$refs.signup.hide()
@@ -139,7 +144,7 @@
 				this.$refs.usernameField.focus();
 			},
 			checkIfUserExists: function () {
-				if(this.user.username.length >= 3) {
+				if(this.user.username.length >= 5) {
 					let _this = this;
 
 					_this.usernameChecking = true;
@@ -206,21 +211,6 @@
 					})
 				}
 			},
-			getMasterToken: function() {
-				let _this = this;
-
-				axios.post(forumTokenEndpoint, {
-					identification: "Administrator",
-					password: "4QZPYp#DpkyP-Y4K"
-				})
-				.then(response => {
-					 _this.masterToken = response.data.token;
-				})
-				.catch(function (error) {
-					console.log(error);
-					_this.loading = false;
-				})
-			},
 			registerUserForumAccount: function(usernameEx, passwordEx, emailEx) {
 				var _this = this;
 
@@ -236,11 +226,11 @@
 				},
 				{
 					headers: {
-						"Authorization": "Token " + _this.masterToken
+						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
 					}
 				})
 				.then(response => {
-					_this.user.forumAtt = response.data.data.attributes;
+					_this.user.forumAtt = response.data.data;
 					_this.login(usernameEx, passwordEx);
 				})
 				.catch(errorEx => {

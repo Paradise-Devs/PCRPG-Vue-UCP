@@ -1,5 +1,6 @@
 .block {
     margin-bottom: 40px;
+    position: relative;
     @include tablet {
         margin-bottom: 0px;
     }
@@ -24,6 +25,8 @@
 
     .block__content {
         border: 1px solid $gray-dark;
+        overflow-x: hidden;
+        overflow-y: auto;
 
         &--footerless {
             border-bottom-left-radius: 5px;
@@ -59,5 +62,10 @@
         padding: 8px 10px;
         text-align: center;
         min-height: 52px;
+    }
+
+    .loader {
+        width: 100%;
+        height: 64px;
     }
 }
