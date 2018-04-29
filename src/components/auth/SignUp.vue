@@ -104,9 +104,9 @@
 		registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
 		loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 	} else {
-		usersEndpoint = 'http://prod.pc-rpg.com.br:3000/api/v1/players/';
-		registerEndpoint = 'http://prod.pc-rpg.com.br:3000/api/v1/register/';
-		loginEndpoint = 'http://prod.pc-rpg.com.br:3000/api/v1/login/';
+		usersEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
+		registerEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/register/';
+		loginEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
 	}
 
 	var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';

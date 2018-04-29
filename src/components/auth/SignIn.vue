@@ -65,7 +65,7 @@
 	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
 		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 	} else {
-		loginAPI = 'http://prod.pc-rpg.com.br:3000/api/v1/login/';
+		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
 	}
 
 	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';

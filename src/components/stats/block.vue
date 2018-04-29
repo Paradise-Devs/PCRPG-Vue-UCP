@@ -30,7 +30,7 @@
     if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
 		statsEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/statistics';
 	} else {
-		statsEndpoint = 'http://prod.pc-rpg.com.br:3000/api/v1/statistics';
+		statsEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/statistics';
 	}
 
     export default {
