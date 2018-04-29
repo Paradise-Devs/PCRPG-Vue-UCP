@@ -68,6 +68,7 @@
 							this.fullyLoaded = true;
 							reject()
 						} else {
+							this.siteLoaded = true;
 							this.user = response.data;
 							this.user.token = response.headers['token-refresh'];
 							this.getForumData();
@@ -77,6 +78,7 @@
 						console.log(error);
 					})
 				} else {
+					this.siteLoaded = true;
 					this.dataLoaded = true;
 					this.fullyLoaded = true;
 				}
@@ -100,7 +102,6 @@
 		},
 		mounted() {
 			this.appLoaded();
-			this.siteLoaded = true;
 		},
 		components: {
 			'spinner': spinner,
