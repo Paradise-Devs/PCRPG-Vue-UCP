@@ -97,9 +97,18 @@
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 	import beat from 'vue-spinner/src/BeatLoader.vue';
 
-	var usersEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	var registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
-	var loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+	var usersEndpoint, registerEndpoint, loginEndpoint;
+
+	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
+		usersEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
+		registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
+		loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+	} else {
+		usersEndpoint = 'http://prod.pc-rpg.com.br:3000/api/v1/players/';
+		registerEndpoint = 'http://prod.pc-rpg.com.br:3000/api/v1/register/';
+		loginEndpoint = 'http://prod.pc-rpg.com.br:3000/api/v1/login/';
+	}
+
 	var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';
 	var forumUsersEndpoint = 'https://forum.pc-rpg.com.br/api/users';
 
