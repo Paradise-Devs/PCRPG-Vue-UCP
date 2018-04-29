@@ -230,7 +230,7 @@
 					}
 				})
 				.then(response => {
-					_this.user.forumAtt = response.data.data.attributes;
+					_this.user.forumAtt = response.data.data;
 					_this.login(usernameEx, passwordEx);
 				})
 				.catch(errorEx => {
