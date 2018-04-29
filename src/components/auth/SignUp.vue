@@ -25,7 +25,7 @@
 					v-model="user.username"
 					ref="usernameField"
 					placeholder="Nome de usuário"
-					v-validate="{ required: true, regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 3, max: 15 }"
+					v-validate="{ required: true, regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 5, max: 15 }"
 					name="username"
 					:class="{ 'is-invalid': errors.has('username') || errorUsername, 'is-valid': !errors.has('username') && user.username.length != 0 }"
 					:state="null"
@@ -135,7 +135,7 @@
 				this.$refs.usernameField.focus();
 			},
 			checkIfUserExists: function () {
-				if(this.user.username.length >= 3) {
+				if(this.user.username.length >= 5) {
 					let _this = this;
 
 					_this.usernameChecking = true;
