@@ -229,14 +229,16 @@
 				this.isShow = 'none'
 			})
 
-			axios.get(usersBaseURI + this.user.username)
-			.then(response => {
-				for(var i = 0; i < response.data.included.length; i++) {
-					if(response.data.included[i].type == 'groups') {
-						this.groups.push(response.data.included[i].attributes);
+			if(this.userLoggedIn) {
+				axios.get(usersBaseURI + this.user.username)
+				.then(response => {
+					for(var i = 0; i < response.data.included.length; i++) {
+						if(response.data.included[i].type == 'groups') {
+							this.groups.push(response.data.included[i].attributes);
+						}
 					}
-				}
-			})
+				})
+			}
 			
 			var closenav = document.getElementById('closeNav');
 			closenav.classList.add('navbar__menu__icon--hidden');
