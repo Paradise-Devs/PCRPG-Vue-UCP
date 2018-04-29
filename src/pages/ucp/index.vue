@@ -1,12 +1,21 @@
 <!--suppress ALL -->
 <template>
-	<router-view/>
+	<b-container>
+		<div v-if="userLoggedIn">
+			<ucpmenu/>
+			<router-view/>
+		</div>
+		<div v-else>
+			ta deslogado ai, camarada
+		</div>
+	</b-container>
 </template>
 
 <script>
 	import Vue from 'vue';
 	import axios from 'axios';
 	import { store } from '@/vuex/store';
+	import ucpmenu from '@/components/ucp-menu/block'
 
 	var tokenAPI, loginAPI;
 
@@ -47,9 +56,18 @@
 			} else {
 				this.userLoggedIn = true;
 			}
+
+			store.watch(
+				(state)=>{
+					return store.getters.getUserData
+				},
+				(oldValue, newValue)=>{
+					this.user = store.state.user;
+				}
+			)
 		},
 		components: {
-            
+            ucpmenu
 		}
 	}
 </script>
