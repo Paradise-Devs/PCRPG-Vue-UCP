@@ -47,7 +47,7 @@
 		},
 		methods: {
 			appLoaded: function() {
-				var token = localStorage.getItem("token");
+				let token = localStorage.getItem("token");
 
 				if(token != null) {
 					axios.post(tokenAPI, {

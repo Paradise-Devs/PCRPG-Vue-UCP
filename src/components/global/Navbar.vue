@@ -13,7 +13,7 @@
                         <b-col md="8" class="navbar__menu navbar__menu--desk" :key="userLoggedIn">
                             <router-link to="/">Início</router-link>
                             <router-link to="/dev">Desenvolvimento</router-link>
-                            <a href="/forum">Fórum</a>
+                            <a href="https://forum.pc-rpg.com.br">Fórum</a>
                             <separator/>
 							<div v-if="!isLoggedIn">
 								<a href="#" v-b-modal.signupModal>Cadastre-se</a>
@@ -24,7 +24,7 @@
 									<template slot="button-content">
 										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
-										<span class="Button-label">{{ user.username }}</span>
+										<span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
 									</template>
 									<b-dropdown-item :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
 									<b-dropdown-item href="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
@@ -63,7 +63,7 @@
 					<div class="nav__mobile__menu__user__info__avatar--empty" v-else> ? </div>
 				</div>
 				<div class="nav__mobile__menu__user__info__name">
-					Olá, {{ user.username }}!
+					Olá, {{ user.forumAtt.attributes.username }}!
 				</div>
 				<div class="nav__mobile__menu__user__info__tags">
 					<b-badge 
@@ -82,11 +82,11 @@
 				<h6 class="separator separator--general">Navegação geral</h6>
 				<router-link to="/" @click="closeMobNav"><fa :icon="['fas', 'home']"/>Início</router-link>
 				<router-link to="/dev"><fa :icon="['fas', 'code']"/>Desenvolvimento</router-link>
-				<a href="/forum"><fa :icon="['fas', 'comments']"/>Fórum</a>
+				<a href="https://forum.pc-rpg.com.br"><fa :icon="['fas', 'comments']"/>Fórum</a>
 				<div class="nav__mobile__menu__links__user" v-if="isLoggedIn">
 					<h6 class="separator">Sua conta</h6>
-					<router-link :to="'/jogador/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</router-link>
-					<router-link to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</router-link>
+					<a :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</a>
+					<a to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</a>
 					<a href="#" @click="logout"><fa :icon="['fas', 'sign-out-alt']"/>Sair</a>
 				</div>
 			</div>
@@ -221,8 +221,6 @@
 			},
 		},
 		mounted() {
-			var _this = this;
-			console.log(this.user);
 			var navOverlay = document.getElementById("navOverlay");
 			navOverlay.style.display = 'none';
 
