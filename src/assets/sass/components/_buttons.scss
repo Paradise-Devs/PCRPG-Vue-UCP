@@ -16,7 +16,7 @@
     background-color: $gray-dark;
     border: 0;
     font-family: $font-open;
-    font-size: inherit;
+    font-size: inherit !important;
     position: relative;
 
     &:hover {

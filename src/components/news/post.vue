@@ -9,7 +9,7 @@
             <ul class="post__content__info">
                 <li class="post__content__info__created">
                     <username-spinner :loading="avatarLoading" color="#303846" size="5px" class="username__loader"></username-spinner> 
-                    <span v-if="avatarProcessed"><b>{{ username }}</b> publicou a {{ post.attributes.startTime | moment }}</span>
+                    <span v-if="avatarProcessed"><b>{{ username }}</b> publicou há {{ post.attributes.startTime | moment }}</span>
                 </li>
             </ul>
         </a>
