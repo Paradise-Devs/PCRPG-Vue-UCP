@@ -87,7 +87,17 @@
 				axios.get(usersBaseURI + this.user.username)
 				.then(response => {
 					this.user.forumAtt = response.data.data;
-					this.user.forumAtt.included = response.data.included;
+
+					let v = [ ];
+
+					for(var i in response.data.included) {
+						if(response.data.included[i].type == "groups") {
+							v.push(response.data.included[i].attributes);
+						}
+					}
+
+					this.user.groups = v;
+
 					this.authUser();
 				})
 				.catch(error => {

@@ -79,7 +79,8 @@
 					username: '',
 					password: '',
 					token: null,
-					forumAtt: [ ]
+					forumAtt: [ ],
+					groups: [ ]
 				},
 				rememberme: false,
 				error: null,
@@ -134,7 +135,13 @@
 				})
 				.then(response => {
 					this.user.forumAtt = response.data.data;
-					this.user.forumAtt.included = response.data.included;
+
+					for(var i in response.data.included) {
+						console.log(response.data.included[i].type);
+						if(response.data.included[i].type == "groups") {
+							this.user.groups.push(response.data.included[i].attributes);
+						}
+					}
 					this.dispatchLogin();
 				})
 				.catch(function (error) {
@@ -144,7 +151,6 @@
 			},
 			dispatchLogin() {
 				store.dispatch('login', this.user).then(() => {
-					console.log(this.user);
 					this.loading = false;
 					this.hideModal();
 				});

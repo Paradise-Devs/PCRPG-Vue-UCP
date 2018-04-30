@@ -68,7 +68,7 @@
 				</div>
 				<div class="nav__mobile__menu__user__info__tags">
 					<b-badge 
-						v-for="group in groups"
+						v-for="group in user.groups"
 						:key="group.id"
 						:style="{ borderColor: group.color }"
 					>
