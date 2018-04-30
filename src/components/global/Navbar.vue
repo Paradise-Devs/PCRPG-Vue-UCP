@@ -26,8 +26,9 @@
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
 										<span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
 									</template>
-									<b-dropdown-item :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
-									<b-dropdown-item href="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
+									<b-dropdown-item to="/ucp" exact><fa :icon="['fas', 'wrench']" />Painel do usuário</b-dropdown-item>
+									<b-dropdown-item :to="'/jogador/' + user.username" exact><fa :icon="['fas', 'address-card']" /> Perfil</b-dropdown-item>
+									<b-dropdown-item to="/ucp/configuracoes" exact><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
 									<b-dropdown-divider/>
 									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
 								</b-dropdown>
@@ -85,8 +86,9 @@
 				<a href="https://forum.pc-rpg.com.br"><fa :icon="['fas', 'comments']"/>Fórum</a>
 				<div class="nav__mobile__menu__links__user" v-if="userLoggedIn">
 					<h6 class="separator">Sua conta</h6>
-					<a :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</a>
-					<a to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</a>
+					<router-link to="/ucp" @click="closeMobNav" exact><fa :icon="['fas', 'wrench']"/>Painel do usuário</router-link>
+					<router-link to="/ucp/perfil" @click="closeMobNav" exact><fa :icon="['fas', 'address-card']"/>Seu perfil</router-link>
+					<router-link to="/ucp/configuracoes" @click="closeMobNav" exact><fa :icon="['fas', 'cog']"/>Configurações</router-link>
 					<a href="#" @click="logout"><fa :icon="['fas', 'sign-out-alt']"/>Sair</a>
 				</div>
 			</div>
@@ -104,7 +106,7 @@
 	import signup from '@/components/auth/SignUp';
 
 	import fontawesome from '@fortawesome/vue-fontawesome';
-	import { bell, user, cog, signOutAlt, bars, times, home, code, comments } from '@fortawesome/fontawesome-free-solid';
+	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench } from '@fortawesome/fontawesome-free-solid';
 
 	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 

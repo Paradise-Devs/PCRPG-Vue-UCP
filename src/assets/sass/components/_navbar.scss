@@ -209,12 +209,21 @@
                             outline: none;
                         }
 
+                        &.active {
+                            color: $white;
+                            background-color: $gray-hover;
+                        }
+
                         svg {
                             float: left;
                             margin-left: -25px;
                             margin-top: 2px;
                             width: 1.28571429em;
                             text-align: center;
+                        }
+
+                        a {
+                            color: inherit !important;
                         }
                     }
 
