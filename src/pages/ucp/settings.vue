@@ -2,7 +2,7 @@
 <template>
 	<b-container class="ucp__config">
 		<b-row>
-			<b-card class="col-12 text-center">
+			<b-card class="col-12 text-center card--bordered">
 				<div class="card__icon">
 					<fa :icon="['fas', 'info-circle']"/>
 				</div>
@@ -260,7 +260,7 @@
 				},
 				{
 					headers: {
-						"Authorization": "Token " + store.getters.getMasterToken + 'userId=' + this.user.forumAtt.id
+						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
 					}
 				})
 				.then(response => {						
