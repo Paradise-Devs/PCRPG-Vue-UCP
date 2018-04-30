@@ -1,56 +1,58 @@
-.card {
-    margin: 20px 0px;
-    background-color: #1B2028;
-    border: none;
-    position: relative;
-    min-height: 160px;
-    
-    .card-body {
-        height: auto;
-        padding: 0;
-
-        @include tablet {
-            height: 160px;
-        }
+.profile__component {
+    .card {
+        margin: 20px 0px;
+        background-color: #1B2028;
+        border: none;
+        position: relative;
+        min-height: 160px;
         
-        &--avatar {
-            width: 100%;
-            height: 150px;
-            text-align: center;
-            display: block;
-            background-color: $gray-dark;
-            border-top-left-radius: 0.25rem;
-            border-bottom-left-radius: 0.25rem;
-            position: relative;
+        .card-body {
+            height: auto;
+            padding: 0;
 
             @include tablet {
+                height: 160px;
+            }
+            
+            &--avatar {
+                width: 100%;
+                height: 150px;
+                text-align: center;
+                display: block;
+                background-color: $gray-dark;
+                border-top-left-radius: 0.25rem;
+                border-bottom-left-radius: 0.25rem;
+                position: relative;
+
+                @include tablet {
+                    display: inline-block;
+                    width: 180px;
+                    height: 100%;
+                }
+
+                img {
+                    height: 80%;
+                    border-radius: 100%;
+                    @include center(absolute);
+                }
+            }
+
+            &--content {
+                padding: 10px 20px;
                 display: inline-block;
-                width: 180px;
-                height: 100%;
-            }
+                vertical-align: top;
 
-            img {
-                height: 80%;
-                border-radius: 100%;
-                @include center(absolute);
-            }
-        }
+                .username {
+                    margin: 0;
+                }
 
-        &--content {
-            padding: 10px 20px;
-            display: inline-block;
-            vertical-align: top;
+                .tags {
+                    margin-top: 10px;
+                }
 
-            .username {
-                margin: 0;
-            }
-
-            .tags {
-                margin-top: 10px;
-            }
-
-            .stats {
-                margin-top: 40px;
+                .stats {
+                    margin-top: 40px;
+                }
             }
         }
     }
@@ -80,7 +82,20 @@
     }    
 }
 
-.profile {
+.ucp {
+    .card {
+        margin-bottom: 20px;
+        background-color: $gray-active;
+        border: 2px dashed $gray-dark;
+        position: relative;
+
+        &__icon {
+            opacity: .3;
+            left: 20px;
+            @include centerY(absolute);
+            font-size: 30px;
+        }
+    }
     &__config {
         &__block {
             padding: 20px;
@@ -88,6 +103,8 @@
             text-align: center;
             border-radius: 5px;
             margin-bottom: 30px;
+            position: relative;
+            min-height: 400px;
 
             &__title {
                 font-size: 14px;
@@ -101,7 +118,13 @@
             &__text {
                 padding: 10px 0;
                 text-align: left;
-                min-height: 100px;
+                min-height: 111px;
+            }
+
+            form {
+                position: absolute;
+                bottom: 20px;
+                width: calc(100% - 40px);
             }
         }
     }

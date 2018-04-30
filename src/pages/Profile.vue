@@ -1,5 +1,5 @@
 <template>
-    <b-container>
+    <b-container class="profile__component">
         <div v-if="!playerProcessed" class="loader">
             <spinner :loading="loading" color="#303846" size="90px"></spinner>
             <h2>Procurando jogador...</h2>

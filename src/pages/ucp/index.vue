@@ -1,6 +1,6 @@
 <!--suppress ALL -->
 <template>
-	<b-container class="profile">
+	<b-container class="ucp">
 		<div v-if="userLoggedIn">
 			<ucpmenu/>
 			<router-view/>
@@ -75,7 +75,7 @@
 <style lang="scss">
 	@import '../../assets/sass/main.scss';
 
-	.profile.container {
-		min-height: 58.6vh;
+	.ucp.container {
+		min-height: 60.8vh;
 	}
 </style>
