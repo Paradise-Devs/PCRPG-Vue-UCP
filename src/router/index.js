@@ -30,7 +30,6 @@ export default new Router({
 			]
 		},
 		{ 	path: '/jogador/:username', 	component: UserProfileView },
-		//{ 	path: '/grupo/:groupname', 		component: GroupView },
 		{ 	path: '*', 						component: NotFoundView },
 	]
 })

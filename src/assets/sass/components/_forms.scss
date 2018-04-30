@@ -23,34 +23,94 @@ input {
     }
 }
 
-.form-centered {
-    text-align: center;
+.form-row {
+    .v-spinner.input-spinner {
+		position: absolute;
+		right: 15px;
+		top: 15px;
+		width: 30px;
+		height: 10px;
+	}
+}
 
-    .b-form-group {
-        margin-bottom: 12px;
-        position: relative;
+form {
+    &.form--small {
+        .form-group {
+            padding: 0;
+            margin-bottom: 10px;
+        
+            .form-row {
+                margin: 0;
+        
+                .v-spinner.input-spinner {
+                    top: 8px;
+                }
+        
+                .invalid-feedback {
+                    text-align: left;
+                    font-size: 12px;
+                }
+        
+                .btn {
+                    .v-spinner {
+                        position: absolute;
+                        right: 10px;
+                        top: 1px;
+                        width: 25px;
+                    }
+                }
+            }
+        
+            .form-row > .col, .form-row > [class*="col-"] {
+                padding: 0;
+            }
+        
+            .col-form-legend {
+                padding: 0;
+                margin-bottom: 5px;
+                text-align: left;
+                font-size: 12px;
+                font-family: $font-roboto;
+                font-weight: 600;
+            }
+        }
     }
-
-    .form-control {
-        &[type=text], &[type=email], &[type=password] {
+    &.form-centered {
+        text-align: center;
+    
+        .b-form-group {
+            margin-bottom: 12px;
+            position: relative;
+        }
+    
+        .form-control {
+            &[type=text], &[type=email], &[type=password] {
+                margin: 0 auto;
+                text-align: center;
+                height: 50px;
+                padding: 15px 20px;
+                font-size: 15px;
+            }
+        }
+    
+        .btn {
             margin: 0 auto;
             text-align: center;
             height: 50px;
             padding: 15px 20px;
             font-size: 15px;
+    
+            .v-spinner {
+                position: absolute;
+                right: 10px;
+                top: 5px;
+                width: 30px;
+            }
         }
-    }
-
-    .btn {
-        margin: 0 auto;
-        text-align: center;
-        height: 50px;
-        padding: 15px 20px;
-        font-size: 15px;
-    }
-
-    .checkbox {
-        text-align: left;
+    
+        .checkbox {
+            text-align: left;
+        }
     }
 }
 
@@ -78,8 +138,8 @@ input {
     padding: 8px 13px;
     font-size: 13px;
     line-height: 1.5;
-    color: $gray;
-    background-color: $gray-dark;
+    color: $white-lt;
+    background-color: $bg-color;
     border: 0;
     border-color: transparent;
     border-radius: 4px;
@@ -92,10 +152,11 @@ input {
     &.disabled, &[disabled], &[readonly] {
         cursor: default;
         opacity: 0.5;
+        background-color: $bg-color;
     }
 
     &::placeholder {
-        font-size: 15px;
+        font-size: inherit;
         color: $gray;
         font-family: $font-open;
     }
@@ -103,14 +164,11 @@ input {
     &:focus {
         background-color: $bg-color;
         color: $white-lt;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none !important;
         border: 2px solid $blue;
-        outline: none;
     }
-}
-
-fieldset[disabled] .form-control {
-    cursor: default;
-    opacity: 0.5;
 }
 
 .form-group:last-child {

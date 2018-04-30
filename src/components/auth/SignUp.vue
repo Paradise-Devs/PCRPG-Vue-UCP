@@ -289,12 +289,4 @@
 		top: 5px;
 		width: 30px;
 	}
-
-	.v-spinner.input-spinner {
-		position: absolute;
-		right: 15px;
-		top: 15px;
-		width: 30px;
-		height: 10px;
-	}
 </style>

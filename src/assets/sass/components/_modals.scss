@@ -63,21 +63,6 @@
                     color: $blue-hover;
                 }
             }
-
-            .form-control {
-                background-color: $bg-color;
-                color: $white-lt;
-                border: 0;
-
-                &:focus {
-                    background-color: $bg-color;
-                    color: $white-lt;
-                    -webkit-box-shadow: none;
-                    -moz-box-shadow: none;
-                    box-shadow: none;
-                    border: 2px solid $blue;
-                }
-            }
         }
 
         .modal-footer {
