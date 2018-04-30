@@ -1,0 +1,60 @@
+.forumlog__container {
+    &__content {
+        background-color: $gray-hover;
+        border-radius: 0 0 5px 5px;
+        padding: 20px;
+        
+        .forum__post {
+            padding: 5px 0 0px;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid $bg-color;
+                margin-bottom: 15px;
+                padding: 5px 0 15px;
+            }
+
+            &__img {
+                vertical-align: top;
+                width: 5%;
+                border-radius: 100%;
+                display: none;
+
+                @include tablet {
+                    display: inline;
+                }
+            }
+            &__text {
+                display: inline-block;
+                width: 100%;
+                margin-left: 15px;
+                font-style: italic;
+                @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 4, $bgColor: $gray-hover);
+                margin-bottom: 0;
+                color: $gray;
+
+                @include tablet {
+                    width: 93%; 
+                }
+
+                &__info {
+                    display: block;
+                    font-style: normal;
+                    color: $gray;
+                    margin-bottom: 5px;
+                    font-family: $font-roboto;
+                    font-weight: 500;
+
+                    a {
+                        color: $blue;
+                    }
+                }
+            }
+        }
+
+        .btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto 0;
+        }
+    }
+}

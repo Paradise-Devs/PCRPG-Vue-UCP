@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import IndexView from '@/pages/Index'
 import DevelopmentView from '@/pages/Development'
 import NotFoundView from '@/pages/errors/404'
-import UserProfileView from '@/pages/Profile'
+//import UserProfileView from '@/pages/Profile'
 
 //UCP
 import UcpView from '@/pages/ucp/index'
@@ -29,7 +29,7 @@ export default new Router({
 				{ 	path: 'perfil', 		component: UcpProfileView },
 			]
 		},
-		{ 	path: '/jogador/:username', 	component: UserProfileView },
+		//{ 	path: '/jogador/:username', 	component: UserProfileView },
 		{ 	path: '*', 						component: NotFoundView },
 	]
 })
