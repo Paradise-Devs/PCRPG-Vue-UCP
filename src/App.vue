@@ -87,6 +87,7 @@
 				axios.get(usersBaseURI + this.user.username)
 				.then(response => {
 					this.user.forumAtt = response.data.data;
+					this.user.forumAtt.included = response.data.included;
 					this.authUser();
 				})
 				.catch(error => {

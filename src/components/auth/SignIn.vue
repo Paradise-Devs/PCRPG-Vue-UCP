@@ -127,9 +127,14 @@
 			authUser: function() {
 				var _this = this;
 
-				axios.get(usersBaseURI + this.user.username)
+				axios.get(usersBaseURI + this.user.username, {
+					headers: {
+						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
+					}
+				})
 				.then(response => {
 					this.user.forumAtt = response.data.data;
+					this.user.forumAtt.included = response.data.included;
 					this.dispatchLogin();
 				})
 				.catch(function (error) {
@@ -139,6 +144,7 @@
 			},
 			dispatchLogin() {
 				store.dispatch('login', this.user).then(() => {
+					console.log(this.user);
 					this.loading = false;
 					this.hideModal();
 				});
