@@ -43,10 +43,10 @@
                         <forumlog :user="user" />
                     </b-tab>
                     <b-tab title="Servidor">
-
+                        <serverlog :user="user" />
                     </b-tab>
                     <b-tab title="Histórico">
-
+                        <history :user="user" />
                     </b-tab>
                 </b-tabs>
             </b-col>
@@ -69,6 +69,8 @@
 
     import char from './char-card'
     import forumlog from './forum-log'
+    import serverlog from './server-log'
+    import history from './history'
     
     var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
     var groupsBaseURI = 'https://forum.pc-rpg.com.br/api/groups';
@@ -126,7 +128,7 @@
         components: {
             'spinner': spinner,
             'fa': fontawesome,
-            char, forumlog,
+            char, forumlog, serverlog, history,
             swiper,
             swiperSlide
         }

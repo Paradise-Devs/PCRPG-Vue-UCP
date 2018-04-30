@@ -1,9 +1,5 @@
 .forumlog__container {
-    &__content {
-        background-color: $gray-hover;
-        border-radius: 0 0 5px 5px;
-        padding: 20px;
-        
+    &__content {        
         .forum__post {
             padding: 5px 0 0px;
 
