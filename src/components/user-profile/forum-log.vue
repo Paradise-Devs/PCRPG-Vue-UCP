@@ -5,7 +5,7 @@
 			<div v-if="forum.processed">
 				<post v-for="post in lastPosts.slice(0, 5)" :key="post.id" :post="post" :user="user"/>
 			</div>
-			<a :href="'https://forum.pc-rpg.com.br/u/' + user.username" class="btn btn-primary" target="_blank">Ver todos</a>
+			<a :href="'https://forum.pc-rpg.com.br/u/' + user.username" class="btn btn-primary" target="_blank" v-if="lastPosts.length >= 5">Ver todos</a>
 		</div>
 	</div>
 </template>
