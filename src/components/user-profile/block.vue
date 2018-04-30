@@ -92,12 +92,7 @@
                 },       
                 charsData: [
                     {
-                        level: 240,
-                        name: 'Antonio Nunes',
-                        job: 'Entregador de Pizza',
-                        faction: 'Sem Tetos',
-                        timeplayed: '14h 22m',
-                        empty: false,
+                        empty: true,
                     },
                     {
                         empty: true,
