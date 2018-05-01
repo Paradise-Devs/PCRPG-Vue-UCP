@@ -54,9 +54,10 @@ form {
     
             .btn {
                 .v-spinner {
+                    margin: 0;
                     position: absolute;
                     right: 10px;
-                    top: 1px;
+                    @include centerY(absolute);
                     width: 25px;
                 }
             }
@@ -106,6 +107,7 @@ form {
             font-size: 15px;
     
             .v-spinner {
+                margin: 0;
                 position: absolute;
                 right: 10px;
                 top: 5px;

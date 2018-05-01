@@ -20,30 +20,34 @@
 					<b-form-group>
 						<b-form-input 
 							type="email"
-							v-model="changed.email"
+							v-model="newEmail"
 							placeholder="E-mail novo"
 							v-validate="'email'"
-							name="email"
-							id="email"
-							:class="{ 'is-invalid': errors.has('email') || errorEmail, 'is-valid': !errors.has('email') && changed.email.length != 0 && !errorEmail }"
+							data-vv-scope="emailScope"
+							name="email" 
+							:class="{ 'is-invalid': errors.has('emailScope.email') || errorEmail, 'is-valid': !errors.has('emailScope.email') && newEmail.length != 0 && !errorEmail }"
 							:state="null"
-							@change="checkEmail()"
-							@blur="checkEmail()"
 							autocomplete="off"
+							@change="checkEmail()"
 							:disabled="emailChecking"
 						/>
 						
 						<beatloader :loading="emailChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
-						<div class="invalid-feedback">{{ errors.first('email') }} {{ errorEmail }}</div>
+						<div class="invalid-feedback">{{ errors.first('emailScope.email') }} <span v-if="errorEmail">{{ errorEmail }}</span></div>
 					</b-form-group>
 					<b-form-group>
 						<b-button
 							type="submit"
-							variant="primary"
-							:disabled="loadingEmail || errors.has('email') || changed.email.length === 0 || emailChecking || errorEmail"
+							:class="{'btn-success': emailChanged, 'btn-primary': !emailChanged }"
+							:disabled="loadingEmail || errors.has('emailScope.email') || newEmail.length === 0 || emailChecking || errorEmail"
 							block
 						>
-							Alterar <moonloader :loading="loadingEmail" color="#303846" size="25px"></moonloader>
+							<transition name="fade">
+								<span v-if="emailChanged">E-mail alterado! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-else>Alterar e-mail</span>
+							</transition>
+
+							<moonloader :loading="loadingEmail" color="#303846" size="25px"></moonloader>
 						</b-button>
 					</b-form-group>
 				</form>
@@ -55,33 +59,33 @@
 					<b-form-group>
 						<b-form-input 
 							type="password"
-							v-model="oldpassword"
+							v-model="oldPassword"
 							placeholder="Senha atual"
-							v-validate="'required|min:8'"
+							v-validate="'min:8'"
 							name="oldPassword"
-							@change="checkPassword()"
-							@blur="checkPassword()"
-							:class="{ 'is-invalid': errors.has('oldPassword') || errorPassword, 'is-valid': !errors.has('oldPassword') && oldpassword.length != 0 && !errorPassword }"
+							data-vv-scope="passScope"
+							:class="{ 'is-invalid': errors.has('passScope.oldPassword') || errorPassword, 'is-valid': !errors.has('passScope.oldPassword') && oldPassword.length != 0 && !errorPassword }"
 							:state="null"
+							@change="checkPassword()"
 							autocomplete="on"
 						/>
 						<beatloader :loading="passChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
-						<div class="invalid-feedback">{{ errors.first('oldPassword') }} {{ errorPassword }}</div>
+						<div class="invalid-feedback">{{ errors.first('passScope.oldPassword') }} {{ errorPassword }}</div>
 					</b-form-group>
 					<b-form-group>
 						<b-form-input 
 							type="password"
-							v-model="changed.password"
+							v-model="newPassword"
 							placeholder="Nova senha"
-							v-validate="'required|min:8|confirmed:confPassword'"
+							v-validate="'min:8|confirmed:confPassword'"
 							name="newPassword"
+							data-vv-scope="passScope"
 							@change="checkPassword()"
-							@blur="checkPassword()"
-							:class="{ 'is-invalid': errors.has('newPassword') || errorNewPassword, 'is-valid': !errors.has('newPassword') && changed.password.length != 0 && !errorNewPassword }"
+							:class="{ 'is-invalid': errors.has('passScope.newPassword') || errorNewPassword, 'is-valid': !errors.has('passScope.newPassword') && newPassword.length != 0 && !errorNewPassword }"
 							:state="null"
 							autocomplete="on"
 						/>
-						<div class="invalid-feedback">{{ errors.first('newPassword') }}</div>
+						<div class="invalid-feedback">{{ errors.first('passScope.newPassword') }}</div>
 						<div class="invalid-feedback" v-if="errorNewPassword">{{ errorNewPassword }}</div>
 					</b-form-group>
 					<b-form-group>
@@ -89,59 +93,71 @@
 							type="password"
 							placeholder="Confirmar nova senha"
 							name="confPassword"
-							:class="{ 'is-invalid': errors.has('confPassword'), 'is-valid': !errors.has('confPassword') && changed.password.length != 0 }"
+							v-model="confPassword"
+							data-vv-scope="passScope"
+							@change="checkPassword()"
+							:class="{ 'is-invalid': errors.has('passScope.newPassword'), 'is-valid': !errors.has('passScope.newPassword') && confPassword.length != 0 }"
 							:state="null"
 							autocomplete="on"
 						/>
-						<div class="invalid-feedback" v-show="errors.has('confPassword')">{{ errors.first('confPassword') }}</div>
 					</b-form-group>
 					<b-form-group>
 						<b-button
 							type="submit"
-							variant="primary"
-							:disabled="errors.has('oldPassword') || errors.has('newPassword') || errors.has('confPassword') ||
-										changed.password.length === 0 || oldpassword.length === 0 ||
+							:class="{'btn-success': passwordChanged, 'btn-primary': !passwordChanged }"
+							:disabled="errors.has('passScope.oldPassword') || errors.has('passScope.newPassword') || errors.has('passScope.confPassword') ||
+										newPassword.length === 0 || oldPassword.length === 0 ||
 										passChecking || errorPassword || errorNewPassword || loadingPassword"
 							block
 						>
-							Alterar <moonloader :loading="loadingPassword" color="#303846" size="25px"></moonloader>
+							<transition name="fade">
+								<span v-if="passwordChanged">Senha alterada! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-else>Alterar senha</span>
+							</transition>
+
+							<moonloader :loading="loadingPassword" color="#303846" size="25px"></moonloader>
 						</b-button>
 					</b-form-group>
 				</form>
 			</b-col>
 			<b-col md="3" sm="12" class="ucp__config__block">
-				<h3 class="ucp__config__block__title">Alterar usuário</h3>
-				<p class="ucp__config__block__text">Seu usuário é único e é como você gostaria de ser chamado fora do jogo. Lembre-se de respeitar a política de nome de usuário que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
+				<h3 class="ucp__config__block__title">Alterar apelido</h3>
+				<p class="ucp__config__block__text">Seu apelido é único e é como você gostaria de ser chamado fora do jogo, também é o seu login para autenticar-se. Lembre-se de respeitar a política de apelidos que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
 				<form class="form--small" v-on:submit.prevent="changeUsername()">
-					<b-form-group label="Usuário atual:">
+					<b-form-group label="Apelido atual:">
 						<b-form-input type="text" :value="user.forumAtt.attributes.username" disabled></b-form-input>
 					</b-form-group>
 					<b-form-group>
 						<b-form-input 
 							type="text"
-							v-model="changed.username"
-							placeholder="Usuário novo"
-							v-validate="'required'"
+							placeholder="Novo apelido"
 							name="username"
-							:class="{ 'is-invalid': errors.has('username') || errorUsername, 'is-valid': !errors.has('username') && changed.username.length != 0 && !errorUsername }"
+							v-model="newUsername"
+							data-vv-scope="userScope"
+							v-validate="'min:5'"
+							:class="{ 'is-invalid': errors.has('userScope.username') || errorUsername, 'is-valid': !errors.has('userScope.username') && newUsername.length != 0 && !errorUsername }"
 							:state="null"
 							@change="checkUsername()"
-							@blur="checkUsername()"
 							autocomplete="off"
 							:disabled="usernameChecking"
 						/>
 						<beatloader :loading="usernameChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
-						<div class="invalid-feedback">{{ errors.first('username') }}</div>
+						<div class="invalid-feedback">{{ errors.first('userScope.username') }}</div>
 						<div class="invalid-feedback" v-if="errorUsername">{{ errorUsername }}</div>
 					</b-form-group>
 					<b-form-group>
 						<b-button
 							type="submit"
-							variant="primary"
-							:disabled="loadingUsername || errors.has('username') || changed.username.length === 0 || errorUsername || usernameChecking"
+							:class="{'btn-success': usernameChanged, 'btn-primary': !usernameChanged }"
+							:disabled="loadingUsername || errors.has('userScope.username') || newUsername.length === 0 || errorUsername || usernameChecking"
 							block
 						>
-							Alterar <moonloader :loading="loadingUsername" color="#303846" size="25px"></moonloader>
+							<transition name="fade">
+								<span v-if="usernameChanged">Apelido alterado! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-else>Alterar apelido</span>
+							</transition>
+							
+							<moonloader :loading="loadingUsername" color="#303846" size="25px"></moonloader>
 						</b-button>
 					</b-form-group>
 				</form>
@@ -159,7 +175,7 @@
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 
 	import fontawesome from '@fortawesome/vue-fontawesome';
-	import { infoCircle } from '@fortawesome/fontawesome-free-solid';
+	import { infoCircle, checkCircle } from '@fortawesome/fontawesome-free-solid';
 
 	var tokenAPI, loginAPI, usersAPI;
 
@@ -180,37 +196,44 @@
             return {
 				user: store.state.user,
 				userLoggedIn: null,
-				changed: {
-					email: '',
-					password: '',
-					username: ''
-				},
-				oldpassword: '',
+
+				newEmail: '',
+				oldPassword: '',
+				newPassword: '',
+				confPassword: '',
+				newUsername: '',
+
 				emailChecking: false,
 				passChecking: false,
 				usernameChecking: false,
+
 				loadingEmail: false,
 				loadingPassword: false,
 				loadingUsername: false,
+
 				errorEmail: null,
 				errorPassword: null,
 				errorNewPassword: null,
 				errorUsername: null,
+
+				emailChanged: false,
+				passwordChanged: false,
+				usernameChanged: false,
             }
         },
 		methods: {
 			checkUsername: function () {
-				this.usernameChecking = true;
+				if(this.fields.$userScope.username.changed && this.fields.$userScope.username.valid) {
+					this.usernameChecking = true;
 
-				if(this.changed.username.length >= 3) {
-					if(this.user.username === this.changed.username.toLowerCase()) {
+					if(this.user.username === this.newUsername.toLowerCase()) {
 						this.errorUsername = 'O seu novo username precisa ser diferente do antigo.';
 						this.usernameChecking = false;
 					} else {
 						axios.get(usersAPI)
 						.then(response => {
 							for (var i = 0; i < response.data.length; i++) {
-								if (response.data[i].username == this.changed.username.toLowerCase()) {
+								if (response.data[i].username == this.newUsername.toLowerCase()) {
 									this.errorUsername = 'Esse username já está em uso';
 									this.usernameChecking = false;
 									break;
@@ -221,18 +244,15 @@
 							}
 						})
 					}
-				} else {
-					this.errorUsername = false;
 				}
 			},
 			checkEmail: function () {
-				this.emailChecking = true;
-
-				if(this.changed.email.length >= 3) {
+				if(this.fields.$emailScope.email.changed && this.fields.$emailScope.email.valid) {
+					this.emailChecking = true;
 					axios.get(usersAPI)
 					.then(response => {
 						for (var i = 0; i < response.data.length; i++) {
-							if (response.data[i].email == this.changed.email) {
+							if (response.data[i].email == this.newEmail) {
 								this.errorEmail = 'Esse e-mail já está em uso';
 								this.emailChecking = false;
 								break;
@@ -242,18 +262,16 @@
 							}
 						}
 					})
-				} else {
-					this.errorEmail = false;
 				}
 			},
 			checkPassword: function() {
-				this.passChecking = true;
-				var _t = this;
+				if(this.fields.$passScope.oldPassword.changed && this.fields.$passScope.oldPassword.valid) {
+					this.passChecking = true;
+					var _t = this;
 
-				if(this.oldpassword.length >= 8) {
 					axios.post(loginAPI, {
 						username: this.user.username,
-						password: this.oldpassword,
+						password: this.oldPassword,
 					})
 					.then(response => {
 						if(response.data.error) {
@@ -271,7 +289,7 @@
 					this.passChecking = false;
 				}
 
-				if(this.oldpassword === this.changed.password) {
+				if(this.oldPassword === this.newPassword) {
 					this.errorNewPassword = 'A senha nova precisa ser diferente da antiga.';
 				} else {
 					this.errorNewPassword = false;
@@ -284,7 +302,7 @@
 				if(!this.errorEmail) {
 					axios.patch(usersAPI + this.user.username, {
 						masterkey: store.getters.getUpdateMasterToken,
-						email: this.changed.email,
+						email: this.newEmail,
 					})
 					.then(response => {
 						this.updateUserForumData("email");
@@ -302,7 +320,7 @@
 				if(!this.errorPassword && !this.errorNewPassword) {
 					axios.patch(usersAPI + this.user.username, {
 						masterkey: store.getters.getUpdateMasterToken,
-						password: this.changed.password,
+						password: this.newPassword,
 					})
 					.then(response => {
 						this.updateUserForumData("password");
@@ -320,7 +338,7 @@
 				if(!this.errorUsername) {
 					axios.patch(usersAPI + this.user.username, {
 						masterkey: store.getters.getUpdateMasterToken,
-						username: this.changed.username,
+						username: this.newUsername,
 					})
 					.then(response => {
 						console.log(response);
@@ -336,11 +354,11 @@
 				var sendData = { };
 
 				if(data == "email") {
-					sendData = { attributes: { email: this.changed.email } }
+					sendData = { attributes: { email: this.newEmail } }
 				} else if(data == "username") {
-					sendData = { attributes: { username: this.changed.username } }
+					sendData = { attributes: { username: this.newUsername } }
 				} else if(data == "password") {
-					sendData = { attributes: { password: this.changed.password } }
+					sendData = { attributes: { password: this.newPassword } }
 				}
 
 				axios.patch(usersForumAPI + this.user.forumAtt.id, {
@@ -352,9 +370,18 @@
 					this.user.forumAtt = response.data.data;
 
 					if(data == "email") {
-						this.user.email = this.changed.email;
+						this.user.email = this.newEmail;
+						this.emailChanged = true;
+						this.newEmail = '';
 					} else if(data == "username") {
-						this.user.username = this.changed.username;
+						this.user.username = this.newUsername;
+						this.usernameChanged = true;
+						this.newUsername = '';
+					} else if(data == "password") {
+						this.passwordChanged = true;
+						this.oldPassword = '';
+						this.newPassword = '';
+						this.confPassword = '';
 					}
 					
 					store.dispatch('setData', this.user).then(() => {
@@ -371,6 +398,31 @@
 				})
 			},
 		},
+		computed: {
+			isFormDirty() {
+				return Object.keys(this.fields).some(key => this.fields[key].dirty);
+			},
+			// form is pristine when all inputs are pristine, so using 'every' is more suitable.
+			isFormPristine() {
+				return Object.keys(this.fields).every(key => this.fields[key].pristine);
+			},
+			// form is valid when all inputs are valid.
+			isFormValid() {
+				return Object.keys(this.fields).every(key => this.fields[key].valid);
+			},
+			// form is invalid when any field is invalid.
+			isFormInvalid() {
+				return Object.keys(this.fields).some(key => this.fields[key].invalid);
+			},
+			// form is touched when any field is touched.
+			isFormTouched() {
+				return Object.keys(this.fields).some(key => this.fields[key].touched);
+			},
+			// form is untouched when all fields are untouched.
+			isFormUntouched() {
+				return Object.keys(this.fields).every(key => this.fields[key].untouched);
+			}
+		},
 		watch: {
 			user: {
 				handler: function(val, oldVal) {
@@ -380,6 +432,31 @@
 						this.userLoggedIn = true;
 					}
 				}, deep: true
+			},
+			newEmail: function() {
+				if(this.emailChanged && this.newEmail.length > 0) {
+					this.emailChanged = false;
+				}
+			},
+			oldPassword: function() {
+				if(this.passwordChanged && this.oldPassword.length > 0) {
+					this.passwordChanged = false;
+				}
+			},
+			newPassword: function() {
+				if(this.passwordChanged && this.newPassword.length > 0) {
+					this.passwordChanged = false;
+				}
+			},
+			confPassword: function() {
+				if(this.passwordChanged && this.confPassword.length > 0) {
+					this.passwordChanged = false;
+				}
+			},
+			newUsername: function() {
+				if(this.usernameChanged && this.newUsername.length > 0) {
+					this.usernameChanged = false;
+				}
 			}
 		},
 		mounted() {
