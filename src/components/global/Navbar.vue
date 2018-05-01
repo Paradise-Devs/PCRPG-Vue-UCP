@@ -43,9 +43,9 @@
 			<icon name="angle-up"/>
             <span class="screen-reader-text">Voltar ao topo</span>
         </a>
-		<signin/>
-		<signup/>
-		<overlay/>
+		<signin v-if="!userLoggedIn" />
+		<signup v-if="!userLoggedIn"/>
+		<overlay v-if="!userLoggedIn"/>
 		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav" :key="userLoggedIn">
 			<div class="navbar__menu__button">
 				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
