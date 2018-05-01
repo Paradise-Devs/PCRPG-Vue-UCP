@@ -42,6 +42,7 @@ export const store = new Vuex.Store({
 		isLoggedIn: state => { return state.user.token != null },
 		getToken: state => { return state.user.token; },
 		getUserData: state => { return state.user; },
+		getUserID: state => { return state.user._id; },
 		getMasterToken: state => { return state.masterToken; },
 		getUpdateMasterToken: state => { return state.updateDataToken; }
 	}

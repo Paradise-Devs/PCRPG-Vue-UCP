@@ -1,9 +1,11 @@
 <template>
     <b-container class="profile__component">
         <b-row>
-            <b-card class="col-12">
+            <b-card class="col-12" :class="{'card--editable': editable}">
                 <div class="card-body--avatar">
-                    <img :src="user.forumAtt.attributes.avatarUrl"/>
+                    <img :src="avatarUpdate" :key="avatarUpdate"/>
+                    <div class="card-body--avatar__overlay" v-if="editable"><fa :icon="['fas','pencil-alt']" /></div>
+                    <b-file accept="image/jpeg, image/png" v-model="avatarFile" v-if="editable" @change="onFileChanged"></b-file>
                 </div>
                 <div class="card-body--content user__info">
                     <h1 class="username">{{ user.forumAtt.attributes.username }}</h1>
@@ -61,28 +63,27 @@
     import fontawesome from '@fortawesome/vue-fontawesome';
     import 'swiper/dist/css/swiper.css'
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
+    import { store } from '@/vuex/store';
 
-    import code from '@fortawesome/fontawesome-free-solid';
-    import bolt from '@fortawesome/fontawesome-free-solid';
-    import support from '@fortawesome/fontawesome-free-solid';
-    import briefcase from '@fortawesome/fontawesome-free-solid';
+    import { code, bolt, support, briefcase, pencilAlt } from '@fortawesome/fontawesome-free-solid';
 
     import char from './char-card'
     import forumlog from './forum-log'
     import serverlog from './server-log'
     import history from './history'
     
-    var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
-    var groupsBaseURI = 'https://forum.pc-rpg.com.br/api/groups';
+    var userBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
     export default {
         props: {
             user: Object,
         },
-
         data() {
 			return {
+                avatarFile: null,
                 loading: true,
+                editable: false,
+                avatarUpdate: null,
 
                 swiperOption: {
                     slidesPerView: 1,
@@ -112,7 +113,59 @@
                 } else {
                     return false;
                 }
+            },
+            onFileChanged(event) {
+                this.avatarFile = event.target.files[0];
+                this.uploadAvatar();
+            },
+            uploadAvatar: function() {
+                const formData = new FormData();
+                formData.append('avatar', this.avatarFile, this.avatarFile.name);
+                let userId = this.user.forumAtt.id;
+                axios.post(userBaseURI + userId + '/avatar', formData, {
+                    headers: {
+                        "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + userId
+                    },
+                    onUploadProgress: ProgressEvent => {
+                        console.log(ProgressEvent.loaded / ProgressEvent.total)
+                    }
+                })
+                .then(response => {
+                    this.user.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
+
+                    store.dispatch('setData', this.user).then(() => {
+                        //tem alguma outra forma de atualizar esse dado de forma reativa?
+                        location.reload();
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                })
             }
+        },
+        watch:{
+			$route (to, from){
+				if(window.innerWidth < 768) {
+					this.closeMobNav();
+				}
+			},
+			user: {
+				handler: function(val, oldVal) {
+                    this.avatarUpdate = this.user.forumAtt.attributes.avatarUrl;
+                    console.log('mudou');
+				}, deep: true
+			}
+		},
+        created() {
+            store.watch(
+				(state)=>{
+					return store.getters.getUserData
+				},
+				(oldValue, newValue)=>{
+                    this.user = store.state.user;
+                    console.log('alterou estado');
+				}
+			)
         },
         filters: {
             bio: function(text) {
@@ -123,7 +176,11 @@
             },
         },
         mounted() {
-            //this.destroySwiper();
+            if(this.user._id == store.getters.getUserID) {
+                this.editable = true;
+            }
+
+            this.avatarUpdate = this.user.forumAtt.attributes.avatarUrl;
         },
         components: {
             'spinner': spinner,
