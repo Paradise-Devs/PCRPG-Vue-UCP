@@ -16,7 +16,6 @@
 			<router-view/>
 			<notifications group="profileConfig" position="bottom left"/>
 			<appfooter/>
-			<overlay/>
 		</div>
 	</div>
 </template>

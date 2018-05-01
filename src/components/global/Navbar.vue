@@ -2,7 +2,7 @@
 <template>
     <div class="nav">
         <animated-fade-in>
-            <nav id="navbar" class="navbar" :key="userLoggedIn">
+            <nav id="navbar" class="navbar">
                 <b-container>
                     <b-row>
                         <b-col>
@@ -45,14 +45,14 @@
         </a>
 		<signin v-if="!userLoggedIn" />
 		<signup v-if="!userLoggedIn"/>
-		<overlay v-if="!userLoggedIn"/>
-		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav" :key="userLoggedIn">
+		<overlay />
+		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav">
 			<div class="navbar__menu__button">
 				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
 				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
 			</div>
 		</div>
-		<div class="nav__mobile__menu" id="navMenu" :key="userLoggedIn">
+		<div class="nav__mobile__menu" id="navMenu">
 			<div class="nav__mobile__menu__signin" v-if="!userLoggedIn">
 				<a href="#" v-b-modal.signupModal @click="closeMobNav">Cadastre-se</a>
 				<span>ou</span>
@@ -138,6 +138,9 @@
 					this.user = store.state.user;
 					this.$router.push(this.$route.query.redirect || '/');
 					this.userLoggedIn = false;
+					var navOverlay = document.getElementById("navOverlay");
+					navOverlay.style.display = 'none';
+					
 					if(window.innerWidth < 768) {
 						this.closeMobNav();
 					}
