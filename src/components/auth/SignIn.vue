@@ -137,7 +137,6 @@
 					this.user.forumAtt = response.data.data;
 
 					for(var i in response.data.included) {
-						console.log(response.data.included[i].type);
 						if(response.data.included[i].type == "groups") {
 							this.user.groups.push(response.data.included[i].attributes);
 						}
