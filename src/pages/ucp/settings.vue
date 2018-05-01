@@ -15,7 +15,7 @@
 				<p class="ucp__config__block__text">Você pode alterar os seus dados de acesso sempre que quiser. Lembre-se de ter sempre um email válido, pois é ele que você vai utilizar para validar qualquer operação importante no servidor.</p>
 				<form class="form--small" v-on:submit.prevent="changeEmail()">
 					<b-form-group label="Email atual:">
-						<b-form-input type="email" :value="user.email" disabled></b-form-input>
+						<b-form-input type="email" :value="user.forumAtt.attributes.email" name="oldEmail" disabled></b-form-input>
 					</b-form-group>
 					<b-form-group>
 						<b-form-input 
@@ -24,20 +24,23 @@
 							placeholder="E-mail novo"
 							v-validate="'email'"
 							name="email"
-							:class="{ 'is-invalid': errors.has('email') || errorEmail, 'is-valid': !errors.has('email') && changed.email.length != 0 }"
+							id="email"
+							:class="{ 'is-invalid': errors.has('email') || errorEmail, 'is-valid': !errors.has('email') && changed.email.length != 0 && !errorEmail }"
 							:state="null"
-							@change="checkIfEmailExists()"
+							@change="checkEmail()"
+							@blur="checkEmail()"
 							autocomplete="off"
 							:disabled="emailChecking"
 						/>
+						
 						<beatloader :loading="emailChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
-						<div class="invalid-feedback" v-show="errors.has('email')">{{ errors.first('email') }}</div>
+						<div class="invalid-feedback">{{ errors.first('email') }} {{ errorEmail }}</div>
 					</b-form-group>
 					<b-form-group>
 						<b-button
 							type="submit"
 							variant="primary"
-							:disabled="loadingEmail || errors.has('email') || changed.email.length === 0 || emailChecking"
+							:disabled="loadingEmail || errors.has('email') || changed.email.length === 0 || emailChecking || errorEmail"
 							block
 						>
 							Alterar <moonloader :loading="loadingEmail" color="#303846" size="25px"></moonloader>
@@ -56,13 +59,14 @@
 							placeholder="Senha atual"
 							v-validate="'required|min:8'"
 							name="oldPassword"
-							@change="checkPassword"
-							:class="{ 'is-invalid': errors.has('oldPassword') || errorEmail, 'is-valid': !errors.has('oldPassword') && oldpassword.length != 0 }"
+							@change="checkPassword()"
+							@blur="checkPassword()"
+							:class="{ 'is-invalid': errors.has('oldPassword') || errorPassword, 'is-valid': !errors.has('oldPassword') && oldpassword.length != 0 && !errorPassword }"
 							:state="null"
 							autocomplete="on"
 						/>
 						<beatloader :loading="passChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
-						<div class="invalid-feedback" v-show="errors.has('oldPassword')">{{ errors.first('oldPassword') }}</div>
+						<div class="invalid-feedback">{{ errors.first('oldPassword') }} {{ errorPassword }}</div>
 					</b-form-group>
 					<b-form-group>
 						<b-form-input 
@@ -71,18 +75,21 @@
 							placeholder="Nova senha"
 							v-validate="'required|min:8|confirmed:confPassword'"
 							name="newPassword"
-							:class="{ 'is-invalid': errors.has('newPassword') || errorEmail, 'is-valid': !errors.has('newPassword') && changed.password.length != 0 }"
+							@change="checkPassword()"
+							@blur="checkPassword()"
+							:class="{ 'is-invalid': errors.has('newPassword') || errorNewPassword, 'is-valid': !errors.has('newPassword') && changed.password.length != 0 && !errorNewPassword }"
 							:state="null"
 							autocomplete="on"
 						/>
-						<div class="invalid-feedback" v-show="errors.has('newPassword')">{{ errors.first('newPassword') }}</div>
+						<div class="invalid-feedback">{{ errors.first('newPassword') }}</div>
+						<div class="invalid-feedback" v-if="errorNewPassword">{{ errorNewPassword }}</div>
 					</b-form-group>
 					<b-form-group>
 						<b-form-input 
 							type="password"
 							placeholder="Confirmar nova senha"
 							name="confPassword"
-							:class="{ 'is-invalid': errors.has('confPassword') || errorEmail, 'is-valid': !errors.has('confPassword') && changed.password.length != 0 }"
+							:class="{ 'is-invalid': errors.has('confPassword'), 'is-valid': !errors.has('confPassword') && changed.password.length != 0 }"
 							:state="null"
 							autocomplete="on"
 						/>
@@ -92,7 +99,9 @@
 						<b-button
 							type="submit"
 							variant="primary"
-							:disabled="loadingPassword || errors.has('email') || changed.email.length === 0 || emailChecking"
+							:disabled="errors.has('oldPassword') || errors.has('newPassword') || errors.has('confPassword') ||
+										changed.password.length === 0 || oldpassword.length === 0 ||
+										passChecking || errorPassword || errorNewPassword || loadingPassword"
 							block
 						>
 							Alterar <moonloader :loading="loadingPassword" color="#303846" size="25px"></moonloader>
@@ -103,7 +112,7 @@
 			<b-col md="3" sm="12" class="ucp__config__block">
 				<h3 class="ucp__config__block__title">Alterar usuário</h3>
 				<p class="ucp__config__block__text">Seu usuário é único e é como você gostaria de ser chamado fora do jogo. Lembre-se de respeitar a política de nome de usuário que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
-				<form class="form--small" v-on:submit.prevent="changeEmail()">
+				<form class="form--small" v-on:submit.prevent="changeUsername()">
 					<b-form-group label="Usuário atual:">
 						<b-form-input type="text" :value="user.forumAtt.attributes.username" disabled></b-form-input>
 					</b-form-group>
@@ -112,22 +121,24 @@
 							type="text"
 							v-model="changed.username"
 							placeholder="Usuário novo"
-							v-validate="'username'"
+							v-validate="'required'"
 							name="username"
-							:class="{ 'is-invalid': errors.has('username') || errorEmail, 'is-valid': !errors.has('username') && changed.username.length != 0 }"
+							:class="{ 'is-invalid': errors.has('username') || errorUsername, 'is-valid': !errors.has('username') && changed.username.length != 0 && !errorUsername }"
 							:state="null"
-							@change="checkIfEmailExists()"
+							@change="checkUsername()"
+							@blur="checkUsername()"
 							autocomplete="off"
-							:disabled="emailChecking"
+							:disabled="usernameChecking"
 						/>
-						<beatloader :loading="emailChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
-						<div class="invalid-feedback" v-show="errors.has('email')">{{ errors.first('email') }}</div>
+						<beatloader :loading="usernameChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
+						<div class="invalid-feedback">{{ errors.first('username') }}</div>
+						<div class="invalid-feedback" v-if="errorUsername">{{ errorUsername }}</div>
 					</b-form-group>
 					<b-form-group>
 						<b-button
 							type="submit"
 							variant="primary"
-							:disabled="loadingUsername || errors.has('email') || changed.email.length === 0 || emailChecking"
+							:disabled="loadingUsername || errors.has('username') || changed.username.length === 0 || errorUsername || usernameChecking"
 							block
 						>
 							Alterar <moonloader :loading="loadingUsername" color="#303846" size="25px"></moonloader>
@@ -183,98 +194,182 @@
 				loadingUsername: false,
 				errorEmail: null,
 				errorPassword: null,
+				errorNewPassword: null,
 				errorUsername: null,
             }
         },
 		methods: {
-			checkIfEmailExists: function () {
-				console.log('opa');
-				if(this.changed.email.length >= 3) {
-					this.emailChecking = true;
+			checkUsername: function () {
+				this.usernameChecking = true;
 
+				if(this.changed.username.length >= 3) {
+					if(this.user.username === this.changed.username.toLowerCase()) {
+						this.errorUsername = 'O seu novo username precisa ser diferente do antigo.';
+						this.usernameChecking = false;
+					} else {
+						axios.get(usersAPI)
+						.then(response => {
+							for (var i = 0; i < response.data.length; i++) {
+								if (response.data[i].username == this.changed.username.toLowerCase()) {
+									this.errorUsername = 'Esse username já está em uso';
+									this.usernameChecking = false;
+									break;
+								} else {
+									this.errorUsername = false;
+									this.usernameChecking = false;
+								}
+							}
+						})
+					}
+				} else {
+					this.errorUsername = false;
+				}
+			},
+			checkEmail: function () {
+				this.emailChecking = true;
+
+				if(this.changed.email.length >= 3) {
 					axios.get(usersAPI)
 					.then(response => {
 						for (var i = 0; i < response.data.length; i++) {
 							if (response.data[i].email == this.changed.email) {
-								this.errorEmail = 'Este e-mail já está em uso';
+								this.errorEmail = 'Esse e-mail já está em uso';
 								this.emailChecking = false;
+								break;
 							} else {
-								this.errorEmail = null;
+								this.errorEmail = false;
 								this.emailChecking = false;
 							}
 						}
 					})
 				} else {
-					this.errorEmail = null;
+					this.errorEmail = false;
 				}
 			},
 			checkPassword: function() {
 				this.passChecking = true;
+				var _t = this;
 
 				if(this.oldpassword.length >= 8) {
 					axios.post(loginAPI, {
 						username: this.user.username,
 						password: this.oldpassword,
 					})
-					.then(function (response) {
+					.then(response => {
 						if(response.data.error) {
-							this.error = response.data.error.message;
-							console.log(response.data.error);
-							this.loading = false;
-							reject()
+							_t.errorPassword = response.data.error.message;
+							_t.passChecking = false;
 						} else {
-							this.user.token = response.data.token;
-							store.dispatch('setData', this.user).then(() => {
-								this.loadingEmail = false;
+							_t.user.token = response.data.token;
+							store.dispatch('setData', _t.user).then(() => {
+								_t.errorPassword = false;
+								_t.passChecking = false;
 							});
 						}
 					})
+				} else {
+					this.passChecking = false;
+				}
+
+				if(this.oldpassword === this.changed.password) {
+					this.errorNewPassword = 'A senha nova precisa ser diferente da antiga.';
+				} else {
+					this.errorNewPassword = false;
 				}
 			},
 			changeEmail: function () {
 				this.loadingEmail = true;
+				this.checkEmail();
 
-				this.checkIfEmailExists();
-
-				if(this.errorEmail === null) {
+				if(!this.errorEmail) {
 					axios.patch(usersAPI + this.user.username, {
 						masterkey: store.getters.getUpdateMasterToken,
 						email: this.changed.email,
 					})
 					.then(response => {
-						this.updateUserForumEmail();
+						this.updateUserForumData("email");
 					})
-					.catch(function (error) {
+					.catch(error => {
 						console.log(error);
 						this.loadingEmail = false;
 					})
 				}
 			},
-			updateUserForumEmail: function() {
+			changePassword: function() {
+				this.loadingPassword = true;
+				this.checkPassword();
+
+				if(!this.errorPassword && !this.errorNewPassword) {
+					axios.patch(usersAPI + this.user.username, {
+						masterkey: store.getters.getUpdateMasterToken,
+						password: this.changed.password,
+					})
+					.then(response => {
+						this.updateUserForumData("password");
+					})
+					.catch(error => {
+						console.log(error);
+						this.loadingPassword = false;
+					})
+				}
+			},
+			changeUsername: function() {
+				this.loadingUsername = true;
+				this.checkUsername();
+
+				if(!this.errorUsername) {
+					axios.patch(usersAPI + this.user.username, {
+						masterkey: store.getters.getUpdateMasterToken,
+						username: this.changed.username,
+					})
+					.then(response => {
+						console.log(response);
+						this.updateUserForumData("username");
+					})
+					.catch(error => {
+						console.log(error);
+						this.loadingUsername = false;
+					})
+				}
+			},
+			updateUserForumData: function(data) {
+				var sendData = { };
+
+				if(data == "email") {
+					sendData = { attributes: { email: this.changed.email } }
+				} else if(data == "username") {
+					sendData = { attributes: { username: this.changed.username } }
+				} else if(data == "password") {
+					sendData = { attributes: { password: this.changed.password } }
+				}
+
 				axios.patch(usersForumAPI + this.user.forumAtt.id, {
-					data: {
-						attributes: {
-							email: this.changed.email
-						}
-					},
-				},
-				{
-					headers: {
-						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
-					}
+					data: sendData,
+				}, {
+					headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
 				})
-				.then(response => {						
+				.then(response => {
 					this.user.forumAtt = response.data.data;
-					this.user.email = this.changed.email;
+
+					if(data == "email") {
+						this.user.email = this.changed.email;
+					} else if(data == "username") {
+						this.user.username = this.changed.username;
+					}
 					
 					store.dispatch('setData', this.user).then(() => {
 						this.loadingEmail = false;
+						this.loadingPassword = false;
+						this.loadingUsername = false;
 					});
 				})
 				.catch(function (error) {
 					console.log(error);
+					this.loadingEmail = false;
+					this.loadingPassword = false;
+					this.loadingUsername = false;
 				})
-			}
+			},
 		},
 		watch: {
 			user: {

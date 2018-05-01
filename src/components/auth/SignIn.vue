@@ -95,7 +95,7 @@
 		},
 		methods: {
 			hideModal: function() {
-				this.$refs.signin.hide()
+				this.$refs.signin.hide();
 			},
 			focusLogin: function() {
 				this.$refs.usernameField.focus()
