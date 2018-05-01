@@ -3,7 +3,7 @@
         <b-row>
             <b-card class="col-12" :class="{'card--editable': editable}">
                 <div class="card-body--avatar">
-                    <img :src="avatarUpdate" :key="avatarUpdate"/>
+                    <img :src="this.user.forumAtt.attributes.avatarUrl"/>
                     <div class="card-body--avatar__overlay" v-if="editable"><fa :icon="['fas','pencil-alt']" /></div>
                     <b-file accept="image/jpeg, image/png" v-model="avatarFile" v-if="editable" @change="onFileChanged"></b-file>
                 </div>
@@ -83,7 +83,6 @@
                 avatarFile: null,
                 loading: true,
                 editable: false,
-                avatarUpdate: null,
 
                 swiperOption: {
                     slidesPerView: 1,
@@ -148,25 +147,8 @@
 				if(window.innerWidth < 768) {
 					this.closeMobNav();
 				}
-			},
-			user: {
-				handler: function(val, oldVal) {
-                    this.avatarUpdate = this.user.forumAtt.attributes.avatarUrl;
-                    console.log('mudou');
-				}, deep: true
 			}
 		},
-        created() {
-            store.watch(
-				(state)=>{
-					return store.getters.getUserData
-				},
-				(oldValue, newValue)=>{
-                    this.user = store.state.user;
-                    console.log('alterou estado');
-				}
-			)
-        },
         filters: {
             bio: function(text) {
                 return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
@@ -179,8 +161,6 @@
             if(this.user._id == store.getters.getUserID) {
                 this.editable = true;
             }
-
-            this.avatarUpdate = this.user.forumAtt.attributes.avatarUrl;
         },
         components: {
             'spinner': spinner,
