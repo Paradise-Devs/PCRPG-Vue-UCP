@@ -14,6 +14,7 @@
 				<hero/>
 			</header>
 			<router-view/>
+			<notifications group="profileConfig" position="bottom left"/>
 			<appfooter/>
 			<overlay/>
 		</div>
@@ -84,7 +85,11 @@
 				}
 			},
 			getForumData: function(){
-				axios.get(usersBaseURI + this.user.username)
+				axios.get(usersBaseURI + this.user.username, {
+					headers: {
+						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
+					}
+				})
 				.then(response => {
 					this.user.forumAtt = response.data.data;
 
