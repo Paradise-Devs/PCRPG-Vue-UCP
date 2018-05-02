@@ -134,7 +134,7 @@
 							name="username"
 							v-model="newUsername"
 							data-vv-scope="userScope"
-							v-validate="{ regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 5, max: 15 }"
+							v-validate="{ regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 3, max: 15 }"
 							:class="{ 'is-invalid': errors.has('userScope.username') || errorUsername, 'is-valid': !errors.has('userScope.username') && newUsername.length != 0 && !errorUsername }"
 							:state="null"
 							@change="checkUsername()"
@@ -305,6 +305,7 @@
 						email: this.newEmail,
 					})
 					.then(response => {
+						this.user.token = response.data.token;
 						this.updateUserForumData("email");
 					})
 					.catch(error => {
@@ -323,6 +324,7 @@
 						password: this.newPassword,
 					})
 					.then(response => {
+						this.user.token = response.data.token;
 						this.updateUserForumData("password");
 					})
 					.catch(error => {
@@ -342,6 +344,8 @@
 					})
 					.then(response => {
 						this.user.username = this.newUsername.toLowerCase();
+						this.user.token = response.data.token;
+						console.log(this.user);
 						this.updateUserForumData("username");
 					})
 					.catch(error => {
@@ -375,6 +379,7 @@
 						this.newEmail = '';
 					} else if(data == "username") {
 						this.user.username = this.newUsername;
+						this.user.forumAtt.attributes.username = this.newUsername;
 						this.usernameChanged = true;
 						this.newUsername = '';
 					} else if(data == "password") {
@@ -385,6 +390,7 @@
 					}
 					
 					store.dispatch('setData', this.user).then(() => {
+						console.log(this.user);
 						this.loadingEmail = false;
 						this.loadingPassword = false;
 						this.loadingUsername = false;

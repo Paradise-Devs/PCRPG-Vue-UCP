@@ -36,6 +36,7 @@ export const store = new Vuex.Store({
 		},
 		SET_USER_DATA (state, userdata) {
 			state.user = userdata;
+			localStorage.setItem("token", state.user.token);
 		}
 	},
 	getters: {
