@@ -134,7 +134,7 @@
 							name="username"
 							v-model="newUsername"
 							data-vv-scope="userScope"
-							v-validate="'min:5'"
+							v-validate="{ regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 5, max: 15 }"
 							:class="{ 'is-invalid': errors.has('userScope.username') || errorUsername, 'is-valid': !errors.has('userScope.username') && newUsername.length != 0 && !errorUsername }"
 							:state="null"
 							@change="checkUsername()"
@@ -341,6 +341,7 @@
 						username: this.newUsername,
 					})
 					.then(response => {
+						this.user.username = this.newUsername.toLowerCase();
 						console.log(response);
 						this.updateUserForumData("username");
 					})
@@ -385,6 +386,7 @@
 					}
 					
 					store.dispatch('setData', this.user).then(() => {
+						console.log(this.user)
 						this.loadingEmail = false;
 						this.loadingPassword = false;
 						this.loadingUsername = false;
