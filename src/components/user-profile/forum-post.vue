@@ -6,7 +6,7 @@
 			<p class="forum__post__text">
 				<span class="forum__post__text__info">
 					Em <a :href="'https://forum.pc-rpg.com.br/d/' + userDiscussion.id + '-' + userDiscussion.attributes.slug + '/' + post.attributes.number" target="_blank">{{ userDiscussion.attributes.title }}</a> 
-					há {{ post.attributes.time | moment }}:
+					{{ post.attributes.time | moment }}:
 				</span>
 				{{ post.attributes.contentHtml | parseText }}
 			</p>
