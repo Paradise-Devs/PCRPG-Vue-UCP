@@ -134,7 +134,7 @@
 							name="username"
 							v-model="newUsername"
 							data-vv-scope="userScope"
-							v-validate="{ regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 3, max: 15 }"
+							v-validate="{ regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 5, max: 15 }"
 							:class="{ 'is-invalid': errors.has('userScope.username') || errorUsername, 'is-valid': !errors.has('userScope.username') && newUsername.length != 0 && !errorUsername }"
 							:state="null"
 							@change="checkUsername()"
@@ -345,7 +345,6 @@
 					.then(response => {
 						this.user.username = this.newUsername.toLowerCase();
 						this.user.token = response.data.token;
-						console.log(this.user);
 						this.updateUserForumData("username");
 					})
 					.catch(error => {
@@ -390,7 +389,6 @@
 					}
 					
 					store.dispatch('setData', this.user).then(() => {
-						console.log(this.user);
 						this.loadingEmail = false;
 						this.loadingPassword = false;
 						this.loadingUsername = false;
@@ -408,23 +406,18 @@
 			isFormDirty() {
 				return Object.keys(this.fields).some(key => this.fields[key].dirty);
 			},
-			// form is pristine when all inputs are pristine, so using 'every' is more suitable.
 			isFormPristine() {
 				return Object.keys(this.fields).every(key => this.fields[key].pristine);
 			},
-			// form is valid when all inputs are valid.
 			isFormValid() {
 				return Object.keys(this.fields).every(key => this.fields[key].valid);
 			},
-			// form is invalid when any field is invalid.
 			isFormInvalid() {
 				return Object.keys(this.fields).some(key => this.fields[key].invalid);
 			},
-			// form is touched when any field is touched.
 			isFormTouched() {
 				return Object.keys(this.fields).some(key => this.fields[key].touched);
 			},
-			// form is untouched when all fields are untouched.
 			isFormUntouched() {
 				return Object.keys(this.fields).every(key => this.fields[key].untouched);
 			}
