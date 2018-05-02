@@ -342,7 +342,6 @@
 					})
 					.then(response => {
 						this.user.username = this.newUsername.toLowerCase();
-						console.log(response);
 						this.updateUserForumData("username");
 					})
 					.catch(error => {
@@ -386,7 +385,6 @@
 					}
 					
 					store.dispatch('setData', this.user).then(() => {
-						console.log(this.user)
 						this.loadingEmail = false;
 						this.loadingPassword = false;
 						this.loadingUsername = false;

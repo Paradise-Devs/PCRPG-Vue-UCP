@@ -111,7 +111,6 @@
 				.then(function (response) {
 					if(response.data.error) {
 						_this.error = response.data.error.message;
-						console.log(response.data.error);
 						_this.loading = false;
 						reject()
 					} else {
