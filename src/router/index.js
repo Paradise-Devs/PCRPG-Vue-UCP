@@ -25,7 +25,7 @@ export default new Router({
 		{ 	path: '/ucp', 					component: UcpView,
 			children: [
 				{ 	path: 'configuracoes', 	component: UcpSettingsView },
-				{ 	path: 'mensagens', 		component: UcpMessagesView },
+				//{ 	path: 'mensagens', 		component: UcpMessagesView },
 				{ 	path: 'perfil', 		component: UcpProfileView },
 			]
 		},
