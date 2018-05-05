@@ -1,11 +1,18 @@
 .firsttime__block {
     margin-top: 40px;
+    margin-bottom: 20px;
+
     &__info {
         border: 2px dashed $gray-dark;
         background-color: $gray-active;
         padding: 20px;
         position: relative;
         border-radius: 5px;
+        text-align: center;
+        
+        @include tablet {
+            text-align: left;
+        }
 
         &__image {
             &--empty {
@@ -25,14 +32,22 @@
 
             img {
                 border-radius: 100%;
-                position: absolute;
-                width: 80px;
-                height: 80px;
+                margin-bottom: 20px;
+
+                @include tablet {
+                    position: absolute;
+                    width: 80px;
+                    height: 80px;
+                }
             }
         }
 
         &__form {
-            padding-left: 100px;
+            text-align: left;
+
+            @include tablet {
+                padding-left: 100px;
+            }
 
             .form-group {
                 padding: 0;
@@ -53,7 +68,7 @@
             }
 
             .btn-group {
-                margin-top: 5px;
+                margin: 5px auto 0;
                 float: right;
             }
         }
