@@ -25,10 +25,10 @@ export default new Router({
 		{ 	path: '/dev', 					component: DevelopmentView },
 		{ 	path: '/ucp', 					component: UcpView,
 			children: [
-				{ 	path: '', 				component: UcpIndexView },
-				{ 	path: 'configuracoes', 	component: UcpSettingsView },
-				//{ 	path: 'mensagens', 		component: UcpMessagesView },
-				{ 	path: 'perfil', 		component: UcpProfileView },
+				{ 	path: '', 				name: 'Início', 		component: UcpIndexView },
+				{ 	path: 'configuracoes', 	name: 'Configurações', 	component: UcpSettingsView },
+				//{ 	path: 'mensagens', 		name: 'Mensagens', 	component: UcpMessagesView },
+				{ 	path: 'perfil', 		name: 'Perfil', 		component: UcpProfileView },
 			]
 		},
 		//{ 	path: '/jogador/:username', 	component: UserProfileView },
