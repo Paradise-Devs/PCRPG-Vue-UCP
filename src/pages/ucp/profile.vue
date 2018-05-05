@@ -39,7 +39,7 @@
 			}
 
 			var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave == null) {
+			if(timeSave != null) {
 				this.$router.push(this.$route.query.redirect || '/ucp');
 			}
 		},
