@@ -49,7 +49,7 @@
 		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav">
 			<div class="navbar__menu__button">
 				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
-				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
+				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav()"/>
 			</div>
 		</div>
 		<div class="nav__mobile__menu" id="navMenu">

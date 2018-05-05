@@ -1,7 +1,7 @@
 <template>
-    <nav class="ucp__menu" id="navMenu">
+    <nav class="ucp__menu" id="navUCPMenu">
         <a href="#" class="router-link current__route current__route--closed" v-if="isMobile" @click="toggleUCPNav">{{ currentRoute }} <fa :icon="['fas', 'bars']" class="route__bars" /></a>
-        <div class="ucp__menu__block" style="display: none" id="navBlock">
+        <div class="ucp__menu__block" style="display: none" id="navUCPBlock">
             <router-link to="/ucp" class="router-link" exact @click="toggleUCPNav">Início</router-link>
             <router-link to="/ucp/perfil" class="router-link" exact @click="toggleUCPNav">Perfil</router-link>
             <router-link to="/ucp/configuracoes" class="router-link" exact @click="toggleUCPNav">Configurações</router-link>
@@ -34,9 +34,9 @@
         },
         methods: {
             showUCPNav: function() {
-                var menu = document.getElementById("navMenu");
+                var menu = document.getElementById("navUCPMenu");
                 var selector = document.getElementsByClassName("current__route")[0];
-                var block = document.getElementById("navBlock");
+                var block = document.getElementById("navUCPBlock");
                 var navOverlay = document.getElementById("navOverlay");
                 var links = document.querySelectorAll('.router-link');
                 
@@ -47,9 +47,9 @@
                 this.ucpNavOpened = true;
             },
             hideUCPNav: function() {
-                var menu = document.getElementById("navMenu");
+                var menu = document.getElementById("navUCPMenu");
                 var selector = document.getElementsByClassName("current__route")[0];
-                var block = document.getElementById("navBlock");
+                var block = document.getElementById("navUCPBlock");
                 var navOverlay = document.getElementById("navOverlay");
                 var links = document.querySelectorAll('.router-link');
                 
@@ -61,13 +61,7 @@
             },
             toggleUCPNav: function(e) {
                 e.preventDefault();
-                
-                var menu = document.getElementById("navMenu");
                 var selector = document.getElementsByClassName("current__route")[0];
-                var block = document.getElementById("navBlock");
-                var navOverlay = document.getElementById("navOverlay");
-                var links = document.querySelectorAll('.router-link');
-                
                 if(selector.classList.contains('current__route--closed')) {
                     this.showUCPNav();
                 } else {
