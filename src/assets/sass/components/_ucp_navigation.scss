@@ -4,7 +4,7 @@
     height: 50px;
     width: 100%;
     margin: 20px 0;
-    z-index: 2;
+    z-index: 1;
     position: relative;
 
     @include tablet {
@@ -32,7 +32,6 @@
         color: $gray;
         border-bottom: 1px solid $bg-color;
         padding: 0 20px;
-        z-index: 2;
 
         @include tablet {
             border-left: 1px solid $bg-color;

@@ -118,7 +118,8 @@
 				userLoggedIn: null,
 				scrolled: false,
 				value: 500,
-				maxValue: 5000
+				maxValue: 5000,
+				navOpened: false
             }
         },
         methods: {
@@ -175,6 +176,7 @@
 				body.classList.add('locked');
 
 				this.fadeIn(navCloseIcon);
+				this.navOpened = true;
 			},
 			closeMobNav: function () {
 				var navToggleButton = document.getElementById("toggleMobNav");
@@ -200,6 +202,7 @@
 				body.classList.remove('locked');
 
 				this.fadeIn(navOpenIcon);
+				this.navOpened = false;
 			},
 			fadeIn: function (el) {
 				el.style.opacity = 0;
@@ -219,7 +222,7 @@
         },
 		watch:{
 			$route (to, from){
-				if(window.innerWidth < 768) {
+				if(window.innerWidth < 768 && this.navOpened) {
 					this.closeMobNav();
 				}
 			},

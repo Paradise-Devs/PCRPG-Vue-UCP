@@ -1,10 +1,10 @@
 <template>
-    <nav class="ucp__menu">
+    <nav class="ucp__menu" id="navMenu">
         <a href="#" class="router-link current__route current__route--closed" v-if="isMobile" @click="toggleUCPNav">{{ currentRoute }} <fa :icon="['fas', 'bars']" class="route__bars" /></a>
         <div class="ucp__menu__block" style="display: none" id="navBlock">
-            <router-link to="/ucp" class="router-link" exact>Início</router-link>
-            <router-link to="/ucp/perfil" class="router-link" exact>Perfil</router-link>
-            <router-link to="/ucp/configuracoes" class="router-link" exact>Configurações</router-link>
+            <router-link to="/ucp" class="router-link" exact @click="toggleUCPNav">Início</router-link>
+            <router-link to="/ucp/perfil" class="router-link" exact @click="toggleUCPNav">Perfil</router-link>
+            <router-link to="/ucp/configuracoes" class="router-link" exact @click="toggleUCPNav">Configurações</router-link>
             <a href="#" class="router-link" @click="logout">Sair</a>
         </div>
     </nav>
@@ -19,7 +19,8 @@
     export default {
         data() {
             return {
-                currentRoute: this.$route.name
+                currentRoute: this.$route.name,
+                ucpNavOpened: false,
             }
         },
         computed: {
@@ -32,18 +33,45 @@
             }
         },
         methods: {
-            toggleUCPNav: function() {
+            showUCPNav: function() {
+                var menu = document.getElementById("navMenu");
                 var selector = document.getElementsByClassName("current__route")[0];
                 var block = document.getElementById("navBlock");
+                var navOverlay = document.getElementById("navOverlay");
+                var links = document.querySelectorAll('.router-link');
+                
+                selector.classList.remove('current__route--closed');
+                selector.classList.add('current__route--opened');
+                block.style.display = '';
+
+                this.ucpNavOpened = true;
+            },
+            hideUCPNav: function() {
+                var menu = document.getElementById("navMenu");
+                var selector = document.getElementsByClassName("current__route")[0];
+                var block = document.getElementById("navBlock");
+                var navOverlay = document.getElementById("navOverlay");
+                var links = document.querySelectorAll('.router-link');
+                
+                selector.classList.remove('current__route--opened');
+                selector.classList.add('current__route--closed');
+                block.style.display = 'none';
+
+                this.ucpNavOpened = false;
+            },
+            toggleUCPNav: function(e) {
+                e.preventDefault();
+                
+                var menu = document.getElementById("navMenu");
+                var selector = document.getElementsByClassName("current__route")[0];
+                var block = document.getElementById("navBlock");
+                var navOverlay = document.getElementById("navOverlay");
+                var links = document.querySelectorAll('.router-link');
                 
                 if(selector.classList.contains('current__route--closed')) {
-                    selector.classList.remove('current__route--closed');
-                    selector.classList.add('current__route--opened');
-                    block.style.display = '';
+                    this.showUCPNav();
                 } else {
-                    selector.classList.remove('current__route--opened');
-                    selector.classList.add('current__route--closed');
-                    block.style.display = 'none';
+                    this.hideUCPNav();
                 }
             },
             
@@ -53,10 +81,13 @@
 				})
 			}
         },
-        watch: {
-            '$route' (to, from) {
+        watch:{
+			$route (to, from){
                 this.currentRoute = this.$route.name;
-                this.toggleUCPNav();
+
+				if(window.innerWidth < 768 && this.ucpNavOpened) {
+                    this.hideUCPNav();
+				}
             }
         },
         components: {
