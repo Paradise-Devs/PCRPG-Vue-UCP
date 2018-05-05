@@ -4,8 +4,8 @@
             <b-card class="col-12" :class="{'card--editable': editable}">
                 <div class="card-body--avatar">
                     <img :src="this.user.forumAtt.attributes.avatarUrl"/>
-                    <div class="card-body--avatar__overlay" v-if="editable"><fa :icon="['fas','pencil-alt']" /></div>
-                    <b-file accept="image/jpeg, image/png" v-model="avatarFile" v-if="editable" @change="onFileChanged"></b-file>
+                    <div class="card-body--avatar__overlay" v-if="editable && !isMobile"><fa :icon="['fas','pencil-alt']" /></div>
+                    <b-file accept="image/jpeg, image/png" v-model="avatarFile" v-if="editable && !isMobile" @change="onFileChanged"></b-file>
                 </div>
                 <div class="card-body--content user__info">
                     <h1 class="username">{{ user.forumAtt.attributes.username }}</h1>
@@ -29,7 +29,7 @@
                 </div>
             </b-card>
         </b-row>
-        <swiper :options="swiperOption" ref="charsSwiper" class="char__wrapper" v-if="IsMobile()">
+        <swiper :options="swiperOption" ref="charsSwiper" class="char__wrapper" v-if="isMobile">
             <swiper-slide v-for="char in charsData" :key="char.id" class="char__wrapper--item">
                 <char :char='char'/>
             </swiper-slide>
@@ -106,13 +106,6 @@
             }
         },
         methods: {
-            IsMobile: function() {
-                if(window.innerWidth < 768) {
-                    return true;
-                } else {
-                    return false;
-                }
-            },
             onFileChanged(event) {
                 this.avatarFile = event.target.files[0];
                 this.uploadAvatar();
@@ -140,6 +133,15 @@
                 .catch(error => {
                     console.log(error);
                 })
+            }
+        },
+        computed: {
+            isMobile: function() {
+                if(window.innerWidth < 768) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         watch:{
