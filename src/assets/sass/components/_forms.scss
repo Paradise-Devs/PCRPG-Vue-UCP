@@ -43,10 +43,17 @@ form {
     }
 
     .form-group {
+        position: relative;
         .form-text {
-            margin-left: 5px;
             margin-top: 2px;
             font-size: 11px;
+        }
+
+        .v-spinner {
+            top: 35px;
+            position: absolute;
+            width: 30px;
+            right: 10px;
         }
     }
 

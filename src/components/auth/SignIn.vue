@@ -150,7 +150,10 @@
 			dispatchLogin() {
 				store.dispatch('login', this.user).then(() => {
 					this.loading = false;
-					this.hideModal();
+					var timeSave = localStorage.getItem('firstTimeUCP');
+					if(timeSave != null) {
+						this.$router.push(this.$route.query.redirect || '/ucp');
+					}
 				});
 			}
 		}
@@ -160,12 +163,5 @@
 <style scoped>
 	.form-group.check {
 		max-height: 19px;
-	}
-
-	.v-spinner {
-		position: absolute;
-		right: 10px;
-		top: 5px;
-		width: 30px;
 	}
 </style>

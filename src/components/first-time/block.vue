@@ -49,7 +49,7 @@
                             id="userBio"
                             type="text"
                             v-model="user.forumAtt.attributes.bio"
-                            required
+                            v-validate="'max:70'"
                             placeholder="Conte-nos sobre você"
                             :value="user.forumAtt.attributes.bio"
                         >
@@ -58,17 +58,26 @@
                     <b-form-group 
                         label="Confirme seu nome de usuário:<br/>"
                         label-for="userName"
-                        description="Você só vai conseguir trocar daqui 3 meses"
                     >
                         <b-form-input 
                             id="userName"
                             type="text"
-                            v-model="user.forumAtt.attributes.username"
-                            required
+                            name="username"
+                            v-model="newUsername"
+                            data-vv-scope="userScope"
+							v-validate="{ regex: /^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$/ , min: 5, max: 15, required: true}"
+                            :class="{ 'is-invalid': errors.has('userScope.username') || errorUsername, 'is-valid': !errors.has('userScope.username') && newUsername.length != 0 && !errorUsername }"
                             placeholder="Confirme seu nome de usuário"
                             :value="user.forumAtt.attributes.username"
-                        >
-                        </b-form-input>
+                            :state="null"
+							@change="checkUsername()"
+							autocomplete="off"
+							:disabled="usernameChecking"
+                        />
+                        <beatloader :loading="usernameChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
+						<div class="invalid-feedback">{{ errors.first('userScope.username') }}</div>
+						<div class="invalid-feedback" v-if="errorUsername">{{ errorUsername }}</div>
+                        <small class="form-text text-muted" v-if="!errors.first('userScope.username')">Você só vai conseguir trocar daqui 3 meses</small>
                     </b-form-group>
                     <b-button-group right>
                         <b-button>Pular essa etapa</b-button>
@@ -83,7 +92,10 @@
 <script>
 	import Vue from 'vue';
 	import axios from 'axios';
-	import { store } from '@/vuex/store';
+    import { store } from '@/vuex/store';
+    
+    import beat from 'vue-spinner/src/BeatLoader.vue';
+	import moon from 'vue-spinner/src/MoonLoader.vue';
 
 	var tokenAPI, loginAPI, usersAPI;
 
@@ -108,11 +120,38 @@
 				userAvatar: null,
 				userLoggedIn: null,
                 avatarFile: null,
-                loadingData: false
+                loadingData: false,
+                newUsername: '',
+                usernameChecking: false,
+                errorUsername: ''
             }
         },
 		methods: {
-			onFileChanged(event) {
+            checkUsername: function() {
+                if(this.fields.$userScope.username.changed && this.fields.$userScope.username.valid) {
+					this.usernameChecking = true;
+
+					if(this.user.username != this.newUsername.toLowerCase()) {
+						axios.get(usersAPI)
+						.then(response => {
+							for (var i = 0; i < response.data.length; i++) {
+								if (response.data[i].username == this.newUsername.toLowerCase()) {
+									this.errorUsername = 'Esse nome de usuário já está em uso';
+									this.usernameChecking = false;
+									break;
+								} else {
+									this.errorUsername = false;
+									this.usernameChecking = false;
+								}
+							}
+						})
+					} else {
+                        this.usernameChecking = false;
+                        this.errorUsername = false;
+                    }
+				}
+            },
+			onFileChanged: function(event) {
 				this.avatarFile = event.target.files[0];
 				this.userAvatar = URL.createObjectURL(event.target.files[0]);
             },
@@ -143,10 +182,10 @@
             updateServerUserAtt: function() {
                 axios.patch(usersAPI + this.user.username, {
                     masterkey: store.getters.getUpdateMasterToken,
-                    username: this.user.forumAtt.attributes.username,
+                    username: this.newUsername,
                 })
                 .then(response => {
-                    this.user.username = this.user.forumAtt.attributes.username.toLowerCase();
+                    this.user.username = this.newUsername.toLowerCase();
                     this.user.token = response.data.token;
                     this.updateForumUserAtt();
                 })
@@ -156,7 +195,7 @@
                 })
             },
             updateForumUserAtt: function() {
-                let sendData = { attributes: { bio: this.user.forumAtt.attributes.bio, username: this.user.forumAtt.attributes.username } };
+                let sendData = { attributes: { bio: this.user.forumAtt.attributes.bio, username: this.newUsername } };
 
                 axios.patch(usersBaseURI + this.user.forumAtt.id, {
                     data: sendData,
@@ -207,6 +246,10 @@
 					this.user = store.state.user;
 				}
 			)
+        },
+        components: {
+			'beatloader': beat,
+			'moonloader': moon
 		}
 	}
 </script>
