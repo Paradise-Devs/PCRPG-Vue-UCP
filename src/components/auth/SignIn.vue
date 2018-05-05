@@ -13,7 +13,7 @@
 		</div>
 
 		<button class="modal-close" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
-		<form class="form-centered" v-on:submit.prevent="login()" @keyup="hideError()">
+		<form class="form--auth" v-on:submit.prevent="login()" @keyup="hideError()">
 			<b-form-group>
 				<b-form-input
 					type="text"

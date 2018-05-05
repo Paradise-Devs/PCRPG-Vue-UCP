@@ -18,7 +18,7 @@
 			<b-alert variant="danger" show>Este usuário e este email já estão em uso.</b-alert>
 		</div>
 		<button class="modal-close" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
-		<form class="form-centered" v-on:submit.prevent="register()">
+		<form class="form--auth" v-on:submit.prevent="register()">
 			<b-form-group :state="null" >
 				<b-form-input
 					type="text"
@@ -33,7 +33,7 @@
 					autocomplete="on"
 					:disabled="usernameChecking"
 				/>
-				<beatloader :loading="usernameChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
+				<beatloader :loading="usernameChecking" color="#303846" size="5px" class="registering"></beatloader>
 				<div class="invalid-feedback" v-show="errors.has('username')">{{ errors.first('username') }}</div>
 			</b-form-group>
 			<b-form-group :state="null" >
@@ -49,7 +49,7 @@
 					autocomplete="on"
 					:disabled="emailChecking"
 				/>
-				<beatloader :loading="emailChecking" color="#303846" size="5px" class="input-spinner"></beatloader>
+				<beatloader :loading="emailChecking" color="#303846" size="5px" class="registering"></beatloader>
 				<div class="invalid-feedback" v-show="errors.has('email')">{{ errors.first('email') }}</div>
 			</b-form-group>
 			<b-form-group :state="null" >
@@ -126,7 +126,7 @@
 				errorEmail: null,
 				loading: false,
 				usernameChecking: false,
-				emailChecking: false
+				emailChecking: true
 			}
 		},
 		components: {
@@ -283,12 +283,3 @@
 		}
 	}
 </script>
-
-<style scoped>
-	.v-spinner.registering {
-		position: absolute;
-		right: 10px;
-		top: 5px;
-		width: 30px;
-	}
-</style>
