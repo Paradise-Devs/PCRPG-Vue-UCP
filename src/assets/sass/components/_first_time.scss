@@ -1,0 +1,58 @@
+.firsttime__block {
+    margin-top: 40px;
+    &__info {
+        border: 2px dashed $gray-dark;
+        background-color: $gray-active;
+        padding: 20px 20px 60px ;
+        position: relative;
+        min-height: 160px;
+        border-radius: 5px;
+
+        &__image {
+            &--empty {
+                width: 80px;
+                height: 80px;
+                border-radius: 100%;
+                font-size: 40px;
+                display: flex;
+                background-color: $gray-dark;
+                font-weight: normal;
+                border-color: transparent;
+                color: $gray;
+                position: absolute;
+                align-items: center;
+                justify-content: center;
+            }
+
+            img {
+                border-radius: 100%;
+                position: absolute;
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        &__form {
+            padding-left: 100px;
+
+            .form-group {
+                padding: 0;
+            }
+
+            .file-group {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .btn {
+                padding: 7px 13px !important;
+            }
+
+            .btn-group {
+                margin-top: 5px;
+                float: right;
+            }
+        }
+    }
+}

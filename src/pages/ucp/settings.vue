@@ -464,6 +464,11 @@
 			} else {
 				this.userLoggedIn = true;
 			}
+
+			var timeSave = localStorage.getItem('firstTimeUCP');
+			if(timeSave == null) {
+				this.$router.push(this.$route.query.redirect || '/ucp');
+			}
 		},
 		components: {
 			'beatloader': beat,

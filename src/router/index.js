@@ -8,7 +8,8 @@ import NotFoundView from '@/pages/errors/404'
 //import UserProfileView from '@/pages/Profile'
 
 //UCP
-import UcpView from '@/pages/ucp/index'
+import UcpView from '@/pages/ucp/auth'
+import UcpIndexView from '@/pages/ucp/index'
 import UcpSettingsView from '@/pages/ucp/settings'
 import UcpProfileView from '@/pages/ucp/profile'
 import UcpMessagesView from '@/pages/ucp/messages'
@@ -24,6 +25,7 @@ export default new Router({
 		{ 	path: '/dev', 					component: DevelopmentView },
 		{ 	path: '/ucp', 					component: UcpView,
 			children: [
+				{ 	path: '', 				component: UcpIndexView },
 				{ 	path: 'configuracoes', 	component: UcpSettingsView },
 				//{ 	path: 'mensagens', 		component: UcpMessagesView },
 				{ 	path: 'perfil', 		component: UcpProfileView },

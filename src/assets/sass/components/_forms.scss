@@ -34,6 +34,22 @@ input {
 }
 
 form {
+    legend {
+        padding: 0;
+        margin-bottom: 5px;
+        text-align: left;
+        font-size: 12px;
+        font-family: $font-roboto;
+    }
+
+    .form-group {
+        .form-text {
+            margin-left: 5px;
+            margin-top: 2px;
+            font-size: 11px;
+        }
+    }
+
     &.form--small {
         .form-group {
             padding: 0;
@@ -72,6 +88,7 @@ form {
             }
         }
     }
+
     &.form-centered {
         text-align: center;
     
@@ -197,4 +214,51 @@ form {
     border: 2px solid $red;
     color: $red;
     outline: none;
+}
+
+.custom-file {
+    position: relative;
+    width: 100%;
+
+    &-input {
+        z-index: 2;
+        margin: 0;
+        opacity: 0;
+        
+        &:focus ~ .custom-file-control {
+            color: inherit !important;
+            background-color: $bg-color !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
+
+    &-control {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1;
+        height: 36px;
+        padding: 8px 13px;
+        font-size: 13px;
+        line-height: 1.5;
+        color: $gray;
+        background-color: $bg-color;
+        border-radius: .25rem;
+
+        &:before {
+            position: absolute;
+            padding: 8px 13px;
+            font-size: 13px;
+            line-height: 1.5;
+            top: 0;
+            right: 0;
+            font-family: $font-open;
+            color: $gray;
+            font-weight: bold;
+            background-color: $gray-dark;
+            content: "Selecione" !important;
+        }
+    }
 }

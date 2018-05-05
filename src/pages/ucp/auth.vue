@@ -1,9 +1,12 @@
 <!--suppress ALL -->
 <template>
-	<b-container class="ucp__index">
-		<firsttime v-if="firstTime"/>
+	<b-container class="ucp">
+		<div v-if="userLoggedIn">
+			<ucpmenu v-if="!firstTime" />
+			<router-view/>
+		</div>
 		<div v-else>
-			não é a primeira vez
+			ta deslogado ai, camarada
 		</div>
 	</b-container>
 </template>
@@ -12,7 +15,7 @@
 	import Vue from 'vue';
 	import axios from 'axios';
 	import { store } from '@/vuex/store';
-	import firsttime from '@/components/first-time/block';
+	import ucpmenu from '@/components/ucp-menu/block'
 
 	var tokenAPI, loginAPI;
 
@@ -27,15 +30,15 @@
 	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
-		//char data = player_id, firstName, lastName, position, property, cash, level, xp, gender [type, enum], pedModel, traits, logoutArea
-
 		data() {
             return {
 				user: store.state.user,
-				firstTime: false
+				userLoggedIn: null,
+				firstTime: null
             }
         },
 		methods: {
+			
 		},
 		watch: {
 			user: {
@@ -55,10 +58,6 @@
 				this.userLoggedIn = true;
 			}
 
-			if(this.user.forumAtt.attributes.avatarUrl != null) {
-				this.userAvatar = this.user.forumAtt.attributes.avatarUrl;
-			}
-
 			var timeSave = localStorage.getItem('firstTimeUCP');
 			if(timeSave != null) {
 				this.firstTime = true;
@@ -74,11 +73,15 @@
 			)
 		},
 		components: {
-			firsttime
+            ucpmenu
 		}
 	}
 </script>
 
 <style lang="scss">
 	@import '../../assets/sass/main.scss';
+
+	.ucp.container {
+		min-height: 60.8vh;
+	}
 </style>

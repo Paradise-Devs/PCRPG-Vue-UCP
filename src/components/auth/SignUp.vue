@@ -270,6 +270,8 @@
 					
 					store.dispatch('login', this.user).then(() => {
 						_this.loading = false;
+						localStorage.getItem('firstTimeUCP', 'true');
+						this.$router.push(this.$route.query.redirect || '/ucp');
 						_this.hideModal();
 					});
 				})

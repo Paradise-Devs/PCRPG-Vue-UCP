@@ -7,7 +7,6 @@
     white-space: nowrap;
     line-height: 20px;
     padding: 8px 13px !important;
-    border-radius: 4px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -55,10 +54,24 @@
         }
     }
 
+    &-secondary {
+        color: $gray !important;
+        background-color: $gray-dark !important;
+
+        &:hover {
+            color: $gray !important;
+            background-color: $gray-hover !important;
+        }
+    }
+
     &.disabled, &[disabled] {
         cursor: default;
         opacity: 0.65;
         box-shadow: none;
+    }
+
+    &:hover {
+        z-index: inherit !important;
     }
 
     &:active, &.active {
