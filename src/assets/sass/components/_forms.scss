@@ -55,6 +55,16 @@ form {
             width: 30px;
             right: 10px;
         }
+
+        .btn {
+            .v-spinner {
+                margin: 0;
+                position: absolute;
+                right: 10px;
+                @include centerY(absolute);
+                width: 25px;
+            }
+        }
     }
 
     &.form--small {

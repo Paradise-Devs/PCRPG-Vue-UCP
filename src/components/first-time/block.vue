@@ -79,10 +79,19 @@
 						<div class="invalid-feedback" v-if="errorUsername">{{ errorUsername }}</div>
                         <small class="form-text text-muted" v-if="!errors.first('userScope.username')">Você só vai conseguir trocar daqui 3 meses</small>
                     </b-form-group>
-                    <b-button-group right>
-                        <b-button>Pular essa etapa</b-button>
-                        <b-button type="submit" variant="primary">Salvar</b-button>
-                    </b-button-group>
+                    <b-form-group>
+                        <b-button-group right>
+                            <b-button @click="ignoreInit()">Pular essa etapa</b-button>
+                            <b-button 
+                                type="submit"
+                                variant="primary"
+                                :disabled="loadingData || errors.has('userScope.username') || newUsername.length === 0 || errorUsername || usernameChecking"
+                            >
+                                Salvar
+                                <moonloader :loading="loadingData" color="#303846" size="25px"></moonloader>
+                            </b-button>
+                        </b-button-group>
+                    </b-form-group>
                 </form>
             </div>
         </b-col>
@@ -123,7 +132,7 @@
                 loadingData: false,
                 newUsername: '',
                 usernameChecking: false,
-                errorUsername: ''
+                errorUsername: null
             }
         },
 		methods: {
@@ -150,6 +159,10 @@
                         this.errorUsername = false;
                     }
 				}
+            },
+            ignoreInit: function() {
+                localStorage.removeItem('firstTimeUCP');
+                this.$root.$emit('hideFirstTimeTut', false);
             },
 			onFileChanged: function(event) {
 				this.avatarFile = event.target.files[0];
@@ -203,12 +216,10 @@
                     headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
                 })
                 .then(response => {
-                    console.log('deu certo');
-                    console.log(response);
-
                     store.dispatch('setData', this.user).then(() => {
-						this.loadingEmail = false;
-						this.loadingData = false;
+                        this.loadingData = false;
+                        localStorage.removeItem('firstTimeUCP');
+                        location.reload();
 					});
                 });
             },
@@ -236,7 +247,9 @@
 
 			if(this.user.forumAtt.attributes.avatarUrl != null) {
 				this.userAvatar = this.user.forumAtt.attributes.avatarUrl;
-			}
+            }
+            
+            this.newUsername = this.user.forumAtt.attributes.username;
 
 			store.watch(
 				(state)=>{

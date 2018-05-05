@@ -72,6 +72,10 @@
 					this.user = store.state.user;
 				}
 			)
+
+			this.$root.$on('hideFirstTimeTut', (res) => {
+				this.firstTime = res;
+			});
 		},
 		components: {
 			firsttime

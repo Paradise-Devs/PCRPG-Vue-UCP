@@ -3,9 +3,8 @@
     &__info {
         border: 2px dashed $gray-dark;
         background-color: $gray-active;
-        padding: 20px 20px 60px ;
+        padding: 20px;
         position: relative;
-        min-height: 160px;
         border-radius: 5px;
 
         &__image {
@@ -46,7 +45,11 @@
             }
 
             .btn {
-                padding: 7px 13px !important;
+                padding: 7px 14px !important;
+
+                &-primary {
+                    width: 140px;
+                }
             }
 
             .btn-group {
