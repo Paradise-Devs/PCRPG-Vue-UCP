@@ -39,12 +39,17 @@
                         height: 100px;
                         display: flex;
                         border-radius: 100%;
+                        top: 10px;
                         cursor: pointer;
-                        @include center(absolute);
+                        @include centerX(absolute);
                         justify-content: center;
                         align-items: center;
                         color: $white;
                         font-size: 32px;
+                        @include tablet {
+                            top: 0;
+                            @include center(absolute);
+                        }
                     }
 
                     &:hover {
@@ -66,7 +71,7 @@
             
             &--avatar {
                 width: 100%;
-                height: 100%;
+                height: 100px;
                 text-align: center;
                 display: flex;
                 background-color: $gray-dark;
@@ -84,7 +89,12 @@
                 img {
                     max-width: 100%;
                     border-radius: 100%;
-                    @include center(absolute);
+                    @include centerX(absolute);
+                    top: 10px;
+
+                    @include tablet { 
+                        @include center(absolute); 
+                    }
                 }
             }
 
