@@ -57,7 +57,7 @@
 			} else {
 				this.userLoggedIn = true;
 			}
-
+			
 			var timeSave = localStorage.getItem('firstTimeUCP');
 			if(timeSave != null) {
 				this.firstTime = true;
