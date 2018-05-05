@@ -20,9 +20,21 @@
     padding-left: 20px;
     font-weight: bold !important;
 
-    &:hover {
-        color: $bg-color !important;
-        text-decoration: none;
+    &-secondary {
+        color: $gray;
+        background-color: $gray-dark;
+
+        &:hover {
+            color: $gray;
+            background-color: $gray-hover;
+        }
+
+        &:not(:disabled):not(.disabled):active,
+        &:not(:disabled):not(.disabled).active, 
+        .show > &.dropdown-toggle {
+            color: $gray;
+            background-color: $gray-hover;
+        }
     }
 
     &-primary {
@@ -51,16 +63,6 @@
         
         &:hover {
             color: $white !important;
-        }
-    }
-
-    &-secondary {
-        color: $gray !important;
-        background-color: $gray-dark !important;
-
-        &:hover {
-            color: $gray !important;
-            background-color: $gray-hover !important;
         }
     }
 
