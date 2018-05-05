@@ -26,7 +26,7 @@
                     <img :src="userAvatar" v-if="userAvatar != null" />
                     <div class="firsttime__block__info__image--empty" v-else> ? </div>
                 </div>
-                <form class="firsttime__block__info__form" v-on:submit.prevent="changeEmail()">
+                <form class="firsttime__block__info__form" v-on:submit.prevent="updateUser()">
                     <b-form-group 
                         label="Gostaria de alterar o seu avatar?"
                         label-for="avatarUpload"
@@ -48,9 +48,11 @@
                         <b-form-input 
                             id="userBio"
                             type="text"
-                            v-model="userBio"
+                            v-model="user.forumAtt.attributes.bio"
                             required
-                            placeholder="Conte-nos sobre você">
+                            placeholder="Conte-nos sobre você"
+                            :value="user.forumAtt.attributes.bio"
+                        >
                         </b-form-input>
                     </b-form-group>
                     <b-form-group 
@@ -61,14 +63,16 @@
                         <b-form-input 
                             id="userName"
                             type="text"
-                            v-model="userBio"
+                            v-model="user.forumAtt.attributes.username"
                             required
-                            placeholder="Confirme seu nome de usuário" :value="user.forumAtt.attributes.username">
+                            placeholder="Confirme seu nome de usuário"
+                            :value="user.forumAtt.attributes.username"
+                        >
                         </b-form-input>
                     </b-form-group>
                     <b-button-group right>
                         <b-button>Pular essa etapa</b-button>
-                        <b-button variant="primary">Salvar</b-button>
+                        <b-button type="submit" variant="primary">Salvar</b-button>
                     </b-button-group>
                 </form>
             </div>
@@ -81,14 +85,16 @@
 	import axios from 'axios';
 	import { store } from '@/vuex/store';
 
-	var tokenAPI, loginAPI;
+	var tokenAPI, loginAPI, usersAPI;
 
 	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
 		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
 		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+		usersAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
 	} else {
 		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
 		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
+		usersAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
 	}
 
 	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
@@ -101,8 +107,8 @@
 				user: store.state.user,
 				userAvatar: null,
 				userLoggedIn: null,
-				avatarFile: null,
-				userBio: ''
+                avatarFile: null,
+                loadingData: false
             }
         },
 		methods: {
@@ -110,28 +116,65 @@
 				this.avatarFile = event.target.files[0];
 				this.userAvatar = URL.createObjectURL(event.target.files[0]);
             },
-            uploadAvatar: function() {
-                const formData = new FormData();
-                formData.append('avatar', this.avatarFile, this.avatarFile.name);
-                let userId = this.user.forumAtt.id;
-                axios.post(userBaseURI + userId + '/avatar', formData, {
-                    headers: {
-                        "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + userId
-                    },
-                    onUploadProgress: ProgressEvent => {
-                        console.log(ProgressEvent.loaded / ProgressEvent.total)
-                    }
+            updateUser: function() {
+                this.loadingData = true;
+
+                if(this.avatarFile != null) {
+                    const formData = new FormData();
+                    formData.append('avatar', this.avatarFile, this.avatarFile.name);
+                    let userId = this.user.forumAtt.id;
+                    axios.post(usersBaseURI + userId + '/avatar', formData, {
+                        headers: {
+                            "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + userId
+                        }
+                    })
+                    .then(response => {
+                        this.user.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
+                        this.updateServerUserAtt();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.loadingData = false;
+                    });
+                } else {
+                    this.updateServerUserAtt();
+                }
+            },
+            updateServerUserAtt: function() {
+                axios.patch(usersAPI + this.user.username, {
+                    masterkey: store.getters.getUpdateMasterToken,
+                    username: this.user.forumAtt.attributes.username,
                 })
                 .then(response => {
-                    this.user.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
-
-                    store.dispatch('setData', this.user).then(() => {
-                        location.reload();
-                    });
+                    this.user.username = this.user.forumAtt.attributes.username.toLowerCase();
+                    this.user.token = response.data.token;
+                    this.updateForumUserAtt();
                 })
                 .catch(error => {
                     console.log(error);
+                    this.loadingData = false;
                 })
+            },
+            updateForumUserAtt: function() {
+                let sendData = { attributes: { bio: this.user.forumAtt.attributes.bio, username: this.user.forumAtt.attributes.username } };
+
+                axios.patch(usersBaseURI + this.user.forumAtt.id, {
+                    data: sendData,
+                }, {
+                    headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
+                })
+                .then(response => {
+                    console.log('deu certo');
+                    console.log(response);
+
+                    store.dispatch('setData', this.user).then(() => {
+						this.loadingEmail = false;
+						this.loadingData = false;
+					});
+                });
+            },
+            uploadAvatar: function() {
+                
             }
 		},
 		watch: {
