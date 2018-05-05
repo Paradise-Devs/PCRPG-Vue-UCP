@@ -3,6 +3,13 @@
         margin-bottom: 20px;
         background-color: $gray-active;
         position: relative;
+        padding-left: 60px;
+        text-align: left;
+
+        @include tablet {
+            padding-left: 0;
+            text-align: center;
+        }
 
         &--bordered {
             border: 2px dashed $gray-dark;

@@ -2,7 +2,7 @@
 <template>
 	<b-container class="ucp__config">
 		<b-row>
-			<b-card class="col-12 text-center card--bordered">
+			<b-card class="col-12 card--bordered">
 				<div class="card__icon">
 					<fa :icon="['fas', 'info-circle']"/>
 				</div>
