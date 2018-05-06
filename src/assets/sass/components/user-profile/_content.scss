@@ -1,0 +1,16 @@
+.comp__userContent {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    margin-top: -10px;
+    padding-left: 20px;
+
+    &__username {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    &__bio {
+        font-style: italic;
+    }
+}
