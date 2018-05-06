@@ -1,33 +1,10 @@
 <template>
-    <b-container class="profile__component">
+    <b-container class="comp__userProfileBlock">
         <b-row>
-            <b-card class="col-12" :class="{'card--editable': editable}">
-                <div class="card-body--avatar">
-                    <img :src="this.user.forumAtt.attributes.avatarUrl"/>
-                    <div class="card-body--avatar__overlay" v-if="editable && !isMobile"><fa :icon="['fas','pencil-alt']" /></div>
-                    <b-file accept="image/jpeg, image/png" v-model="avatarFile" v-if="editable && !isMobile" @change="onFileChanged"></b-file>
-                </div>
-                <div class="card-body--content user__info">
-                    <h1 class="username">{{ user.forumAtt.attributes.username }}</h1>
-                    <div class="tags">
-                        <b-badge 
-                            v-for="group in user.groups"
-                            :key="group.id"
-                            :style="{ borderColor: group.color }"
-                        >
-                            <span class="icon" :style="{ backgroundColor: group.color }"> 
-                                <fa :icon="['fas', group.icon]" />
-                            </span>
-                            <span :style="{ color: group.color }">{{ group.nameSingular}}</span>
-                        </b-badge>
-                    </div>
-                    <div class="stats">
-                        <ul>
-                            <li>Membro desde {{ user.forumAtt.attributes.joinTime | moment }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </b-card>
+            <b-col class="comp__userProfileBlock__block" md="12">
+                <userAvatar :user="user" :editable="editable" />
+                <userContent :user="user" />
+            </b-col>
         </b-row>
         <swiper :options="swiperOption" ref="charsSwiper" class="char__wrapper" v-if="isMobile">
             <swiper-slide v-for="char in charsData" :key="char.id" class="char__wrapper--item">
@@ -35,11 +12,11 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
-        <b-row v-else class="profile__component__chars">
+        <b-row v-else class="comp__userProfileBlock__chars">
             <char class="col-md-4" v-for="char in charsData" :key="char.id" :char='char'/>
         </b-row>
-        <b-row class="profile__component__data">
-            <b-col cols="12" class="profile__component__data__container">
+        <b-row class="comp__userProfileBlock__data">
+            <b-col cols="12" class="comp__userProfileBlock__data__container">
                 <b-tabs>
                     <b-tab title="Fórum" active>
                         <forumlog :user="user" />
@@ -67,6 +44,8 @@
 
     import { code, bolt, support, briefcase, pencilAlt } from '@fortawesome/fontawesome-free-solid';
 
+    import userAvatar from './avatar'
+    import userContent from './content'
     import char from './char-card'
     import forumlog from './forum-log'
     import serverlog from './server-log'
@@ -80,7 +59,6 @@
         },
         data() {
 			return {
-                avatarFile: null,
                 loading: true,
                 editable: false,
 
@@ -105,36 +83,6 @@
                 ]
             }
         },
-        methods: {
-            onFileChanged(event) {
-                this.avatarFile = event.target.files[0];
-                this.uploadAvatar();
-            },
-            uploadAvatar: function() {
-                const formData = new FormData();
-                formData.append('avatar', this.avatarFile, this.avatarFile.name);
-                let userId = this.user.forumAtt.id;
-                axios.post(userBaseURI + userId + '/avatar', formData, {
-                    headers: {
-                        "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + userId
-                    },
-                    onUploadProgress: ProgressEvent => {
-                        console.log(ProgressEvent.loaded / ProgressEvent.total)
-                    }
-                })
-                .then(response => {
-                    this.user.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
-
-                    store.dispatch('setData', this.user).then(() => {
-                        //tem alguma outra forma de atualizar esse dado de forma reativa?
-                        location.reload();
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-            }
-        },
         computed: {
             isMobile: function() {
                 if(window.innerWidth < 768) {
@@ -151,14 +99,6 @@
 				}
 			}
 		},
-        filters: {
-            bio: function(text) {
-                return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-            },
-            moment: function(time) {
-                return moment(time).format('LL');
-            },
-        },
         mounted() {
             if(this.user._id == store.getters.getUserID) {
                 this.editable = true;
@@ -167,7 +107,7 @@
         components: {
             'spinner': spinner,
             'fa': fontawesome,
-            char, forumlog, serverlog, history,
+            char, forumlog, serverlog, history, userAvatar, userContent,
             swiper,
             swiperSlide
         }
