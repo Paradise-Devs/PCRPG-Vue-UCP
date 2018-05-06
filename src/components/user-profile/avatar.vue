@@ -18,7 +18,7 @@
         </span>
         <b-progress class="comp__userAvatar__uploader__status" :max="processingMax" v-else-if="processingStep == 2">
             <b-progress-bar :value="processingPerc">
-               {{ animatedProcessingValue }}
+               {{ animatedProcessingValue }}%
             </b-progress-bar>
         </b-progress>
     </div>
