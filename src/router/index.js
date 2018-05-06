@@ -13,8 +13,6 @@ Vue.use(Router);
 
 // routes
 export default new Router({
-	mode: 'history',
-	cors: true,
 	routes: [
 		{ 	path: '/', 						component: IndexView },
 		{ 	path: '/dev', 					component: DevelopmentView },
