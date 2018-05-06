@@ -2,7 +2,7 @@
     <div class="comp__userAvatar">
         <img :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
         <div class="comp__userAvatar--empty" v-else> ? </div>
-        <div class="comp__userAvatar__uploader" v-if="editable">
+        <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">
             <label for='newAvatarField' class="button"><fa :icon="['fas', 'upload']" /></label>
             <input id='newAvatarField' type='file' accept="image/jpeg, image/png" @change="onFileChanged">
         </div>
@@ -11,9 +11,9 @@
             :class="{'comp__userAvatar__uploader__status--success': processingSuccess, 'comp__userAvatar__uploader__status--error': processingError }"
             v-if="processingStep != 2 && processingStep > 0 && editable"
         > 
-            <span v-if="processingStep == 1">Iniciando</span>
-            <span v-if="processingStep == 3">Finalizando</span>
-            <span v-if="processingStep == 4">Atualizando</span>
+            <span v-if="processingStep == 1">Iniciando...</span>
+            <span v-if="processingStep == 3">Finalizando...</span>
+            <span v-if="processingStep == 4">Atualizando...</span>
             <span v-if="processingStep == 5">Erro!</span>
         </span>
         <b-progress class="comp__userAvatar__uploader__status" :max="processingMax" v-else-if="processingStep == 2">
@@ -41,7 +41,6 @@
         },
         data() {
 			return {
-                loading: true,
                 processingStep: 0,
                 processingPerc: 0,
                 processingTweenedPerc: 0,
