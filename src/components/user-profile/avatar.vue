@@ -79,7 +79,6 @@
                     },
                     onUploadProgress: ProgressEvent => {
                         perc = (ProgressEvent.loaded / ProgressEvent.total) * 100;
-                        console.log(perc);
                         this.processingStep = 2;
                         this.processingPerc = perc;
 
