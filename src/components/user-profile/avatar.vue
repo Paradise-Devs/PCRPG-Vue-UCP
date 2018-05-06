@@ -42,7 +42,6 @@
         data() {
 			return {
                 loading: true,
-                editable: false,
                 processingStep: 0,
                 processingPerc: 0,
                 processingTweenedPerc: 0,
