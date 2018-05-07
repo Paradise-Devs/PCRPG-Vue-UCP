@@ -1,3 +1,94 @@
 .ucp__index {
-    
+    &__info {
+        &__column {
+            &--left {
+                margin-right: 24px;
+                flex: 0 0 72.666667%;
+                max-width: 72.666667%;
+            }
+        }
+        &__block {
+            background-color: $gray-dark;
+            margin-bottom: 24px;
+            border-radius: 5px;
+            padding: 0;
+
+            &__desc {
+                color: $gray-lt;
+                text-transform: uppercase;
+                font-family: $font-roboto;
+                font-size: 12px;
+                font-weight: 700;
+                margin: 15px 20px 0;
+            }
+
+            &__content {
+                padding: 15px 20px;
+                position: relative;
+                width: 100%;
+
+                .btn {
+                    position: absolute;
+                    bottom: 20px;
+                    right: 20px;
+                }
+            }
+
+            &--account {
+                .account__item {
+                    margin-bottom: 2px;
+                    &__stats {
+                        float: right;
+                        text-transform: uppercase;
+
+                        &.deactivated, &.permbanned {
+                            color: $red;
+                        }
+
+                        &.tempbanned {
+                            color: $orange;
+                        }
+
+                        &.normal {
+                            color: $green;
+                        }
+                    }
+                }
+            }
+
+            &--punishment {
+                &.permbanned {
+                    border: 1px solid $red;
+
+                    .ucp__index__info__block__desc {
+                        color: $red;
+                    }
+                }
+
+                &.tempbanned {
+                    border: 1px solid $orange;
+
+                    .ucp__index__info__block__desc {
+                        color: $orange;
+                    }
+                }
+
+                &__info {
+                    margin-top: 15px;
+
+                    .punishment__item {
+                        margin-bottom: 2px;
+
+                        &__desc {
+                            float: right;
+                        }
+
+                        &--expires {
+                            color: $orange;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

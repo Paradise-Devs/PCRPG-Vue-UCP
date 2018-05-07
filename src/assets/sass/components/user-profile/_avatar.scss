@@ -15,7 +15,7 @@
         font-weight: normal;
         border-color: transparent;
         color: $gray;
-        position: absolute;
+        @include centerX(absolute);
         align-items: center;
         justify-content: center;
     }
