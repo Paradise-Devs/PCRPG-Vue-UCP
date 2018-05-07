@@ -79,13 +79,8 @@
 					</b-col>
 					<b-col md="12" class="ucp__index__info__block">
 						<h4 class="ucp__index__info__block__desc">Log administrativo</h4>
-						<ul class="ucp__index__info__block--log__list">
-							<li class="log__item">Lós alterou o dinheiro do personagem %s para %d.</li>
-							<li class="log__item">Lós baniu o personagem tal por tanto tempo. motivo tal</li>
-							<li class="log__item"></li>
-							<li class="log__item"></li>
-							<li class="log__item"></li>
-							<li class="log__item"></li>
+						<ul class="ucp__index__info__block__content">
+							<li class="log__item">Não há logs disponíveis.</li>
 						</ul>
 					</b-col>
 				</b-row>
