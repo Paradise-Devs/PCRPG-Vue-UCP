@@ -13,9 +13,25 @@
 							<router-link to="/ucp/perfil" exact class="btn btn-primary">Ver perfil completo</router-link>
 						</div>
 					</b-col>
-					<h3>Seus personagens</h3>
-					<b-col md="12" class="ucp__index__info__block">
-						
+					<div class="ucp__index__info__divider">
+						<h3 class="ucp__index__info__divider__title">Seus personagens</h3>
+					</div>
+					<b-col md="12" class="ucp__index__info__block__character">
+						<swiper :options="swiperOption" class="ucp__index__info__block__character-swiper">
+							<swiper-slide v-for="char in chars" :key="char.id" class="char__wrapper--item">
+								<b-col 
+									md="10" 
+									offset-md="1" 
+									class="ucp__index__info__block"
+								>
+									<h2 class="charname">{{ char.lastname }}, {{ char.name }}</h2>
+									<div class="character__level"></div>
+								</b-col>
+							</swiper-slide>
+							<div class="ucp__index__info__block__character-swiper__pagination" slot="pagination"></div>
+						</swiper>
+						<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--prev"><fa :icon="['fas', 'angle-left']" /></div>
+    					<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--next"><fa :icon="['fas', 'angle-right']" /></div>
 					</b-col>
 				</b-row>
 			</b-col>
@@ -96,11 +112,12 @@
 	import { store } from '@/vuex/store';
 	import firsttime from '@/components/first-time/block';
 	import fontawesome from '@fortawesome/vue-fontawesome';
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 	import userAvatar from '@/components/user-profile/avatar';
 	import userContent from '@/components/user-profile/content';
 
-	import { code, bolt, support, briefcase, pencilAlt } from '@fortawesome/fontawesome-free-solid';
+	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight } from '@fortawesome/fontawesome-free-solid';
 
 	var tokenAPI, loginAPI;
 
@@ -128,7 +145,50 @@
 				counting: {
 					now: Math.trunc((new Date()).getTime() / 1000),
 					punishmentEnd: null,
-				}
+				},
+
+				swiperOption: {
+                    slidesPerView: 1,
+                    init: true,
+                    variableWidth: false,
+					navigation: {
+						nextEl: '.ucp__index__info__block__character-swiper__arrow--next',
+						prevEl: '.ucp__index__info__block__character-swiper__arrow--prev',
+					},
+                    pagination: {
+                        el: '.ucp__index__info__block__character-swiper__pagination',
+                    }
+                }, 
+
+				chars: [
+					{
+						level: 234,
+						xp: 923,
+						maxXP: 999999,
+						name: 'Lucas',
+						lastname: 'Souza',
+						lastLocation: 'Padoca de Los Santos',
+						job: 'Padeiro',
+					},
+					{
+						level: 333,
+						xp: 923,
+						maxXP: 999999,
+						name: 'Lucas',
+						lastname: 'Souza',
+						lastLocation: 'Padoca de Los Santos',
+						job: 'Padeiro',
+					},
+					{
+						level: 666,
+						xp: 923,
+						maxXP: 999999,
+						name: 'Lucas',
+						lastname: 'Souza',
+						lastLocation: 'Padoca de Los Santos',
+						job: 'Padeiro',
+					}
+				]
             }
         },
 		watch: {

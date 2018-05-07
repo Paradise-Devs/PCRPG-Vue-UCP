@@ -7,6 +7,26 @@
                 max-width: 72.666667%;
             }
         }
+        &__divider {
+            width: 100%;
+            position: relative;
+            background-color: $blue;
+            height: 2px;
+            margin-top: 8px;
+            margin-bottom: 30px;
+            border-radius: 2px;
+
+            &__title {
+                @include centerX(absolute);
+                top: -7px;
+                background-color: $bg-color;
+                text-transform: uppercase;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 700;
+                padding: 0 20px;
+            }
+        }
         &__block {
             background-color: $gray-dark;
             margin-bottom: 24px;
@@ -31,6 +51,71 @@
                     position: absolute;
                     bottom: 20px;
                     right: 20px;
+                }
+            }
+
+            &__character {
+                position: relative;
+                margin-bottom: 10px;
+                .ucp__index__info__block {
+                    min-height: 150px;
+                    margin-bottom: 0;
+                }
+
+                &-swiper {
+                    &__pagination {
+                        text-align: center;
+                        width: 60px !important;
+                        margin: 0 auto;
+                        
+                    
+                    }
+
+                    &__arrow {
+                        @include centerY(absolute);
+                        width: 45px;
+                        height: 45px;
+                        margin-top: -15px;
+                        z-index: 10;
+                        border-radius: 100%;
+                        cursor: pointer;
+                        background-size: 27px 44px;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        font-size: 30px;
+                        text-align: center;
+
+                        &--prev {
+                            left: 10px;
+                            right: auto;
+                        }
+
+                        &--next {
+                            right: 10px;
+                            left: auto;
+                        }
+
+                        &:hover {
+                            background-color: $gray-hover;
+                            color: $blue;
+                        }
+
+                        &:active {
+                            background-color: $gray-dark;
+                            color: $blue-active;
+                        }
+
+                        &:focus {
+                            outline: none;
+                        }
+
+                        &.swiper-button-disabled {
+                            background-color: $bg-color !important;
+                            color: $gray !important;
+                            cursor: default;
+                            opacity: .3;
+                        }
+                    }
                 }
             }
 
