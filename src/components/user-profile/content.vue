@@ -1,7 +1,7 @@
 <template>
     <div class="comp__userContent">
         <h3 class="comp__userContent__username">{{ user.forumAtt.attributes.username }}</h3>
-        <p class="comp__userContent__bio">{{ user.forumAtt.attributes.bio | bio }}</p>
+        <p class="comp__userContent__bio" v-if="user.forumAtt.attributes.bio">{{ user.forumAtt.attributes.bio | bio }}</p>
         <div class="tags">
             <b-badge 
                 v-for="group in user.groups"
