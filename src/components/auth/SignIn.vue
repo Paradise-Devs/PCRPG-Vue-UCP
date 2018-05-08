@@ -33,11 +33,6 @@
 					autocomplete="on"
 				/>
 			</b-form-group>
-			<b-form-group class="check">
-				<label class="checkbox">
-					<input type="checkbox" v-model="rememberme">Remember Me
-				</label>
-			</b-form-group>
 			<b-form-group>
 				<b-button type="submit" variant="primary" :disabled="loading" block class="loginButton">
 					Entrar <vue-spinner :loading="loading" color="#303846" size="30px"></vue-spinner>
@@ -81,7 +76,6 @@
 					token: null,
 					forumAtt: [ ]
 				},
-				rememberme: false,
 				error: null,
 				loading: false,
 			}
