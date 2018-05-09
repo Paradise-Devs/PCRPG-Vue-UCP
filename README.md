@@ -5,9 +5,9 @@
     <img src="https://img.shields.io/badge/VueJS-2.5.9-brightgreen.svg"/>
 </p>
 
-![Build Status](http://206.189.200.66:8080/buildStatus/icon?job=pcrpg-site-dev) DEV
+![Build Status](http://206.189.200.66:8080/buildStatus/icon?job=pcrpg-website-dev) DEV
 
-![Build Status](http://206.189.200.66:8080/buildStatus/icon?job=pcrpg-site-prod) PROD
+![Build Status](http://206.189.200.66:8080/buildStatus/icon?job=pcrpg-website-prod) PROD
 
 # Paradise City RPG - Web
 
