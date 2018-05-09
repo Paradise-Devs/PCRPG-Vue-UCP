@@ -38,7 +38,7 @@
 
         .modal-body {
             background-color: $gray-dark;
-            padding: 25px 30px;
+            padding: 0px;
             color: $gray;
 
             .modal-close {
@@ -66,6 +66,9 @@
                     background: transparent !important;
                     color: $blue-hover;
                 }
+            }
+            .form-centered {
+                margin: 25px 30px;
             }
         }
 

@@ -20,6 +20,7 @@
 					v-model="user.username"
 					ref="usernameField"
 					required
+					:class="{ 'is-invalid': error }"
 					placeholder="Nome de usuário ou Email"
 					autocomplete="on"
 				/>
@@ -29,14 +30,10 @@
 					type="password"
 					v-model="user.password"
 					required
+					:class="{ 'is-invalid': error }"
 					placeholder="Senha"
 					autocomplete="on"
 				/>
-			</b-form-group>
-			<b-form-group class="check">
-				<label class="checkbox">
-					<input type="checkbox" v-model="rememberme">Remember Me
-				</label>
 			</b-form-group>
 			<b-form-group>
 				<b-button type="submit" variant="primary" :disabled="loading" block class="loginButton">
@@ -82,7 +79,6 @@
 					forumAtt: [ ],
 					groups: [ ]
 				},
-				rememberme: false,
 				error: null,
 				loading: false,
 			}
@@ -112,7 +108,6 @@
 					if(response.data.error) {
 						_this.error = response.data.error.message;
 						_this.loading = false;
-						reject()
 					} else {
 						_this.user.token = response.data.token;
 						_this.authUser();

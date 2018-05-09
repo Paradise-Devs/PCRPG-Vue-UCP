@@ -186,7 +186,7 @@ form {
     padding: 8px 13px;
     font-size: 13px;
     line-height: 1.5;
-    color: $white-lt;
+    color: $gray;
     background-color: $bg-color;
     border: 0;
     border-color: transparent;
@@ -216,6 +216,8 @@ form {
         -moz-box-shadow: none;
         box-shadow: none !important;
         border: 2px solid $blue;
+        box-shadow: none !important;
+        outline: none;
     }
 }
 
