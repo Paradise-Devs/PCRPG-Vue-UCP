@@ -1,0 +1,11 @@
+.alert {
+    border-radius: 0;
+    border: 0;
+    margin-bottom: 0;
+    text-align: center;
+
+    &-danger {
+        background-color: $red;
+        color: $white;
+    }
+}

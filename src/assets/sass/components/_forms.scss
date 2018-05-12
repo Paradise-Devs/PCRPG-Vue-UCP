@@ -79,7 +79,7 @@ input {
     font-size: 13px;
     line-height: 1.5;
     color: $gray;
-    background-color: $gray-dark;
+    background-color: $bg-color;
     border: 0;
     border-color: transparent;
     border-radius: 4px;
@@ -104,6 +104,7 @@ input {
         background-color: $bg-color;
         color: $white-lt;
         border: 2px solid $blue;
+        box-shadow: none !important;
         outline: none;
     }
 }
