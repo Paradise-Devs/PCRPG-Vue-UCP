@@ -20,12 +20,33 @@
 						<swiper :options="swiperOption" class="ucp__index__info__block__character-swiper">
 							<swiper-slide v-for="char in chars" :key="char.id" class="char__wrapper--item">
 								<b-col 
-									md="10" 
+									md="12" 
 									offset-md="1" 
 									class="ucp__index__info__block"
 								>
-									<h2 class="charname">{{ char.lastname }}, {{ char.name }}</h2>
-									<div class="character__level"></div>
+									<span class="character__id">ID {{ char.player_id }}</span>
+									<div class="character__level">
+										<span class="label">{{ char.level }}</span>
+									</div>
+									<div class="character__info">
+										<h4 class="title">{{ char.name }}</h4>
+										<h6 class="text">{{ char.job }}</h6>
+										<h6 class="text">Última localização: {{ char.logoutArea }}</h6>
+									</div>
+									<div class="character__stats">
+										<ul class="stats__list">
+											<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+										</ul>
+									</div>
+									<div class="character__exp">
+										<span class="character__exp__current">Próximo level {{ char.level + 1 }}</span>
+										<span class="character__exp__needed">XP <b>{{ char.xp }}/{{ getNeededExp(char.level) }}</b></span>
+										<b-progress :max="getNeededExp(char.level)">
+											<b-progress-bar :value="char.xp">
+												{{ getExpPercent(char.level, char.xp) }}%
+											</b-progress-bar>
+										</b-progress>
+									</div>
 								</b-col>
 							</swiper-slide>
 							<div class="ucp__index__info__block__character-swiper__pagination" slot="pagination"></div>
@@ -117,7 +138,7 @@
 	import userAvatar from '@/components/user-profile/avatar';
 	import userContent from '@/components/user-profile/content';
 
-	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight } from '@fortawesome/fontawesome-free-solid';
+	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight, dollarSign } from '@fortawesome/fontawesome-free-solid';
 
 	var tokenAPI, loginAPI;
 
@@ -162,30 +183,23 @@
 
 				chars: [
 					{
-						level: 234,
-						xp: 923,
-						maxXP: 999999,
-						name: 'Lucas',
-						lastname: 'Souza',
-						lastLocation: 'Padoca de Los Santos',
+						player_id: 13231,
+						level: 2,
+						cash: 1,
+						xp: 11,
+						name: 'Lucas Souza',
+						logoutArea: 'Padoca de Los Santos',
+						status: 'Ativo',
 						job: 'Padeiro',
 					},
 					{
-						level: 333,
-						xp: 923,
-						maxXP: 999999,
-						name: 'Lucas',
-						lastname: 'Souza',
-						lastLocation: 'Padoca de Los Santos',
-						job: 'Padeiro',
-					},
-					{
-						level: 666,
-						xp: 923,
-						maxXP: 999999,
-						name: 'Lucas',
-						lastname: 'Souza',
-						lastLocation: 'Padoca de Los Santos',
+						player_id: 13231,
+						level: 2,
+						cash: 1,
+						xp: 11,
+						name: 'Lucas Souza',
+						logoutArea: 'Padoca de Los Santos',
+						status: 'Ativo',
 						job: 'Padeiro',
 					}
 				]
@@ -229,6 +243,9 @@
 					return '0' + value.toString()
 				}
 				return value.toString()
+			},
+			money: function(value) {
+				return value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 			}
 		},
 		computed: {
@@ -297,6 +314,14 @@
 				if(this.user.forumAtt.attributes.avatarUrl != null) {
 					this.userAvatar = this.user.forumAtt.attributes.avatarUrl;
 				}
+			},
+			getNeededExp: function(level) {
+				return 8 + ((level-1)*4);
+			},
+			getExpPercent: function(level, currentXP) {
+				let max = this.getNeededExp(level);
+				let res = (currentXP / max) * 100;
+				return res.toFixed();
 			}
 		},
 		mounted() {

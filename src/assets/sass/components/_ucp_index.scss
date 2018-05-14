@@ -57,25 +57,108 @@
             &__character {
                 position: relative;
                 margin-bottom: 10px;
+                padding: 0;
+
                 .ucp__index__info__block {
-                    min-height: 150px;
-                    margin-bottom: 0;
+                    padding-bottom: 15px;
+                    width: 85%;
+                    margin: 0 auto 8px;
+                    position: relative;
+
+                    .character {
+                        &__id {
+                            position: absolute;
+                            top: 5px;
+                            right: 5px;
+                            color: $gray-lt;
+                        }
+
+                        &__level {
+                            height: 100%;
+                            width: 107px;
+                            padding: 20px 20px 10px;
+                            display: inline-flex;
+                            justify-content: center;
+                            align-items: center;
+                                            
+                            .label {
+                                width: 65px;
+                                height: 65px;
+                                background-color: $blue;
+                                color: $white;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border-radius: 100px;
+                                font-size: 32px;
+                            }
+                        }
+
+                        &__exp {
+                            margin: 0 20px;
+                            text-transform: uppercase;
+                            font-size: 12px;
+                            display: block;
+    
+                            &__needed {
+                                float: right;
+                            }
+    
+                            .progress {
+                                margin-top: 2px;
+                            }
+                        }
+
+                        &__info {
+                            padding: 15px 0 0;
+                            display: inline-block;
+                            vertical-align: top;
+                            width: 63%;
+    
+                            .title {
+                                margin: 0;
+                                font-weight: 600;
+                            }
+    
+                            .text {
+                                margin: 3px 0;
+                                font-size: 14px;
+                            }                        
+                        }
+
+                        &__stats {
+                            display: inline-block;
+                            vertical-align: top;
+                            padding: 23px 20px 0 0;
+                            width: 20%;
+
+                            .stats__list {
+                                .item {
+                                    &--positive {
+                                        color: $green;
+                                    }
+                                    &--negative {
+                                        color: $red;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 &-swiper {
                     &__pagination {
                         text-align: center;
                         width: 60px !important;
-                        margin: 0 auto;
-                        
-                    
+                        margin: 0 auto 0;
+                        bottom: 0px;
                     }
 
                     &__arrow {
                         @include centerY(absolute);
                         width: 45px;
                         height: 45px;
-                        margin-top: -15px;
+                        margin-top: -20px;
                         z-index: 10;
                         border-radius: 100%;
                         cursor: pointer;
@@ -86,12 +169,12 @@
                         text-align: center;
 
                         &--prev {
-                            left: 10px;
+                            left: 5px;
                             right: auto;
                         }
 
                         &--next {
-                            right: 10px;
+                            right: 5px;
                             left: auto;
                         }
 
