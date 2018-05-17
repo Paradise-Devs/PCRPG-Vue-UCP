@@ -65,6 +65,14 @@
                     margin: 0 auto 8px;
                     position: relative;
 
+                    &--single {
+                        width: 100%;
+                    }
+
+                    &--empty {
+                        width: 100%;
+                    }
+
                     .character {
                         &__id {
                             position: absolute;

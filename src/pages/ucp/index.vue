@@ -17,7 +17,7 @@
 						<h3 class="ucp__index__info__divider__title">Seus personagens</h3>
 					</div>
 					<b-col md="12" class="ucp__index__info__block__character">
-						<swiper :options="swiperOption" class="ucp__index__info__block__character-swiper">
+						<swiper :options="swiperOption" class="ucp__index__info__block__character-swiper" v-if="chars.length > 1">
 							<swiper-slide v-for="char in chars" :key="char.id" class="char__wrapper--item">
 								<b-col 
 									md="12" 
@@ -51,8 +51,47 @@
 							</swiper-slide>
 							<div class="ucp__index__info__block__character-swiper__pagination" slot="pagination"></div>
 						</swiper>
-						<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--prev"><fa :icon="['fas', 'angle-left']" /></div>
-    					<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--next"><fa :icon="['fas', 'angle-right']" /></div>
+						<b-col 
+							md="12" 
+							offset-md="1" 
+							class="ucp__index__info__block ucp__index__info__block--empty"
+							v-else-if="chars.length == null"
+						>
+							tetete
+						</b-col>
+						<b-col 
+							md="12" 
+							offset-md="1" 
+							class="ucp__index__info__block ucp__index__info__block--single"
+							v-else
+							v-for="char in chars" :key="char.id"
+						>
+							<span class="character__id">ID {{ char.player_id }}</span>
+							<div class="character__level">
+								<span class="label">{{ char.level }}</span>
+							</div>
+							<div class="character__info">
+								<h4 class="title">{{ char.name }}</h4>
+								<h6 class="text">{{ char.job }}</h6>
+								<h6 class="text">Última localização: {{ char.logoutArea }}</h6>
+							</div>
+							<div class="character__stats">
+								<ul class="stats__list">
+									<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+								</ul>
+							</div>
+							<div class="character__exp">
+								<span class="character__exp__current">Próximo level {{ char.level + 1 }}</span>
+								<span class="character__exp__needed">XP <b>{{ char.xp }}/{{ getNeededExp(char.level) }}</b></span>
+								<b-progress :max="getNeededExp(char.level)">
+									<b-progress-bar :value="char.xp">
+										{{ getExpPercent(char.level, char.xp) }}%
+									</b-progress-bar>
+								</b-progress>
+							</div>
+						</b-col>
+						<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--prev" v-if="chars.length > 1"><fa :icon="['fas', 'angle-left']" /></div>
+    					<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--next" v-if="chars.length > 1"><fa :icon="['fas', 'angle-right']" /></div>
 					</b-col>
 				</b-row>
 			</b-col>
@@ -181,28 +220,7 @@
                     }
                 }, 
 
-				chars: [
-					{
-						player_id: 13231,
-						level: 2,
-						cash: 1,
-						xp: 11,
-						name: 'Lucas Souza',
-						logoutArea: 'Padoca de Los Santos',
-						status: 'Ativo',
-						job: 'Padeiro',
-					},
-					{
-						player_id: 13231,
-						level: 2,
-						cash: 1,
-						xp: 11,
-						name: 'Lucas Souza',
-						logoutArea: 'Padoca de Los Santos',
-						status: 'Ativo',
-						job: 'Padeiro',
-					}
-				]
+				chars: { }
             }
         },
 		watch: {
