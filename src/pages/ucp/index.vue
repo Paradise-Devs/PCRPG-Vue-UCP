@@ -57,7 +57,13 @@
 							class="ucp__index__info__block ucp__index__info__block--empty"
 							v-else-if="chars.length == null"
 						>
-							tetete
+							<div class="char__icon">
+								<font-awesome-layers>
+									<fa :icon="['fas', 'street-view']"/>
+									<fa :icon="['fas', 'plus']" transform="shrink-12 left-10 up-9" />
+								</font-awesome-layers>
+							</div>
+							<span class="char__text">Sem personagens</span>
 						</b-col>
 						<b-col 
 							md="12" 
@@ -179,14 +185,16 @@
 
 	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight, dollarSign } from '@fortawesome/fontawesome-free-solid';
 
-	var tokenAPI, loginAPI;
+	var tokenAPI, loginAPI, userAPI;
 
 	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
 		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
 		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
+		userAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
 	} else {
 		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
 		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
+		userAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
 	}
 
 	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
@@ -340,6 +348,12 @@
 				let max = this.getNeededExp(level);
 				let res = (currentXP / max) * 100;
 				return res.toFixed();
+			},
+			getUserChars: function() {
+				axios.get(userAPI + this.user.username + '/characters')
+				.then(response => {
+					this.chars = response;
+				})
 			}
 		},
 		mounted() {
@@ -364,6 +378,8 @@
 			} else {
 				this.userLoggedIn = true;
 			}
+
+			this.getUserChars();
 
 			this.$root.$on('hideFirstTimeTut', (res) => {
 				this.firstTime = res;
