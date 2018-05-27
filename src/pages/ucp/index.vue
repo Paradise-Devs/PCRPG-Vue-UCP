@@ -359,6 +359,7 @@
 		mounted() {
 			this.getUserAvatar();
 			this.checkUserAccountStatus();
+			this.getUserChars();
 
 			store.watch(
 				(state)=>{
@@ -378,8 +379,6 @@
 			} else {
 				this.userLoggedIn = true;
 			}
-
-			this.getUserChars();
 
 			this.$root.$on('hideFirstTimeTut', (res) => {
 				this.firstTime = res;
