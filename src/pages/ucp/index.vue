@@ -60,7 +60,7 @@
 							<div class="char__icon">
 								<font-awesome-layers>
 									<fa :icon="['fas', 'street-view']"/>
-									<fa :icon="['fas', 'plus']" transform="shrink-12 left-10 up-9" />
+                					<fa :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
 								</font-awesome-layers>
 							</div>
 							<span class="char__text">Sem personagens</span>
@@ -177,7 +177,7 @@
 	import moment from 'moment';
 	import { store } from '@/vuex/store';
 	import firsttime from '@/components/first-time/block';
-	import fontawesome from '@fortawesome/vue-fontawesome';
+	import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 	import userAvatar from '@/components/user-profile/avatar';
@@ -392,7 +392,8 @@
 		components: {
 			firsttime,
 			userAvatar, userContent,
-			'fa': fontawesome
+			'fa': FontAwesomeIcon,
+			FontAwesomeLayers
 		}
 	}
 </script>
