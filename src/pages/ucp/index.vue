@@ -55,7 +55,7 @@
 							md="12" 
 							offset-md="1" 
 							class="ucp__index__info__block ucp__index__info__block--empty"
-							v-else-if="chars.length == null"
+							v-else-if="chars.length == 0"
 						>
 							<div class="char__icon">
 								<font-awesome-layers>
@@ -69,7 +69,7 @@
 							md="12" 
 							offset-md="1" 
 							class="ucp__index__info__block ucp__index__info__block--single"
-							v-else
+							v-else-if="chars.length == 1"
 							v-for="char in chars" :key="char.id"
 						>
 							<span class="character__id">ID {{ char.player_id }}</span>
@@ -185,15 +185,11 @@
 
 	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight, dollarSign } from '@fortawesome/fontawesome-free-solid';
 
-	var tokenAPI, loginAPI, userAPI;
+	var userAPI;
 
 	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
 		userAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
 	} else {
-		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
 		userAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
 	}
 
@@ -228,7 +224,7 @@
                     }
                 }, 
 
-				chars: { }
+				chars: [ ]
             }
         },
 		watch: {
@@ -352,7 +348,10 @@
 			getUserChars: function() {
 				axios.get(userAPI + this.user.username + '/characters')
 				.then(response => {
-					this.chars = response;
+					this.chars = response.data;
+				})
+				.catch(error => {
+					console.log(error);
 				})
 			}
 		},
