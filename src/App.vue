@@ -14,8 +14,8 @@
 				<hero/>
 			</header>
 			<router-view/>
+			<notifications group="profileConfig" position="bottom left"/>
 			<appfooter/>
-			<overlay/>
 		</div>
 	</div>
 </template>
@@ -84,9 +84,24 @@
 				}
 			},
 			getForumData: function(){
-				axios.get(usersBaseURI + this.user.username)
+				axios.get(usersBaseURI + this.user.username, {
+					headers: {
+						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
+					}
+				})
 				.then(response => {
 					this.user.forumAtt = response.data.data;
+
+					let v = [ ];
+
+					for(var i in response.data.included) {
+						if(response.data.included[i].type == "groups") {
+							v.push(response.data.included[i].attributes);
+						}
+					}
+
+					this.user.groups = v;
+
 					this.authUser();
 				})
 				.catch(error => {

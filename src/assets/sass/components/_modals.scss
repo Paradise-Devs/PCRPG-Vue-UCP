@@ -1,7 +1,11 @@
 .modal {
     .modal-dialog {
         max-width: 375px;
-        margin: 120px auto;
+        margin: 0 auto;
+
+        @include tablet {
+            margin: 120px auto;
+        }
     }
 
     .modal-content {
@@ -63,7 +67,7 @@
                     color: $blue-hover;
                 }
             }
-            .form-centered {
+            .form--auth {
                 margin: 25px 30px;
             }
         }
@@ -74,7 +78,7 @@
             color: $gray;
             background-color: $bg-color;
             padding: 20px;
-            margin: 25px -30px -25px;
+            margin: 25px 0px -10px;
             display: block;
             font-family: $font-open;
 

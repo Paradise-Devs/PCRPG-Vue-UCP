@@ -6,9 +6,13 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
 	state: {
 		user: {},
-		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx; '
+		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx; ',
+		updateDataToken: '4vvhw6rrkchEfUgnJLyGRc995ZVvB86PxxzYknUT'
 	},
 	actions: {
+		setData({commit}, userdata) {
+			commit('SET_USER_DATA', userdata)
+		},
 		login({ commit }, userdata) {
 			return new Promise((resolve) => {
 				setTimeout(() => {
@@ -32,13 +36,16 @@ export const store = new Vuex.Store({
 		},
 		SET_USER_DATA (state, userdata) {
 			state.user = userdata;
+			localStorage.setItem("token", state.user.token);
 		}
 	},
 	getters: {
 		isLoggedIn: state => { return state.user.token != null },
 		getToken: state => { return state.user.token; },
 		getUserData: state => { return state.user; },
-		getMasterToken: state => { return state.masterToken; }
+		getUserID: state => { return state.user._id; },
+		getMasterToken: state => { return state.masterToken; },
+		getUpdateMasterToken: state => { return state.updateDataToken; }
 	}
 });
 

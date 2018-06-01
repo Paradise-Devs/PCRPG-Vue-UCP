@@ -1,0 +1,97 @@
+.comp__userAvatar {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    width: 100px;
+    height: 100px;
+
+    &--empty {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        font-size: 40px;
+        display: flex;
+        background-color: $gray-hover;
+        font-weight: normal;
+        border-color: transparent;
+        color: $gray;
+        @include centerX(absolute);
+        align-items: center;
+        justify-content: center;
+    }
+
+    img {
+        border-radius: 100%;
+        margin-bottom: 20px;
+        width: 100px;
+        height: 100px;
+
+        @include tablet {
+            @include centerX(absolute);
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    &__uploader {
+        position: absolute;
+        bottom: 0px;
+        right: 5px;
+
+        @include tablet {
+            bottom: 15px;
+            right: 5px;
+        }
+    
+        input[type='file'] {
+            display: none
+        }
+    
+        .button {
+            background-color: $blue;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            font-size: 12px;
+            position: relative;
+            border-radius: 100%;
+            margin: 0;
+    
+            svg {
+                @include center(absolute);
+            }
+    
+            &:hover {
+                background-color: $blue-hover;
+            }
+        }
+
+        &__status {
+            position: absolute;
+            width: 100%;
+            bottom: -10px;
+            height: 20px;
+            text-align: center;
+            background-color: $bg-color;
+            padding: 0 0 2px;
+            border-radius: 5px;
+            font-size: 12px;
+
+            &--success {
+                color: $white-green;
+                background-color: $green;
+            }
+
+            &--error {
+                color: $white-red;
+                background-color: $red;
+            }
+
+            &.progress {
+                padding: 0;
+            }
+        }
+    }
+}

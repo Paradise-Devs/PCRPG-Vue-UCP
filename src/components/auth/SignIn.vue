@@ -13,7 +13,7 @@
 		</div>
 
 		<button class="modal-close" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
-		<form class="form-centered" v-on:submit.prevent="login()" @keyup="hideError()">
+		<form class="form--auth" v-on:submit.prevent="login()" @keyup="hideError()">
 			<b-form-group>
 				<b-form-input
 					type="text"
@@ -76,7 +76,8 @@
 					username: '',
 					password: '',
 					token: null,
-					forumAtt: [ ]
+					forumAtt: [ ],
+					groups: [ ]
 				},
 				error: null,
 				loading: false,
@@ -90,7 +91,7 @@
 		},
 		methods: {
 			hideModal: function() {
-				this.$refs.signin.hide()
+				this.$refs.signin.hide();
 			},
 			focusLogin: function() {
 				this.$refs.usernameField.focus()
@@ -121,9 +122,19 @@
 			authUser: function() {
 				var _this = this;
 
-				axios.get(usersBaseURI + this.user.username)
+				axios.get(usersBaseURI + this.user.username, {
+					headers: {
+						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
+					}
+				})
 				.then(response => {
 					this.user.forumAtt = response.data.data;
+
+					for(var i in response.data.included) {
+						if(response.data.included[i].type == "groups") {
+							this.user.groups.push(response.data.included[i].attributes);
+						}
+					}
 					this.dispatchLogin();
 				})
 				.catch(function (error) {
@@ -134,7 +145,10 @@
 			dispatchLogin() {
 				store.dispatch('login', this.user).then(() => {
 					this.loading = false;
-					this.hideModal();
+					var timeSave = localStorage.getItem('firstTimeUCP');
+					if(timeSave != null) {
+						this.$router.push(this.$route.query.redirect || '/ucp');
+					}
 				});
 			}
 		}
@@ -144,12 +158,5 @@
 <style scoped>
 	.form-group.check {
 		max-height: 19px;
-	}
-
-	.v-spinner {
-		position: absolute;
-		right: 10px;
-		top: 5px;
-		width: 30px;
 	}
 </style>
