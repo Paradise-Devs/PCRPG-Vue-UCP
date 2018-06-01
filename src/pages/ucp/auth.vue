@@ -5,9 +5,6 @@
 			<ucpmenu v-if="!firstTime" />
 			<router-view/>
 		</div>
-		<div v-else>
-			ta deslogado ai, camarada
-		</div>
 	</b-container>
 </template>
 
@@ -53,7 +50,7 @@
 		},
 		mounted() {
 			if(this.user.token == null) {
-				this.userLoggedIn = false;
+				this.$router.push(this.$route.query.redirect || '/');
 			} else {
 				this.userLoggedIn = true;
 			}

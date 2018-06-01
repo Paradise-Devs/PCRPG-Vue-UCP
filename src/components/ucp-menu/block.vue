@@ -71,7 +71,7 @@
             
             logout: function () {
 				store.dispatch('logout').then(() => {
-					this.$router.push(this.$route.query.redirect || '/ucp');
+					this.$router.push(this.$route.query.redirect || '/');
 				})
 			}
         },
