@@ -22,14 +22,14 @@
             &__text {
                 display: inline-block;
                 width: 100%;
-                margin-left: 15px;
                 font-style: italic;
                 @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 4, $bgColor: $gray-hover);
                 margin-bottom: 0;
                 color: $gray;
 
                 @include tablet {
-                    width: 93%; 
+                    width: 93%;
+                    margin-left: 15px;
                 }
 
                 &__info {

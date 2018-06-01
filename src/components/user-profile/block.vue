@@ -6,7 +6,7 @@
                 <userContent :user="user" />
             </b-col>
         </b-row>
-        <swiper :options="swiperOption" ref="charsSwiper" class="char__wrapper" v-if="isMobile">
+        <swiper :options="swiperOption" ref="charsSwiper" class="char__wrapper" v-if="isMobile && charsData.length >= 1">
             <div v-if="charsData.length >= 1">
                 <swiper-slide v-for="char in charsData" :key="char.id" class="char__wrapper--item">
                     <char :char='char'/>
@@ -14,7 +14,10 @@
                 <div class="swiper-pagination" slot="pagination"></div>
             </div>
         </swiper>
-        <b-row v-else class="comp__userProfileBlock__chars">
+        <b-row v-else>
+            <char class="col-md-12" empty/>
+        </b-row>
+        <b-row v-if="!isMobile" class="comp__userProfileBlock__chars">
             <char class="col-md-4" v-for="char in charsData" :key="char.id" :char='char' v-if="charsData.length > 0" />
             <char class="col-md-4" v-if="charsData.length === 0" empty/>
             <char class="col-md-4" v-if="charsData.length === 0" empty/>
