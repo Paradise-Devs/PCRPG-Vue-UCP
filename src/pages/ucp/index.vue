@@ -3,7 +3,7 @@
 	<b-container class="ucp__index">
 		<firsttime v-if="firstTime"/>
 		<b-row v-else class="ucp__index__info">
-			<b-col md="8" class="ucp__index__info__column--left">
+			<b-col md="8" sm="12" class="ucp__index__info__column--left">
 				<b-row>
 					<b-col md="12" class="ucp__index__info__block ucp__index__info__block--profile">
 						<h4 class="ucp__index__info__block__desc ucp__index__info__block--profile__desc">Seu perfil</h4>
