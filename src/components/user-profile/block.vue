@@ -14,7 +14,7 @@
                 <div class="swiper-pagination" slot="pagination"></div>
             </div>
         </swiper>
-        <b-row v-else>
+        <b-row v-else-if="isMobile && charsData.length === 0">
             <char class="col-md-12" empty/>
         </b-row>
         <b-row v-if="!isMobile" class="comp__userProfileBlock__chars">
