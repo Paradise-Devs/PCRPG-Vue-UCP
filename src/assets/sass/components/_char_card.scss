@@ -1,13 +1,39 @@
 .char__card {
     width: 100%;
     background-color: $gray-dark;
-    border-radius: 5px;
     position: relative;
-    height: 236px;
+    padding: 0;
+    min-height: 254px;
+    border-radius: 0;
 
-    &.empty {
+    @include tablet {
+        border-radius: 5px;
+        height: auto;
+        max-width: 32.3333% !important;
+    }
+
+    &:not(:last-child) {
+        margin-right: 16px;
+    }
+
+    &--empty {
         background-color: rgba($color: $gray-dark, $alpha: .2);
         border: 1px dashed $gray-dark;
+        position: relative;
+
+        .card__icon {
+            opacity: .5;
+            font-size: 80px;
+            @include center(absolute);
+        }
+
+        .card__text {
+            position: absolute;
+            bottom: 40px;
+            font-size: 16px;
+            width: 100%;
+            text-align: center;
+        }
     }
     
     &__main {
@@ -48,7 +74,7 @@
             }
 
             td {
-                padding: 5px 10px;
+                padding: 8px 10px;
                 text-align: center;
 
                 &.opt {
@@ -63,5 +89,14 @@
                 }
             }
         }
+    }
+}
+
+.char__wrapper {
+    margin: 0 -15px;
+    overflow: inherit;
+
+    .swiper-pagination {
+        bottom: -30px;
     }
 }

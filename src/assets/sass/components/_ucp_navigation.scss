@@ -1,0 +1,106 @@
+.ucp__menu {
+    $border: 5px;
+    display: block;
+    height: 50px;
+    width: 100%;
+    margin: 20px 0 24px;
+    z-index: 1;
+    position: relative;
+
+    @include tablet {
+        display: -webkit-flex;
+        display: flex;
+    }
+
+    &__block {
+        display: block;
+        width: 100%;
+        @include tablet {
+            display: -webkit-flex;
+            display: flex !important;
+        }
+    }
+
+    .router-link {
+        width: 100%;
+        line-height: 50px;
+        height: 100%;
+        display: block;
+        justify-content: center;
+        text-transform: uppercase;
+        background-color: $gray-dark;
+        color: rgba($color: $white, $alpha: .2);
+        border-bottom: 1px solid $bg-color;
+        padding: 0 20px;
+
+        @include tablet {
+            border-left: 1px solid $bg-color;
+            border-bottom: 0;
+            flex-grow: 1;
+            display: inline-flex;
+        }
+
+        &:hover:not(.router-link-active) {
+            background-color: $gray-hover;
+            color: $gray;
+        }
+
+        &.current__route {
+            border-left: none !important;
+            position: relative;
+
+            &--closed {
+                background-color: $gray-dark;
+                color: $white;
+                border-radius: $border;
+            }
+
+            &--opened {
+                background-color: $blue-hover;
+                border-radius: $border $border 0 0;
+                color: $white;
+            }
+
+            @include tablet {
+                display: none;
+            }
+
+            .route__bars {
+                position: absolute;
+                right: 20px;
+                top: 15px;
+                font-size: 20px;
+            }
+        }
+
+        &-active {
+            background-color: $blue-hover;
+            border-left: none !important;
+
+            @include mobile {
+                border: 0;
+                background-color: $gray-active;
+            }
+
+            color: $white;
+        }
+
+        &:first-child {
+            @include tablet {
+                border-top-left-radius: $border;
+                border-bottom-left-radius: $border;
+            }
+        }
+
+        &:last-child {
+            @include mobile {
+                border-bottom-left-radius: $border;
+                border-bottom-right-radius: $border;
+            }
+            @include tablet {
+                border-top-right-radius: $border;
+                border-bottom-right-radius: $border;
+            }
+        }
+    }
+}

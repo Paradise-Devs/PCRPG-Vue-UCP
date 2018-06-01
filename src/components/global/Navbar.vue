@@ -2,7 +2,7 @@
 <template>
     <div class="nav">
         <animated-fade-in>
-            <nav id="navbar" class="navbar" :key="userLoggedIn">
+            <nav id="navbar" class="navbar">
                 <b-container>
                     <b-row>
                         <b-col>
@@ -26,8 +26,9 @@
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
 										<span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
 									</template>
-									<b-dropdown-item :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']" /> Perfil</b-dropdown-item>
-									<b-dropdown-item href="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
+									<b-dropdown-item to="/ucp" exact><fa :icon="['fas', 'wrench']" />Painel do usuário</b-dropdown-item>
+									<b-dropdown-item :to="'/jogador/' + user.username" exact><fa :icon="['fas', 'address-card']" /> Perfil</b-dropdown-item>
+									<b-dropdown-item to="/ucp/configuracoes" exact><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
 									<b-dropdown-divider/>
 									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
 								</b-dropdown>
@@ -42,16 +43,16 @@
 			<icon name="angle-up"/>
             <span class="screen-reader-text">Voltar ao topo</span>
         </a>
-		<signin/>
-		<signup/>
-		<overlay/>
-		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav" :key="userLoggedIn">
+		<signin v-if="!userLoggedIn" />
+		<signup v-if="!userLoggedIn"/>
+		<overlay />
+		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav">
 			<div class="navbar__menu__button">
 				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
-				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav"/>
+				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav()"/>
 			</div>
 		</div>
-		<div class="nav__mobile__menu" id="navMenu" :key="userLoggedIn">
+		<div class="nav__mobile__menu" id="navMenu">
 			<div class="nav__mobile__menu__signin" v-if="!userLoggedIn">
 				<a href="#" v-b-modal.signupModal @click="closeMobNav">Cadastre-se</a>
 				<span>ou</span>
@@ -67,7 +68,7 @@
 				</div>
 				<div class="nav__mobile__menu__user__info__tags">
 					<b-badge 
-						v-for="group in groups"
+						v-for="group in user.groups"
 						:key="group.id"
 						:style="{ borderColor: group.color }"
 					>
@@ -85,8 +86,9 @@
 				<a href="https://forum.pc-rpg.com.br"><fa :icon="['fas', 'comments']"/>Fórum</a>
 				<div class="nav__mobile__menu__links__user" v-if="userLoggedIn">
 					<h6 class="separator">Sua conta</h6>
-					<a :href="'https://forum.pc-rpg.com.br/u/' + user.username"><fa :icon="['fas', 'user']"/>Seu perfil</a>
-					<a to="https://forum.pc-rpg.com.br/settings"><fa :icon="['fas', 'cog']"/>Configurações</a>
+					<router-link to="/ucp" @click="closeMobNav" exact><fa :icon="['fas', 'wrench']"/>Painel do usuário</router-link>
+					<router-link to="/ucp/perfil" @click="closeMobNav" exact><fa :icon="['fas', 'address-card']"/>Seu perfil</router-link>
+					<router-link to="/ucp/configuracoes" @click="closeMobNav" exact><fa :icon="['fas', 'cog']"/>Configurações</router-link>
 					<a href="#" @click="logout"><fa :icon="['fas', 'sign-out-alt']"/>Sair</a>
 				</div>
 			</div>
@@ -104,7 +106,7 @@
 	import signup from '@/components/auth/SignUp';
 
 	import fontawesome from '@fortawesome/vue-fontawesome';
-	import { bell, user, cog, signOutAlt, bars, times, home, code, comments } from '@fortawesome/fontawesome-free-solid';
+	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench } from '@fortawesome/fontawesome-free-solid';
 
 	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
@@ -116,7 +118,8 @@
 				userLoggedIn: null,
 				scrolled: false,
 				value: 500,
-				maxValue: 5000
+				maxValue: 5000,
+				navOpened: false
             }
         },
         methods: {
@@ -136,6 +139,9 @@
 					this.user = store.state.user;
 					this.$router.push(this.$route.query.redirect || '/');
 					this.userLoggedIn = false;
+					var navOverlay = document.getElementById("navOverlay");
+					navOverlay.style.display = 'none';
+					
 					if(window.innerWidth < 768) {
 						this.closeMobNav();
 					}
@@ -170,6 +176,7 @@
 				body.classList.add('locked');
 
 				this.fadeIn(navCloseIcon);
+				this.navOpened = true;
 			},
 			closeMobNav: function () {
 				var navToggleButton = document.getElementById("toggleMobNav");
@@ -195,6 +202,7 @@
 				body.classList.remove('locked');
 
 				this.fadeIn(navOpenIcon);
+				this.navOpened = false;
 			},
 			fadeIn: function (el) {
 				el.style.opacity = 0;
@@ -214,7 +222,7 @@
         },
 		watch:{
 			$route (to, from){
-				if(window.innerWidth < 768) {
+				if(window.innerWidth < 768 && this.navOpened) {
 					this.closeMobNav();
 				}
 			},

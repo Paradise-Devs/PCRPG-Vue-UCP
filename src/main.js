@@ -19,6 +19,8 @@ import axios from 'axios'
 import VeeValidate, { Validator } from 'vee-validate';
 import ptbr from 'vee-validate/dist/locale/pt_BR';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import Notifications from 'vue-notification'
+
 Validator.localize('pt_BR', ptbr);
 
 Vue.router = router;
@@ -31,6 +33,7 @@ Vue.use(VueScrollTo);
 Vue.use(VuePaginate);
 Vue.use(VeeValidate);
 Vue.use(VueAwesomeSwiper);
+Vue.use(Notifications);
 
 const locale = require('moment')
 require('moment/locale/pt-br')
