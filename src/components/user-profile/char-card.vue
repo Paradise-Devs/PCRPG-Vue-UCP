@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!char.empty" class="char__card">
+    <div v-if="char && !empty" class="char__card">
         <div class="char__card__main">
             <span class="char__card__main--level">{{ char.level }}</span>
         </div>
@@ -23,7 +23,7 @@
             </tr>
         </table>
     </div>
-    <div v-else class="char__card char__card--empty">
+    <div v-else-if="empty" class="char__card char__card--empty">
         <div class="card__icon">
             <font-awesome-layers>
                 <fa :icon="['fas', 'street-view']"/>
@@ -42,12 +42,16 @@
 
     export default {
         props: {
-            char: Object
+            char: Object,
+            empty: Boolean
         },
         data() {
 			return {
                 username: this.$route.params.username,
             }
+        },
+        mounted() {
+            console.log(this.char);
         },
         components: {
             'vue-spinner': PulseLoader,

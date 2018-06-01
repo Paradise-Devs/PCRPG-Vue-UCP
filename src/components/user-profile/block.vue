@@ -7,13 +7,18 @@
             </b-col>
         </b-row>
         <swiper :options="swiperOption" ref="charsSwiper" class="char__wrapper" v-if="isMobile">
-            <swiper-slide v-for="char in charsData" :key="char.id" class="char__wrapper--item">
-                <char :char='char'/>
-            </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
+            <div v-if="charsData.length >= 1">
+                <swiper-slide v-for="char in charsData" :key="char.id" class="char__wrapper--item">
+                    <char :char='char'/>
+                </swiper-slide>
+                <div class="swiper-pagination" slot="pagination"></div>
+            </div>
         </swiper>
         <b-row v-else class="comp__userProfileBlock__chars">
-            <char class="col-md-4" v-for="char in charsData" :key="char.id" :char='char'/>
+            <char class="col-md-4" v-for="char in charsData" :key="char.id" :char='char' v-if="charsData.length > 0" />
+            <char class="col-md-4" v-if="charsData.length === 0" empty/>
+            <char class="col-md-4" v-if="charsData.length === 0" empty/>
+            <char class="col-md-4" v-if="charsData.length === 0" empty/>
         </b-row>
         <b-row class="comp__userProfileBlock__data">
             <b-col cols="12" class="comp__userProfileBlock__data__container">
@@ -50,8 +55,16 @@
     import forumlog from './forum-log'
     import serverlog from './server-log'
     import history from './history'
+
+    var userAPI;
     
-    var userBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
+    if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
+		userAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
+	} else {
+		userAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
+	}
+
+	var userBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
     export default {
         props: {
@@ -70,17 +83,7 @@
                         el: '.swiper-pagination',
                     }
                 },       
-                charsData: [
-                    {
-                        empty: true,
-                    },
-                    {
-                        empty: true,
-                    },
-                    {
-                        empty: true,
-                    }
-                ]
+                charsData: [ ]
             }
         },
         computed: {
@@ -99,10 +102,22 @@
 				}
 			}
 		},
+        methods: {
+            getUserCharacters: function() {
+                axios.get(userAPI + this.user.username + '/characters')
+                .then(response => {
+                    this.charsData = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            }
+        },
         mounted() {
             if(this.user._id == store.getters.getUserID) {
                 this.editable = true;
             }
+            this.getUserCharacters();
         },
         components: {
             'spinner': spinner,
