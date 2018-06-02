@@ -110,7 +110,8 @@
                 loadingData: false,
                 newUsername: '',
                 usernameChecking: false,
-                errorUsername: null
+                errorUsername: null,
+                fileChanged: false,
             }
         },
 		methods: {
@@ -139,12 +140,13 @@
 				}
             },
             ignoreInit: function() {
-                localStorage.removeItem('firstTimeUCP');
+                localStorage.setItem('firstTimeUCP', false);
                 this.$root.$emit('hideFirstTimeTut', false);
             },
 			onFileChanged: function(event) {
 				this.avatarFile = event.target.files[0];
-				this.userAvatar = URL.createObjectURL(event.target.files[0]);
+                this.userAvatar = URL.createObjectURL(event.target.files[0]);
+                this.fileChanged = true;
             },
             updateUser: function() {
                 this.loadingData = true;
@@ -196,13 +198,12 @@
                 .then(response => {
                     store.dispatch('setData', this.user).then(() => {
                         this.loadingData = false;
-                        localStorage.removeItem('firstTimeUCP');
-                        location.reload();
+                        localStorage.setItem('firstTimeUCP', false);
+                        if(this.fileChanged) {
+                            location.reload();
+                        }
 					});
                 });
-            },
-            uploadAvatar: function() {
-                
             }
 		},
 		mounted() {

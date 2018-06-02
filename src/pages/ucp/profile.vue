@@ -28,9 +28,6 @@
 				userLoggedIn: null
             }
         },
-		methods: {
-			
-		},
 		mounted() {
 			for(var i in this.user.forumAtt.included) {
 				if(this.user.forumAtt.included[i].type == "groups") {
@@ -39,7 +36,7 @@
 			}
 
 			var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave != null) {
+			if(timeSave === "true") {
 				this.$router.push(this.$route.query.redirect || '/ucp');
 			}
 		},
