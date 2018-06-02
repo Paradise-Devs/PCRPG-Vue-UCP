@@ -253,6 +253,20 @@
 			} else {
 				this.userLoggedIn = true;
 			}
+
+			this.$root.$on('logout', function() {
+				store.dispatch('logout').then(() => {
+					this.user = store.state.user;
+					this.$router.push(this.$route.query.redirect || '/');
+					this.userLoggedIn = false;
+					var navOverlay = document.getElementById("navOverlay");
+					navOverlay.style.display = 'none';
+					
+					if(window.innerWidth < 768) {
+						this.closeMobNav();
+					}
+				})
+			});
 		},
         created() {
             window.addEventListener('scroll', this.handleScroll);
