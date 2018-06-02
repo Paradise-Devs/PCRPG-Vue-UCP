@@ -8,7 +8,7 @@
             </b-col>
             <b-col sm="12" md="10" class="commit__message">
                 {{ commit.message }}
-                <span class="commit__message__date">{{ commit.created_at | moment }}</span>
+                <span class="commit__message__date">{{ commit.created_at | moment }} atrás</span>
             </b-col>
         </b-row>
     </div>
