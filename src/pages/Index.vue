@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="page__index">
 		<b-container>
 			<serverinfo/>
 			<b-row>
@@ -63,27 +63,3 @@
 		}
     }
 </script>
-
-<style lang="scss">
-	.joinus {
-        margin: 30px 0px;
-
-		h2 {
-			color: #526cff;
-			text-transform: uppercase;
-			font-size: 20px;
-			margin-bottom: 20px;
-
-			b {
-				color: #6c7d93;
-			}
-		}
-
-		.row {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			min-height: 367px;
-		}
-    }
-</style>

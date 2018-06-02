@@ -7,6 +7,10 @@
 @import 'layout/general';
 @import 'layout/responsivity';
 
+//pages
+@import 'pages/index';
+@import 'pages/development';
+
 //components
 @import 'components/alert';
 @import 'components/loader';
@@ -29,7 +33,6 @@
 @import 'components/ucp_index';
 @import 'components/ucp_navigation';
 @import 'components/ucp_settings';
-
 
 //user profile
 @import 'components/user-profile/avatar';

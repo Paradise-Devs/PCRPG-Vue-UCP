@@ -1,5 +1,5 @@
 <template>
-	<div class="commits">
+	<div class="page__development">
 		<b-container>
 			<b-row>
 				<b-col md="6">
@@ -80,33 +80,3 @@
 		},
 	}
 </script>
-
-<style lang="scss" scoped>
-	@import '../assets/sass/base/variables.scss';
-	@import '../assets/sass/layout/responsivity.scss';
-
-	.commits {
-		min-height: 63vh;
-		margin: 20px 0px;
-		text-align: center;
-
-		@include tablet {
-			text-align: left;
-			margin: 40px 0px;
-		}
-
-		.stats {
-			margin-top: 10px;
-			text-align: center;
-
-			@include tablet {
-				margin: 0;
-				text-align: right;
-			}
-		}
-
-		.nomore {
-			color: $gray;
-		}
-	}
-</style>
