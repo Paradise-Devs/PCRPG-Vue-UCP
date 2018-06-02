@@ -126,7 +126,7 @@
 				errorEmail: null,
 				loading: false,
 				usernameChecking: false,
-				emailChecking: true
+				emailChecking: false
 			}
 		},
 		components: {
