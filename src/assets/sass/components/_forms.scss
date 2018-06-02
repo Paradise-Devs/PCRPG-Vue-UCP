@@ -250,6 +250,7 @@ form {
         z-index: 2;
         margin: 0;
         opacity: 0;
+        cursor: pointer;
         
         &:focus ~ .custom-file-control {
             color: inherit !important;
