@@ -70,9 +70,7 @@
             },
             
             logout: function () {
-				store.dispatch('logout').then(() => {
-					this.$router.push(this.$route.query.redirect || '/');
-				})
+				this.$root.$emit('logout');
 			}
         },
         watch:{
