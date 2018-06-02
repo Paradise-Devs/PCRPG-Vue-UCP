@@ -30,8 +30,8 @@
 		data() {
             return {
 				user: store.state.user,
-				userLoggedIn: null,
-				firstTime: null
+				firstTime: false,
+				userLoggedIn: null
             }
         },
 		watch: {
@@ -48,7 +48,7 @@
 		computed: {
 			firstTime: function() {
 				var timeSave = localStorage.getItem('firstTimeUCP');
-				if(timeSave === "true") {
+				if(timeSave === "true" || timeSave === null) {
 					return true;
 				} else {
 					return false;
@@ -72,7 +72,7 @@
 			)
 
 			var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave === "true") {
+			if(timeSave === "true" || timeSave === null) {
 				this.firstTime = true;
 			} else {
 				this.firstTime = false;
