@@ -50,9 +50,6 @@
                 username: this.$route.params.username,
             }
         },
-        mounted() {
-            console.log(this.char);
-        },
         components: {
             'vue-spinner': PulseLoader,
             'fa': FontAwesomeIcon,

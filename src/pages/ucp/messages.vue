@@ -36,9 +36,6 @@
 				userLoggedIn: null
             }
         },
-		methods: {
-			
-		},
 		watch: {
 			user: {
 				handler: function(val, oldVal) {
@@ -58,7 +55,7 @@
 			}
 
 			var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave == null) {
+			if(timeSave === "true") {
 				this.$router.push(this.$route.query.redirect || '/ucp');
 			}
 

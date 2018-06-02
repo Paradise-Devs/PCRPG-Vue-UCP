@@ -34,9 +34,6 @@
 				firstTime: null
             }
         },
-		methods: {
-			
-		},
 		watch: {
 			user: {
 				handler: function(val, oldVal) {
@@ -48,16 +45,21 @@
 				}, deep: true
 			}
 		},
+		computed: {
+			firstTime: function() {
+				var timeSave = localStorage.getItem('firstTimeUCP');
+				if(timeSave === "true") {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		},
 		mounted() {
 			if(this.user.token == null) {
 				this.$router.push(this.$route.query.redirect || '/');
 			} else {
 				this.userLoggedIn = true;
-			}
-			
-			var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave != null) {
-				this.firstTime = true;
 			}
 
 			store.watch(
@@ -68,6 +70,13 @@
 					this.user = store.state.user;
 				}
 			)
+
+			var timeSave = localStorage.getItem('firstTimeUCP');
+			if(timeSave === "true") {
+				this.firstTime = true;
+			} else {
+				this.firstTime = false;
+			}
 
 			this.$root.$on('hideFirstTimeTut', (res) => {
 				this.firstTime = res;

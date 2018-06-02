@@ -146,8 +146,13 @@
 				store.dispatch('login', this.user).then(() => {
 					this.loading = false;
 					var timeSave = localStorage.getItem('firstTimeUCP');
-					if(timeSave != null) {
+					if(timeSave == null) {
+						localStorage.setItem('firstTimeUCP', 'true');
 						this.$router.push(this.$route.query.redirect || '/ucp');
+					} else {
+						if(timeSave) {
+							this.$router.push(this.$route.query.redirect || '/ucp');
+						}
 					}
 				});
 			}

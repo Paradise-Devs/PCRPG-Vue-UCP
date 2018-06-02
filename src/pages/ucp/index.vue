@@ -286,6 +286,14 @@
 			},
 			expireDays: function() {
 				return Math.trunc((this.calculatedExpireDate - this.counting.now) / 60 / 60 / 24);
+			},
+			firstTime: function() {
+				var timeSave = localStorage.getItem('firstTimeUCP');
+				if(timeSave === "true") {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		},
 		methods: {
@@ -379,14 +387,16 @@
 				this.userLoggedIn = true;
 			}
 
+			var timeSave = localStorage.getItem('firstTimeUCP');
+			if(timeSave === "true") {
+				this.firstTime = true;
+			} else {
+				this.firstTime = false;
+			}
+
 			this.$root.$on('hideFirstTimeTut', (res) => {
 				this.firstTime = res;
 			});
-
-			var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave != null) {
-				this.firstTime = true;
-			}
 		},
 		components: {
 			firsttime,
