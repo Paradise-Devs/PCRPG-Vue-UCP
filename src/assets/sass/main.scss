@@ -11,21 +11,23 @@
 @import 'pages/index';
 @import 'pages/development';
 
+//global components
+@import 'components/global/blocks';
+@import 'components/global/posts';
+@import 'components/global/forms';
+@import 'components/global/buttons';
+@import 'components/global/navbar';
+@import 'components/global/footer';
+@import 'components/global/hero';
+@import 'components/global/loader';
+@import 'components/global/modals';
+
 //components
 @import 'components/alert';
-@import 'components/loader';
-@import 'components/blocks';
-@import 'components/posts';
 @import 'components/users';
 @import 'components/pagination';
-@import 'components/modals';
-@import 'components/forms';
-@import 'components/buttons';
 @import 'components/commit';
-@import 'components/navbar';
 @import 'components/stats';
-@import 'components/footer';
-@import 'components/hero';
 @import 'components/user_profile';
 @import 'components/char_card';
 @import 'components/forum_log';

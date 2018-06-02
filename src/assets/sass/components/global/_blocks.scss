@@ -4,7 +4,7 @@
     @include tablet {
         margin-bottom: 0px;
     }
-    .block__header {
+    &__header {
         background-color: $gray-dark;
         padding: 8px 10px;
         text-align: center;
@@ -23,7 +23,7 @@
         }
     }
 
-    .block__content {
+    &__content {
         border: 1px solid $gray-dark;
         overflow-x: hidden;
         overflow-y: auto;
@@ -55,7 +55,7 @@
         }
     }
 
-    .block__footer {
+    &__footer {
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         background-color: $gray-dark;
