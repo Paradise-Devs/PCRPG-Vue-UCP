@@ -1,28 +1,28 @@
 <!--suppress ALL -->
 <template>
-	<b-container class="ucp__index">
+	<b-container class="page__ucp--index">
 		<firsttime v-if="firstTime"/>
-		<b-row v-else class="ucp__index__info">
-			<b-col md="8" sm="12" class="ucp__index__info__column--left">
+		<b-row v-else class="ucp">
+			<b-col md="8" sm="12" class="ucp__column--left">
 				<b-row>
-					<b-col md="12" class="ucp__index__info__block ucp__index__info__block--profile">
-						<h4 class="ucp__index__info__block__desc ucp__index__info__block--profile__desc">Seu perfil</h4>
-						<div class="ucp__index__info__block__content">
+					<b-col md="12" class="ucp__block ucp__block--profile">
+						<h4 class="ucp__block__desc ucp__block--profile__desc">Seu perfil</h4>
+						<div class="ucp__block__content">
 							<userAvatar :user="user" :editable="true" />
 							<userContent :user="user" />
 							<router-link to="/ucp/perfil" exact class="btn btn-primary">Ver perfil completo</router-link>
 						</div>
 					</b-col>
-					<div class="ucp__index__info__divider">
-						<h3 class="ucp__index__info__divider__title">Seus personagens</h3>
+					<div class="ucp__divider">
+						<h3 class="ucp__divider__title">Seus personagens</h3>
 					</div>
-					<b-col md="12" class="ucp__index__info__block__character">
-						<swiper :options="swiperOption" class="ucp__index__info__block__character-swiper" v-if="chars.length > 1">
+					<b-col md="12" class="ucp__block__character">
+						<swiper :options="swiperOption" class="ucp__block__character-swiper" v-if="chars.length > 1">
 							<swiper-slide v-for="char in chars" :key="char.id" class="char__wrapper--item">
 								<b-col 
 									md="12" 
 									offset-md="1" 
-									class="ucp__index__info__block"
+									class="ucp__block"
 								>
 									<span class="character__id">ID {{ char.player_id }}</span>
 									<div class="character__level">
@@ -49,12 +49,12 @@
 									</div>
 								</b-col>
 							</swiper-slide>
-							<div class="ucp__index__info__block__character-swiper__pagination" slot="pagination"></div>
+							<div class="ucp__block__character-swiper__pagination" slot="pagination"></div>
 						</swiper>
 						<b-col 
 							md="12" 
 							offset-md="1" 
-							class="ucp__index__info__block ucp__index__info__block--empty"
+							class="ucp__block ucp__block--empty"
 							v-else-if="chars.length == 0"
 						>
 							<div class="char__icon">
@@ -68,7 +68,7 @@
 						<b-col 
 							md="12" 
 							offset-md="1" 
-							class="ucp__index__info__block ucp__index__info__block--single"
+							class="ucp__block ucp__block--single"
 							v-else-if="chars.length == 1"
 							v-for="char in chars" :key="char.id"
 						>
@@ -96,26 +96,26 @@
 								</b-progress>
 							</div>
 						</b-col>
-						<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--prev" v-if="chars.length > 1"><fa :icon="['fas', 'angle-left']" /></div>
-    					<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--next" v-if="chars.length > 1"><fa :icon="['fas', 'angle-right']" /></div>
+						<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--prev" v-if="chars.length > 1"><fa :icon="['fas', 'angle-left']" /></div>
+    					<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--next" v-if="chars.length > 1"><fa :icon="['fas', 'angle-right']" /></div>
 					</b-col>
 				</b-row>
 			</b-col>
-			<b-col md="3" class="ucp__index__info__column--right">
+			<b-col md="3" class="ucp__column--right">
 				<b-row>
 					<b-col 
 						md="12"
-						class="ucp__index__info__block ucp__index__info__block--punishment"
+						class="ucp__block ucp__block--punishment"
 						:class="{
 							'tempbanned': userActivatedStatus == 2,
 							'permbanned': userActivatedStatus == 3,
 						}"
 						v-if="userActivatedStatus >= 2"
 					>
-						<h4 class="ucp__index__info__block__desc ucp__index__info__block--punishment__desc">Punição</h4>
-						<ul class="ucp__index__info__block__content">
+						<h4 class="ucp__block__desc ucp__block--punishment__desc">Punição</h4>
+						<ul class="ucp__block__content">
 							<b>{{ this.user.forumAtt.attributes.username }}</b>, você possui uma punição ativa no momento. <br/>Veja maiores detalhes abaixo:
-							<ul class="ucp__index__info__block--punishment__info">
+							<ul class="ucp__block--punishment__info">
 								<li class="punishment__item">
 									Administrador resp. 
 									<span class="punishment__item__desc">
@@ -137,9 +137,9 @@
 							</ul>
 						</ul>
 					</b-col>
-					<b-col md="12" class="ucp__index__info__block ucp__index__info__block--account">
-						<h4 class="ucp__index__info__block__desc">Sua conta</h4>
-						<ul class="ucp__index__info__block__content">
+					<b-col md="12" class="ucp__block ucp__block--account">
+						<h4 class="ucp__block__desc">Sua conta</h4>
+						<ul class="ucp__block__content">
 							<li class="account__item">
 								Status atual 
 								<span 
@@ -159,9 +159,9 @@
 							<li class="account__item">Membro desde <span class="account__item__stats">{{ this.user.forumAtt.attributes.joinTime | normalDateFilter }}</span></li>
 						</ul>
 					</b-col>
-					<b-col md="12" class="ucp__index__info__block">
-						<h4 class="ucp__index__info__block__desc">Log administrativo</h4>
-						<ul class="ucp__index__info__block__content">
+					<b-col md="12" class="ucp__block">
+						<h4 class="ucp__block__desc">Log administrativo</h4>
+						<ul class="ucp__block__content">
 							<li class="log__item">Não há logs disponíveis.</li>
 						</ul>
 					</b-col>
@@ -216,11 +216,11 @@
                     init: true,
                     variableWidth: false,
 					navigation: {
-						nextEl: '.ucp__index__info__block__character-swiper__arrow--next',
-						prevEl: '.ucp__index__info__block__character-swiper__arrow--prev',
+						nextEl: '.ucp__block__character-swiper__arrow--next',
+						prevEl: '.ucp__block__character-swiper__arrow--prev',
 					},
                     pagination: {
-                        el: '.ucp__index__info__block__character-swiper__pagination',
+                        el: '.ucp__block__character-swiper__pagination',
                     }
                 }, 
 

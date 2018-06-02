@@ -1,6 +1,6 @@
 <!--suppress ALL -->
 <template>
-	<b-container class="ucp__config">
+	<b-container class="page__ucp--settings">
 		<b-row>
 			<b-card class="col-12 card--bordered">
 				<div class="card__icon">
@@ -10,9 +10,9 @@
 			</b-card>
 		</b-row>
 		<b-row align-h="between">
-			<b-col md="3" sm="12" class="ucp__config__block">
-				<h3 class="ucp__config__block__title">Alterar e-mail</h3>
-				<p class="ucp__config__block__text">Você pode alterar os seus dados de acesso sempre que quiser. Lembre-se de ter sempre um email válido, pois é ele que você vai utilizar para validar qualquer operação importante no servidor.</p>
+			<b-col md="3" sm="12" class="setting__block">
+				<h3 class="setting__block__title">Alterar e-mail</h3>
+				<p class="setting__block__text">Você pode alterar os seus dados de acesso sempre que quiser. Lembre-se de ter sempre um email válido, pois é ele que você vai utilizar para validar qualquer operação importante no servidor.</p>
 				<form class="form--small" v-on:submit.prevent="changeEmail()">
 					<b-form-group label="Email atual:">
 						<b-form-input type="email" :value="user.forumAtt.attributes.email" name="oldEmail" disabled></b-form-input>
@@ -52,9 +52,9 @@
 					</b-form-group>
 				</form>
 			</b-col>
-			<b-col md="5" sm="12" class="ucp__config__block">
-				<h3 class="ucp__config__block__title">Alterar senha</h3>
-				<p class="ucp__config__block__text">Sua senha deve ser única e não pode ser compartilhada com terceiros. A equipe do PC:RPG nunca vai solicita-la para prestar qualquer tipo de suporte. Você é o único responsável por ela, é possível recuperá-la através do seu e-mail.</p>
+			<b-col md="5" sm="12" class="setting__block">
+				<h3 class="setting__block__title">Alterar senha</h3>
+				<p class="setting__block__text">Sua senha deve ser única e não pode ser compartilhada com terceiros. A equipe do PC:RPG nunca vai solicita-la para prestar qualquer tipo de suporte. Você é o único responsável por ela, é possível recuperá-la através do seu e-mail.</p>
 				<form class="form--small" v-on:submit.prevent="changePassword()">
 					<b-form-group>
 						<b-form-input 
@@ -120,9 +120,9 @@
 					</b-form-group>
 				</form>
 			</b-col>
-			<b-col md="3" sm="12" class="ucp__config__block">
-				<h3 class="ucp__config__block__title">Alterar apelido</h3>
-				<p class="ucp__config__block__text">Seu apelido é único e é como você gostaria de ser chamado fora do jogo, também é o seu login para autenticar-se. Lembre-se de respeitar a política de apelidos que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
+			<b-col md="3" sm="12" class="setting__block">
+				<h3 class="setting__block__title">Alterar apelido</h3>
+				<p class="setting__block__text">Seu apelido é único e é como você gostaria de ser chamado fora do jogo, também é o seu login para autenticar-se. Lembre-se de respeitar a política de apelidos que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
 				<form class="form--small" v-on:submit.prevent="changeUsername()">
 					<b-form-group label="Apelido atual:">
 						<b-form-input type="text" :value="user.forumAtt.attributes.username" disabled></b-form-input>

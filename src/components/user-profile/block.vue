@@ -1,7 +1,7 @@
 <template>
-    <b-container class="comp__userProfileBlock">
+    <b-container class="page__user-profile">
         <b-row>
-            <b-col class="comp__userProfileBlock__block" md="12">
+            <b-col class="user-profile__block" md="12">
                 <userAvatar :user="user" :editable="editable" />
                 <userContent :user="user" />
             </b-col>
@@ -17,14 +17,14 @@
         <b-row v-else-if="isMobile && charsData.length === 0">
             <char class="col-md-12" empty/>
         </b-row>
-        <b-row v-if="!isMobile" class="comp__userProfileBlock__chars">
+        <b-row v-if="!isMobile" class="user-profile__chars">
             <char class="col-md-4" v-for="char in charsData" :key="char.id" :char='char' v-if="charsData.length > 0" />
             <char class="col-md-4" v-if="charsData.length === 0" empty/>
             <char class="col-md-4" v-if="charsData.length === 0" empty/>
             <char class="col-md-4" v-if="charsData.length === 0" empty/>
         </b-row>
-        <b-row class="comp__userProfileBlock__data">
-            <b-col cols="12" class="comp__userProfileBlock__data__container">
+        <b-row class="user-profile__data">
+            <b-col cols="12" class="user-profile__data__container">
                 <b-tabs>
                     <b-tab title="Fórum" active>
                         <forumlog :user="user" />
