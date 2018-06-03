@@ -13,7 +13,8 @@
 				</div>
 			</b-col>
 			<b-col md="9" sm="12" class="column column--right">
-				<messagingList :messages="messages"/>
+                <loader  :loading="loading" color="#303846" size="60px"></loader>
+				<messagingList :messages="messages" v-if="!loading"/>
 			</b-col>
 		</b-row>
 	</b-container>
@@ -21,86 +22,24 @@
 
 <script>
 	import Vue from 'vue';
-	import messagingList from '@/components/messaging/list'
+    import messagingList from '@/components/messaging/list'
+
+    import loader from 'vue-spinner/src/MoonLoader.vue'
+    
+    import MessagingService from '@/services/messaging'
+    import { store } from '@/vuex/store'
 
 	export default {
         data() {
 			return {
-                messages: [
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: false
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                ],
-                btnActivated: 1
+                user: store.state.user,
+                inbox: [ ],
+                outbox: [ ],
+                trashbox: [ ],
+                messages: [ ],
+                btnActivated: 1,
+
+                loading: true
             }
         },
         methods: {
@@ -108,81 +47,71 @@
                 this.btnActivated = 1;
                 this.$root.$emit('hideReadingMessage');
 
-                this.messages = [
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                ]
+                this.loading = true;
+
+                MessagingService.getMessagesTo(this.user.username)
+                .then(res =>{
+                    this.messages = res.data;
+                    //this.loading = false;
+                })
+                .catch(err => {
+                    console.log(err);
+                    //this.loading = false;
+                })
             },
             getOutbox: function() {
                 this.btnActivated = 2;
                 this.$root.$emit('hideReadingMessage');
+
+                this.loading = true;
                 
-                this.messages = [
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: false
-                    },
-                    {
-                        sender: 'Los',
-                        receiver: 'Los',
-                        sendDate: '2018-13-11',
-                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                        location: 'inbox',
-                        isRead: true
-                    },
-                ]
+                MessagingService.getMessagesFrom(this.user.username)
+                .then(res =>{
+                    this.messages = res.data;
+                    this.loading = false;
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.loading = false;
+                })
             },
             getTrashbox: function() {
                 this.btnActivated = 3;
                 this.$root.$emit('hideReadingMessage');
 
-                this.messages = []
+                this.loading = true;
+
+                MessagingService.getDeletedMessages(this.user.username)
+                .then(res =>{
+                    this.messages = res.data;
+                    this.loading = false;
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.loading = false;
+                })
             },
         },
         mounted() {
-            this.messages = [
-                {
-                    sender: 'Los',
-                    receiver: 'Los',
-                    sendDate: '2018-13-11',
-                    subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                    body: 'Occaecat Lorem id minim ad.Nulla excepteur adipisicing laboris consectetur consequat cillum voluptate do do mollit.Minim officia elit id nisi ullamco.Labore est tempor esse adipisicing dolore in eiusmod qui.Proident consequat amet sint quis mollit sunt cupidatat ipsum eu.',
-                    location: 'inbox',
-                    id: 'weoawjf241do',
-                    isRead: true
-                },
-                {
-                    sender: 'Los',
-                    receiver: 'Los',
-                    sendDate: '2018-13-11',
-                    subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
-                    body: 'Occaecat Lorem id minim ad.Nulla excepteur adipisicing laboris consectetur consequat cillum voluptate do do mollit.Minim officia elit id nisi ullamco.Labore est tempor esse adipisicing dolore in eiusmod qui.Proident consequat amet sint quis mollit sunt cupidatat ipsum eu.',
-                    location: 'inbox',
-                    id: 'wqod1313',
-                    isRead: true
-                },
-            ]
+            MessagingService.getMessagesTo(this.user.username)
+            .then(res =>{
+                this.messages = res.data;
+                this.loading = false;
+            })
+            .catch(err => {
+                console.log(err);
+                this.loading = false;
+            })
         },
 		components: {
-			messagingList
+            messagingList,
+            'loader': loader,
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+    .v-spinner {
+        margin-top: 70px;
+    }
+</style>
