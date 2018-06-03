@@ -12,7 +12,11 @@ import UcpView from '@/pages/ucp/auth'
 import UcpIndexView from '@/pages/ucp/index'
 import UcpSettingsView from '@/pages/ucp/settings'
 import UcpProfileView from '@/pages/ucp/profile'
-import UcpMessagesView from '@/pages/ucp/messages'
+
+//messaging
+import UcpMessagesView from '@/pages/ucp/messaging/model'
+import UcpMessagesIndexView from '@/pages/ucp/messaging/index'
+import UcpMessageDetailsView from '@/pages/ucp/messaging/message'
 
 Vue.use(Router);
 
@@ -25,7 +29,12 @@ export default new Router({
 			children: [
 				{ 	path: '', 							component: UcpIndexView },
 				{ 	path: 'configuracoes', 				component: UcpSettingsView },
-				{ 	path: 'mensagens', 					component: UcpMessagesView },
+				{ 	path: 'mensagens', 					component: UcpMessagesView,
+					children: [
+						{ 	path: '', 					component: UcpMessagesIndexView },
+						{ 	path: 'msg/:msgid?', 		component: UcpMessageDetailsView },
+					]
+				},
 				{ 	path: 'perfil', 					component: UcpProfileView },
 			]
 		},

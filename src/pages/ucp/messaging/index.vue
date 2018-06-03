@@ -106,6 +106,8 @@
         methods: {
             getInbox: function() {
                 this.btnActivated = 1;
+                this.$root.$emit('hideReadingMessage');
+
                 this.messages = [
                     {
                         sender: 'Los',
@@ -127,6 +129,7 @@
             },
             getOutbox: function() {
                 this.btnActivated = 2;
+                this.$root.$emit('hideReadingMessage');
                 
                 this.messages = [
                     {
@@ -149,6 +152,7 @@
             },
             getTrashbox: function() {
                 this.btnActivated = 3;
+                this.$root.$emit('hideReadingMessage');
 
                 this.messages = []
             },
@@ -160,7 +164,9 @@
                     receiver: 'Los',
                     sendDate: '2018-13-11',
                     subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                    body: 'Occaecat Lorem id minim ad.Nulla excepteur adipisicing laboris consectetur consequat cillum voluptate do do mollit.Minim officia elit id nisi ullamco.Labore est tempor esse adipisicing dolore in eiusmod qui.Proident consequat amet sint quis mollit sunt cupidatat ipsum eu.',
                     location: 'inbox',
+                    id: 'weoawjf241do',
                     isRead: true
                 },
                 {
@@ -168,7 +174,9 @@
                     receiver: 'Los',
                     sendDate: '2018-13-11',
                     subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                    body: 'Occaecat Lorem id minim ad.Nulla excepteur adipisicing laboris consectetur consequat cillum voluptate do do mollit.Minim officia elit id nisi ullamco.Labore est tempor esse adipisicing dolore in eiusmod qui.Proident consequat amet sint quis mollit sunt cupidatat ipsum eu.',
                     location: 'inbox',
+                    id: 'wqod1313',
                     isRead: true
                 },
             ]
