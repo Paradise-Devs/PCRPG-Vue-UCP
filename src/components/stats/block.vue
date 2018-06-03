@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import ServerService from '@/services/server';
     
     var statsEndpoint;
     if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
@@ -40,7 +40,7 @@
             }
         },
         mounted() {
-            axios.get(statsEndpoint)
+            ServerService.getStats()
 			.then(response => {
 				this.stats = response.data;
 			});

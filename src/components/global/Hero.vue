@@ -11,16 +11,11 @@
 </template>
 
 <script>
-    export default {
-        name: 'Slider',
-        methods: {
-		}
-    }
+    export default { }
 </script>
 
 <style>
     .hero {
         background-image: url('./hero-bg.jpg');
     }
-
 </style>

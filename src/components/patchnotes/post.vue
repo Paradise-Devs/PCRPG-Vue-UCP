@@ -10,14 +10,15 @@
                 </li>
             </ul>
         </a>
-        <span class="post__comments"><icon name="comment-o"/> {{ patch.attributes.commentsCount }}</span>
+        <span class="post__comments"><icon :icon="['far', 'comments']" /> {{ post.attributes.commentsCount }}</span>
     </div>
 </template>
 
 <script>
 	import moment from 'moment';
 
-    import 'vue-awesome/icons/comment-o'
+    
+	import { comments } from '@fortawesome/fontawesome-free-regular';
 
     export default {
         props:['patch'],
@@ -25,7 +26,7 @@
 			moment: function(time) {
 				return moment(time).fromNow();
 			}
-		}
+        }
     }
 </script>
 

@@ -7,30 +7,41 @@
 @import 'layout/general';
 @import 'layout/responsivity';
 
-//components
-@import 'components/alert';
-@import 'components/loader';
-@import 'components/blocks';
-@import 'components/posts';
-@import 'components/users';
-@import 'components/pagination';
-@import 'components/modals';
-@import 'components/forms';
-@import 'components/buttons';
-@import 'components/commit';
-@import 'components/navbar';
-@import 'components/stats';
-@import 'components/footer';
-@import 'components/hero';
-@import 'components/user_profile';
-@import 'components/char_card';
-@import 'components/forum_log';
-@import 'components/first_time';
-@import 'components/ucp_index';
-@import 'components/ucp_navigation';
-@import 'components/ucp_settings';
+//pages
+@import 'pages/index';
+@import 'pages/development';
+@import 'pages/user_profile';
+@import 'pages/ucp/index';
+@import 'pages/ucp/settings';
 
+//global components
+@import 'components/global/blocks';
+@import 'components/global/posts';
+@import 'components/global/forms';
+@import 'components/global/buttons';
+@import 'components/global/navbar';
+@import 'components/global/footer';
+@import 'components/global/hero';
+@import 'components/global/loader';
+@import 'components/global/modals';
+@import 'components/global/alert';
+@import 'components/global/pagination';
 
 //user profile
 @import 'components/user-profile/avatar';
+@import 'components/user-profile/char_card';
 @import 'components/user-profile/content';
+@import 'components/user-profile/forum_log';
+
+//Commit - Development page
+@import 'components/commits/commit';
+
+//ucp
+@import 'components/ucp/first_time';
+@import 'components/ucp/navigation';
+
+//team
+@import 'components/team/users';
+
+//server-stats
+@import 'components/server-stats/block'; 

@@ -1,28 +1,28 @@
 <!--suppress ALL -->
 <template>
-	<b-container class="ucp__index">
+	<b-container class="page__ucp--index">
 		<firsttime v-if="firstTime"/>
-		<b-row v-else class="ucp__index__info">
-			<b-col md="8" sm="12" class="ucp__index__info__column--left">
+		<b-row v-else class="ucp">
+			<b-col md="8" sm="12" class="ucp__column--left">
 				<b-row>
-					<b-col md="12" class="ucp__index__info__block ucp__index__info__block--profile">
-						<h4 class="ucp__index__info__block__desc ucp__index__info__block--profile__desc">Seu perfil</h4>
-						<div class="ucp__index__info__block__content">
+					<b-col md="12" class="ucp__block ucp__block--profile">
+						<h4 class="ucp__block__desc ucp__block--profile__desc">Seu perfil</h4>
+						<div class="ucp__block__content">
 							<userAvatar :user="user" :editable="true" />
 							<userContent :user="user" />
 							<router-link to="/ucp/perfil" exact class="btn btn-primary">Ver perfil completo</router-link>
 						</div>
 					</b-col>
-					<div class="ucp__index__info__divider">
-						<h3 class="ucp__index__info__divider__title">Seus personagens</h3>
+					<div class="ucp__divider">
+						<h3 class="ucp__divider__title">Seus personagens</h3>
 					</div>
-					<b-col md="12" class="ucp__index__info__block__character">
-						<swiper :options="swiperOption" class="ucp__index__info__block__character-swiper" v-if="chars.length > 1">
+					<b-col md="12" class="ucp__block__character">
+						<swiper :options="swiperOption" class="ucp__block__character-swiper" v-if="chars.length > 1">
 							<swiper-slide v-for="char in chars" :key="char.id" class="char__wrapper--item">
 								<b-col 
 									md="12" 
 									offset-md="1" 
-									class="ucp__index__info__block"
+									class="ucp__block"
 								>
 									<span class="character__id">ID {{ char.player_id }}</span>
 									<div class="character__level">
@@ -35,7 +35,7 @@
 									</div>
 									<div class="character__stats">
 										<ul class="stats__list">
-											<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+											<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><icon :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
 										</ul>
 									</div>
 									<div class="character__exp">
@@ -49,18 +49,18 @@
 									</div>
 								</b-col>
 							</swiper-slide>
-							<div class="ucp__index__info__block__character-swiper__pagination" slot="pagination"></div>
+							<div class="ucp__block__character-swiper__pagination" slot="pagination"></div>
 						</swiper>
 						<b-col 
 							md="12" 
 							offset-md="1" 
-							class="ucp__index__info__block ucp__index__info__block--empty"
+							class="ucp__block ucp__block--empty"
 							v-else-if="chars.length == 0"
 						>
 							<div class="char__icon">
 								<font-awesome-layers>
-									<fa :icon="['fas', 'street-view']"/>
-                					<fa :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
+									<icon :icon="['fas', 'street-view']"/>
+                					<icon :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
 								</font-awesome-layers>
 							</div>
 							<span class="char__text">Sem personagens</span>
@@ -68,7 +68,7 @@
 						<b-col 
 							md="12" 
 							offset-md="1" 
-							class="ucp__index__info__block ucp__index__info__block--single"
+							class="ucp__block ucp__block--single"
 							v-else-if="chars.length == 1"
 							v-for="char in chars" :key="char.id"
 						>
@@ -83,7 +83,7 @@
 							</div>
 							<div class="character__stats">
 								<ul class="stats__list">
-									<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+									<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><icon :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
 								</ul>
 							</div>
 							<div class="character__exp">
@@ -96,26 +96,26 @@
 								</b-progress>
 							</div>
 						</b-col>
-						<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--prev" v-if="chars.length > 1"><fa :icon="['fas', 'angle-left']" /></div>
-    					<div class="ucp__index__info__block__character-swiper__arrow ucp__index__info__block__character-swiper__arrow--next" v-if="chars.length > 1"><fa :icon="['fas', 'angle-right']" /></div>
+						<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--prev" v-if="chars.length > 1"><icon :icon="['fas', 'angle-left']" /></div>
+    					<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--next" v-if="chars.length > 1"><icon :icon="['fas', 'angle-right']" /></div>
 					</b-col>
 				</b-row>
 			</b-col>
-			<b-col md="3" class="ucp__index__info__column--right">
+			<b-col md="3" class="ucp__column--right">
 				<b-row>
 					<b-col 
 						md="12"
-						class="ucp__index__info__block ucp__index__info__block--punishment"
+						class="ucp__block ucp__block--punishment"
 						:class="{
 							'tempbanned': userActivatedStatus == 2,
 							'permbanned': userActivatedStatus == 3,
 						}"
 						v-if="userActivatedStatus >= 2"
 					>
-						<h4 class="ucp__index__info__block__desc ucp__index__info__block--punishment__desc">Punição</h4>
-						<ul class="ucp__index__info__block__content">
+						<h4 class="ucp__block__desc ucp__block--punishment__desc">Punição</h4>
+						<ul class="ucp__block__content">
 							<b>{{ this.user.forumAtt.attributes.username }}</b>, você possui uma punição ativa no momento. <br/>Veja maiores detalhes abaixo:
-							<ul class="ucp__index__info__block--punishment__info">
+							<ul class="ucp__block--punishment__info">
 								<li class="punishment__item">
 									Administrador resp. 
 									<span class="punishment__item__desc">
@@ -137,9 +137,9 @@
 							</ul>
 						</ul>
 					</b-col>
-					<b-col md="12" class="ucp__index__info__block ucp__index__info__block--account">
-						<h4 class="ucp__index__info__block__desc">Sua conta</h4>
-						<ul class="ucp__index__info__block__content">
+					<b-col md="12" class="ucp__block ucp__block--account">
+						<h4 class="ucp__block__desc">Sua conta</h4>
+						<ul class="ucp__block__content">
 							<li class="account__item">
 								Status atual 
 								<span 
@@ -159,9 +159,9 @@
 							<li class="account__item">Membro desde <span class="account__item__stats">{{ this.user.forumAtt.attributes.joinTime | normalDateFilter }}</span></li>
 						</ul>
 					</b-col>
-					<b-col md="12" class="ucp__index__info__block">
-						<h4 class="ucp__index__info__block__desc">Log administrativo</h4>
-						<ul class="ucp__index__info__block__content">
+					<b-col md="12" class="ucp__block">
+						<h4 class="ucp__block__desc">Log administrativo</h4>
+						<ul class="ucp__block__content">
 							<li class="log__item">Não há logs disponíveis.</li>
 						</ul>
 					</b-col>
@@ -173,27 +173,17 @@
 
 <script>
 	import Vue from 'vue';
-	import axios from 'axios';
+	import ServerService from '@/services/server';
 	import moment from 'moment';
 	import { store } from '@/vuex/store';
 	import firsttime from '@/components/first-time/block';
-	import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 	import userAvatar from '@/components/user-profile/avatar';
 	import userContent from '@/components/user-profile/content';
 
+	import { FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
 	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight, dollarSign } from '@fortawesome/fontawesome-free-solid';
-
-	var userAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		userAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	} else {
-		userAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
-	}
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		//char data = player_id, firstName, lastName, position, property, cash, level, xp, gender [type, enum], pedModel, traits, logoutArea
@@ -216,11 +206,11 @@
                     init: true,
                     variableWidth: false,
 					navigation: {
-						nextEl: '.ucp__index__info__block__character-swiper__arrow--next',
-						prevEl: '.ucp__index__info__block__character-swiper__arrow--prev',
+						nextEl: '.ucp__block__character-swiper__arrow--next',
+						prevEl: '.ucp__block__character-swiper__arrow--prev',
 					},
                     pagination: {
-                        el: '.ucp__index__info__block__character-swiper__pagination',
+                        el: '.ucp__block__character-swiper__pagination',
                     }
                 }, 
 
@@ -354,7 +344,7 @@
 				return res.toFixed();
 			},
 			getUserChars: function() {
-				axios.get(userAPI + this.user.username + '/characters')
+				ServerService.getPlayerCharacters(this.user.username)
 				.then(response => {
 					this.chars = response.data;
 				})
@@ -400,9 +390,8 @@
 		},
 		components: {
 			firsttime,
-			userAvatar, userContent,
-			'fa': FontAwesomeIcon,
-			FontAwesomeLayers
+			FontAwesomeLayers,
+			userAvatar, userContent
 		}
 	}
 </script>

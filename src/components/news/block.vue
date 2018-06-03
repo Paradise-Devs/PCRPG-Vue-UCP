@@ -25,15 +25,12 @@
 
 <script>
     import Vue from 'vue'
-	import axios from 'axios';
+    import ForumService from '@/services/forum'
     import moment from 'moment';
     import fontawesome from '@fortawesome/vue-fontawesome'
 	import comments from '@fortawesome/fontawesome-free-regular';
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import post from './post.vue'
-
-    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
-	var newsDiscussions = forumBaseURI + 'discussions?filter[q]=tag:novidades,patchnotes,devlog&sort=-startTime';
     
     export default {
 		data() {
@@ -50,12 +47,15 @@
 			this.news.processed = false;
             this.news.loading = true;
 
-            axios.get(newsDiscussions)
+            ForumService.getForumNews()
 			.then(response => {
 				this.news.posts = response.data.data;
 				this.news.processed = true;
 				this.news.loading = false;
-			});
+            })
+            .catch(error => {
+                console.log(error);
+            })
         },
         components: {
 			'vue-spinner': PulseLoader,

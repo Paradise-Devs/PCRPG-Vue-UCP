@@ -26,11 +26,11 @@
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
 										<span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
 									</template>
-									<b-dropdown-item to="/ucp" exact><fa :icon="['fas', 'wrench']" />Painel do usuário</b-dropdown-item>
-									<b-dropdown-item :to="'/jogador/' + user.username" exact><fa :icon="['fas', 'address-card']" /> Perfil</b-dropdown-item>
-									<b-dropdown-item to="/ucp/configuracoes" exact><fa :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
+									<b-dropdown-item to="/ucp" exact><icon :icon="['fas', 'wrench']" />Painel do usuário</b-dropdown-item>
+									<b-dropdown-item :to="'/jogador/' + user.username" exact><icon :icon="['fas', 'address-card']" /> Perfil</b-dropdown-item>
+									<b-dropdown-item to="/ucp/configuracoes" exact><icon :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
 									<b-dropdown-divider/>
-									<b-dropdown-item @click="logout"><fa :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
+									<b-dropdown-item @click="logout"><icon :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
 								</b-dropdown>
 							</div>
                         </b-col>
@@ -39,17 +39,13 @@
             </nav>
         </animated-fade-in>
         <spacefix/>
-        <a href="#" v-scroll-to="'#app'" id="toTop" :style="{ display: scrolled }">
-			<icon name="angle-up"/>
-            <span class="screen-reader-text">Voltar ao topo</span>
-        </a>
 		<signin v-if="!userLoggedIn" />
 		<signup v-if="!userLoggedIn"/>
 		<overlay />
 		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav">
 			<div class="navbar__menu__button">
-				<fa :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
-				<fa :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav()"/>
+				<icon :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
+				<icon :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav()"/>
 			</div>
 		</div>
 		<div class="nav__mobile__menu" id="navMenu">
@@ -73,7 +69,7 @@
 						:style="{ borderColor: group.color }"
 					>
 						<span class="icon" :style="{ backgroundColor: group.color }"> 
-							<fa :icon="['fas', group.icon]" />
+							<icon :icon="['fas', group.icon]" />
 						</span>
 						<span :style="{ color: group.color }">{{ group.nameSingular}}</span>
 					</b-badge>
@@ -81,15 +77,15 @@
 			</div>
 			<div class="nav__mobile__menu__links">
 				<h6 class="separator separator--general">Navegação geral</h6>
-				<router-link to="/" @click="closeMobNav"><fa :icon="['fas', 'home']"/>Início</router-link>
-				<router-link to="/dev"><fa :icon="['fas', 'code']"/>Desenvolvimento</router-link>
-				<a href="https://forum.pc-rpg.com.br"><fa :icon="['fas', 'comments']"/>Fórum</a>
+				<router-link to="/" @click="closeMobNav"><icon :icon="['fas', 'home']"/>Início</router-link>
+				<router-link to="/dev"><icon :icon="['fas', 'code']"/>Desenvolvimento</router-link>
+				<a href="https://forum.pc-rpg.com.br"><icon :icon="['fas', 'comments']"/>Fórum</a>
 				<div class="nav__mobile__menu__links__user" v-if="userLoggedIn">
 					<h6 class="separator">Sua conta</h6>
-					<router-link to="/ucp" @click="closeMobNav" exact><fa :icon="['fas', 'wrench']"/>Painel do usuário</router-link>
-					<router-link to="/ucp/perfil" @click="closeMobNav" exact><fa :icon="['fas', 'address-card']"/>Seu perfil</router-link>
-					<router-link to="/ucp/configuracoes" @click="closeMobNav" exact><fa :icon="['fas', 'cog']"/>Configurações</router-link>
-					<a href="#" @click="logout"><fa :icon="['fas', 'sign-out-alt']"/>Sair</a>
+					<router-link to="/ucp" @click="closeMobNav" exact><icon :icon="['fas', 'wrench']"/>Painel do usuário</router-link>
+					<router-link to="/ucp/perfil" @click="closeMobNav" exact><icon :icon="['fas', 'address-card']"/>Seu perfil</router-link>
+					<router-link to="/ucp/configuracoes" @click="closeMobNav" exact><icon :icon="['fas', 'cog']"/>Configurações</router-link>
+					<a href="#" @click="logout"><icon :icon="['fas', 'sign-out-alt']"/>Sair</a>
 				</div>
 			</div>
 		</div>
@@ -98,17 +94,12 @@
 
 <script>
     import Vue from 'vue';
-	import axios from 'axios';
-    import 'vue-awesome/icons/angle-up';
 	import { store } from '@/vuex/store';
 
 	import signin from '@/components/auth/SignIn';
 	import signup from '@/components/auth/SignUp';
 
-	import fontawesome from '@fortawesome/vue-fontawesome';
 	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench } from '@fortawesome/fontawesome-free-solid';
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
         data: () => {
@@ -285,7 +276,6 @@
         },
 		components: {
 			signin, signup, store,
-			'fa': fontawesome,
 		}
 	}
 

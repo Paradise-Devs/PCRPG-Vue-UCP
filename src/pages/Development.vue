@@ -1,5 +1,5 @@
 <template>
-	<div class="commits">
+	<div class="page__development">
 		<b-container>
 			<b-row>
 				<b-col md="6">
@@ -24,14 +24,10 @@
 </template>
 
 <script>
-	import axios from 'axios';
+	import GitService from '@/services/gitlab'
 	import InfiniteLoading  from 'vue-infinite-loading';
 
 	import commits from '@/components/commits/commit.vue'
-
-	var baseuri = 'https://gitlab.com/api/v4/projects/6159796';
-	var statsApi = baseuri + '?statistics=true&private_token=qn42srqy59sVqMtCnaYp';
-	var commitsApi = baseuri + '/repository/commits?ref_name=development&private_token=qn42srqy59sVqMtCnaYp&page=1&per_page=10';
 
 	export default {
 		data() {
@@ -45,11 +41,7 @@
 		},
 		methods: {
 			getCommits($state) {
-				axios.get(commitsApi, {
-					params: {
-						page: this.currentPage
-					}
-				})
+				GitService.getCommits(this.currentPage)
 				.then(response => {
 					if(response.data.length > 0) {
 						this.currentPage++;
@@ -67,7 +59,7 @@
 		},
 		
 		mounted() {
-			axios.get(statsApi)
+			GitService.getStats()
 			.then(response => {
 				this.stats = response.data.statistics;
 			})
@@ -80,33 +72,3 @@
 		},
 	}
 </script>
-
-<style lang="scss" scoped>
-	@import '../assets/sass/base/variables.scss';
-	@import '../assets/sass/layout/responsivity.scss';
-
-	.commits {
-		min-height: 63vh;
-		margin: 20px 0px;
-		text-align: center;
-
-		@include tablet {
-			text-align: left;
-			margin: 40px 0px;
-		}
-
-		.stats {
-			margin-top: 10px;
-			text-align: center;
-
-			@include tablet {
-				margin: 0;
-				text-align: right;
-			}
-		}
-
-		.nomore {
-			color: $gray;
-		}
-	}
-</style>

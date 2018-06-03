@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="page__index">
 		<b-container>
 			<serverinfo/>
 			<b-row>
@@ -33,12 +33,7 @@
 
 <script>
 	import Vue from 'vue'
-	import axios from 'axios';
 	import moment from 'moment';
-
-	import fontawesome from '@fortawesome/vue-fontawesome'
-	import comments from '@fortawesome/fontawesome-free-regular';
-	import users from '@fortawesome/fontawesome-free-solid';
 
 	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 	import serverinfo from '@/components/server-info/bar.vue'
@@ -52,7 +47,6 @@
 	export default {
 		components: {
 			'vue-spinner': PulseLoader,
-			'fa': fontawesome,
 			serverinfo,
 			news,
 			patchnotes,
@@ -63,27 +57,3 @@
 		}
     }
 </script>
-
-<style lang="scss">
-	.joinus {
-        margin: 30px 0px;
-
-		h2 {
-			color: #526cff;
-			text-transform: uppercase;
-			font-size: 20px;
-			margin-bottom: 20px;
-
-			b {
-				color: #6c7d93;
-			}
-		}
-
-		.row {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			min-height: 367px;
-		}
-    }
-</style>

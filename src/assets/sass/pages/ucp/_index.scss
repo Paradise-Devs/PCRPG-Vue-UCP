@@ -1,5 +1,5 @@
-.ucp__index {
-    &__info {
+.page__ucp--index {
+    .ucp {
         &__column {
             &--left {
                 margin-right: 24px;
@@ -70,7 +70,7 @@
                 margin-bottom: 10px;
                 padding: 0;
 
-                .ucp__index__info__block {
+                .ucp__block {
                     padding-bottom: 15px;
                     width: 85%;
                     margin: 0 auto 8px;
