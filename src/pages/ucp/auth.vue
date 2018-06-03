@@ -61,6 +61,7 @@
 			var timeSave = localStorage.getItem('firstTimeUCP');
 			if(timeSave === "true" || timeSave === null) {
 				this.firstTime = true;
+				localStorage.setItem('firstTimeUCP', true);
 			} else {
 				this.firstTime = false;
 			}
