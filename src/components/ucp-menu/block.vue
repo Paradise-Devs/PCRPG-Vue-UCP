@@ -5,7 +5,7 @@
             <router-link to="/ucp" class="router-link" exact @click="toggleUCPNav">Início</router-link>
             <router-link to="/ucp/perfil" class="router-link" exact @click="toggleUCPNav">Perfil</router-link>
             <router-link to="/ucp/configuracoes" class="router-link" exact @click="toggleUCPNav">Configurações</router-link>
-            <router-link to="/ucp/mensagens" class="router-link" exact @click="toggleUCPNav">Mensagens</router-link>
+            <router-link to="/ucp/mensagens" class="router-link" @click="toggleUCPNav">Mensagens</router-link>
             <a href="#" class="router-link" @click="logout">Sair</a>
         </div>
     </nav>
