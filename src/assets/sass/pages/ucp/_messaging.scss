@@ -1,11 +1,19 @@
-.page__ucp--messaging {
-    .column {
-        &--left {
-            padding-left: 0;
-        }
+.page__ucp {
+    &--messaging {
+        .column {
+            &--left {
+                padding-left: 0;
+            }
 
-        &--right {
-            padding-right: 0;
+            &--right {
+                padding-right: 0;
+            }
+        }
+    }
+
+    &--message-details {
+        .column {
+            padding: 0;
         }
     }
 }

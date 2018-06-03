@@ -66,6 +66,15 @@
         }
     }
 
+    &-danger {
+        color: $white !important;
+        background-color: $red;
+        
+        &:hover {
+            color: $white !important;
+        }
+    }
+
     &.disabled, &[disabled] {
         cursor: default;
         opacity: 0.65;
