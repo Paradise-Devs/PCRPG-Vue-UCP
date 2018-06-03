@@ -175,6 +175,7 @@
                     store.dispatch('setData', this.user).then(() => {
                         this.loadingData = false;
                         localStorage.setItem('firstTimeUCP', false);
+                        this.$root.$emit('hideFirstTimeTut', false);
                         if(this.fileChanged) {
                             location.reload();
                         }
