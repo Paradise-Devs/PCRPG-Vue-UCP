@@ -19,6 +19,9 @@ export default {
     },
 
     //get messages
+    getMessageData(msgid) {
+        return axios.get(baseUri + msgid, { Authorization: "Bearer " + localStorage.getItem('token') });
+    },
     getMessagesTo(user) {
         return axios.get(baseUri + 'to/' + user, { Authorization: "Bearer " + localStorage.getItem('token') });
     },
