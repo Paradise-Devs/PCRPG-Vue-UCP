@@ -1,7 +1,7 @@
 .messaging__list {
     .list {
         min-height: 420px;
-        .message {
+        .message_item {
             width: 100%;
             height: 70px;
             background-color: $gray-active;
@@ -17,7 +17,7 @@
             -ms-user-select: none;
             user-select: none;
 
-            &:hover:not(.message--selected):not(.message--unreaded) {
+            &:hover:not(.message_item--selected):not(.message_item--unreaded) {
                 background-color: $gray-dark;
                 opacity: .7;
             }

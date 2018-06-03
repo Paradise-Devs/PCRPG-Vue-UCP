@@ -33,7 +33,7 @@ export default new Router({
 				{ 	path: 'mensagens', 					component: UcpMessagesView,
 					children: [
 						{ 	path: '', 					component: UcpMessagesIndexView },
-						{ 	path: 'msg/:msgid?', 		component: UcpMessageDetailsView },
+						{ 	path: ':msgid', 		component: UcpMessageDetailsView },
 						{ 	path: 'nova', 				component: UcpNewMessageView },
 					]
 				},
