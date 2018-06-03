@@ -168,7 +168,8 @@
 
 <script>
 	import Vue from 'vue';
-	import axios from 'axios';
+	import ServerService from '@/services/server';
+	import ForumService from '@/services/forum';
 	import { store } from '@/vuex/store';
 
 	import beat from 'vue-spinner/src/BeatLoader.vue';
@@ -176,20 +177,6 @@
 
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import { infoCircle, checkCircle } from '@fortawesome/fontawesome-free-solid';
-
-	var tokenAPI, loginAPI, usersAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-		usersAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	} else {
-		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
-		usersAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
-	}
-
-	var usersForumAPI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
@@ -230,7 +217,7 @@
 						this.errorUsername = 'O seu novo username precisa ser diferente do antigo.';
 						this.usernameChecking = false;
 					} else {
-						axios.get(usersAPI)
+						ServerService.getPlayers()
 						.then(response => {
 							for (var i = 0; i < response.data.length; i++) {
 								if (response.data[i].username == this.newUsername.toLowerCase()) {
@@ -249,7 +236,8 @@
 			checkEmail: function () {
 				if(this.fields.$emailScope.email.changed && this.fields.$emailScope.email.valid) {
 					this.emailChecking = true;
-					axios.get(usersAPI)
+
+					ServerService.getPlayers()
 					.then(response => {
 						for (var i = 0; i < response.data.length; i++) {
 							if (response.data[i].email == this.newEmail) {
@@ -269,21 +257,17 @@
 					this.passChecking = true;
 					var _t = this;
 
-					axios.post(loginAPI, {
-						username: this.user.username,
-						password: this.oldPassword,
-					})
+					ServerService.loginPlayer(this.user.username, this.oldPassword)
 					.then(response => {
-						if(response.data.error) {
-							_t.errorPassword = response.data.error.message;
+						_t.user.token = response.data.token;
+						store.dispatch('setData', _t.user).then(() => {
+							_t.errorPassword = false;
 							_t.passChecking = false;
-						} else {
-							_t.user.token = response.data.token;
-							store.dispatch('setData', _t.user).then(() => {
-								_t.errorPassword = false;
-								_t.passChecking = false;
-							});
-						}
+						});
+					})
+					.catch(error => {
+						_t.errorPassword = error.response.data.error.message;
+						_t.passChecking = false;
 					})
 				} else {
 					this.passChecking = false;
@@ -300,10 +284,7 @@
 				this.checkEmail();
 
 				if(!this.errorEmail) {
-					axios.patch(usersAPI + this.user.username, {
-						masterkey: store.getters.getUpdateMasterToken,
-						email: this.newEmail,
-					})
+					ServerService.updatePlayerEmail(this.user.username, this.newEmail)
 					.then(response => {
 						this.user.token = response.data.token;
 						this.updateUserForumData("email");
@@ -319,10 +300,7 @@
 				this.checkPassword();
 
 				if(!this.errorPassword && !this.errorNewPassword) {
-					axios.patch(usersAPI + this.user.username, {
-						masterkey: store.getters.getUpdateMasterToken,
-						password: this.newPassword,
-					})
+					ServerService.updatePlayerPassword(this.user.username, this.newPassword)
 					.then(response => {
 						this.user.token = response.data.token;
 						this.updateUserForumData("password");
@@ -338,10 +316,7 @@
 				this.checkUsername();
 
 				if(!this.errorUsername) {
-					axios.patch(usersAPI + this.user.username, {
-						masterkey: store.getters.getUpdateMasterToken,
-						username: this.newUsername,
-					})
+					ServerService.updatePlayerUsername(this.user.username, this.newUsername)
 					.then(response => {
 						this.user.username = this.newUsername.toLowerCase();
 						this.user.token = response.data.token;
@@ -364,11 +339,7 @@
 					sendData = { attributes: { password: this.newPassword } }
 				}
 
-				axios.patch(usersForumAPI + this.user.forumAtt.id, {
-					data: sendData,
-				}, {
-					headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
-				})
+				ForumService.updateUserData(this.user.forumAtt.id, sendData)
 				.then(response => {
 					this.user.forumAtt = response.data.data;
 

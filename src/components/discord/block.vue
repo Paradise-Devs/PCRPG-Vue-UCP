@@ -36,9 +36,7 @@
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
     import fontawesome from '@fortawesome/vue-fontawesome'
     import discord from '@fortawesome/fontawesome-free-brands';
-    import axios from 'axios';
-
-    var discordApi = 'https://discordapp.com/api/guilds/188111558218481664/widget.json';
+    import DiscordService from '@/services/discord';
 
     export default {
         data() {
@@ -59,7 +57,7 @@
             this.loading = true;
             this.processed = false;
 
-            axios.get(discordApi)
+            DiscordService.init()
             .then(response => {
                 this.members = response.data.members;
                 this.channels = response.data.channels;

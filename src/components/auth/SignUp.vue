@@ -90,27 +90,13 @@
 <script>
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import times from '@fortawesome/fontawesome-free-solid';
-	import axios from 'axios';
+	import ServerService from '@/services/server';
+	import ForumService from '@/services/forum';
 	import { store } from '@/vuex/store'
 
 	import signin from '@/components/auth/SignIn'
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 	import beat from 'vue-spinner/src/BeatLoader.vue';
-
-	var usersEndpoint, registerEndpoint, loginEndpoint;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		usersEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-		registerEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/register/';
-		loginEndpoint = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	} else {
-		usersEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
-		registerEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/register/';
-		loginEndpoint = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
-	}
-
-	var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';
-	var forumUsersEndpoint = 'https://forum.pc-rpg.com.br/api/users';
 
 	export default {
 		data() {
@@ -149,7 +135,7 @@
 
 					_this.usernameChecking = true;
 
-					axios.get(usersEndpoint + this.user.username)
+					ServerService.getPlayerData(this.user.username)
 					.then(response => {
 						if (response.data) {
 							_this.errorUsername = 'Este nome de usuário já está em uso';
@@ -169,7 +155,7 @@
 
 					_this.emailChecking = true;
 
-					axios.get(usersEndpoint)
+					ServerService.getPlayers()
 					.then(response => {
 						for (var i = 0; i < response.data.length; i++) {
 							if (response.data[i].email == _this.user.email) {
@@ -198,11 +184,7 @@
 				if(this.errorEmail === null && this.errorUsername === null) {
 					let _this = this;
 
-					axios.post(registerEndpoint, {
-						username: localUsername,
-						password: localPassword,
-						email: localEmail,
-					})
+					ServerService.registerPlayer(localUsername, localPassword, localEmail)
 					.then(response => {						
 						_this.registerUserForumAccount(localUsername, localPassword, localEmail);
 					})
@@ -213,22 +195,9 @@
 			},
 			registerUserForumAccount: function(usernameEx, passwordEx, emailEx) {
 				var _this = this;
+				var sendData = { attributes: { username: usernameEx, password: passwordEx, email: emailEx, isActivated: true } };
 
-				axios.post(forumUsersEndpoint, {
-					data: {
-						attributes: {
-							username: usernameEx,
-							password: passwordEx,
-							email: emailEx,
-							isActivated: true
-						}
-					},
-				},
-				{
-					headers: {
-						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
-					}
-				})
+				ForumService.registerUser(sendData)
 				.then(response => {
 					_this.user.forumAtt = response.data.data;
 					_this.login(usernameEx, passwordEx);
@@ -242,10 +211,7 @@
 				this.loading = true;
 				var _this = this;
 
-				axios.post(loginEndpoint, {
-					username: usernameEx,
-					password: passwordEx,
-				})
+				ServerService.loginPlayer(usernameEx, passwordEx)
 				.then(response => {
 					if(response.data.error) {
 						_this.error = response.data.error.message;
@@ -261,10 +227,7 @@
 			saveUserData: function(usernameEx, passwordEx) {
 				let _this = this;
 				
-				axios.post(forumTokenEndpoint, {
-					identification: usernameEx,
-					password: passwordEx
-				})
+				ForumService.getUserToken(usernameEx, passwordEx)
 				.then(response => {
 					_this.user.forumToken = response.data.token;
 					

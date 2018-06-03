@@ -33,12 +33,7 @@
 
 <script>
 	import Vue from 'vue'
-	import axios from 'axios';
 	import moment from 'moment';
-
-	import fontawesome from '@fortawesome/vue-fontawesome'
-	import comments from '@fortawesome/fontawesome-free-regular';
-	import users from '@fortawesome/fontawesome-free-solid';
 
 	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 	import serverinfo from '@/components/server-info/bar.vue'
@@ -52,7 +47,6 @@
 	export default {
 		components: {
 			'vue-spinner': PulseLoader,
-			'fa': fontawesome,
 			serverinfo,
 			news,
 			patchnotes,

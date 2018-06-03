@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import ServerService from '@/services/server';
     import moment from 'moment';
     import spinner from 'vue-spinner/src/MoonLoader.vue';
     import fontawesome from '@fortawesome/vue-fontawesome';
@@ -58,16 +58,6 @@
     import forumlog from './forum-log'
     import serverlog from './server-log'
     import history from './history'
-
-    var userAPI;
-    
-    if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		userAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	} else {
-		userAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
-	}
-
-	var userBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
     export default {
         props: {
@@ -107,7 +97,7 @@
 		},
         methods: {
             getUserCharacters: function() {
-                axios.get(userAPI + this.user.username + '/characters')
+                ServerService.getPlayerCharacters(this.user.username)
                 .then(response => {
                     this.charsData = response.data;
                 })

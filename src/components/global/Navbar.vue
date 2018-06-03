@@ -98,7 +98,6 @@
 
 <script>
     import Vue from 'vue';
-	import axios from 'axios';
     import 'vue-awesome/icons/angle-up';
 	import { store } from '@/vuex/store';
 
@@ -107,8 +106,6 @@
 
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench } from '@fortawesome/fontawesome-free-solid';
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
         data: () => {

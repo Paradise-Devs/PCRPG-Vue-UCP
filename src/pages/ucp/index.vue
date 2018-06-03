@@ -173,7 +173,7 @@
 
 <script>
 	import Vue from 'vue';
-	import axios from 'axios';
+	import ServerService from '@/services/server';
 	import moment from 'moment';
 	import { store } from '@/vuex/store';
 	import firsttime from '@/components/first-time/block';
@@ -184,16 +184,6 @@
 	import userContent from '@/components/user-profile/content';
 
 	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight, dollarSign } from '@fortawesome/fontawesome-free-solid';
-
-	var userAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		userAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	} else {
-		userAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
-	}
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		//char data = player_id, firstName, lastName, position, property, cash, level, xp, gender [type, enum], pedModel, traits, logoutArea
@@ -354,7 +344,7 @@
 				return res.toFixed();
 			},
 			getUserChars: function() {
-				axios.get(userAPI + this.user.username + '/characters')
+				ServerService.getPlayerCharacters(this.user.username)
 				.then(response => {
 					this.chars = response.data;
 				})

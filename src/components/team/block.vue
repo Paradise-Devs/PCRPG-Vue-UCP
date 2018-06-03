@@ -62,8 +62,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import { store } from '@/vuex/store'
+    import ForumService from '@/services/forum'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import fontawesome from '@fortawesome/vue-fontawesome'
 
@@ -71,10 +70,6 @@
     import angleUp from '@fortawesome/fontawesome-free-solid';
 
     import user from './user.vue'
-
-    var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users';
-    var groupsBaseURI = 'https://forum.pc-rpg.com.br/api/groups';
-    var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';
 
     export default {
         data() {
@@ -87,9 +82,7 @@
             }
         },
         mounted() {
-            axios.get(usersBaseURI, {
-                headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
-            })
+            ForumService.getAllUsers()
             .then(response => {
                 this.users = response.data.data;
                 for(var i = 0; i < this.users.length; i++) {

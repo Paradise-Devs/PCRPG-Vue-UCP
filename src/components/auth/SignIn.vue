@@ -51,21 +51,12 @@
 <script>
 	import fontawesome from '@fortawesome/vue-fontawesome';
 	import times from '@fortawesome/fontawesome-free-solid';
-	import axios from 'axios';
+	import ServerService from '@/services/server';
+	import ForumService from '@/services/forum';
 	import { store } from '@/vuex/store'
 
 	import signup from '@/components/auth/SignUp'
 	import spinner from 'vue-spinner/src/MoonLoader.vue';
-
-	var loginAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	} else {
-		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
-	}
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
@@ -100,18 +91,14 @@
 				this.loading = true;
 				var _this = this;
 
-				axios.post(loginAPI, {
-					username: this.user.username,
-					password: this.user.password,
-				})
+				ServerService.loginPlayer(this.user.username, this.user.password)
 				.then(function (response) {
-					if(response.data.error) {
-						_this.error = response.data.error.message;
-						_this.loading = false;
-					} else {
-						_this.user.token = response.data.token;
-						_this.authUser();
-					}
+					_this.user.token = response.data.token;
+					_this.authUser();
+				})
+				.catch(error => {
+					_this.error = error.response.data.error.message;
+					_this.loading = false;
 				})
 			},
 			hideError: function () {
@@ -122,11 +109,7 @@
 			authUser: function() {
 				var _this = this;
 
-				axios.get(usersBaseURI + this.user.username, {
-					headers: {
-						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
-					}
-				})
+				ForumService.getUserData(this.user.username)
 				.then(response => {
 					this.user.forumAtt = response.data.data;
 

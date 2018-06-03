@@ -22,15 +22,12 @@
 
 <script>
     import Vue from 'vue'
-	import axios from 'axios';
+	import ForumService from '@/services/forum';
     import moment from 'moment';
     import fontawesome from '@fortawesome/vue-fontawesome'
 	import comments from '@fortawesome/fontawesome-free-regular';
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import post from './post.vue'
-
-    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
-	var patchnotes = forumBaseURI + 'discussions?filter[q]=tag:patchnotes&sort=-startTime';
 
     export default {
 		data() {
@@ -46,7 +43,7 @@
 			this.patches.processed = false;
             this.patches.loading = true;
 
-            axios.get(patchnotes)
+            ForumService.getPatchnotes()
 			.then(response => {
 				this.patches.posts = response.data.data;
 				this.patches.processed = true;

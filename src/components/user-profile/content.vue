@@ -19,7 +19,6 @@
 
 <script>
 	import Vue from 'vue';
-	import axios from 'axios';
 	import { store } from '@/vuex/store';
 	import fontawesome from '@fortawesome/vue-fontawesome';
     

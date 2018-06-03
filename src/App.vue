@@ -25,7 +25,8 @@
 	import 'animate.css/animate.css'
 	import { store } from '@/vuex/store'
 	import spinner from 'vue-spinner/src/MoonLoader.vue';
-	import axios from 'axios';
+	import ServerService from '@/services/server';
+	import ForumService from '@/services/forum';
 
 	import navbar from '@/components/global/Navbar'
 	import hero from '@/components/global/Hero'
@@ -58,9 +59,7 @@
 				let token = localStorage.getItem("token");
 
 				if(token != null) {
-					axios.post(tokenAPI, {
-						token: token
-					})
+					ServerService.getToken(token)
 					.then(response => {
 						if(response.data.error) {
 							console.log(response.data.error);
@@ -84,11 +83,7 @@
 				}
 			},
 			getForumData: function(){
-				axios.get(usersBaseURI + this.user.username, {
-					headers: {
-						"Authorization": "Token " + store.getters.getMasterToken + 'userId=1'
-					}
-				})
+				ForumService.getUserData(this.user.username)
 				.then(response => {
 					this.user.forumAtt = response.data.data;
 

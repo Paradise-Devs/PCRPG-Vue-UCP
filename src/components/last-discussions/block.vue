@@ -18,15 +18,12 @@
 
 <script>
     import Vue from 'vue'
-	import axios from 'axios';
+	import ForumService from '@/services/forum';
     import moment from 'moment';
     import fontawesome from '@fortawesome/vue-fontawesome'
 	import comments from '@fortawesome/fontawesome-free-regular';
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import post from './post.vue'
-
-    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
-	var lastDiscussions = forumBaseURI + 'discussions?sort=-startTime';
     
     export default {
 		data() {
@@ -42,7 +39,7 @@
 			this.lastPosts.processed = false;
 			this.lastPosts.loading = true;
 
-            axios.get(lastDiscussions)
+            ForumService.getLastestDiscussions()
 			.then(response => {
 				this.lastPosts.posts = response.data.data;
 				this.lastPosts.processed = true;

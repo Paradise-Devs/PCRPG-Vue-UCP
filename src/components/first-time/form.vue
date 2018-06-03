@@ -77,7 +77,8 @@
 
 <script>
     import Vue from 'vue';
-	import axios from 'axios';
+    import ServerService from '@/services/server';
+    import ForumService from '@/services/forum';
     import { store } from '@/vuex/store';
     
     import beat from 'vue-spinner/src/BeatLoader.vue';
@@ -85,20 +86,6 @@
 
     import textFirstTime from './text';
     import formFirstTime from './form';
-
-	var tokenAPI, loginAPI, usersAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-		usersAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	} else {
-		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
-		usersAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
-	}
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
@@ -120,7 +107,7 @@
 					this.usernameChecking = true;
 
 					if(this.user.username != this.newUsername.toLowerCase()) {
-						axios.get(usersAPI)
+						ServerService.getPlayers()
 						.then(response => {
 							for (var i = 0; i < response.data.length; i++) {
 								if (response.data[i].username == this.newUsername.toLowerCase()) {
@@ -155,11 +142,7 @@
                     const formData = new FormData();
                     formData.append('avatar', this.avatarFile, this.avatarFile.name);
                     let userId = this.user.forumAtt.id;
-                    axios.post(usersBaseURI + userId + '/avatar', formData, {
-                        headers: {
-                            "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + userId
-                        }
-                    })
+                    ForumService.updateUserAvatar(userId , formData)
                     .then(response => {
                         this.user.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
                         this.updateServerUserAtt();
@@ -173,10 +156,7 @@
                 }
             },
             updateServerUserAtt: function() {
-                axios.patch(usersAPI + this.user.username, {
-                    masterkey: store.getters.getUpdateMasterToken,
-                    username: this.newUsername,
-                })
+                ServerService.updatePlayerUsername(this.user.username, this.newUsername)
                 .then(response => {
                     this.user.username = this.newUsername.toLowerCase();
                     this.user.token = response.data.token;
@@ -190,11 +170,7 @@
             updateForumUserAtt: function() {
                 let sendData = { attributes: { bio: this.user.forumAtt.attributes.bio, username: this.newUsername } };
 
-                axios.patch(usersBaseURI + this.user.forumAtt.id, {
-                    data: sendData,
-                }, {
-                    headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
-                })
+                ForumService.updateUserData(this.user.forumAtt.id, sendData)
                 .then(response => {
                     store.dispatch('setData', this.user).then(() => {
                         this.loadingData = false;
