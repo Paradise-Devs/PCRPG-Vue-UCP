@@ -14,8 +14,11 @@ var auth = { "Authorization": "Bearer " + localStorage.getItem('token') }
 export default {
     //send
     sendMessage(from, to, subject, body) {
+        let e = new Date();
+        let date = e.toISOString();
+
         return axios.post(baseUri + 'send', 
-            { from: from, to: to, subject: subject, body: body, sendDate: new Date().getTime() },
+            { from: from, to: to, subject: subject, body: body, sendDate: date },
             auth
         );
     },
