@@ -9,36 +9,38 @@ if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.c
     baseUri = 'https://prod.pc-rpg.com.br:3000/api/v1/messages/';
 }
 
+var auth = { "Authorization": "Bearer " + localStorage.getItem('token') }
+
 export default {
     //send
     sendMessage(from, to, subject, body) {
         return axios.post(baseUri + 'send', 
             { from: from, to: to, subject: subject, body: body, sendDate: new Date().getTime() },
-            { Authorization: "Bearer " + localStorage.getItem('token') }
+            auth
         );
     },
 
     //get messages
     getMessageData(msgid) {
-        return axios.get(baseUri + msgid, { Authorization: "Bearer " + localStorage.getItem('token') });
+        return axios.get(baseUri + msgid, { headers: auth });
     },
     getMessagesTo(user) {
-        return axios.get(baseUri + 'to/' + user, { Authorization: "Bearer " + localStorage.getItem('token') });
+        return axios.get(baseUri + 'to/' + user, { headers: auth });
     },
     getMessagesFrom(user) {
-        return axios.get(baseUri + 'from/' + user, { Authorization: "Bearer " + localStorage.getItem('token') });
+        return axios.get(baseUri + 'from/' + user, { headers: auth });
     },
     getDeletedMessages(user) {
-        return axios.get(baseUri + 'from/' + user, { Authorization: "Bearer " + localStorage.getItem('token') });
+        return axios.get(baseUri + 'trash/' + user, { headers: auth });
     },
 
     //Update
     markMessageAsRead(msgid) {
-        return axios.post(baseUri + 'markAsRead', { messageId: msgid }, { Authorization: "Bearer " + localStorage.getItem('token') });
+        return axios.post(baseUri + 'markAsRead', { messageId: msgid }, { headers: auth });
     },
 
     //delete
     deleteMessage(messagesid) {
-        return axios.delete(baseUri + 'delete', { messages: messagesid }, { Authorization: "Bearer " + localStorage.getItem('token') });
+        return axios.delete(baseUri + 'delete', { messages: messagesid }, { headers: auth } );
     }
 }
