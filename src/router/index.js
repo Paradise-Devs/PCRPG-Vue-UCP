@@ -19,17 +19,17 @@ Vue.use(Router);
 // routes
 export default new Router({
 	routes: [
-		{ 	path: '/', 						component: IndexView },
-		{ 	path: '/dev', 					component: DevelopmentView },
-		{ 	path: '/ucp', 					component: UcpView,
+		{ 	path: '/', 									component: IndexView },
+		{ 	path: '/dev', 								component: DevelopmentView },
+		{ 	path: '/ucp', 								component: UcpView,
 			children: [
-				{ 	path: '', 				name: 'Início', 		component: UcpIndexView },
-				{ 	path: 'configuracoes', 	name: 'Configurações', 	component: UcpSettingsView },
-				{ 	path: 'mensagens', 		name: 'Mensagens', 		component: UcpMessagesView },
-				{ 	path: 'perfil', 		name: 'Perfil', 		component: UcpProfileView },
+				{ 	path: '', 							component: UcpIndexView },
+				{ 	path: 'configuracoes', 				component: UcpSettingsView },
+				{ 	path: 'mensagens', 					component: UcpMessagesView },
+				{ 	path: 'perfil', 					component: UcpProfileView },
 			]
 		},
-		{ 	path: '/jogador/:username', 	name: 'user',			component: UserProfileView },
-		{ 	path: '*', 						component: NotFoundView },
+		{ 	path: '/jogador/:username', 				component: UserProfileView },
+		{ 	path: '*', 									component: NotFoundView },
 	]
 })

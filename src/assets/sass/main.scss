@@ -13,6 +13,7 @@
 @import 'pages/user_profile';
 @import 'pages/ucp/index';
 @import 'pages/ucp/settings';
+@import 'pages/ucp/messaging';
 
 //global components
 @import 'components/global/blocks';
@@ -45,3 +46,7 @@
 
 //server-stats
 @import 'components/server-stats/block'; 
+
+//messaging
+@import 'components/messaging/menu'; 
+@import 'components/messaging/list'; 

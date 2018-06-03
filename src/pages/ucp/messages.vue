@@ -1,83 +1,180 @@
 <!--suppress ALL -->
 <template>
-	<b-container class="ucp">
-		<div v-if="userLoggedIn">
-			<ucpmenu/>
-			<router-view/>
-		</div>
-		<div v-else>
-			ta deslogado ai, camarada
-		</div>
+	<b-container class="page__ucp--messaging">
+		<b-row>
+			<b-col md="3" sm="12" class="column column--left">
+				<div class="messaging__block">
+					<button class="btn btn-primary btn-block">Nova mensagem</button>
+					<ul class="messasing__menu">
+						<li class="menu__item" :class="{'menu__item--active': btnActivated == 1}" @click="getInbox">Caixa de entrada</li>
+						<li class="menu__item" :class="{'menu__item--active': btnActivated == 2}"  @click="getOutbox">Caixa de saída</li>
+						<li class="menu__item" :class="{'menu__item--active': btnActivated == 3}"  @click="getTrashbox">Lixeira</li>
+					</ul>
+				</div>
+			</b-col>
+			<b-col md="9" sm="12" class="column column--right">
+				<messagingList :messages="messages"/>
+			</b-col>
+		</b-row>
 	</b-container>
 </template>
 
 <script>
 	import Vue from 'vue';
-	import axios from 'axios';
-	import { store } from '@/vuex/store';
-	import ucpmenu from '@/components/ucp-menu/block'
-
-	var tokenAPI, loginAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	} else {
-		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
-	}
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
+	import messagingList from '@/components/messaging/list'
 
 	export default {
-		data() {
-            return {
-				user: store.state.user,
-				userLoggedIn: null
+        data() {
+			return {
+                messages: [
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: false
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                ],
+                btnActivated: 1
             }
         },
-		watch: {
-			user: {
-				handler: function(val, oldVal) {
-					if(this.user.token == null) {
-						this.userLoggedIn = false;
-					} else {
-						this.userLoggedIn = true;
-					}
-				}, deep: true
-			}
-		},
-		mounted() {
-			if(this.user.token == null) {
-				this.userLoggedIn = false;
-			} else {
-				this.userLoggedIn = true;
-			}
+        methods: {
+            getInbox: function() {
+                this.btnActivated = 1;
+                this.messages = [
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                ]
+            },
+            getOutbox: function() {
+                this.btnActivated = 2;
+                
+                this.messages = [
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: false
+                    },
+                    {
+                        sender: 'Los',
+                        receiver: 'Los',
+                        sendDate: '2018-13-11',
+                        subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                        location: 'inbox',
+                        isRead: true
+                    },
+                ]
+            },
+            getTrashbox: function() {
+                this.btnActivated = 3;
 
-			var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave === "true") {
-				this.$router.push(this.$route.query.redirect || '/ucp');
-			}
-
-			store.watch(
-				(state)=>{
-					return store.getters.getUserData
-				},
-				(oldValue, newValue)=>{
-					this.user = store.state.user;
-				}
-			)
-		},
+                this.messages = []
+            },
+        },
+        mounted() {
+            this.messages = [
+                {
+                    sender: 'Los',
+                    receiver: 'Los',
+                    sendDate: '2018-13-11',
+                    subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                    location: 'inbox',
+                    isRead: true
+                },
+                {
+                    sender: 'Los',
+                    receiver: 'Los',
+                    sendDate: '2018-13-11',
+                    subject: 'Cupidatat duis sunt consectetur fugiat voluptate esse nisi ut aliqua aute pariatur do excepteur ipsum.',
+                    location: 'inbox',
+                    isRead: true
+                },
+            ]
+        },
 		components: {
-            ucpmenu
+			messagingList
 		}
 	}
 </script>
-
-<style lang="scss">
-	@import '../../assets/sass/main.scss';
-
-	.ucp.container {
-		min-height: 60.8vh;
-	}
-</style>
