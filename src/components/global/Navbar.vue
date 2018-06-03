@@ -39,10 +39,6 @@
             </nav>
         </animated-fade-in>
         <spacefix/>
-        <a href="#" v-scroll-to="'#app'" id="toTop" :style="{ display: scrolled }">
-			<icon name="angle-up"/>
-            <span class="screen-reader-text">Voltar ao topo</span>
-        </a>
 		<signin v-if="!userLoggedIn" />
 		<signup v-if="!userLoggedIn"/>
 		<overlay />
@@ -98,7 +94,6 @@
 
 <script>
     import Vue from 'vue';
-    import 'vue-awesome/icons/angle-up';
 	import { store } from '@/vuex/store';
 
 	import signin from '@/components/auth/SignIn';
