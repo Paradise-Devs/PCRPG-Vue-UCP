@@ -211,15 +211,13 @@
 
 				ServerService.loginPlayer(usernameEx, passwordEx)
 				.then(response => {
-					if(response.data.error) {
-						_this.error = response.data.error.message;
-						console.log(response.data.error);
-						_this.loading = false;
-						reject()
-					} else {
-						_this.user.token = response.data.token;
-						_this.saveUserData(usernameEx, passwordEx);
-					}
+					_this.user.token = response.data.token;
+					_this.saveUserData(usernameEx, passwordEx);
+				})
+				.catch(error => {
+					_this.error = response.data.error.message;
+					console.log(response.data.error);
+					_this.loading = false;
 				})
 			},
 			saveUserData: function(usernameEx, passwordEx) {

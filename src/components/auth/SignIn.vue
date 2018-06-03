@@ -90,7 +90,7 @@
 				var _this = this;
 
 				ServerService.loginPlayer(this.user.username, this.user.password)
-				.then(function (response) {
+				.then(response => {
 					_this.user.token = response.data.token;
 					_this.authUser();
 				})
