@@ -12,7 +12,7 @@
 			<b-alert variant="danger" show>{{ error }}</b-alert>
 		</div>
 
-		<button class="modal-close" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
+		<button class="modal-close" @click="hideModal"><icon :icon="['fas', 'times']" /></button>
 		<form class="form--auth" v-on:submit.prevent="login()" @keyup="hideError()">
 			<b-form-group>
 				<b-form-input
@@ -49,7 +49,6 @@
 </template>
 
 <script>
-	import fontawesome from '@fortawesome/vue-fontawesome';
 	import times from '@fortawesome/fontawesome-free-solid';
 	import ServerService from '@/services/server';
 	import ForumService from '@/services/forum';
@@ -75,7 +74,6 @@
 			}
 		},
 		components: {
-			'fa': fontawesome,
 			'vue-spinner': spinner,
 			signup,
 			store

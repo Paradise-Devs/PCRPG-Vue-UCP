@@ -13,7 +13,7 @@
                 </li>
             </ul>
         </a>
-        <span class="post__comments"><fa :icon="['far', 'comments']" /> {{ post.attributes.commentsCount }}</span>
+        <span class="post__comments"><icon :icon="['far', 'comments']" /> {{ post.attributes.commentsCount }}</span>
     </div>
 </template>
 
@@ -23,7 +23,6 @@
     
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
-    import fontawesome from '@fortawesome/vue-fontawesome';
 	import { comments } from '@fortawesome/fontawesome-free-regular';
 
     export default {
@@ -59,8 +58,7 @@
             })
         },
         components: {
-            'avatar-spinner': BounceLoader, 'username-spinner': PulseLoader,
-            'fa': fontawesome
+            'avatar-spinner': BounceLoader, 'username-spinner': PulseLoader
         }
     }
 </script>

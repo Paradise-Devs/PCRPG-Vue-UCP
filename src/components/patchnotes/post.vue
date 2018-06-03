@@ -10,14 +10,14 @@
                 </li>
             </ul>
         </a>
-        <span class="post__comments"><fa :icon="['far', 'comments']" /> {{ post.attributes.commentsCount }}</span>
+        <span class="post__comments"><icon :icon="['far', 'comments']" /> {{ post.attributes.commentsCount }}</span>
     </div>
 </template>
 
 <script>
 	import moment from 'moment';
 
-    import fontawesome from '@fortawesome/vue-fontawesome';
+    
 	import { comments } from '@fortawesome/fontawesome-free-regular';
 
     export default {
@@ -26,9 +26,6 @@
 			moment: function(time) {
 				return moment(time).fromNow();
 			}
-        },
-        components: {
-            'fa': fontawesome
         }
     }
 </script>

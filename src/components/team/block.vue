@@ -1,14 +1,14 @@
 <template>
     <div class="block team">
         <div class="block__header">
-            <h3><fa :icon="['fas', 'users']" /> A equipe</h3>
+            <h3><icon :icon="['fas', 'users']" /> A equipe</h3>
         </div>
         <div class="block__content">
             <div role="tablist">
                 <div class="rank" v-b-toggle.devs>
                     Desenvolvedores
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="devs">
                     <user
@@ -20,8 +20,8 @@
 
                 <div class="rank" v-b-toggle.admin>
                     Administradores
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="admin">
                     <user
@@ -33,8 +33,8 @@
 
                 <div class="rank" v-b-toggle.mods>
                     Moderadores
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="mods">
                     <user
@@ -46,8 +46,8 @@
 
                 <div class="rank" v-b-toggle.support>
                     Suporte
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="support">
                     <user

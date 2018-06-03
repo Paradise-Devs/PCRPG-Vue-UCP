@@ -17,7 +17,7 @@
 		<div class="modal-alert" v-if="errorEmail && errorUsername" ref="errorAlert">
 			<b-alert variant="danger" show>Este usuário e este email já estão em uso.</b-alert>
 		</div>
-		<button class="modal-close" @click="hideModal"><fa :icon="['fas', 'times']" /></button>
+		<button class="modal-close" @click="hideModal"><icon :icon="['fas', 'times']" /></button>
 		<form class="form--auth" v-on:submit.prevent="register()">
 			<b-form-group :state="null" >
 				<b-form-input
@@ -88,7 +88,6 @@
 </template>
 
 <script>
-	import fontawesome from '@fortawesome/vue-fontawesome';
 	import times from '@fortawesome/fontawesome-free-solid';
 	import ServerService from '@/services/server';
 	import ForumService from '@/services/forum';
@@ -116,7 +115,6 @@
 			}
 		},
 		components: {
-			'fa': fontawesome,
 			'moonloader': moon,
 			'beatloader': beat,
 			signin,

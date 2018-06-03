@@ -1,7 +1,7 @@
 <template>
     <div class="block lastposts">
         <div class="block__header">
-            <h3><fa :icon="['far', 'comments']" /> Últimas Discussões</h3>
+            <h3><icon :icon="['far', 'comments']" /> Últimas Discussões</h3>
         </div>
         <div class="block__content block__content--footerless">
             <vue-spinner :loading="lastPosts.loading" color="#303846" size="10px" class="loader"></vue-spinner>

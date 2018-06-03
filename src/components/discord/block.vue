@@ -4,7 +4,7 @@
         <div v-if="processed">
             <div class="block">
                 <div class="block__header">
-                    <h3><fa :icon="['fab', 'discord']" /> {{ name }}</h3>
+                    <h3><icon :icon="['fab', 'discord']" /> {{ name }}</h3>
                 </div>
                 <div class="block__content">
                     <ul class="user__list">

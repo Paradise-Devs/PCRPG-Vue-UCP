@@ -17,6 +17,7 @@ import VeeValidate, { Validator } from 'vee-validate';
 import ptbr from 'vee-validate/dist/locale/pt_BR';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Notifications from 'vue-notification'
+import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
 
 Validator.localize('pt_BR', ptbr);
 
@@ -37,6 +38,8 @@ require('moment/locale/pt-br')
 Vue.use(VueMoment, {
 	locale
 });
+
+Vue.component('icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false
 

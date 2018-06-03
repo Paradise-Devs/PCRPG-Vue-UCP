@@ -4,7 +4,7 @@
 		<b-row>
 			<b-card class="col-12 card--bordered">
 				<div class="card__icon">
-					<fa :icon="['fas', 'info-circle']"/>
+					<icon :icon="['fas', 'info-circle']"/>
 				</div>
 				No UCP não é possível alterar configurações de privacidade do Fórum. Utilize a <a href="https://forum.pc-rpg.com.br/settings" target="_blank">página de configurações</a> da sua conta do Fórum para isto.
 			</b-card>
@@ -43,7 +43,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="emailChanged">E-mail alterado! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="emailChanged">E-mail alterado! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
 								<span v-else>Alterar e-mail</span>
 							</transition>
 
@@ -111,7 +111,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="passwordChanged">Senha alterada! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="passwordChanged">Senha alterada! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
 								<span v-else>Alterar senha</span>
 							</transition>
 
@@ -153,7 +153,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="usernameChanged">Apelido alterado! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="usernameChanged">Apelido alterado! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
 								<span v-else>Alterar apelido</span>
 							</transition>
 							
@@ -175,7 +175,6 @@
 	import beat from 'vue-spinner/src/BeatLoader.vue';
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 
-	import fontawesome from '@fortawesome/vue-fontawesome';
 	import { infoCircle, checkCircle } from '@fortawesome/fontawesome-free-solid';
 
 	export default {
@@ -443,8 +442,7 @@
 		},
 		components: {
 			'beatloader': beat,
-			'moonloader': moon,
-			'fa': fontawesome
+			'moonloader': moon
 		}
 	}
 </script>

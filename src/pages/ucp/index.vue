@@ -35,7 +35,7 @@
 									</div>
 									<div class="character__stats">
 										<ul class="stats__list">
-											<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+											<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><icon :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
 										</ul>
 									</div>
 									<div class="character__exp">
@@ -59,8 +59,8 @@
 						>
 							<div class="char__icon">
 								<font-awesome-layers>
-									<fa :icon="['fas', 'street-view']"/>
-                					<fa :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
+									<icon :icon="['fas', 'street-view']"/>
+                					<icon :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
 								</font-awesome-layers>
 							</div>
 							<span class="char__text">Sem personagens</span>
@@ -83,7 +83,7 @@
 							</div>
 							<div class="character__stats">
 								<ul class="stats__list">
-									<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+									<li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><icon :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
 								</ul>
 							</div>
 							<div class="character__exp">
@@ -96,8 +96,8 @@
 								</b-progress>
 							</div>
 						</b-col>
-						<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--prev" v-if="chars.length > 1"><fa :icon="['fas', 'angle-left']" /></div>
-    					<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--next" v-if="chars.length > 1"><fa :icon="['fas', 'angle-right']" /></div>
+						<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--prev" v-if="chars.length > 1"><icon :icon="['fas', 'angle-left']" /></div>
+    					<div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--next" v-if="chars.length > 1"><icon :icon="['fas', 'angle-right']" /></div>
 					</b-col>
 				</b-row>
 			</b-col>
@@ -177,12 +177,12 @@
 	import moment from 'moment';
 	import { store } from '@/vuex/store';
 	import firsttime from '@/components/first-time/block';
-	import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 	import userAvatar from '@/components/user-profile/avatar';
 	import userContent from '@/components/user-profile/content';
 
+	import { FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
 	import { code, bolt, support, briefcase, pencilAlt, angleLeft, angleRight, dollarSign } from '@fortawesome/fontawesome-free-solid';
 
 	export default {
@@ -390,9 +390,8 @@
 		},
 		components: {
 			firsttime,
-			userAvatar, userContent,
-			'fa': FontAwesomeIcon,
-			FontAwesomeLayers
+			FontAwesomeLayers,
+			userAvatar, userContent
 		}
 	}
 </script>

@@ -45,7 +45,6 @@
     import ServerService from '@/services/server';
     import moment from 'moment';
     import spinner from 'vue-spinner/src/MoonLoader.vue';
-    import fontawesome from '@fortawesome/vue-fontawesome';
     import 'swiper/dist/css/swiper.css'
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
     import { store } from '@/vuex/store';
@@ -114,7 +113,6 @@
         },
         components: {
             'spinner': spinner,
-            'fa': fontawesome,
             char, forumlog, serverlog, history, userAvatar, userContent,
             swiper,
             swiperSlide
