@@ -52,11 +52,11 @@
                 MessagingService.getMessagesTo(this.user.username)
                 .then(res =>{
                     this.messages = res.data;
-                    //this.loading = false;
+                    this.loading = false;
                 })
                 .catch(err => {
                     console.log(err);
-                    //this.loading = false;
+                    this.loading = false;
                 })
             },
             getOutbox: function() {
