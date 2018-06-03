@@ -16,7 +16,7 @@
                         </div>
                         <div class="content">
                             <h5 class="title">{{ msg.subject }}</h5>
-                            <span class="info">Enviado por <b>{{ msg.sender }}</b> há 2 dias atrás.</span>
+                            <span class="info">Enviado por <b>{{ msg.sender }}</b> {{ msg.sendDate | moment }} atrás.</span>
                         </div>
                     </li>
                 </paginate>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+    import moment from 'moment';
+
     export default {
         props: {
             messages: Array
@@ -51,6 +53,11 @@
                 return this.msgDetails != null ? true : false;
             }
         },
+        filters: {
+			moment: function(time) {
+				return moment(time).fromNow();
+			}
+		},
         methods: {
             openMessage: function(msg) {
                 this.msgDetails = msg;
