@@ -32,18 +32,6 @@
 	import hero from '@/components/global/Hero'
 	import appfooter from '@/components/global/Footer'
 
-	var tokenAPI, loginAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-	} else {
-		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
-	}
-
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
-
 	export default {
 		data() {
 			return {
