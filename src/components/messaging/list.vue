@@ -54,7 +54,7 @@
         methods: {
             openMessage: function(msg) {
                 this.msgDetails = msg;
-                this.$router.push(this.$route.query.redirect || 'mensagens/msg/' + msg.id);
+                this.$router.push(this.$route.query.redirect || 'mensagens/msg/' + msg._id);
             }
         },
         mounted() {
