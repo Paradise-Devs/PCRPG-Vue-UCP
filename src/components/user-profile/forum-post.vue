@@ -15,12 +15,10 @@
 </template>
 
 <script>
-	import axios from 'axios';
+	import ForumService from '@/services/forum';
 	import moment from 'moment';
 	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 	import fontawesome from '@fortawesome/vue-fontawesome'
-
-	var forumBaseURI =  'https://forum.pc-rpg.com.br/api/discussions/';
 
     export default {
 		props: {
@@ -38,7 +36,7 @@
 			}
 		},
 		mounted() {
-			axios.get(forumBaseURI + this.post.relationships.discussion.data.id)
+			ForumService.getDiscussionData(this.post.relationships.discussion.data.id)
 			.then(response => {
 				this.userDiscussion = response.data.data;
 				this.postP.loading = false;

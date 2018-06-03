@@ -15,12 +15,10 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import GitlabService from '@/services/gitlab';
     import moment from 'moment';
     
     import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
-
-    var userFindAPI = 'https://gitlab.com/api/v4/projects/6159796/users?private_token=Uyazy3QPxKsf_qiVzmah&search=';
 
     export default {
         props: {
@@ -38,7 +36,7 @@
             this.avatarProcessed = false;
 
             setTimeout(() => {
-                axios.get(userFindAPI + this.commit.author_email)
+                GitlabService.getUserData(this.commit.author_email)
                 .then(response => {
                     this.useravatar = response.data[0].avatar_url;
                     this.avatarProcessed = true;

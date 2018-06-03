@@ -1,14 +1,14 @@
 <template>
     <div class="block team">
         <div class="block__header">
-            <h3><fa :icon="['fas', 'users']" /> A equipe</h3>
+            <h3><icon :icon="['fas', 'users']" /> A equipe</h3>
         </div>
         <div class="block__content">
             <div role="tablist">
                 <div class="rank" v-b-toggle.devs>
                     Desenvolvedores
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="devs">
                     <user
@@ -20,8 +20,8 @@
 
                 <div class="rank" v-b-toggle.admin>
                     Administradores
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="admin">
                     <user
@@ -33,8 +33,8 @@
 
                 <div class="rank" v-b-toggle.mods>
                     Moderadores
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="mods">
                     <user
@@ -46,8 +46,8 @@
 
                 <div class="rank" v-b-toggle.support>
                     Suporte
-                    <span class="opened"><fa :icon="['fas', 'angle-up']" /></span>
-                    <span class="closed"><fa :icon="['fas', 'angle-down']" /></span>
+                    <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
+                    <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
                 </div>
                 <b-collapse accordion="team" id="support">
                     <user
@@ -62,8 +62,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import { store } from '@/vuex/store'
+    import ForumService from '@/services/forum'
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import fontawesome from '@fortawesome/vue-fontawesome'
 
@@ -71,10 +70,6 @@
     import angleUp from '@fortawesome/fontawesome-free-solid';
 
     import user from './user.vue'
-
-    var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users';
-    var groupsBaseURI = 'https://forum.pc-rpg.com.br/api/groups';
-    var forumTokenEndpoint = 'https://forum.pc-rpg.com.br/api/token';
 
     export default {
         data() {
@@ -87,9 +82,7 @@
             }
         },
         mounted() {
-            axios.get(usersBaseURI, {
-                headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
-            })
+            ForumService.getAllUsers()
             .then(response => {
                 this.users = response.data.data;
                 for(var i = 0; i < this.users.length; i++) {

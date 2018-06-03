@@ -12,14 +12,12 @@ import VueWaypoint from 'vue-waypoint'
 import VueScrollTo  from 'vue-scrollto'
 import VueMoment from 'vue-moment'
 import VueInfiniteScroll from 'vue-infinite-scroll'
-import anime from 'animejs'
-import Icon from 'vue-awesome/components/Icon'
 import VuePaginate from 'vue-paginate'
-import axios from 'axios'
 import VeeValidate, { Validator } from 'vee-validate';
 import ptbr from 'vee-validate/dist/locale/pt_BR';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Notifications from 'vue-notification'
+import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
 
 Validator.localize('pt_BR', ptbr);
 
@@ -41,7 +39,7 @@ Vue.use(VueMoment, {
 	locale
 });
 
-Vue.component('icon', Icon)
+Vue.component('icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false
 

@@ -9,7 +9,7 @@
                 :style="{ borderColor: group.color }"
             >
                 <span class="icon" :style="{ backgroundColor: group.color }"> 
-                    <fa :icon="['fas', group.icon]" />
+                    <icon :icon="['fas', group.icon]" />
                 </span>
                 <span :style="{ color: group.color }">{{ group.nameSingular}}</span>
             </b-badge>
@@ -19,9 +19,7 @@
 
 <script>
 	import Vue from 'vue';
-	import axios from 'axios';
 	import { store } from '@/vuex/store';
-	import fontawesome from '@fortawesome/vue-fontawesome';
     
     import { code, bolt, support, briefcase, pencilAlt } from '@fortawesome/fontawesome-free-solid';
 
@@ -34,9 +32,6 @@
                 let tmp = text.replace(/(?:\r\n|\r|\n)/g, ' ');
                 return tmp;
             },
-        },
-        components: {
-            'fa': fontawesome
         }
     }
 </script>

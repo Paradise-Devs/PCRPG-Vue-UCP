@@ -1,18 +1,18 @@
 <!--suppress ALL -->
 <template>
-	<b-container class="ucp__config">
+	<b-container class="page__ucp--settings">
 		<b-row>
 			<b-card class="col-12 card--bordered">
 				<div class="card__icon">
-					<fa :icon="['fas', 'info-circle']"/>
+					<icon :icon="['fas', 'info-circle']"/>
 				</div>
 				No UCP não é possível alterar configurações de privacidade do Fórum. Utilize a <a href="https://forum.pc-rpg.com.br/settings" target="_blank">página de configurações</a> da sua conta do Fórum para isto.
 			</b-card>
 		</b-row>
 		<b-row align-h="between">
-			<b-col md="3" sm="12" class="ucp__config__block">
-				<h3 class="ucp__config__block__title">Alterar e-mail</h3>
-				<p class="ucp__config__block__text">Você pode alterar os seus dados de acesso sempre que quiser. Lembre-se de ter sempre um email válido, pois é ele que você vai utilizar para validar qualquer operação importante no servidor.</p>
+			<b-col md="3" sm="12" class="setting__block">
+				<h3 class="setting__block__title">Alterar e-mail</h3>
+				<p class="setting__block__text">Você pode alterar os seus dados de acesso sempre que quiser. Lembre-se de ter sempre um email válido, pois é ele que você vai utilizar para validar qualquer operação importante no servidor.</p>
 				<form class="form--small" v-on:submit.prevent="changeEmail()">
 					<b-form-group label="Email atual:">
 						<b-form-input type="email" :value="user.forumAtt.attributes.email" name="oldEmail" disabled></b-form-input>
@@ -43,7 +43,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="emailChanged">E-mail alterado! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="emailChanged">E-mail alterado! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
 								<span v-else>Alterar e-mail</span>
 							</transition>
 
@@ -52,9 +52,9 @@
 					</b-form-group>
 				</form>
 			</b-col>
-			<b-col md="5" sm="12" class="ucp__config__block">
-				<h3 class="ucp__config__block__title">Alterar senha</h3>
-				<p class="ucp__config__block__text">Sua senha deve ser única e não pode ser compartilhada com terceiros. A equipe do PC:RPG nunca vai solicita-la para prestar qualquer tipo de suporte. Você é o único responsável por ela, é possível recuperá-la através do seu e-mail.</p>
+			<b-col md="5" sm="12" class="setting__block">
+				<h3 class="setting__block__title">Alterar senha</h3>
+				<p class="setting__block__text">Sua senha deve ser única e não pode ser compartilhada com terceiros. A equipe do PC:RPG nunca vai solicita-la para prestar qualquer tipo de suporte. Você é o único responsável por ela, é possível recuperá-la através do seu e-mail.</p>
 				<form class="form--small" v-on:submit.prevent="changePassword()">
 					<b-form-group>
 						<b-form-input 
@@ -111,7 +111,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="passwordChanged">Senha alterada! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="passwordChanged">Senha alterada! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
 								<span v-else>Alterar senha</span>
 							</transition>
 
@@ -120,9 +120,9 @@
 					</b-form-group>
 				</form>
 			</b-col>
-			<b-col md="3" sm="12" class="ucp__config__block">
-				<h3 class="ucp__config__block__title">Alterar apelido</h3>
-				<p class="ucp__config__block__text">Seu apelido é único e é como você gostaria de ser chamado fora do jogo, também é o seu login para autenticar-se. Lembre-se de respeitar a política de apelidos que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
+			<b-col md="3" sm="12" class="setting__block">
+				<h3 class="setting__block__title">Alterar apelido</h3>
+				<p class="setting__block__text">Seu apelido é único e é como você gostaria de ser chamado fora do jogo, também é o seu login para autenticar-se. Lembre-se de respeitar a política de apelidos que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
 				<form class="form--small" v-on:submit.prevent="changeUsername()">
 					<b-form-group label="Apelido atual:">
 						<b-form-input type="text" :value="user.forumAtt.attributes.username" disabled></b-form-input>
@@ -153,7 +153,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="usernameChanged">Apelido alterado! <fa :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="usernameChanged">Apelido alterado! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
 								<span v-else>Alterar apelido</span>
 							</transition>
 							
@@ -168,28 +168,14 @@
 
 <script>
 	import Vue from 'vue';
-	import axios from 'axios';
+	import ServerService from '@/services/server';
+	import ForumService from '@/services/forum';
 	import { store } from '@/vuex/store';
 
 	import beat from 'vue-spinner/src/BeatLoader.vue';
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 
-	import fontawesome from '@fortawesome/vue-fontawesome';
 	import { infoCircle, checkCircle } from '@fortawesome/fontawesome-free-solid';
-
-	var tokenAPI, loginAPI, usersAPI;
-
-	if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-		tokenAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/login/';
-		usersAPI = 'http://dev.pc-rpg.com.br:3000/api/v1/players/';
-	} else {
-		tokenAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/token';
-		loginAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/login/';
-		usersAPI = 'https://prod.pc-rpg.com.br:3000/api/v1/players/';
-	}
-
-	var usersForumAPI = 'https://forum.pc-rpg.com.br/api/users/';
 
 	export default {
 		data() {
@@ -230,7 +216,7 @@
 						this.errorUsername = 'O seu novo username precisa ser diferente do antigo.';
 						this.usernameChecking = false;
 					} else {
-						axios.get(usersAPI)
+						ServerService.getPlayers()
 						.then(response => {
 							for (var i = 0; i < response.data.length; i++) {
 								if (response.data[i].username == this.newUsername.toLowerCase()) {
@@ -249,7 +235,8 @@
 			checkEmail: function () {
 				if(this.fields.$emailScope.email.changed && this.fields.$emailScope.email.valid) {
 					this.emailChecking = true;
-					axios.get(usersAPI)
+
+					ServerService.getPlayers()
 					.then(response => {
 						for (var i = 0; i < response.data.length; i++) {
 							if (response.data[i].email == this.newEmail) {
@@ -269,21 +256,17 @@
 					this.passChecking = true;
 					var _t = this;
 
-					axios.post(loginAPI, {
-						username: this.user.username,
-						password: this.oldPassword,
-					})
+					ServerService.loginPlayer(this.user.username, this.oldPassword)
 					.then(response => {
-						if(response.data.error) {
-							_t.errorPassword = response.data.error.message;
+						_t.user.token = response.data.token;
+						store.dispatch('setData', _t.user).then(() => {
+							_t.errorPassword = false;
 							_t.passChecking = false;
-						} else {
-							_t.user.token = response.data.token;
-							store.dispatch('setData', _t.user).then(() => {
-								_t.errorPassword = false;
-								_t.passChecking = false;
-							});
-						}
+						});
+					})
+					.catch(error => {
+						_t.errorPassword = error.response.data.error.message;
+						_t.passChecking = false;
 					})
 				} else {
 					this.passChecking = false;
@@ -300,10 +283,7 @@
 				this.checkEmail();
 
 				if(!this.errorEmail) {
-					axios.patch(usersAPI + this.user.username, {
-						masterkey: store.getters.getUpdateMasterToken,
-						email: this.newEmail,
-					})
+					ServerService.updatePlayerEmail(this.user.username, this.newEmail)
 					.then(response => {
 						this.user.token = response.data.token;
 						this.updateUserForumData("email");
@@ -319,10 +299,7 @@
 				this.checkPassword();
 
 				if(!this.errorPassword && !this.errorNewPassword) {
-					axios.patch(usersAPI + this.user.username, {
-						masterkey: store.getters.getUpdateMasterToken,
-						password: this.newPassword,
-					})
+					ServerService.updatePlayerPassword(this.user.username, this.newPassword)
 					.then(response => {
 						this.user.token = response.data.token;
 						this.updateUserForumData("password");
@@ -338,10 +315,7 @@
 				this.checkUsername();
 
 				if(!this.errorUsername) {
-					axios.patch(usersAPI + this.user.username, {
-						masterkey: store.getters.getUpdateMasterToken,
-						username: this.newUsername,
-					})
+					ServerService.updatePlayerUsername(this.user.username, this.newUsername)
 					.then(response => {
 						this.user.username = this.newUsername.toLowerCase();
 						this.user.token = response.data.token;
@@ -364,11 +338,7 @@
 					sendData = { attributes: { password: this.newPassword } }
 				}
 
-				axios.patch(usersForumAPI + this.user.forumAtt.id, {
-					data: sendData,
-				}, {
-					headers: { "Authorization": "Token " + store.getters.getMasterToken + 'userId=1' }
-				})
+				ForumService.updateUserData(this.user.forumAtt.id, sendData)
 				.then(response => {
 					this.user.forumAtt = response.data.data;
 
@@ -472,8 +442,7 @@
 		},
 		components: {
 			'beatloader': beat,
-			'moonloader': moon,
-			'fa': fontawesome
+			'moonloader': moon
 		}
 	}
 </script>

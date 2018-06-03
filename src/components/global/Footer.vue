@@ -11,28 +11,28 @@
                         v-b-tooltip.hover title="Facebook"
                         target="_blank"
                     >
-                        <fa :icon="['fab', 'facebook-f']"/>
+                        <icon :icon="['fab', 'facebook-f']"/>
                     </a>
                     <a 
                         href="https://twitter.com/paradisecityrpg" 
                         v-b-tooltip.hover title="Twitter"
                         target="_blank"
                     >
-                        <fa :icon="['fab', 'twitter']"/>
+                        <icon :icon="['fab', 'twitter']"/>
                     </a>
                     <a 
                         href="https://www.youtube.com/channel/UCGo6hd688I7PS3NzRa01yiw"
                         v-b-tooltip.hover title="YouTube"
                         target="_blank"
                     >
-                        <fa :icon="['fab', 'youtube']"/>
+                        <icon :icon="['fab', 'youtube']"/>
                     </a>
                     <a
                         href="https://discordapp.com/invite/hpvRGZe"
                         v-b-tooltip.hover title="Discord"
                         target="_blank"
                     >
-                        <fa :icon="['fab', 'discord']"/>
+                        <icon :icon="['fab', 'discord']"/>
                     </a>
                 </b-col>
             </b-row>

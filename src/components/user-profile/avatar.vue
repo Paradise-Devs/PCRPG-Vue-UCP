@@ -3,7 +3,7 @@
         <img :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
         <div class="comp__userAvatar--empty" v-else> ? </div>
         <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">
-            <label for='newAvatarField' class="button"><fa :icon="['fas', 'upload']" /></label>
+            <label for='newAvatarField' class="button"><icon :icon="['fas', 'upload']" /></label>
             <input id='newAvatarField' type='file' accept="image/jpeg, image/png" @change="onFileChanged">
         </div>
         <span 
@@ -27,7 +27,6 @@
 <script>
     import axios from 'axios';
     import { store } from '@/vuex/store';
-    import fontawesome from '@fortawesome/vue-fontawesome';
     import { TweenMax } from 'gsap'
 
     import { upload } from '@fortawesome/fontawesome-free-solid';
@@ -101,9 +100,6 @@
                     console.log(error);
                 })
             }
-        },
-        components: {
-            'fa': fontawesome
         }
     }
 </script>

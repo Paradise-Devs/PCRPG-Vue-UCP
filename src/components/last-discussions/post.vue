@@ -19,13 +19,11 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import ForumService from '@/services/forum';
     import moment from 'moment';
     
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
-
-    var forumBaseURI = 'https://forum.pc-rpg.com.br/api/';
 
     export default {
         props: {
@@ -57,7 +55,7 @@
             this.tagLoading = true;
             this.tagProcessed = false;
 
-            axios.get(forumBaseURI + 'users/' + this.post.relationships.startUser.data.id)
+            ForumService.getUserData(this.post.relationships.startUser.data.id)
             .then(response => {
                 this.username = response.data.data.attributes.username;
                 this.useravatar = response.data.data.attributes.avatarUrl;
@@ -65,7 +63,7 @@
                 this.avatarLoading = false;
             })
 
-            axios.get(forumBaseURI + 'tags')
+            ForumService.getTags()
             .then(response => {
                 for(var i = 0; i < response.data.data.length; i++) {
                     if(response.data.data[i].id == this.post.relationships.tags.data[0].id) {
