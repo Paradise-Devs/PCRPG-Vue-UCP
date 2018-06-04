@@ -33,9 +33,6 @@
         data() {
 			return {
                 user: store.state.user,
-                inbox: [ ],
-                outbox: [ ],
-                trashbox: [ ],
                 messages: [ ],
                 btnActivated: 1,
 
@@ -45,9 +42,9 @@
         methods: {
             getInbox: function() {
                 this.btnActivated = 1;
-                this.$root.$emit('hideReadingMessage');
 
                 this.loading = true;
+                this.messages = []
 
                 MessagingService.getMessagesTo(this.user.username)
                 .then(res =>{
@@ -61,9 +58,9 @@
             },
             getOutbox: function() {
                 this.btnActivated = 2;
-                this.$root.$emit('hideReadingMessage');
 
                 this.loading = true;
+                this.messages = []
                 
                 MessagingService.getMessagesFrom(this.user.username)
                 .then(res =>{
@@ -77,9 +74,9 @@
             },
             getTrashbox: function() {
                 this.btnActivated = 3;
-                this.$root.$emit('hideReadingMessage');
 
                 this.loading = true;
+                this.messages = []
 
                 MessagingService.getDeletedMessages(this.user.username)
                 .then(res =>{

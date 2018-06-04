@@ -1,17 +1,40 @@
 <template>
-    <div class="message">
-        <loader  :loading="loading" color="#303846" size="60px"></loader>
-        <div class="message__details" v-if="!loading">
-            <div class="message__header">
-                <h3 class="message__subject">{{ message.subject }}</h3>
-            </div>
-        </div>
-    </div>
+    <b-container class="page__ucp--message-details">
+        <loader :loading="loading" color="#303846" size="60px"></loader>
+        <b-row v-if="!loading" class="message">
+            <b-col md="12" sm="12" class="message__buttons">
+                <router-link to="/ucp/mensagens" class="router-link btn btn-secondary">Voltar para as mensagens</router-link>
+                <div class="right">
+                    <router-link :to="'/ucp/mensagens/responder/' + message._id" class="router-link btn btn-primary">Responder</router-link>
+                    <b-btn-group>
+                        <b-button variant="secondary" @click="confirmDelete()"><icon :icon="['fas', 'trash-alt']"/> Deletar</b-button>
+                        <!-- <b-button variant="secondary"><icon :icon="['fas', 'exclamation-triangle']"/> Reportar</b-button> -->
+                    </b-btn-group>
+                </div>
+            </b-col>
+            <b-col md="12" sm="12" class="message__block">
+                <div class="message__header">
+                    <div class="avatar">
+                        <img src="https://forum.pc-rpg.com.br/assets/avatars/fd5jikfxjrpo4tx4.png">
+                    </div>
+                    <div class="details">
+                        <h3 class="title">{{ message.subject }}</h3>
+                        <span class="info">Enviado por <b>{{ message.sender }}</b> {{ message.sendDate | moment }} atrás.</span>
+                    </div>
+                </div>
+                <div v-html="marked" class="message__content markdown"></div>
+            </b-col>
+        </b-row>
+    </b-container>
 </template>
 
 <script>
     import MessagingService from '@/services/messaging'
     import loader from 'vue-spinner/src/MoonLoader.vue'
+    import moment from 'moment';
+    import marked from 'marked';
+
+    import { trashAlt, exclamationTriangle } from '@fortawesome/fontawesome-free-solid';
 
     export default {
         data() {
@@ -24,13 +47,49 @@
             MessagingService.getMessageData(this.$route.params.msgid)
             .then(response => {
                 this.message = response.data;
-                this.loading = false;
+                MessagingService.markMessageAsRead(this.message._id)
+                .then(res => {
+                    this.loading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
             })
             .catch(error => {
                 console.log(error);
                 this.loading = false;
             })
         },
+        computed: {
+            marked: function() {
+                return marked(this.message.body, { sanitize: true });
+            }
+        },
+        methods: {
+            confirmDelete: function() {
+                var r = confirm("Você tem certeza que deseja deletar esta mensagem? A mensagem será movida para a pasta lixeira.");
+                if (r == true) {
+                    var e = [ ];
+                    e.push(this.message._id);
+                    console.log(e);
+                    MessagingService.deleteMessage(e)
+                    .then(res => {
+                        this.$router.push(this.$route.query.redirect || '/ucp/mensagens');
+                        console.log(res);
+                    })
+                    .catch(error => {
+                        console.log(error.response);
+                    })
+                } else {
+                    txt = "You pressed Cancel!";
+                }
+            }
+        },
+        filters: {
+			moment: function(time) {
+				return moment(time).fromNow();
+            }
+		},
         components: {
             loader
         }

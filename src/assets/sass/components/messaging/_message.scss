@@ -1,48 +1,68 @@
 .message {
-    &__header {
-        background-color: $gray-active;
-        padding: 20px 20px 10px;
-        border-radius: 10px 10px 0 0;
-        border-bottom: 1px solid $gray-dark;
+    &__buttons {
+        padding: 0;
+        margin: 0 0 24px;
 
-        .avatar {
-            display: inline-block;
-            width: 70px;
+        .right {
+            padding: 0;
+            float: right;
 
-            img {
-                border-radius: 100%;
-                max-width: 100%;
-            }
-        }
+            .btn-group {
+                margin-left: 20px;
 
-        .details {
-            display: inline-block;
-            vertical-align: top;
-            margin-left: 15px;
-            width: 80%;
-
-            .title {
-                display: block;
-                max-width: 100%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                font-size: 30px;
-                margin: 0;
-                color: $gray;
-            }
-
-            .info {
-                font-size: 12px;
-                color: rgba($color: $gray, $alpha: .5);
+                svg {
+                    margin-right: 5px;
+                }
             }
         }
     }
+    &__block {
+        padding: 0;
+        .message__header {
+            background-color: $gray-active;
+            padding: 10px 20px 10px;
+            border-radius: 10px 10px 0 0;
+            border-bottom: 1px solid $gray-dark;
 
-    &__content {
-        background-color: $gray-active;
-        padding: 10px 20px 10px;
-        border-radius: 0 0 10px 10px;
-        margin: 0 0 24px;
+            .avatar {
+                display: inline-block;
+                width: 70px;
+
+                img {
+                    border-radius: 100%;
+                    max-width: 100%;
+                }
+            }
+
+            .details {
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 15px;
+                width: 80%;
+
+                .title {
+                    display: block;
+                    max-width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 30px;
+                    margin: 0;
+                    color: $gray;
+                }
+
+                .info {
+                    font-size: 12px;
+                    color: rgba($color: $gray, $alpha: .5);
+                }
+            }
+        }
+
+        .message__content {
+            background-color: $gray-active;
+            padding: 10px 20px 10px;
+            border-radius: 0 0 10px 10px;
+            margin: 0 0 24px;
+        }
     }
 }

@@ -4,8 +4,8 @@
             <div v-if="messages.length > 0">
                 <paginate name="messages" :list="messages" :per="5" class="list">
                     <li 
-                        class="message_item" 
-                        :class="{ 'message_item--unreaded': !msg.isRead, 'message_item--selected': msg.selected }" 
+                        class="message" 
+                        :class="{ 'message--unreaded': !msg.isRead, 'message--selected': msg.selected }" 
                         v-for="(msg, index) in paginated('messages')" 
                         :key="index" 
                         @click="$set(msg, 'selected', !msg.selected)"

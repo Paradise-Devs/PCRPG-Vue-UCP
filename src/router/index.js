@@ -18,6 +18,7 @@ import UcpMessagesView from '@/pages/ucp/messaging/model'
 import UcpMessagesIndexView from '@/pages/ucp/messaging/index'
 import UcpMessageDetailsView from '@/pages/ucp/messaging/message'
 import UcpNewMessageView from '@/pages/ucp/messaging/new'
+import UcpReplyMessageView from '@/pages/ucp/messaging/reply'
 
 Vue.use(Router);
 
@@ -33,8 +34,9 @@ export default new Router({
 				{ 	path: 'mensagens', 					component: UcpMessagesView,
 					children: [
 						{ 	path: '', 					component: UcpMessagesIndexView },
-						{ 	path: ':msgid', 		component: UcpMessageDetailsView },
+						{ 	path: ':msgid', 			component: UcpMessageDetailsView },
 						{ 	path: 'nova', 				component: UcpNewMessageView },
+						{ 	path: 'responder/:msgid', 	component: UcpReplyMessageView },
 					]
 				},
 				{ 	path: 'perfil', 					component: UcpProfileView },

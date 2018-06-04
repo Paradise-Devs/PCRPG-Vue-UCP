@@ -66,6 +66,16 @@
         }
     }
 
+    &-warning {
+        color: $white !important;
+        background-color: $orange !important;
+        
+        &:hover {
+            color: $white !important;
+            background-color: $orange-hover !important;
+        }
+    }
+
     &-danger {
         color: $white !important;
         background-color: $red;

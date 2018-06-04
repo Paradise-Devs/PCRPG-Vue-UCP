@@ -44,6 +44,6 @@ export default {
 
     //delete
     deleteMessage(messagesid) {
-        return axios.delete(baseUri + 'delete', { messages: messagesid }, { headers: auth } );
+        return axios.post(baseUri + 'delete', { messages: [ messagesid ] }, { headers: auth } );
     }
 }
