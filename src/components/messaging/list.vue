@@ -61,7 +61,7 @@
         methods: {
             openMessage: function(msg) {
                 this.msgDetails = msg;
-                this.$router.push(this.$route.query.redirect || 'mensagens/' + msg._id);
+                this.$router.push(this.$route.query.redirect || 'mensagens/ver/' + msg._id);
             }
         },
         mounted() {

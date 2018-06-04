@@ -4,7 +4,7 @@
 		<b-row>
 			<b-col md="3" sm="12" class="column column--left">
 				<div class="messaging__block">
-					<button class="btn btn-primary btn-block">Nova mensagem</button>
+					<router-link to="mensagens/nova" class="router-link btn btn-primary btn-block" exact>Nova Mensagem</router-link>
 					<ul class="messasing__menu">
 						<li class="menu__item" :class="{'menu__item--active': btnActivated == 1}" @click="getInbox">Caixa de entrada</li>
 						<li class="menu__item" :class="{'menu__item--active': btnActivated == 2}"  @click="getOutbox">Caixa de saída</li>
