@@ -221,6 +221,36 @@ form {
     }
 }
 
+textarea {
+    resize: none;
+    background-color: $gray-dark;
+    border: none;
+    color: $gray;
+    padding: 8px 13px;
+    border-radius: 10px;
+
+    &.disabled, &[disabled], &[readonly] {
+        cursor: default;
+        opacity: 0.5;
+    }
+
+    &:focus {
+        color: $white-lt;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none !important;
+        border: 2px solid $blue;
+        box-shadow: none !important;
+        outline: none;
+    }
+
+    &::placeholder {
+        font-size: inherit;
+        color: $gray;
+        font-family: $font-open;
+    }
+}
+
 .form-group:last-child {
     margin-bottom: 0 !important;
 }
