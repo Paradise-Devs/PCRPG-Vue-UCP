@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
 	state: {
-		user: {}
+		user: {},
+		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx; '
 	},
 	actions: {
 		setData({commit}, userdata) {
