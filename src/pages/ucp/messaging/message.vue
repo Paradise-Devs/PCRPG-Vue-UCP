@@ -71,7 +71,6 @@
                 if (r == true) {
                     var e = [ ];
                     e.push(this.message._id);
-                    console.log(e);
                     MessagingService.deleteMessage(e)
                     .then(res => {
                         this.$router.push(this.$route.query.redirect || '/ucp/mensagens');
@@ -80,8 +79,6 @@
                     .catch(error => {
                         console.log(error.response);
                     })
-                } else {
-                    txt = "You pressed Cancel!";
                 }
             }
         },
