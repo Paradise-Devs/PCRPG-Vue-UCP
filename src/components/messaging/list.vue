@@ -16,7 +16,7 @@
                         </div>
                         <div class="content">
                             <h5 class="title">{{ msg.subject }}</h5>
-                            <span class="info">Enviado por <b>{{ msg.sender }}</b> {{ msg.sendDate | moment }} atrás.</span>
+                            <span class="info">Enviado por <b>{{ msg.sender.username }}</b> {{ msg.sendDate | moment }} atrás.</span>
                         </div>
                     </li>
                 </paginate>

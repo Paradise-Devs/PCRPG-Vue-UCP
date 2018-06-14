@@ -19,7 +19,7 @@
                     </div>
                     <div class="details">
                         <h3 class="title">{{ message.subject }}</h3>
-                        <span class="info">Enviado por <b>{{ message.sender }}</b> {{ message.sendDate | moment }} atrás.</span>
+                        <span class="info">Enviado por <b>{{ message.sender.username }}</b> {{ message.sendDate | moment }} atrás.</span>
                     </div>
                 </div>
                 <div v-html="marked" class="message__content markdown"></div>
