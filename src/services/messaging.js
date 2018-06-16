@@ -23,7 +23,7 @@ export default {
 		return axios.post(
 			baseUri + "send",
 			{ from: from, to: to, subject: subject, body: body, sendDate: date },
-			auth
+			{ headers: auth }
 		);
 	},
 
