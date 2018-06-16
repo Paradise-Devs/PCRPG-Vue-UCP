@@ -222,6 +222,8 @@ form {
 }
 
 textarea {
+    width: 100%;
+    min-height: 200px;
     resize: none;
     background-color: $gray-dark;
     border: none;
@@ -266,7 +268,8 @@ textarea {
 .was-validated .form-control:invalid,
 .form-control.is-invalid,
 .was-validated .custom-select:invalid,
-.custom-select.is-invalid {
+.custom-select.is-invalid,
+textarea.is-invalid {
     border: 2px solid $red;
     color: $red;
     outline: none;
