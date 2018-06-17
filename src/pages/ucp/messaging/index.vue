@@ -14,7 +14,7 @@
 			</b-col>
 			<b-col md="9" sm="12" class="column column--right">
                 <loader  :loading="loading" color="#303846" size="60px"></loader>
-				<messagingList :messages="messages" v-if="!loading"/>
+				<messagingList :messages="sortedMessages" v-if="!loading"/>
 			</b-col>
 		</b-row>
 	</b-container>
@@ -35,8 +35,12 @@
                 user: store.state.user,
                 messages: [ ],
                 btnActivated: 1,
-
                 loading: true
+            }
+        },
+        computed: {
+            sortedMessages: function() {
+                return this.messages.sort((a, b) => new Date(a.sendDate).getTime() + new Date(b.sendDate).getTime());
             }
         },
         methods: {
