@@ -147,31 +147,50 @@
 
 				clearTimeout(this.timeout);
       			this.timeout = setTimeout(() => {
-					const usersPromise = ForumService.getAllUsers();
-					const groupsPromise = ForumService.getAllGroups();
+					// const usersPromise = ForumService.getAllUsers();
+					// const groupsPromise = ForumService.getAllGroups();
 
-					Promise.all([usersPromise, groupsPromise]).then(values => {
+					// Promise.all([usersPromise, groupsPromise]).then(values => {
+					// 	this.suggestions = [];
+					// 	this.selected = null;
+
+					// 	let userData = [];
+					// 	let groupData = [];
+
+					// 	for(let i in values[0].data.data) {
+					// 		userData.push(values[0].data.data[i].attributes);
+					// 	}
+					// 	for(let j in values[1].data.data) {
+					// 		//groupData.push(values[1].data.data[j].attributes);
+					// 	}
+
+					// 	const users = this.filterResults(userData, val, "username");
+					// 	const groups = this.filterResults(groupData, val, "namePlural");
+						  
+					// 	users.length &&
+					// 		this.suggestions.push({ name: "users", data: users });
+						
+					// 	groups.length &&
+					// 		this.suggestions.push({ name: "groups", data: groups });
+					// });
+
+					const usersPromise = ForumService.getAllUsers()
+					.then(res => {
 						this.suggestions = [];
 						this.selected = null;
 
-						let userData = [];
-						let groupData = [];
+						let response = res.data.data;
 
-						for(let i in values[0].data.data) {
-							userData.push(values[0].data.data[i].attributes);
+						let userData = [];
+
+						for(let i in response) {
+							userData.push(response[i].attributes);
 						}
-						/*for(let j in values[1].data.data) {
-							//groupData.push(values[1].data.data[j].attributes);
-						}*/
 
 						const users = this.filterResults(userData, val, "username");
-						//const groups = this.filterResults(groupData, val, "namePlural");
-						  
+
 						users.length &&
 							this.suggestions.push({ name: "users", data: users });
-						
-						/*groups.length &&
-							this.suggestions.push({ name: "groups", data: groups });*/
 					});
 				}, this.debounceMilliseconds);
 			},
