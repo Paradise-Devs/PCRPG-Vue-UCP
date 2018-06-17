@@ -1,17 +1,21 @@
 #autosuggest {
+    &.is-invalid .form-control {
+        border: 2px solid $red;
+        color: $red;
+        outline: none;
+    }
+
     .form-control:focus {
-        border-radius: 0px 0px 4px 4px;
+        border-radius: 4px 4px 0 0;
         background-color: $gray-active;
     }
     .autosuggest__results {
         &-container {
             position: absolute;
             background-color: $gray-active;
-            bottom: 36px;
             z-index: 9;
-            left: 0;
             width: 100%;
-            border-radius: 4px 4px 0 0;
+            border-radius: 0 0 4px 4px;
 
             ul:not(:last-child) {
                 margin-bottom: 10px;

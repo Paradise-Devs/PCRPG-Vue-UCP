@@ -24,8 +24,15 @@
 
     fieldset {
         textarea.is-invalid + .invalid-feedback {
-            display: block;
-            text-align: right;
+            display: inline-block;
+            float: right;
+            max-width: 266px;
+        }
+
+        textarea.is-invalid + .invalid-feedback + .form-text {
+            display: inline-block;
+            float: left;
+            width: 300px;
         }
     }
 }

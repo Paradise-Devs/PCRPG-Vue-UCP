@@ -22,7 +22,9 @@
 						:sectionConfigs="sugSecConfigs"
 						:renderSuggestion="sugRendering"
 						:getSuggestionValue="sugValue"
+						:class="{ 'is-invalid': errorUser }"
 					/>
+					<div class="invalid-feedback" v-show="errorUser">{{ errorUser }}</div>
 				</b-form-group>
 				<b-form-group 
 					description="Você pode utilizar <a href='http://commonmark.org/help/' target='_blank'>Markdown</a> para formatar o seu texto"
@@ -42,7 +44,7 @@
 					<b-button variant="primary" type="submit" 
 						:disabled="
 							sendingMessage || errors.has('mensagem') || errors.has('assunto') ||
-							mensagem.length === 0 || assunto.length === 0
+							mensagem.length === 0 || assunto.length === 0 || errorUser
 						"
 					>
 						Enviar
@@ -58,7 +60,8 @@
 	import Vue from 'vue';
 	import { store } from "@/vuex/store";
 	import MessagingService from "@/services/messaging";
-	import ForumService from '@/services/forum'
+	import ForumService from '@/services/forum';
+	import ServerService from '@/services/server';
 	import marked from "marked";
 	import moon from 'vue-spinner/src/MoonLoader.vue';
 	import { VueAutosuggest } from "vue-autosuggest";
@@ -70,27 +73,28 @@
 				user: store.state.user,
 				mensagem: "",
 				assunto: "",
-				destinatario: "",
+				dest: "",
 				sendingMessage: false,
 				errorUser: null,
 
 				//auto suggest settings
 				timeout: null,
       			debounceMilliseconds: 50,
-				selected: null,
 				suggestions: [],
 				sugProps: {
 					id: "autocomp",
 					onInputChange: this.getData,
 					placeholder: "Destinatário",
-					name: "destinatario"
+					name: "destinatario",
+					disabled: this.sendingMessage
 				},
 				sugSecConfigs: {
 					users: {
 						limit: 3,
 						label: "Usuários",
 						onSelected: selected => {
-							this.selected = selected.username;
+							this.errorUser = null;
+							this.dest = selected.item.username;
 						}
 					},
 					groups: {
@@ -112,15 +116,35 @@
 			SendMessage: function() {
 				this.sendingMessage = true;
 
-				MessagingService.sendMessage(this.user.username, this.destinatario, this.assunto, this.mensagem)
-				.then(res => {
+				if(this.dest.toLowerCase() === this.user.username.toLowerCase()) {
+					this.errorUser = "Você não pode enviar mensagem para você mesmo."
 					this.sendingMessage = false;
-				})
-				.catch(error => {
-					console.log(error);
-				});
+				} else {
+					ServerService.getPlayerData(this.dest)
+					.then(res => {
+						if(res === null) {
+							this.errorUser = "Usuário não existe."
+							this.sendingMessage = false;
+						} else {
+							MessagingService.sendMessage(this.user.username, this.dest, this.assunto, this.mensagem)
+							.then(res => {
+								this.sendingMessage = false;
+								console.log('sucesso');
+							})
+							.catch(error => {
+								console.log(error);
+							});
+						}
+					})
+					.catch(err => {
+						console.log(err);
+					});
+				}
 			},
 			getData: function(val) {
+				if(this.errorUser) { this.errorUser = null; }
+				this.dest = val;
+
 				clearTimeout(this.timeout);
       			this.timeout = setTimeout(() => {
 					const usersPromise = ForumService.getAllUsers();
@@ -136,9 +160,9 @@
 						for(let i in values[0].data.data) {
 							userData.push(values[0].data.data[i].attributes);
 						}
-						for(let j in values[1].data.data) {
+						/*for(let j in values[1].data.data) {
 							//groupData.push(values[1].data.data[j].attributes);
-						}
+						}*/
 
 						const users = this.filterResults(userData, val, "username");
 						//const groups = this.filterResults(groupData, val, "namePlural");
@@ -154,7 +178,10 @@
 			filterResults: function(data, text, field) {
 				let e = data.filter(item => {
 					if (item[field].toLowerCase().indexOf(text.toLowerCase()) > -1) {
+						this.errorUser = null;
 						return item[field];
+					} else {
+						this.errorUser = "Usuário não existe."
 					}
 				}).sort();
 
