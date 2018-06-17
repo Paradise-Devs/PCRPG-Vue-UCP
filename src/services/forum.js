@@ -21,6 +21,9 @@ export default {
     getAllUsers() {
         return axios.get(baseUri + 'users', { headers: auth });
     },
+    getAllGroups() {
+        return axios.get(baseUri + 'groups', { headers: auth });
+    },
     getTags() {
         return axios.get(baseUri + 'tags');
     },
