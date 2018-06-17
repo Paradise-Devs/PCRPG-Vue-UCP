@@ -40,7 +40,7 @@
         },
         computed: {
             sortedMessages: function() {
-                return this.messages.sort((a, b) => new Date(a.sendDate).getTime() + new Date(b.sendDate).getTime());
+                return this.messages.sort((a, b) => new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
             }
         },
         methods: {
