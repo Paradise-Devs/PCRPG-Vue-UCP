@@ -14,7 +14,7 @@
 				<hero/>
 			</header>
 			<router-view/>
-			<notifications group="profileConfig" position="bottom left"/>
+			<notifications group="main" position="bottom right"/>
 			<appfooter/>
 		</div>
 	</div>

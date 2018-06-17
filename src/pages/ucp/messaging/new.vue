@@ -76,6 +76,7 @@
 				dest: "",
 				sendingMessage: false,
 				errorUser: null,
+				test: 'testete',
 
 				//auto suggest settings
 				timeout: null,
@@ -129,7 +130,14 @@
 							MessagingService.sendMessage(this.user.username, this.dest, this.assunto, this.mensagem)
 							.then(res => {
 								this.sendingMessage = false;
-								console.log('sucesso');
+								this.$router.push(this.$route.query.redirect || 'ver/' + res.data.message);
+								this.$notify({
+									group: 'main',
+									title: 'Mensagem enviada com sucesso!',
+									text: 'Você deve receber uma notificação assim que sua mensagem for respondida.',
+									type: 'success',
+									duration: 5000
+								});
 							})
 							.catch(error => {
 								console.log(error);
