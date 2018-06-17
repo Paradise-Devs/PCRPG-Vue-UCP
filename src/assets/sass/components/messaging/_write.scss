@@ -16,8 +16,16 @@
             }
         }
 
-        .submit {
+        .btn-primary {
+            min-width: 148px;
             float: right;
+        }
+    }
+
+    fieldset {
+        textarea.is-invalid + .invalid-feedback {
+            display: block;
+            text-align: right;
         }
     }
 }
