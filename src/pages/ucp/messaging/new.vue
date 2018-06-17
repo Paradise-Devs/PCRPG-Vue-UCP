@@ -76,7 +76,6 @@
 				dest: "",
 				sendingMessage: false,
 				errorUser: null,
-				test: 'testete',
 
 				//auto suggest settings
 				timeout: null,
