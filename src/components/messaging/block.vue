@@ -2,8 +2,8 @@
     <div class="messaging__list">
         <div v-if="messages.length > 0">
             <paginate name="messages" :list="messages" :per="5" class="list">
-                <li v-for="(msg, index) in paginated('messages')" :key="index">
-                    <message :msg="msg" />
+                <li v-for="(msg, index) in paginated('messages')" :key="index" @click="getSelectedElements">
+                    <message :msg="msg"/>
                 </li>
             </paginate>
             <paginate-links
@@ -35,6 +35,21 @@
                 selected: [],
                 paginate: ['messages']
 			}
+        },
+        methods: {
+            getSelectedElements: function (event) {
+                if(!event.target.classList.contains('message--selected')) {
+                    event.target.classList.add('message--selected');
+                } else {
+                    event.target.classList.remove('message--selected');
+                }
+
+                let allMessages = document.getElementsByClassName('message--selected');
+                this.selected = [];
+                for(let i = 0; i < allMessages.length; i++) {
+                    this.selected.push(allMessages[i].dataset.msgid);
+                }
+            }
         },
         components: {
             message

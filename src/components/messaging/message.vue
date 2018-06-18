@@ -2,8 +2,8 @@
     <div 
         class="message" 
         :class="{ 'message--unreaded': !msg.isRead, 'message--selected': msg.selected }"
-        @click="$set(msg, 'selected', !msg.selected)"
         @dblclick="openMessage(msg)"
+        :data-msgid="msg._id"
     >
         <div class="avatar">
             <img :src="sender.avatar">
@@ -42,7 +42,6 @@
             },
         },
         mounted() {
-            console.log(this.msg.sender.username);
             ForumService.getUserData(this.msg.sender.username)
             .then(user => {
                 this.sender.username = user.data.data.attributes.username;
