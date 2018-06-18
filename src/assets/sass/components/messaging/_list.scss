@@ -87,4 +87,11 @@
             font-size: 18px;
         }
     }
+
+    .deleteMessagesBtn {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        z-index: 9 !important;
+    }
 }

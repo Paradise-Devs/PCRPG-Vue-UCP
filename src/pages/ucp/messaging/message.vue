@@ -98,7 +98,6 @@
                     MessagingService.deleteMessage(e)
                     .then(res => {
                         this.$router.push(this.$route.query.redirect || '/ucp/mensagens');
-                        console.log(res);
                     })
                     .catch(error => {
                         console.log(error.response);
