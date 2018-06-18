@@ -5,11 +5,11 @@
             <b-col md="12" sm="12" class="message__buttons">
                 <router-link to="/ucp/mensagens" class="router-link btn btn-secondary">Voltar para as mensagens</router-link>
                 <div class="right">
-                    <router-link :to="'/ucp/mensagens/responder/' + message._id" class="router-link btn btn-primary">Responder</router-link>
                     <b-btn-group>
                         <b-button variant="secondary" @click="confirmDelete()"><icon :icon="['fas', 'trash-alt']"/> Deletar</b-button>
                         <!-- <b-button variant="secondary"><icon :icon="['fas', 'exclamation-triangle']"/> Reportar</b-button> -->
                     </b-btn-group>
+                    <router-link :to="'/ucp/mensagens/responder/' + message._id" class="router-link btn btn-primary">Responder</router-link>
                 </div>
             </b-col>
             <b-col md="12" sm="12" class="message__block">
