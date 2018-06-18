@@ -27,6 +27,17 @@ export default {
 		);
 	},
 
+	replyMessage(from, to, subject, body, msgid) {
+		let e = new Date();
+		let date = e.toISOString();
+
+		return axios.post(
+			baseUri + "send",
+			{ from: from, to: to, subject: subject, body: body, sendDate: date, reply: msgid },
+			{ headers: auth }
+		);
+	},
+
 	//get messages
 	getMessageData(msgid) {
 		return axios.get(baseUri + msgid, { headers: auth });
