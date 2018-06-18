@@ -33,4 +33,25 @@
             }
         }
     }
+
+    .card {
+        margin-top: 24px;
+        background-color: $gray-hover;
+        position: relative;
+        text-align: left;
+        border: 2px dashed $gray-dark;
+
+        &-body {
+            padding: 10px 15px;
+
+            ul {
+                list-style-type: disc;
+                padding: 0 20px;
+
+                li {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
 }

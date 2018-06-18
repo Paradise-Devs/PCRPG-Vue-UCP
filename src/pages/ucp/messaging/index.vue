@@ -10,6 +10,12 @@
 						<li class="menu__item" :class="{'menu__item--active': btnActivated == 2}"  @click="getOutbox">Caixa de saída</li>
 						<li class="menu__item" :class="{'menu__item--active': btnActivated == 3}"  @click="getTrashbox">Lixeira</li>
 					</ul>
+                    <b-card>
+                        <ul>
+                            <li>Para ler uma mensagem, basta dar <b>2 cliques</b> na mensagem desejada.</li>
+                            <li>Para deletar uma ou mais mensagens, basta dar <b>1 clique</b> na mensagem desejada e clicar em deletar</li>
+                        </ul>
+                    </b-card>
 				</div>
 			</b-col>
 			<b-col md="9" sm="12" class="column column--right">
