@@ -3,6 +3,7 @@
         class="message" 
         :class="{ 'message--unreaded': !msg.isRead, 'message--selected': msg.selected }"
         @dblclick="openMessage(msg)"
+        @click="openMobMessage(msg)"
         :data-msgid="msg._id"
     >
         <div class="avatar">
@@ -39,6 +40,11 @@
         methods: {
             openMessage: function(msg) {
                 this.$router.push(this.$route.query.redirect || 'mensagens/ver/' + msg._id);
+            },
+            openMobMessage: function(msg) {
+                if(window.innerWidth < 767) {
+                    this.$router.push(this.$route.query.redirect || 'mensagens/ver/' + msg._id);
+                }
             },
         },
         mounted() {
