@@ -16,6 +16,7 @@
         <div class="empty" v-else>
             <h3>Nenhuma mensagem encontrada</h3>
         </div>
+        <b-button variant="danger" @click="confirmDelete()" class="deleteMessagesBtn"><icon :icon="['fas', 'trash-alt']"/> Deletar {{ selected.length }} <span v-if="selected.length == 1">mensagem</span><span v-else>mensagens</span></b-button>
     </div>
 </template>
 
@@ -30,24 +31,24 @@
         },
         data() {
 			return {
-                userAvatar: null,
-                userName: null,
                 selected: [],
                 paginate: ['messages']
 			}
         },
         methods: {
-            getSelectedElements: function (event) {
-                if(!event.target.classList.contains('message--selected')) {
-                    event.target.classList.add('message--selected');
-                } else {
-                    event.target.classList.remove('message--selected');
-                }
+            getSelectedElements: function (el) {
+                if(el.target.classList.contains('message')) {
+                    if(!el.target.classList.contains('message--selected')) {
+                        el.target.classList.add('message--selected');
+                    } else {
+                        el.target.classList.remove('message--selected');
+                    }
 
-                let allMessages = document.getElementsByClassName('message--selected');
-                this.selected = [];
-                for(let i = 0; i < allMessages.length; i++) {
-                    this.selected.push(allMessages[i].dataset.msgid);
+                    let allMessages = document.getElementsByClassName('message--selected');
+                    this.selected = [];
+                    for(let i = 0; i < allMessages.length; i++) {
+                        this.selected.push(allMessages[i].dataset.msgid);
+                    }
                 }
             }
         },
