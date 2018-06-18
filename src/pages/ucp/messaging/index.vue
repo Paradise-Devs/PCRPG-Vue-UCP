@@ -22,7 +22,7 @@
 
 <script>
 	import Vue from 'vue';
-    import messagingList from '@/components/messaging/list'
+    import messagingList from '@/components/messaging/block'
 
     import loader from 'vue-spinner/src/MoonLoader.vue'
     

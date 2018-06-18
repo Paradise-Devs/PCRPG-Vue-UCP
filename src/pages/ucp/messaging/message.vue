@@ -15,11 +15,11 @@
             <b-col md="12" sm="12" class="message__block">
                 <div class="message__header">
                     <div class="avatar">
-                        <img src="https://forum.pc-rpg.com.br/assets/avatars/fd5jikfxjrpo4tx4.png">
+                        <img :src="userAvatar">
                     </div>
                     <div class="details">
                         <h3 class="title">{{ message.subject }}</h3>
-                        <span class="info">Enviado por <b>{{ message.sender.username }}</b> {{ message.sendDate | moment }} atrás.</span>
+                        <span class="info">Enviado por <b>{{ userName }}</b> {{ message.sendDate | moment }} atrás.</span>
                     </div>
                 </div>
                 <div class="message__content">
@@ -38,6 +38,7 @@
 
 <script>
     import MessagingService from '@/services/messaging'
+    import ForumService from '@/services/forum'
     import loader from 'vue-spinner/src/MoonLoader.vue'
     import moment from 'moment';
     import marked from 'marked';
@@ -47,6 +48,8 @@
     export default {
         data() {
             return {
+                userAvatar: null,
+                userName: null,
                 message: [ ],
                 quote: null,
                 loading: true
@@ -56,6 +59,15 @@
             MessagingService.getMessageData(this.$route.params.msgid)
             .then(response => {
                 this.message = response.data;
+
+                ForumService.getUserData(this.message.sender.username)
+                .then(user => {
+                    this.userAvatar = user.data.data.attributes.avatarUrl;
+                    this.userName = user.data.data.attributes.username;
+                })
+
+                console.log(this.userAvatar);
+
                 if(this.message.reply) {
                     MessagingService.getMessageData(this.message.reply)
                     .then(res => {
