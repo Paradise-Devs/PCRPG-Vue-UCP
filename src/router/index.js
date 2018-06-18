@@ -25,24 +25,26 @@ Vue.use(Router);
 // routes
 export default new Router({
 	routes: [
-		{ 	path: '/', 									component: IndexView },
-		{ 	path: '/dev', 								component: DevelopmentView },
-		{ 	path: '/ucp', 								component: UcpView,
+		{ path: '/', name: 'Início', component: IndexView },
+		{ path: '/dev', name: 'Desenvolvimento', component: DevelopmentView },
+		{
+			path: '/ucp', name: 'UCP', component: UcpView,
 			children: [
-				{ 	path: '', 							component: UcpIndexView },
-				{ 	path: 'configuracoes', 				component: UcpSettingsView },
-				{ 	path: 'mensagens', 					component: UcpMessagesView,
+				{ path: '', name: 'Início', component: UcpIndexView },
+				{ path: 'configuracoes', name: 'Configurações', component: UcpSettingsView },
+				{
+					path: 'mensagens', name: 'Mensagens', component: UcpMessagesView,
 					children: [
-						{ 	path: '', 					component: UcpMessagesIndexView },
-						{ 	path: 'ver/:msgid', 			component: UcpMessageDetailsView },
-						{ 	path: 'nova', 				component: UcpNewMessageView },
-						{ 	path: 'responder/:msgid', 	component: UcpReplyMessageView },
+						{ path: '', name: 'Mensagens', component: UcpMessagesIndexView },
+						{ path: 'ver/:msgid', name: 'Mensagens', component: UcpMessageDetailsView },
+						{ path: 'nova', name: 'Mensagens', component: UcpNewMessageView },
+						{ path: 'responder/:msgid', name: 'Mensagens', component: UcpReplyMessageView },
 					]
 				},
-				{ 	path: 'perfil', 					component: UcpProfileView },
+				{ path: 'perfil', component: UcpProfileView },
 			]
 		},
-		{ 	path: '/jogador/:username', 				component: UserProfileView },
-		{ 	path: '*', 									component: NotFoundView },
+		{ path: '/jogador/:username', component: UserProfileView },
+		{ path: '*', component: NotFoundView },
 	]
 })
