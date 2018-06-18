@@ -22,7 +22,15 @@
                         <span class="info">Enviado por <b>{{ message.sender.username }}</b> {{ message.sendDate | moment }} atrás.</span>
                     </div>
                 </div>
-                <div v-html="marked" class="message__content markdown"></div>
+                <div class="message__content">
+                    Em resposta a sua mensagem anterior: 
+                    <div class="oldmessage" v-if="quote">
+                        <span class="title">{{ quote.subject }}</span>
+                        <div class="markdown" v-html="oldMarked" />
+                    </div>
+                    <hr />
+                    <div v-html="marked" class="message__content markdown" />
+                </div>
             </b-col>
         </b-row>
     </b-container>
@@ -40,6 +48,7 @@
         data() {
             return {
                 message: [ ],
+                quote: null,
                 loading: true
             }
         },
@@ -47,13 +56,13 @@
             MessagingService.getMessageData(this.$route.params.msgid)
             .then(response => {
                 this.message = response.data;
-                MessagingService.markMessageAsRead(this.message._id)
-                .then(res => {
-                    this.loading = false;
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+                if(this.message.reply) {
+                    MessagingService.getMessageData(this.message.reply)
+                    .then(res => {
+                        this.quote = res.data;
+                    })
+                }
+                this.markAsRead(this.message._id);
             })
             .catch(error => {
                 console.log(error);
@@ -63,6 +72,9 @@
         computed: {
             marked: function() {
                 return marked(this.message.body, { sanitize: true });
+            },
+            oldMarked: function() {
+                return marked(this.quote.body, { sanitize: true });
             }
         },
         methods: {
@@ -80,6 +92,15 @@
                         console.log(error.response);
                     })
                 }
+            },
+            markAsRead: function(msgid) {
+                MessagingService.markMessageAsRead(msgid)
+                .then(res => {
+                    this.loading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
             }
         },
         filters: {

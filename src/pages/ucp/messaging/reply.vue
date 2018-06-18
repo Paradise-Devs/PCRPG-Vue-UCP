@@ -72,7 +72,7 @@
 
 				let title = this.originalTitle.replace('Re: ', '');
 
-                MessagingService.sendMessage(this.user.username, this.originalPoster, 'Re: ' + title, this.mensagem)
+                MessagingService.replyMessage(this.user.username, this.originalPoster, 'Re: ' + title, this.mensagem, this.$route.params.msgid)
                 .then(res => {
                     this.sendingMessage = false;
                     this.$router.push(this.$route.query.redirect || '/ucp/mensagens/ver/' + res.data.message);
