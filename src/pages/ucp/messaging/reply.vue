@@ -69,7 +69,10 @@
 		methods: {
 			SendMessage: function() {
 				this.sendingMessage = true;
-                MessagingService.sendMessage(this.user.username, this.originalPoster, 'Re: ' + this.originalTitle, this.originalMessage)
+
+				let title = this.originalTitle.replace('Re: ', '');
+
+                MessagingService.sendMessage(this.user.username, this.originalPoster, 'Re: ' + title, this.mensagem)
                 .then(res => {
                     this.sendingMessage = false;
                     this.$router.push(this.$route.query.redirect || '/ucp/mensagens/ver/' + res.data.message);
