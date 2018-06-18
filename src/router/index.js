@@ -41,10 +41,10 @@ export default new Router({
 						{ path: 'responder/:msgid', name: 'Mensagens', component: UcpReplyMessageView },
 					]
 				},
-				{ path: 'perfil', component: UcpProfileView },
+				{ path: 'perfil', name: 'Perfil', component: UcpProfileView },
 			]
 		},
-		{ path: '/jogador/:username', component: UserProfileView },
+		{ path: '/jogador/:username', name: 'Perfil', component: UserProfileView },
 		{ path: '*', component: NotFoundView },
 	]
 })

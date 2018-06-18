@@ -38,11 +38,11 @@
             border-bottom: 0;
             flex-grow: 1;
             display: inline-flex;
-        }
 
-        &:hover:not(.router-link-active) {
-            background-color: $gray-hover;
-            color: $gray;
+            &:hover:not(.router-link-active) {
+                background-color: $gray-hover;
+                color: $gray;
+            }
         }
 
         &.current__route {
