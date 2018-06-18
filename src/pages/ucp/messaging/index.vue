@@ -10,7 +10,7 @@
 						<li class="menu__item" :class="{'menu__item--active': btnActivated == 2}"  @click="getOutbox">Caixa de saída</li>
 						<li class="menu__item" :class="{'menu__item--active': btnActivated == 3}"  @click="getTrashbox">Lixeira</li>
 					</ul>
-                    <b-card>
+                    <b-card v-if="!isMobile">
                         <ul>
                             <li>Para ler uma mensagem, basta dar <b>2 cliques</b> na mensagem desejada.</li>
                             <li>Para deletar uma ou mais mensagens, basta dar <b>1 clique</b> na mensagem desejada e clicar em deletar</li>
@@ -47,6 +47,10 @@
         computed: {
             sortedMessages: function() {
                 return this.messages.sort((a, b) => new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
+            },
+            isMobile: function() {
+                if(window.innerWidth < 768) { return true; } 
+                else { return false; }
             }
         },
         methods: {
