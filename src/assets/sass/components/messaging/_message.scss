@@ -3,6 +3,17 @@
         padding: 0;
         margin: 0 0 24px;
 
+        .btn {
+            max-height: 36px;
+            &-back svg {
+                font-size: 18px;
+
+                @include tablet {
+                    font-size: inherit;
+                }
+            }
+        }
+
         .right {
             padding: 0;
             float: right;
@@ -11,7 +22,9 @@
                 margin-right: 20px;
 
                 svg {
-                    margin-right: 5px;
+                    @include tablet {
+                        margin-right: 5px;
+                    }
                 }
             }
         }

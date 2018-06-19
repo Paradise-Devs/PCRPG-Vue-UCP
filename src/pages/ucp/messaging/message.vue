@@ -3,10 +3,10 @@
         <loader :loading="loading" color="#303846" size="60px"></loader>
         <b-row v-if="!loading" class="message">
             <b-col md="12" sm="12" class="message__buttons">
-                <router-link to="/ucp/mensagens" class="router-link btn btn-secondary">Voltar para as mensagens</router-link>
+                <router-link to="/ucp/mensagens" class="router-link btn btn-secondary btn-back"><span v-if="!isMobile">Voltar para as mensagens</span><span v-else><icon :icon="['fas', 'angle-left']"/></span></router-link>
                 <div class="right">
                     <b-btn-group>
-                        <b-button variant="secondary" @click="confirmDelete()"><icon :icon="['fas', 'trash-alt']"/> Deletar</b-button>
+                        <b-button variant="secondary" @click="confirmDelete()"><icon :icon="['fas', 'trash-alt']"/><span v-if="!isMobile"> Deletar</span></b-button>
                         <!-- <b-button variant="secondary"><icon :icon="['fas', 'exclamation-triangle']"/> Reportar</b-button> -->
                     </b-btn-group>
                     <router-link :to="'/ucp/mensagens/responder/' + message._id" class="router-link btn btn-primary">Responder</router-link>
@@ -43,7 +43,7 @@
     import moment from 'moment';
     import marked from 'marked';
 
-    import { trashAlt, exclamationTriangle } from '@fortawesome/fontawesome-free-solid';
+    import { trashAlt, exclamationTriangle, angleLeft } from '@fortawesome/fontawesome-free-solid';
 
     export default {
         data() {
@@ -87,6 +87,10 @@
             },
             oldMarked: function() {
                 return marked(this.quote.body, { sanitize: true });
+            },
+            isMobile: function() {
+                if(window.innerWidth < 768) { return true; } 
+                else { return false; }
             }
         },
         methods: {
