@@ -20,7 +20,7 @@
 			</b-col>
 			<b-col md="9" sm="12" class="column column--right">
                 <loader  :loading="loading" color="#303846" size="60px"></loader>
-				<messagingList :messages="sortedMessages" v-if="!loading"/>
+				<messagingList :messages="sortedMessages" :clickable="messagesClickable" v-if="!loading" />
 			</b-col>
 		</b-row>
 	</b-container>
@@ -40,6 +40,7 @@
 			return {
                 user: store.state.user,
                 messages: [ ],
+                messagesClickable: true,
                 btnActivated: 1,
                 loading: true
             }
@@ -63,6 +64,7 @@
                 MessagingService.getMessagesTo(this.user.username)
                 .then(res =>{
                     this.messages = res.data;
+                    this.messagesClickable = true;
                     this.loading = false;
                 })
                 .catch(err => {
@@ -79,6 +81,7 @@
                 MessagingService.getMessagesFrom(this.user.username)
                 .then(res =>{
                     this.messages = res.data;
+                    this.messagesClickable = true;
                     this.loading = false;
                 })
                 .catch(err => {
@@ -95,6 +98,7 @@
                 MessagingService.getDeletedMessages(this.user.username)
                 .then(res =>{
                     this.messages = res.data;
+                    this.messagesClickable = false;
                     this.loading = false;
                 })
                 .catch(err => {

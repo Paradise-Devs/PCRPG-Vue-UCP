@@ -28,17 +28,19 @@
 
     export default {
         props: {
-            messages: Array
+            messages: Array,
+            clickable: Boolean
         },
         data() {
 			return {
                 selected: [],
+                clickDisabled: false,
                 paginate: ['messages']
 			}
         },
         methods: {
             getSelectedElements: function (el) {
-                if(el.target.classList.contains('message')) {
+                if(el.target.classList.contains('message') && this.clickable) {
                     if(!el.target.classList.contains('message--selected')) {
                         el.target.classList.add('message--selected');
                     } else {
@@ -55,7 +57,6 @@
             confirmDelete: function() {
                 var r = confirm("Você tem certeza que deseja deletar? A mensagem será movida para a pasta lixeira.");
                 if (r == true) {
-                    console.log(this.selected);
                     MessagingService.deleteMessage(this.selected)
                     .then(res => {
                         this.$router.push(this.$route.query.redirect || '/ucp/mensagens');
@@ -65,7 +66,7 @@
                         console.log(error.response);
                     })
                 }
-            },
+            }
         },
         components: {
             message
