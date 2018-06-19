@@ -23,13 +23,15 @@
                     </div>
                 </div>
                 <div class="message__content">
-                    Em resposta a sua mensagem anterior: 
                     <div class="oldmessage" v-if="quote">
-                        <span class="title">{{ quote.subject }}</span>
-                        <div class="markdown" v-html="oldMarked" />
+                        Em resposta a sua mensagem anterior:
+                        <div class="quote">
+                            <span class="title">{{ quote.subject }}</span>
+                            <div class="markdown" v-html="oldMarked" />
+                        </div>
                     </div>
-                    <hr />
-                    <div v-html="marked" class="message__content markdown" />
+                    <hr class="oldmessage__separator"/>
+                    <div v-html="marked" class="current__message markdown" />
                 </div>
             </b-col>
         </b-row>
