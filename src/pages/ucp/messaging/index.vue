@@ -113,6 +113,11 @@
                 console.log(err);
                 this.loading = false;
             })
+
+            let e = this;
+            this.$root.$on('reloadInbox', function() {
+				e.getInbox();
+			});
         },
 		components: {
             messagingList,

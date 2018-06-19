@@ -59,6 +59,7 @@
                     MessagingService.deleteMessage(this.selected)
                     .then(res => {
                         this.$router.push(this.$route.query.redirect || '/ucp/mensagens');
+                        this.$root.$emit('reloadInbox');
                     })
                     .catch(error => {
                         console.log(error.response);
