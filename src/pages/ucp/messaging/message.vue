@@ -67,9 +67,7 @@
                     this.userAvatar = user.data.data.attributes.avatarUrl;
                     this.userName = user.data.data.attributes.username;
                 })
-
-                console.log(this.userAvatar);
-
+                
                 if(this.message.reply) {
                     MessagingService.getMessageData(this.message.reply)
                     .then(res => {

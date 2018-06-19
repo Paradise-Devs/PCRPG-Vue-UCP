@@ -20,7 +20,15 @@
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
 							<div class="navbar__menu__user" v-else>
-								<b-dropdown no-caret right class="navbar__menu__user__info">
+								<b-dropdown no-caret right class="messages">
+									<template slot="button-content">
+										<icon :icon="['fas', 'comment-alt']"/>
+									</template>
+									<b-dropdown-item v-for="message in messagesNotReaded" :key="message._id" :to="{ path: '/ucp/mensagens/ver', params: { msgid: message._id }}" exact>
+										teste
+									</b-dropdown-item>
+								</b-dropdown>
+								<b-dropdown no-caret right class="profile">
 									<template slot="button-content">
 										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
@@ -99,13 +107,16 @@
 	import signin from '@/components/auth/SignIn';
 	import signup from '@/components/auth/SignUp';
 
-	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench } from '@fortawesome/fontawesome-free-solid';
+	import MessagingService from '@/services/messaging'
+
+	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench, commentAlt } from '@fortawesome/fontawesome-free-solid';
 
 	export default {
         data: () => {
             return {
 				user: store.state.user,
 				groups: [ ],
+				messagesNotReaded: [ ],
 				userLoggedIn: null,
 				scrolled: false,
 				value: 500,
@@ -209,6 +220,18 @@
 				};
 
 				tick();
+			},
+			getUserUnreadedMessages: function() {
+				MessagingService.getMessagesTo(this.user.username)
+				.then(res => {
+					for(let i in res.data) {
+						if(!res.data[i].isRead) {
+							this.messagesNotReaded.push(res.data[i]);
+						}
+					}
+
+					console.log(this.messagesNotReaded);
+				})
 			}
         },
 		watch:{
@@ -244,6 +267,8 @@
 			} else {
 				this.userLoggedIn = true;
 			}
+
+			if(this.userLoggedIn) { this.getUserUnreadedMessages(); }
 
 			this.$root.$on('logout', function() {
 				store.dispatch('logout').then(() => {
