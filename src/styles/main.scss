@@ -30,6 +30,9 @@
 @import 'components/global/notifications';
 @import 'components/global/autocomplete';
 
+//Discord
+@import 'components/discord/block';
+
 //user profile
 @import 'components/user-profile/avatar';
 @import 'components/user-profile/char_card';
@@ -55,3 +58,6 @@
 @import 'components/messaging/list';
 @import 'components/messaging/formating';
 @import 'components/messaging/write';
+
+//last-discussions
+@import 'components/last-discussions/post';

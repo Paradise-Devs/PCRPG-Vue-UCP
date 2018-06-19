@@ -112,5 +112,5 @@
 </script>
 
 <style lang="scss">
-	@import './assets/sass/main.scss';
+	@import './styles/main.scss';
 </style>

@@ -34,8 +34,6 @@
 </script>
 
 <style lang="scss">
-	@import '../../assets/sass/main.scss';
-
 	.ucp.container {
 		min-height: 60.8vh;
 	}
