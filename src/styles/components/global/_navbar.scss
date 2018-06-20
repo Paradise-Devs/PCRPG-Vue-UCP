@@ -127,8 +127,7 @@
             list-style: none;
 
             .dropdown {
-                &.messages {
-
+                &.messages__dropdown {
                     &.show {
                         .btn:before {
                             display: inline-block;

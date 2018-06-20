@@ -20,12 +20,12 @@
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
 							<div class="navbar__menu__user" v-else>
-								<b-dropdown no-caret right class="messages">
+								<b-dropdown no-caret right class="messages__dropdown">
 									<template slot="button-content">
 										<icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
 										<span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
 									</template>
-									<msg-notification v-for="message in messagesNotReaded" :key="message._id" :msg="message" @click="refreshMessages"/>
+									<msg-notification v-for="message in messagesNotReaded" :key="message._id" :msg="message"/>
 									<div v-if="messagesNotReaded.length == 0" class="dropdown-item empty">
 										Não há mensagens não lidas
 									</div>
@@ -226,6 +226,7 @@
 				tick();
 			},
 			getUserUnreadedMessages: function() {
+				this.messagesNotReaded = [];
 				MessagingService.getMessagesTo(this.user.username)
 				.then(res => {
 					for(let i in res.data) {
@@ -234,13 +235,11 @@
 						}
 					}
 				})
-			},
-			refreshMessages: function() {
-				console.log('called');
 			}
         },
 		watch:{
 			$route (to, from){
+				this.getUserUnreadedMessages();
 				if(window.innerWidth < 768 && this.navOpened) {
 					this.closeMobNav();
 				}
@@ -275,16 +274,25 @@
 
 			if(this.userLoggedIn) { this.getUserUnreadedMessages(); }
 
+			let e = this;
+			this.$root.$on('refreshNotReadedMessages', function() {
+				let messagesDropdown = document.getElementsByClassName('show');
+				for(let i = 0; i < messagesDropdown.length; i++) {
+					messagesDropdown[i].classList.remove('show');
+				}
+				e.getUserUnreadedMessages();
+			});
+
 			this.$root.$on('logout', function() {
 				store.dispatch('logout').then(() => {
-					this.user = store.state.user;
-					this.$router.push(this.$route.query.redirect || '/');
-					this.userLoggedIn = false;
+					e.user = store.state.user;
+					e.$router.push(this.$route.query.redirect || '/');
+					e.userLoggedIn = false;
 					var navOverlay = document.getElementById("navOverlay");
 					navOverlay.style.display = 'none';
 					
 					if(window.innerWidth < 768) {
-						this.closeMobNav();
+						e.closeMobNav();
 					}
 				})
 			});

@@ -42,6 +42,7 @@
         methods: {
             openMessage: function(msg) {
                 this.$router.push(this.$route.query.redirect || '/ucp/mensagens/ver/' + msg._id);
+                this.$root.$emit('refreshNotReadedMessages');
             },
         },
         mounted() {
