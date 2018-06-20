@@ -44,7 +44,6 @@ export const store = new Vuex.Store({
 		getUserData: state => { return state.user; },
 		getUserID: state => { return state.user._id; },
 		getMasterToken: state => { return state.masterToken; },
-		getUpdateMasterToken: state => { return state.updateDataToken; }
 	}
 });
 

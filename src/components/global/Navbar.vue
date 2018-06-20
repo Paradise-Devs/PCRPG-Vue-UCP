@@ -25,7 +25,7 @@
 										<icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
 										<span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
 									</template>
-									<msg-notification v-for="message in messagesNotReaded" :key="message._id" :msg="message"/>
+									<msg-notification v-for="message in sortedMessages" :key="message._id" :msg="message"/>
 									<div v-if="messagesNotReaded.length == 0" class="dropdown-item empty">
 										Não há mensagens não lidas
 									</div>
@@ -114,6 +114,7 @@
 	import MessagingService from '@/services/messaging'
 
 	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench, commentAlt } from '@fortawesome/fontawesome-free-solid';
+import { setTimeout, setInterval } from 'timers';
 
 	export default {
         data: () => {
@@ -125,9 +126,15 @@
 				scrolled: false,
 				value: 500,
 				maxValue: 5000,
+				lastestMessage: null,
 				navOpened: false
             }
-        },
+		},
+		computed: {
+			sortedMessages: function() {
+                return this.messagesNotReaded.sort((a, b) => new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
+            },
+		},
         methods: {
             handleScroll: function () {
                 var scrollpos = window.scrollY;
@@ -237,6 +244,21 @@
 								this.messagesNotReaded.push(res.data[i]);
 							}
 						}
+
+						this.lastestMessage = this.messagesNotReaded.slice(-1).pop();
+						let lastestNotification = localStorage.getItem('lastestNotification');
+
+						if(lastestNotification != this.lastestMessage._id && lastestNotification != null) {
+							this.$notify({
+								group: 'main',
+								title: 'Você recebeu uma nova mensagem!',
+								text: '<b>' + this.lastestMessage.sender.username + '</b> te enviou uma mensagem.',
+								type: 'info',
+								duration: 8000
+							});
+						}
+						
+						localStorage.setItem('lastestNotification', this.lastestMessage._id);
 					}
 				})
 			}
@@ -301,6 +323,11 @@
 					}
 				})
 			});
+
+			setInterval(function() {
+				console.log('chamou');
+				e.getUserUnreadedMessages();
+			}, 5000);
 		},
         created() {
             window.addEventListener('scroll', this.handleScroll);
