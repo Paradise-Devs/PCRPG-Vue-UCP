@@ -126,7 +126,6 @@ import { setTimeout, setInterval } from 'timers';
 				scrolled: false,
 				value: 500,
 				maxValue: 5000,
-				lastestMessage: null,
 				navOpened: false
             }
 		},
@@ -245,20 +244,22 @@ import { setTimeout, setInterval } from 'timers';
 							}
 						}
 
-						this.lastestMessage = this.messagesNotReaded.slice(-1).pop();
-						let lastestNotification = localStorage.getItem('lastestNotification');
+						if(oldLeng < res.data.length) {
+							let lastestMessage = this.messagesNotReaded.slice(-1).pop();
+							let lastestNotification = localStorage.getItem('lastestNotification');
 
-						if(lastestNotification != this.lastestMessage._id && lastestNotification != null) {
-							this.$notify({
-								group: 'main',
-								title: 'Você recebeu uma nova mensagem!',
-								text: '<b>' + this.lastestMessage.sender.username + '</b> te enviou uma mensagem.',
-								type: 'info',
-								duration: 8000
-							});
+							if(lastestNotification != lastestMessage._id && lastestNotification != null) {
+								this.$notify({
+									group: 'main',
+									title: 'Você recebeu uma nova mensagem!',
+									text: '<b>' + lastestMessage.sender.username + '</b> te enviou uma mensagem.',
+									type: 'info',
+									duration: 8000
+								});
+							}
+							
+							localStorage.setItem('lastestNotification', lastestMessage._id);
 						}
-						
-						localStorage.setItem('lastestNotification', this.lastestMessage._id);
 					}
 				})
 			}
