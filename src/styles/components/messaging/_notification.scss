@@ -25,6 +25,9 @@
             .title {
                 margin: 0;
                 font-size: 16px;
+                max-width: 95%;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .info {
