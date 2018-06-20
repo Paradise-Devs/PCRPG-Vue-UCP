@@ -128,29 +128,117 @@
 
             .dropdown {
                 &.messages {
+
+                    &.show {
+                        .btn:before {
+                            display: inline-block;
+                        }
+                    }
                     .btn {
                         width: 40px;
                         height: 40px;
                         border-radius: 100%;
+                        position: relative;
                         svg {
-                            font-size: 14px;
+                            font-size: 17px;
+                            @include center(absolute);
+                            top: 52%;
+
+                            &.active {
+                                color: $green;
+                                -webkit-animation: blink 2s infinite;
+                                -moz-animation: blink 2s infinite;
+                                -ms-animation: blink 2s infinite;
+                                -o-animation: blink 2s infinite;
+                                animation: blink 2s infinite;
+
+                                @keyframes blink {
+                                    0% { opacity: .6; }
+                                    50%   { opacity: 1; }
+                                    100% { opacity: .6; }
+                                }
+                            }
+                        }
+
+                        &:before {
+                            width: 0;
+                            height: 0;
+                            content: "";
+                            position: absolute;
+                            left: 50%;
+                            -webkit-transform: translateX(-50%);
+                            transform: translateX(-50%);
+                            bottom: -10px;
+                            display: none;
+                            border-top: 15px solid transparent;
+                            border-left: 15px solid transparent;
+                            border-right: 15px solid transparent;
+                            border-bottom: 15px solid #0d0f11;
+                        }
+
+                        .number {
+                            z-index: 9;
+                            color: $black;
+                            font-size: 10px;
+                            @include center(absolute);
+                            top: 48%;
                         }
                     }
 
-                    .dropdown-menu {
-                        left: -103px !important;
-                        min-width: 250px;
-                        padding: 0;
+                    .dropdown {
+                        &-menu {
+                            left: -130px !important;
+                            width: 300px;
+                            padding: 0;
+                            max-height: 400px;
+                            overflow-y: auto;
 
-                        .dropdown-item {
-                            padding: 8px;
-                            &:first-child {
-                                border-radius: 4px 4px 0 0;
+                            &::-webkit-scrollbar-track {
+                                background-color: transparent;
+                                box-shadow: none;
                             }
+                    
+                            &::-webkit-scrollbar {
+                                background-color: transparent;
+                                width: 6px;
+                            }
+                    
+                            &::-webkit-scrollbar-thumb {
+                                background-color: $gray-dark;
+                                border: 0;
+                                padding: 8px;
+                            }
+                        }
+                        &-item {
+                            padding: 8px;
 
                             &:last-child {
                                 border-radius: 0 0 4px 4px;
                             }
+
+                            &.empty {
+                                text-align: center;
+                                padding-top: 15px;
+                                &:hover {
+                                    background-color: inherit;
+                                    cursor: default;
+                                    user-select: none;
+                                }
+                            }
+
+                            &.all {
+                                text-align: center;
+                                color: $blue;
+                                background-color: $gray-hover;
+
+                                &:hover {
+                                    color: $blue-hover !important;
+                                    background-color: $gray-dark;
+                                }
+                            }
+                        }
+                        &-divider {
+                            margin-bottom: 0;
                         }
                     }
                 }
@@ -195,7 +283,7 @@
                 &-menu {
                     transform: none !important;
                     left: -40px !important;
-                    top: 35px !important;
+                    top: 40px !important;
                     z-index: 1030;
                     min-width: 160px;
                     padding: 8px 0;

@@ -22,11 +22,14 @@
 							<div class="navbar__menu__user" v-else>
 								<b-dropdown no-caret right class="messages">
 									<template slot="button-content">
-										<icon :icon="['fas', 'comment-alt']"/>
+										<icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
+										<span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
 									</template>
-									<b-dropdown-item v-for="message in messagesNotReaded" :key="message._id" :to="{ path: '/ucp/mensagens/ver', params: { msgid: message._id }}" exact>
-										teste
-									</b-dropdown-item>
+									<msg-notification v-for="message in messagesNotReaded" :key="message._id" :msg="message" @click="refreshMessages"/>
+									<div v-if="messagesNotReaded.length == 0" class="dropdown-item empty">
+										Não há mensagens não lidas
+									</div>
+									<b-dropdown-item to="/ucp/mensagens" exact class="all">Ver todas as mensagens...</b-dropdown-item>
 								</b-dropdown>
 								<b-dropdown no-caret right class="profile">
 									<template slot="button-content">
@@ -106,6 +109,7 @@
 
 	import signin from '@/components/auth/SignIn';
 	import signup from '@/components/auth/SignUp';
+	import msgNotification from '@/components/messaging/notification';
 
 	import MessagingService from '@/services/messaging'
 
@@ -229,9 +233,10 @@
 							this.messagesNotReaded.push(res.data[i]);
 						}
 					}
-
-					console.log(this.messagesNotReaded);
 				})
+			},
+			refreshMessages: function() {
+				console.log('called');
 			}
         },
 		watch:{
@@ -300,7 +305,7 @@
             window.removeEventListener('scroll', this.handleScroll);
         },
 		components: {
-			signin, signup, store,
+			signin, signup, store, msgNotification
 		}
 	}
 
