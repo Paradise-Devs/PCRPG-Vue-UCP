@@ -303,13 +303,13 @@ import { setTimeout, setInterval } from 'timers';
 
 			let e = this;
 			this.$root.$on('refreshNotReadedMessages', function() {
-				let messagesDropdown = document.getElementsByClassName('show');
-				console.log(messagesDropdown);
-				for(let i = 0; i < messagesDropdown.length; i++) {
-					messagesDropdown[i].classList.remove('show');
-				}
 				e.getUserUnreadedMessages();
 			});
+
+			let messagesDropdown = document.getElementsByClassName('show');
+			for(let i = 0; i < messagesDropdown.length; i++) {
+				messagesDropdown[i].classList.remove('show');
+			}
 
 			this.$root.$on('logout', function() {
 				store.dispatch('logout').then(() => {
@@ -326,7 +326,6 @@ import { setTimeout, setInterval } from 'timers';
 			});
 
 			setInterval(function() {
-				console.log('chamou');
 				e.getUserUnreadedMessages();
 			}, 5000);
 		},
