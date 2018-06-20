@@ -21,6 +21,7 @@
 <script>
     import moment from 'moment';
     import ForumService from '@/services/forum'
+import { setTimeout } from 'timers';
 
     export default {
         props: {
@@ -41,7 +42,12 @@
 		},
         methods: {
             openMessage: function(msg) {
-                this.$router.push(this.$route.query.redirect || '/ucp/mensagens/ver/' + msg._id);
+                this.$router.push(this.$route.query.redirect || '/');
+                let e = this;
+                setTimeout(function() {
+                    e.$router.push(e.$route.query.redirect || '/ucp/mensagens/ver/' + msg._id);
+                });
+
                 this.$root.$emit('refreshNotReadedMessages');
             },
         },

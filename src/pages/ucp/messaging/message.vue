@@ -74,6 +74,7 @@
                         this.quote = res.data;
                     })
                 }
+
                 this.markAsRead(this.message._id);
             })
             .catch(error => {
@@ -112,6 +113,7 @@
                 MessagingService.markMessageAsRead(msgid)
                 .then(res => {
                     this.loading = false;
+                    this.$root.$emit('refreshNotReadedMessages');
                 })
                 .catch(error => {
                     console.log(error);

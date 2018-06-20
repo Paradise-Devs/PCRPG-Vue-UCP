@@ -226,12 +226,16 @@
 				tick();
 			},
 			getUserUnreadedMessages: function() {
-				this.messagesNotReaded = [];
+				let oldLeng = this.messagesNotReaded.length;
+
 				MessagingService.getMessagesTo(this.user.username)
 				.then(res => {
-					for(let i in res.data) {
-						if(!res.data[i].isRead) {
-							this.messagesNotReaded.push(res.data[i]);
+					if(oldLeng != res.data.length) {
+						this.messagesNotReaded = [];
+						for(let i in res.data) {
+							if(!res.data[i].isRead) {
+								this.messagesNotReaded.push(res.data[i]);
+							}
 						}
 					}
 				})
@@ -277,6 +281,7 @@
 			let e = this;
 			this.$root.$on('refreshNotReadedMessages', function() {
 				let messagesDropdown = document.getElementsByClassName('show');
+				console.log(messagesDropdown);
 				for(let i = 0; i < messagesDropdown.length; i++) {
 					messagesDropdown[i].classList.remove('show');
 				}
