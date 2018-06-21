@@ -20,7 +20,8 @@
 			</b-col>
 			<b-col md="9" sm="12" class="column column--right">
                 <loader  :loading="loading" color="#303846" size="60px"></loader>
-				<messagingList :messages="sortedMessages" :clickable="messagesClickable" v-if="!loading" />
+				<messagingList :messages="sortedInOutMessages" :clickable="messagesClickable" v-if="!loading && (btnActivated == 1 || btnActivated == 2)" />
+                <messagingList :messages="sortedTrashMessages" :clickable="messagesClickable" v-if="!loading && btnActivated == 3" />
 			</b-col>
 		</b-row>
 	</b-container>
@@ -46,8 +47,11 @@
             }
         },
         computed: {
-            sortedMessages: function() {
+            sortedInOutMessages: function() {
                 return this.messages.sort((a, b) => new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
+            },
+            sortedTrashMessages: function() {
+                return this.messages.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
             },
             isMobile: function() {
                 if(window.innerWidth < 768) { return true; } 
@@ -105,7 +109,7 @@
                     console.log(err);
                     this.loading = false;
                 })
-            },
+            }
         },
         mounted() {
             MessagingService.getMessagesTo(this.user.username)
