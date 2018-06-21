@@ -244,21 +244,23 @@ import { setTimeout, setInterval } from 'timers';
 							}
 						}
 
-						if(oldLeng < res.data.length) {
-							let lastestMessage = this.messagesNotReaded.slice(-1).pop();
-							let lastestNotification = localStorage.getItem('lastestNotification');
+						if(this.messagesNotReaded.length > 0) {
+							if(oldLeng < res.data.length) {
+								let lastestMessage = this.messagesNotReaded.slice(-1).pop();
+								let lastestNotification = localStorage.getItem('lastestNotification');
 
-							if(lastestNotification != lastestMessage._id && lastestNotification != null) {
-								this.$notify({
-									group: 'main',
-									title: 'Você recebeu uma nova mensagem!',
-									text: '<b>' + lastestMessage.sender.username + '</b> te enviou uma mensagem.',
-									type: 'info',
-									duration: 8000
-								});
+								if(lastestNotification != lastestMessage._id && lastestNotification != null) {
+									this.$notify({
+										group: 'main',
+										title: 'Você recebeu uma nova mensagem!',
+										text: '<b>' + lastestMessage.sender.username + '</b> te enviou uma mensagem.',
+										type: 'info',
+										duration: 8000
+									});
+								}
+								
+								localStorage.setItem('lastestNotification', lastestMessage._id);
 							}
-							
-							localStorage.setItem('lastestNotification', lastestMessage._id);
 						}
 					}
 				})
