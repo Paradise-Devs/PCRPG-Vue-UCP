@@ -1,0 +1,39 @@
+.notifications {
+    width: 350px !important;
+    bottom: 30px !important;
+    right: 30px !important;
+
+    .notification {
+        border-radius: 4px;
+        padding: 15px;
+        background-color: $gray-dark;
+        box-shadow: 0px 0px 10px rgba($color: $black, $alpha: .3);
+        border: 1px solid $gray-active;
+        border-right: 6px solid $blue;
+
+        &-wrapper {
+            overflow: inherit;
+        }
+
+        &-title {
+            font-size: 15px;
+            font-family: $font-regular;
+            font-weight: bold;
+            color: $blue;
+        }
+        
+        &-content {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+
+        &.success {
+            border-color: $green;
+            background-color: rgba($color: $green-lt, $alpha: .05);
+
+            .notification-title {
+                color: $green;
+            }
+        }
+    }
+}

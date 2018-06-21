@@ -1,0 +1,31 @@
+.page__ucp {
+    &--messaging {
+        .column {
+            &--left {
+                padding-left: 0;
+                padding-right: 0;
+
+                @include tablet {
+                    padding-left: 0;
+                    padding-right: 15px;
+                }
+            }
+
+            &--right {
+                padding-left: 0;
+                padding-right: 0;
+                
+                @include tablet {
+                    padding-left: 15px;
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+
+    &--message-details {
+        .column {
+            padding: 0;
+        }
+    }
+}
