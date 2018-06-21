@@ -6,8 +6,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
 	state: {
 		user: {},
-		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx; ',
-		updateDataToken: '4vvhw6rrkchEfUgnJLyGRc995ZVvB86PxxzYknUT'
+		masterToken: 'jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx; '
 	},
 	actions: {
 		setData({commit}, userdata) {
@@ -45,7 +44,6 @@ export const store = new Vuex.Store({
 		getUserData: state => { return state.user; },
 		getUserID: state => { return state.user._id; },
 		getMasterToken: state => { return state.masterToken; },
-		getUpdateMasterToken: state => { return state.updateDataToken; }
 	}
 });
 

@@ -13,6 +13,7 @@
 @import 'pages/user_profile';
 @import 'pages/ucp/index';
 @import 'pages/ucp/settings';
+@import 'pages/ucp/messaging';
 
 //global components
 @import 'components/global/blocks';
@@ -26,6 +27,11 @@
 @import 'components/global/modals';
 @import 'components/global/alert';
 @import 'components/global/pagination';
+@import 'components/global/notifications';
+@import 'components/global/autocomplete';
+
+//Discord
+@import 'components/discord/block';
 
 //user profile
 @import 'components/user-profile/avatar';
@@ -45,3 +51,14 @@
 
 //server-stats
 @import 'components/server-stats/block'; 
+
+//messaging
+@import 'components/messaging/message'; 
+@import 'components/messaging/menu'; 
+@import 'components/messaging/list';
+@import 'components/messaging/formating';
+@import 'components/messaging/write';
+@import 'components/messaging/notification';
+
+//last-discussions
+@import 'components/last-discussions/post';

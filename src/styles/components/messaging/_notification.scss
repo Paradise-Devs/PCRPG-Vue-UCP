@@ -1,0 +1,51 @@
+.notification__message {
+    cursor: pointer;
+    position: relative;
+    height: 105px;
+
+    &:not(:first-child) {
+        border-top: 1px solid $gray-dark;
+    }
+
+    .header {
+        .avatar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+    
+            img {
+                border-radius: 100%;
+                max-width: 30px;
+            }
+        }
+
+        .content {
+            padding-left: 40px;
+
+            .title {
+                margin: 0;
+                font-size: 16px;
+                max-width: 95%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .info {
+                font-size: 12px;
+                color: $gray;
+            }
+        }
+    }
+
+    .body {
+        .text {
+            white-space: normal;
+            font-size: 12px;
+            padding: 3px;
+            line-height: 1.2;
+            max-height: 45px;
+            overflow: hidden;
+            color: $formattedColor;
+        }
+    }
+}

@@ -221,6 +221,38 @@ form {
     }
 }
 
+textarea {
+    width: 100%;
+    min-height: 200px;
+    resize: none;
+    background-color: $gray-dark;
+    border: none;
+    color: $gray;
+    padding: 8px 13px;
+    border-radius: 10px;
+
+    &.disabled, &[disabled], &[readonly] {
+        cursor: default;
+        opacity: 0.5;
+    }
+
+    &:focus {
+        color: $white-lt;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none !important;
+        border: 2px solid $blue;
+        box-shadow: none !important;
+        outline: none;
+    }
+
+    &::placeholder {
+        font-size: inherit;
+        color: $gray;
+        font-family: $font-open;
+    }
+}
+
 .form-group:last-child {
     margin-bottom: 0 !important;
 }
@@ -236,7 +268,8 @@ form {
 .was-validated .form-control:invalid,
 .form-control.is-invalid,
 .was-validated .custom-select:invalid,
-.custom-select.is-invalid {
+.custom-select.is-invalid,
+textarea.is-invalid {
     border: 2px solid $red;
     color: $red;
     outline: none;
@@ -288,4 +321,8 @@ form {
             content: "Selecione" !important;
         }
     }
+}
+
+.invalid-feedback {
+    display: block;
 }

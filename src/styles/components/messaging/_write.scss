@@ -1,0 +1,97 @@
+.new_message {
+    margin-bottom: 20px;
+    .preview {
+        min-height: 300px;
+    }
+
+    .inputs {
+        border-top: 2px solid $gray-dark;
+        padding: 20px 0 0;
+
+        fieldset {
+            padding: 0;
+
+            .form-control {
+                background-color: $gray-dark;
+            }
+        }
+
+        .btn-primary {
+            min-width: 148px;
+            float: right;
+        }
+    }
+
+    fieldset {
+        textarea.is-invalid + .invalid-feedback {
+            display: inline-block;
+            float: right;
+            max-width: 266px;
+        }
+
+        textarea.is-invalid + .invalid-feedback + .form-text {
+            display: inline-block;
+            float: left;
+            width: 300px;
+        }
+    }
+
+    .oldmessage {
+        margin-bottom: 10px;
+        background-color: $gray-active;
+        position: relative;
+        border: 2px dashed $gray-dark;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 14px !important;
+
+        max-height: 300px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        &::-webkit-scrollbar {
+            background-color: transparent;
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $gray-dark;
+            border: 0;
+            padding: 8px;
+        }
+
+        .title {
+            font-size: 16px !important;
+            font-weight: bold;
+            display: block;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 12px !important;
+            margin: 0 !important;
+        }
+
+        p {
+            font-size: 12px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        blockquote {
+            font-size: 12px !important;
+        }
+
+        ol {
+            font-size: 12px !important;
+        }
+
+        .message__info {
+            display: block;
+            margin-bottom: 10px;
+        }
+    }
+}

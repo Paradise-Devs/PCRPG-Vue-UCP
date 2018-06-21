@@ -20,7 +20,18 @@
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
 							<div class="navbar__menu__user" v-else>
-								<b-dropdown no-caret right class="navbar__menu__user__info">
+								<b-dropdown no-caret right class="messages__dropdown">
+									<template slot="button-content">
+										<icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
+										<span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
+									</template>
+									<msg-notification v-for="message in sortedMessages" :key="message._id" :msg="message"/>
+									<div v-if="messagesNotReaded.length == 0" class="dropdown-item empty">
+										Não há mensagens não lidas
+									</div>
+									<b-dropdown-item to="/ucp/mensagens" exact class="all">Ver todas as mensagens...</b-dropdown-item>
+								</b-dropdown>
+								<b-dropdown no-caret right class="profile">
 									<template slot="button-content">
 										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
 										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
@@ -98,21 +109,31 @@
 
 	import signin from '@/components/auth/SignIn';
 	import signup from '@/components/auth/SignUp';
+	import msgNotification from '@/components/messaging/notification';
 
-	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench } from '@fortawesome/fontawesome-free-solid';
+	import MessagingService from '@/services/messaging'
+
+	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench, commentAlt } from '@fortawesome/fontawesome-free-solid';
+import { setTimeout, setInterval } from 'timers';
 
 	export default {
         data: () => {
             return {
 				user: store.state.user,
 				groups: [ ],
+				messagesNotReaded: [ ],
 				userLoggedIn: null,
 				scrolled: false,
 				value: 500,
 				maxValue: 5000,
 				navOpened: false
             }
-        },
+		},
+		computed: {
+			sortedMessages: function() {
+                return this.messagesNotReaded.sort((a, b) => new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
+            },
+		},
         methods: {
             handleScroll: function () {
                 var scrollpos = window.scrollY;
@@ -209,10 +230,45 @@
 				};
 
 				tick();
+			},
+			getUserUnreadedMessages: function() {
+				let oldLeng = this.messagesNotReaded.length;
+
+				MessagingService.getMessagesTo(this.user.username)
+				.then(res => {
+					if(oldLeng != res.data.length) {
+						this.messagesNotReaded = [];
+						for(let i in res.data) {
+							if(!res.data[i].isRead) {
+								this.messagesNotReaded.push(res.data[i]);
+							}
+						}
+
+						if(this.messagesNotReaded.length > 0) {
+							if(oldLeng < res.data.length) {
+								let lastestMessage = this.messagesNotReaded.slice(-1).pop();
+								let lastestNotification = localStorage.getItem('lastestNotification');
+
+								if(lastestNotification != lastestMessage._id && lastestNotification != null) {
+									this.$notify({
+										group: 'main',
+										title: 'Você recebeu uma nova mensagem!',
+										text: '<b>' + lastestMessage.sender.username + '</b> te enviou uma mensagem.',
+										type: 'info',
+										duration: 8000
+									});
+								}
+								
+								localStorage.setItem('lastestNotification', lastestMessage._id);
+							}
+						}
+					}
+				})
 			}
         },
 		watch:{
 			$route (to, from){
+				this.getUserUnreadedMessages();
 				if(window.innerWidth < 768 && this.navOpened) {
 					this.closeMobNav();
 				}
@@ -245,19 +301,35 @@
 				this.userLoggedIn = true;
 			}
 
+			if(this.userLoggedIn) { this.getUserUnreadedMessages(); }
+
+			let e = this;
+			this.$root.$on('refreshNotReadedMessages', function() {
+				e.getUserUnreadedMessages();
+			});
+
+			let messagesDropdown = document.getElementsByClassName('show');
+			for(let i = 0; i < messagesDropdown.length; i++) {
+				messagesDropdown[i].classList.remove('show');
+			}
+
 			this.$root.$on('logout', function() {
 				store.dispatch('logout').then(() => {
-					this.user = store.state.user;
-					this.$router.push(this.$route.query.redirect || '/');
-					this.userLoggedIn = false;
+					e.user = store.state.user;
+					e.$router.push(this.$route.query.redirect || '/');
+					e.userLoggedIn = false;
 					var navOverlay = document.getElementById("navOverlay");
 					navOverlay.style.display = 'none';
 					
 					if(window.innerWidth < 768) {
-						this.closeMobNav();
+						e.closeMobNav();
 					}
 				})
 			});
+
+			setInterval(function() {
+				e.getUserUnreadedMessages();
+			}, 5000);
 		},
         created() {
             window.addEventListener('scroll', this.handleScroll);
@@ -275,7 +347,7 @@
             window.removeEventListener('scroll', this.handleScroll);
         },
 		components: {
-			signin, signup, store,
+			signin, signup, store, msgNotification
 		}
 	}
 

@@ -1,17 +1,19 @@
 <template>
     <div 
-        class="message" 
-        :class="{ 'message--unreaded': !msg.isRead, 'message--selected': msg.selected }"
-        @dblclick="openMessage(msg)"
-        @click="openMobMessage(msg)"
-        :data-msgid="msg._id"
+        class="dropdown-item notification__message" 
+        @click="openMessage(msg)"
     >
-        <div class="avatar">
-            <img :src="sender.avatar">
+        <div class="header">
+            <div class="avatar">
+                <img :src="sender.avatar">
+            </div>
+            <div class="content">
+                <h5 class="title">{{ msg.subject }}</h5>
+                <span class="info">Enviado por <b>{{ sender.username }}</b> {{ msg.sendDate | moment }} atrás.</span>
+            </div>
         </div>
-        <div class="content">
-            <h5 class="title">{{ msg.subject }}</h5>
-            <span class="info">Enviado por <b>{{ sender.username }}</b> {{ msg.sendDate | moment }} atrás.</span>
+        <div class="body">
+            <p class="text">{{ msg.body }}</p>
         </div>
     </div>
 </template>
@@ -19,6 +21,7 @@
 <script>
     import moment from 'moment';
     import ForumService from '@/services/forum'
+import { setTimeout } from 'timers';
 
     export default {
         props: {
@@ -39,12 +42,13 @@
 		},
         methods: {
             openMessage: function(msg) {
-                this.$router.push(this.$route.query.redirect || 'mensagens/ver/' + msg._id);
-            },
-            openMobMessage: function(msg) {
-                if(window.innerWidth < 767) {
-                    this.$router.push(this.$route.query.redirect || 'mensagens/ver/' + msg._id);
-                }
+                this.$router.push(this.$route.query.redirect || '/');
+                let e = this;
+                setTimeout(function() {
+                    e.$router.push(e.$route.query.redirect || '/ucp/mensagens/ver/' + msg._id);
+                });
+
+                this.$root.$emit('refreshNotReadedMessages');
             },
         },
         mounted() {
