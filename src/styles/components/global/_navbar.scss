@@ -127,6 +127,11 @@
             list-style: none;
 
             .dropdown {
+                &.profile {
+                    .dropdown-menu {
+                        left: -40px !important;
+                    }
+                }
                 &.show {
                     .btn {
                         background-color: #101418;

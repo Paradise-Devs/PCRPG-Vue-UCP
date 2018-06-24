@@ -13,7 +13,7 @@
     user-select: none;
     color: $gray;
     background-color: $gray-dark;
-    border: 0;
+    border: 0 !important;
     font-family: $font-open;
     font-size: inherit !important;
     position: relative;

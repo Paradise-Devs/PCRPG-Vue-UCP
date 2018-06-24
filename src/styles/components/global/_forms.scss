@@ -224,7 +224,7 @@ form {
 textarea {
     width: 100%;
     min-height: 200px;
-    resize: none;
+    resize: none !important;
     background-color: $gray-dark;
     border: none;
     color: $gray;
