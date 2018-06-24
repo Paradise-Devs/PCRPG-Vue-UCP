@@ -25,15 +25,15 @@
         background-color: $gray-dark !important;
 
         &:hover {
-            color: $gray;
-            background-color: $gray-hover;
+            color: $gray !important;
+            background-color: $gray-hover !important;
         }
 
         &:not(:disabled):not(.disabled):active,
         &:not(:disabled):not(.disabled).active, 
         .show > &.dropdown-toggle {
-            color: $gray;
-            background-color: $gray-hover;
+            color: $gray !important;
+            background-color: $gray-hover !important;
         }
     }
 
