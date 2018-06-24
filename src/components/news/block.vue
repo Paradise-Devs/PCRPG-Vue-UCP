@@ -64,17 +64,3 @@
 		}
     }
 </script>
-
-<style lang="scss" scoped>
-    .news {
-        p {
-			padding: 20px 0;
-			text-align: center;
-			margin: 0px;
-        }
-        
-        .loader {
-		    height: 64px;
-        }
-    }
-</style>

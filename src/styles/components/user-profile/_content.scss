@@ -13,4 +13,10 @@
     &__bio {
         font-style: italic;
     }
+
+    .tags {
+        .badge {
+            background-color: transparent !important;
+        }
+    }
 }

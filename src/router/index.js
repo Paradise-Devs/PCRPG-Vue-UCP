@@ -8,7 +8,7 @@ import NotFoundView from '@/pages/errors/404'
 import UserProfileView from '@/pages/Profile'
 
 //UCP
-import UcpView from '@/pages/ucp/auth'
+import UcpView from '@/pages/ucp/model'
 import UcpIndexView from '@/pages/ucp/index'
 import UcpSettingsView from '@/pages/ucp/settings'
 import UcpProfileView from '@/pages/ucp/profile'

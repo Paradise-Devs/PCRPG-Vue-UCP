@@ -13,27 +13,27 @@
     user-select: none;
     color: $gray;
     background-color: $gray-dark;
-    border: 0;
+    border: 0 !important;
     font-family: $font-open;
-    font-size: inherit;
+    font-size: inherit !important;
     position: relative;
     padding-left: 20px;
     font-weight: bold !important;
 
     &-secondary {
-        color: $gray;
-        background-color: $gray-dark;
+        color: $gray !important;
+        background-color: $gray-dark !important;
 
         &:hover {
-            color: $gray;
-            background-color: $gray-hover;
+            color: $gray !important;
+            background-color: $gray-hover !important;
         }
 
         &:not(:disabled):not(.disabled):active,
         &:not(:disabled):not(.disabled).active, 
         .show > &.dropdown-toggle {
-            color: $gray;
-            background-color: $gray-hover;
+            color: $gray !important;
+            background-color: $gray-hover !important;
         }
     }
 
