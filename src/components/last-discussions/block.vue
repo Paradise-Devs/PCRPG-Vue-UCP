@@ -53,21 +53,3 @@
 		}
     }
 </script>
-
-<style lang="scss" scoped>
-	.lastposts {
-        .block__content {
-            min-height: 374px;
-            max-height: 374px;
-            overflow-x: auto;
-
-            .loader {
-                height: 332px;
-            }
-
-            .post {
-                padding-left: 62px;
-            }
-        }
-	}
-</style>
