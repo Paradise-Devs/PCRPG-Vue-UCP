@@ -1,5 +1,5 @@
 .badge {
-    background-color: transparent !important;
+    background-color: transparent;
     border: 1px solid;
     border-radius: 20px !important;
     padding: 5px 10px 5px 30px !important;
@@ -27,5 +27,9 @@
             position: relative;
             right: -1px;
         }
+    }
+
+    &-secondary {
+        color: $white !important;
     }
 }

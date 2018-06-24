@@ -81,7 +81,7 @@
     &__tag {
         font-family: $font-roboto;
         margin-right: 0;
-        position: absolute;
+        position: absolute !important;
         right: 15px;
         top: 23px;
         max-width: 150px;
