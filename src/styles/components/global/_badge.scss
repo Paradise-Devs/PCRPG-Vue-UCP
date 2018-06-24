@@ -10,6 +10,8 @@
     font-size: 12px !important;
     font-family: $font-roboto;
     font-weight: 400 !important;
+    user-select: none;
+    cursor: default;
 
     .icon {
         position: absolute;
