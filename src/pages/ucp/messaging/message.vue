@@ -58,6 +58,11 @@
             }
         },
         mounted() {
+            var timeSave = localStorage.getItem('firstTimeUCP');
+			if(timeSave === "true") {
+				this.$router.push(this.$route.query.redirect || '/ucp');
+            }
+            
             MessagingService.getMessageData(this.$route.params.msgid)
             .then(response => {
                 this.message = response.data;
