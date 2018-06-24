@@ -21,8 +21,8 @@
     font-weight: bold !important;
 
     &-secondary {
-        color: $gray;
-        background-color: $gray-dark;
+        color: $gray !important;
+        background-color: $gray-dark !important;
 
         &:hover {
             color: $gray;
