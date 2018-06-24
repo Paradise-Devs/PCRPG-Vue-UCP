@@ -15,22 +15,6 @@
 @import 'pages/ucp/settings';
 @import 'pages/ucp/messaging';
 
-//global components
-@import 'components/global/blocks';
-@import 'components/global/badge';
-@import 'components/global/posts';
-@import 'components/global/forms';
-@import 'components/global/buttons';
-@import 'components/global/navbar';
-@import 'components/global/footer';
-@import 'components/global/hero';
-@import 'components/global/loader';
-@import 'components/global/modals';
-@import 'components/global/alert';
-@import 'components/global/pagination';
-@import 'components/global/notifications';
-@import 'components/global/autocomplete';
-
 //Discord
 @import 'components/discord/block';
 
@@ -66,3 +50,19 @@
 
 //news
 @import 'components/news/block';
+
+//global components
+@import 'components/global/blocks';
+@import 'components/global/badge';
+@import 'components/global/posts';
+@import 'components/global/forms';
+@import 'components/global/buttons';
+@import 'components/global/navbar';
+@import 'components/global/notifications';
+@import 'components/global/footer';
+@import 'components/global/hero';
+@import 'components/global/loader';
+@import 'components/global/modals';
+@import 'components/global/alert';
+@import 'components/global/pagination';
+@import 'components/global/autocomplete';
