@@ -21,7 +21,7 @@
 <script>
     import moment from 'moment';
     import ForumService from '@/services/forum'
-import { setTimeout } from 'timers';
+    import { setTimeout } from 'timers';
 
     export default {
         props: {

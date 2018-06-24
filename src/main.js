@@ -24,7 +24,6 @@ Validator.localize('pt_BR', ptbr);
 Vue.router = router;
 
 // registering apps
-Vue.use(VueBootstrap);
 Vue.use(VueAnimated);
 Vue.use(VueWaypoint);
 Vue.use(VueScrollTo);
@@ -32,6 +31,7 @@ Vue.use(VuePaginate);
 Vue.use(VeeValidate);
 Vue.use(VueAwesomeSwiper);
 Vue.use(Notifications);
+Vue.use(VueBootstrap);
 
 const locale = require('moment')
 require('moment/locale/pt-br')

@@ -3,7 +3,7 @@
     background-color: $gray-dark;
     position: relative;
     padding: 0;
-    min-height: 254px;
+    min-height: 254px !important;
     border-radius: 0;
 
     @include tablet {

@@ -20,7 +20,7 @@
 								<a href="#" v-b-modal.signinModal>Entrar</a>
 							</div>
 							<div class="navbar__menu__user" v-else>
-								<b-dropdown no-caret right class="messages__dropdown">
+								<b-dropdown no-caret right class="messages__dropdown" @click="getUserUnreadedMessages">
 									<template slot="button-content">
 										<icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
 										<span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
@@ -257,6 +257,8 @@ import { setTimeout, setInterval } from 'timers';
 										type: 'info',
 										duration: 8000
 									});
+
+									this.$root.$emit('reloadInbox');
 								}
 								
 								localStorage.setItem('lastestNotification', lastestMessage._id);
@@ -269,6 +271,11 @@ import { setTimeout, setInterval } from 'timers';
 		watch:{
 			$route (to, from){
 				this.getUserUnreadedMessages();
+				let messagesDropdown = document.getElementsByClassName('show');
+				for(let i = 0; i < messagesDropdown.length; i++) {
+					messagesDropdown[i].classList.remove('show');
+				}
+
 				if(window.innerWidth < 768 && this.navOpened) {
 					this.closeMobNav();
 				}
@@ -307,11 +314,6 @@ import { setTimeout, setInterval } from 'timers';
 			this.$root.$on('refreshNotReadedMessages', function() {
 				e.getUserUnreadedMessages();
 			});
-
-			let messagesDropdown = document.getElementsByClassName('show');
-			for(let i = 0; i < messagesDropdown.length; i++) {
-				messagesDropdown[i].classList.remove('show');
-			}
 
 			this.$root.$on('logout', function() {
 				store.dispatch('logout').then(() => {

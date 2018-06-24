@@ -124,8 +124,13 @@
 
             let e = this;
             this.$root.$on('reloadInbox', function() {
-				e.getInbox();
-			});
+                e.getInbox();
+            });
+            
+            var timeSave = localStorage.getItem('firstTimeUCP');
+			if(timeSave === "true") {
+				this.$router.push(this.$route.query.redirect || '/ucp');
+			}
         },
 		components: {
             messagingList,

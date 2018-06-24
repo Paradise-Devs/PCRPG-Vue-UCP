@@ -39,6 +39,8 @@
 </template>
 
 <script>
+    import { store } from '@/vuex/store';
+
     import MessagingService from '@/services/messaging'
     import ForumService from '@/services/forum'
     import loader from 'vue-spinner/src/MoonLoader.vue'
@@ -50,6 +52,7 @@
     export default {
         data() {
             return {
+                user: store.state.user,
                 userAvatar: null,
                 userName: null,
                 message: [ ],
@@ -58,6 +61,11 @@
             }
         },
         mounted() {
+            var timeSave = localStorage.getItem('firstTimeUCP');
+			if(timeSave === "true") {
+				this.$router.push(this.$route.query.redirect || '/ucp');
+            }
+            
             MessagingService.getMessageData(this.$route.params.msgid)
             .then(response => {
                 this.message = response.data;
@@ -75,7 +83,12 @@
                     })
                 }
 
-                this.markAsRead(this.message._id);
+                if(this.message.receiver.username == this.user.username) {
+                    this.markAsRead(this.message._id);
+                } else {
+                    this.loading = false;
+                    this.$root.$emit('refreshNotReadedMessages');
+                }
             })
             .catch(error => {
                 console.log(error);
