@@ -124,7 +124,7 @@
 
             let e = this;
             this.$root.$on('reloadInbox', function() {
-				e.getInbox();
+                e.getInbox();
             });
             
             var timeSave = localStorage.getItem('firstTimeUCP');

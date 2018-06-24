@@ -257,6 +257,8 @@ import { setTimeout, setInterval } from 'timers';
 										type: 'info',
 										duration: 8000
 									});
+
+									this.$root.$emit('reloadInbox');
 								}
 								
 								localStorage.setItem('lastestNotification', lastestMessage._id);
