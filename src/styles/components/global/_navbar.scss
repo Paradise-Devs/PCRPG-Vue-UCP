@@ -192,6 +192,29 @@
             display: none;
         }
 
+        .messages__dropdown {
+            position: fixed;
+            top: 10px;
+            right: 80px;
+
+            .btn {
+                &:before {
+                    bottom: -12px;
+                }
+                
+                svg {
+                    font-size: 22px;
+                }
+            }
+
+            .dropdown-menu {
+                position: fixed !important;
+                left: 7% !important;
+                width: 88vw;
+                top: 55px !important;
+            }
+        }
+
         .navbar__menu__button {
             .navbar__menu__icon {
                 font-size: 30px;
