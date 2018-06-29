@@ -133,7 +133,7 @@
                     text-align: center;
                     padding: 8px 0;
                 }
-            }
+            }            
 
             &__info {
                 .dropdown {
@@ -190,6 +190,15 @@
         
         @include tablet {
             display: none;
+        }
+
+        .messages__dropdown {
+            .dropdown-menu {
+                position: fixed !important;
+                left: 7% !important;
+                width: 88vw;
+                top: 55px !important;
+            }
         }
 
         .navbar__menu__button {
