@@ -1,7 +1,22 @@
 .messages__dropdown {
+    position: fixed;
+    top: 10px;
+    right: 80px;
+    z-index: 2;
+
+    .dropdown-menu {
+        position: fixed !important;
+        left: 7% !important;
+        width: 88vw;
+        top: 55px !important;
+    }
     &.show {
         .btn:before {
             display: inline-block;
+            bottom: -12px;
+        }
+        svg {
+            font-size: 22px;
         }
     }
     .btn {
