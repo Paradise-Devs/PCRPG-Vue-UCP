@@ -24,7 +24,8 @@
                 </div>
                 <div class="message__content">
                     <div class="oldmessage" v-if="quote">
-                        Em resposta a sua mensagem anterior:
+                        <span v-if="quote.sender.username == user.username">Em resposta a sua mensagem anterior:</span>
+                        <span v-else>Em resposta a mensagem de {{ quote.sender.username }}:</span>
                         <div class="quote">
                             <span class="title">{{ quote.subject }}</span>
                             <div class="markdown" v-html="oldMarked" />
