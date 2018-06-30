@@ -42,7 +42,16 @@
 
 			ForumService.getLastestPostsByUser(this.user.forumAtt.id)
 			.then(response => {
-				this.lastPosts = response.data.data;
+				let posts = response.data.data;
+
+				let validPosts = [ ];
+				for(let i = 0; i < posts.length; i++) {
+					if(posts[i].attributes.contentType === 'comment') {
+						validPosts.push(posts[i]);
+					}
+				}
+
+				this.lastPosts = validPosts;
 				this.forum.loading = false;
 				this.forum.processed = true;
 			});
