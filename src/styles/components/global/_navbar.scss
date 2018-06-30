@@ -193,6 +193,11 @@
         }
 
         .messages__dropdown {
+            position: fixed;
+            top: 10px;
+            right: 80px;
+            z-index: 2;
+
             .dropdown-menu {
                 position: fixed !important;
                 left: 7% !important;
