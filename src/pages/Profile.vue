@@ -67,7 +67,7 @@
 
 <style lang="scss" scoped>
     .page__user-profile {
-        padding: 10px 0;
+        padding: 10px 23px;
         min-height: 62.5vh;
     }
     .v-spinner {
