@@ -65,6 +65,11 @@
 			if(timeSave === "true") {
 				this.$router.push(this.$route.query.redirect || '/ucp');
             }
+
+            let messagesDropdown = document.getElementsByClassName('show');
+            for(let i = 0; i < messagesDropdown.length; i++) {
+                messagesDropdown[i].classList.remove('show');
+            }
             
             MessagingService.getMessageData(this.$route.params.msgid)
             .then(response => {
