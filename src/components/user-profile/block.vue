@@ -66,6 +66,7 @@
 			return {
                 loading: true,
                 editable: false,
+                localUser: store.state.user,
 
                 swiperOption: {
                     slidesPerView: 1,
@@ -106,7 +107,7 @@
             }
         },
         mounted() {
-            if(this.user._id == store.getters.getUserID) {
+            if(this.user._id == this.localUser._id) {
                 this.editable = true;
             }
             this.getUserCharacters();

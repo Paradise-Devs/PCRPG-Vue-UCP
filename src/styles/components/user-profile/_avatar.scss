@@ -3,7 +3,10 @@
     vertical-align: top;
     position: relative;
     width: 100px;
-    height: 100px;
+
+    &--editable {
+        height: 100px;
+    }
 
     &--empty {
         width: 80px;
