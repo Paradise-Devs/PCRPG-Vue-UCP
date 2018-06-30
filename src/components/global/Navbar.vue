@@ -54,6 +54,17 @@
 		<signup v-if="!userLoggedIn"/>
 		<overlay />
 		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav">
+			<b-dropdown no-caret right class="messages__dropdown" @click="getUserUnreadedMessages">
+				<template slot="button-content">
+					<icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
+					<span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
+				</template>
+				<msg-notification v-for="message in sortedMessages" :key="message._id" :msg="message"/>
+				<div v-if="messagesNotReaded.length == 0" class="dropdown-item empty">
+					Não há mensagens não lidas
+				</div>
+				<b-dropdown-item to="/ucp/mensagens" exact class="all">Ver todas as mensagens...</b-dropdown-item>
+			</b-dropdown>
 			<div class="navbar__menu__button">
 				<icon :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
 				<icon :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav()"/>
@@ -95,6 +106,10 @@
 					<h6 class="separator">Sua conta</h6>
 					<router-link to="/ucp" @click="closeMobNav" exact><icon :icon="['fas', 'wrench']"/>Painel do usuário</router-link>
 					<router-link to="/ucp/perfil" @click="closeMobNav" exact><icon :icon="['fas', 'address-card']"/>Seu perfil</router-link>
+					<router-link to="/ucp/mensagens" @click="closeMobNav" exact :class="{ 'unreaded': messagesNotReaded.length > 0 }"><icon :icon="['fas', 'comment-alt']"/>
+						Mensagens
+						<b-badge :class="{ 'unreaded': messagesNotReaded.length > 0 }">{{ messagesNotReaded.length }}</b-badge>
+					</router-link>
 					<router-link to="/ucp/configuracoes" @click="closeMobNav" exact><icon :icon="['fas', 'cog']"/>Configurações</router-link>
 					<a href="#" @click="logout"><icon :icon="['fas', 'sign-out-alt']"/>Sair</a>
 				</div>

@@ -24,7 +24,8 @@
                 </div>
                 <div class="message__content">
                     <div class="oldmessage" v-if="quote">
-                        Em resposta a sua mensagem anterior:
+                        <span v-if="quote.sender.username == user.username">Em resposta a sua mensagem anterior:</span>
+                        <span v-else>Em resposta a mensagem de {{ quote.sender.username }}:</span>
                         <div class="quote">
                             <span class="title">{{ quote.subject }}</span>
                             <div class="markdown" v-html="oldMarked" />
@@ -64,6 +65,11 @@
             var timeSave = localStorage.getItem('firstTimeUCP');
 			if(timeSave === "true") {
 				this.$router.push(this.$route.query.redirect || '/ucp');
+            }
+
+            let messagesDropdown = document.getElementsByClassName('show');
+            for(let i = 0; i < messagesDropdown.length; i++) {
+                messagesDropdown[i].classList.remove('show');
             }
             
             MessagingService.getMessageData(this.$route.params.msgid)
