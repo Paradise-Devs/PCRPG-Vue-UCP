@@ -30,6 +30,7 @@ export const store = new Vuex.Store({
 			localStorage.setItem("token", state.user.token);
 		},
 		LOGOUT (state) {
+			state.user = { };
 			state.user.token = null;
 			localStorage.removeItem("token");
 		},
