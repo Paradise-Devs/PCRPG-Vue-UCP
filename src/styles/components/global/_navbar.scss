@@ -139,40 +139,10 @@
                 .dropdown {
                     position: relative;
                 }
+            }
 
-                &__avatar {
-                    margin: -2px 5px -2px -6px;
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 24px;
-                    font-size: 12px;
-                    line-height: 24px;
-                    display: inline-block;
-                    box-sizing: content-box;
-                    color: $white;
-                    text-align: center;
-                    vertical-align: top;
-                    background-color: $gray-dark;
-                    font-weight: normal;
-
-                    &--empty {
-                        display: inline-block;
-                        -webkit-box-sizing: content-box;
-                        box-sizing: content-box;
-                        text-align: center;
-                        vertical-align: top;
-                        background-color: $gray-dark;
-                        font-weight: normal;
-                        border-color: transparent;
-                        color: $gray;
-                        font-size: 14px;
-                        margin: -2px 5px -2px -6px;
-                        width: 24px;
-                        height: 24px;
-                        line-height: 24px;
-                        border-radius: 24px;
-                    }
-                }
+            .avatar {
+                margin: -2px 5px -2px -6px;
             }
         }
     }

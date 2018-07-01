@@ -5,7 +5,7 @@
         </div>
         <div class="block__content" :class="[ news.posts.length > 0 ? 'block__content--borderless' : '']">
             <vue-spinner :loading="news.loading" color="#303846" size="10px" class="loader"></vue-spinner>
-            <div v-if="news.processed">
+            <div v-if="news.processed" class="body">
                 <paginate name="news" :list="news.posts" :per="4">
                     <li v-for="post in paginated('news')" :key="post.id">
                         <post :post='post' />

@@ -4,7 +4,7 @@
 			<div class="preview markdown" v-html="marked"></div>
 			<div class="inputs">
 				<b-form-group>
-					Destinatário: <router-link :to="'/jogador/' + dest" class="router-link" @click="toggleUCPNav"><b>{{ dest }}</b></router-link>
+					Destinatário: <router-link :to="'/jogador/' + dest" class="router-link"><b>{{ dest }}</b></router-link>
 				</b-form-group>
 				<b-form-group>
 					<b-form-input 
