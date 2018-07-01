@@ -4,13 +4,17 @@
         <loader :loading="userLoading" color="#303846" size="60px"></loader>
         
         <div v-if="!userLoading">
-            <playerProfile :user="user" v-if="userFound" />
+            <div v-if="userFound">
+                <!-- Maybe a player search? -->
+                <playerProfile :user="user"/>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-	import Vue from 'vue';
+    import Vue from 'vue';
+    import { store } from '@/vuex/store';
 	import playerProfile from '@/components/user-profile/block'
 	import ForumService from '@/services/forum';
     import ServerService from '@/services/server';
@@ -19,12 +23,20 @@
 	export default {
 		data() {
             return {
-				user: [ ],
+                user: [ ],
+                localUser: store.state.user,
+                localUserLoggedIn: false,
                 userLoading: true,
                 userFound: false,
             }
         },
 		mounted() {
+            if(this.localUser.token == null) {
+                this.localUserLoggedIn = false;
+            } else {
+                this.localUserLoggedIn = true;
+            }
+            
             let username = this.$route.params.username;
 			
 			ServerService.getPlayerData(username)

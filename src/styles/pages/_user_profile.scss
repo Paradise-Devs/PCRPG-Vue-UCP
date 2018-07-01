@@ -5,6 +5,22 @@
             margin-bottom: 24px;
             padding: 20px;
             border-radius: 5px;
+            position: relative;
+            min-height: 116px;
+
+            .action-buttons {
+                position: absolute;
+                bottom: 15px;
+                right: 15px;
+                
+                .btn {
+                    max-height: 34px;
+                    svg {
+                        font-size: 18px;
+                        color: $white;
+                    }
+                }
+            }
         }
 
         &__chars {
