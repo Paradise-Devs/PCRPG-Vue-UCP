@@ -5,9 +5,9 @@
         
         <div v-if="!userLoading">
             <div v-if="userFound">
-                <!-- Maybe a player search? -->
                 <playerProfile :user="user"/>
             </div>
+            <!-- Maybe a player search if player not found? -->
         </div>
     </div>
 </template>
@@ -43,7 +43,8 @@
 			.then(res => {
 				if(res === null) {
                     this.userLoading = false;
-                    this.userFound = true;
+                    this.userFound = false;
+                    this.$router.push(this.$route.query.redirect || '/jogador');
 				} else {
                     this.user = res.data;
                     this.user.forumAtt = { };
@@ -67,7 +68,10 @@
 				}
 			})
 			.catch(err => {
-				console.log(err);
+                console.log(err);
+                this.userLoading = false;
+                this.userFound = false;
+                this.$router.push(this.$route.query.redirect || '/jogador');
 			});
 		},
 		components: {
