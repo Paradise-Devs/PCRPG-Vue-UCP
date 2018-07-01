@@ -37,7 +37,7 @@ export default new Router({
 					children: [
 						{ path: '', name: 'Mensagens Index', component: UcpMessagesIndexView },
 						{ path: 'ver/:msgid', name: 'Ver Mensagens', component: UcpMessageDetailsView },
-						{ path: 'nova', name: 'Nova Mensagem', component: UcpNewMessageView },
+						{ path: 'nova/:username?', name: 'Nova Mensagem', component: UcpNewMessageView },
 						{ path: 'responder/:msgid', name: 'Responder Mensagem', component: UcpReplyMessageView },
 					]
 				},
