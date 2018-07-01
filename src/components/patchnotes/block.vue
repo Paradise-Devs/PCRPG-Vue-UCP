@@ -47,8 +47,12 @@
 			.then(response => {
 				this.patches.posts = response.data.data;
 				this.patches.processed = true;
-				this.patches.loading = false;
-			});
+                this.patches.loading = false;
+                console.log(this.patches.posts);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         },
         components: {
 			'vue-spinner': PulseLoader,

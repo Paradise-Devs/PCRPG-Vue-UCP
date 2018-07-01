@@ -10,7 +10,7 @@
                 </li>
             </ul>
         </a>
-        <span class="post__comments"><icon :icon="['far', 'comments']" /> {{ post.attributes.commentsCount }}</span>
+        <span class="post__comments"><icon :icon="['far', 'comments']" /> {{ patch.attributes.commentsCount }}</span>
     </div>
 </template>
 
@@ -21,7 +21,9 @@
 	import { comments } from '@fortawesome/fontawesome-free-regular';
 
     export default {
-        props:['patch'],
+        props: {
+            patch: Object
+        },
 		filters: {
 			moment: function(time) {
 				return moment(time).fromNow();
