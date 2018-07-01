@@ -28,23 +28,23 @@ export default new Router({
 		{ path: '/', name: 'Início', component: IndexView },
 		{ path: '/dev', name: 'Desenvolvimento', component: DevelopmentView },
 		{
-			path: '/ucp', name: 'UCP', component: UcpView,
+			path: '/ucp', component: UcpView,
 			children: [
-				{ path: '', name: 'Início', component: UcpIndexView },
+				{ path: '', name: 'UCP Index', component: UcpIndexView },
 				{ path: 'configuracoes', name: 'Configurações', component: UcpSettingsView },
 				{
-					path: 'mensagens', name: 'Mensagens', component: UcpMessagesView,
+					path: 'mensagens', component: UcpMessagesView,
 					children: [
-						{ path: '', name: 'Mensagens', component: UcpMessagesIndexView },
-						{ path: 'ver/:msgid', name: 'Mensagens', component: UcpMessageDetailsView },
-						{ path: 'nova', name: 'Mensagens', component: UcpNewMessageView },
-						{ path: 'responder/:msgid', name: 'Mensagens', component: UcpReplyMessageView },
+						{ path: '', name: 'Mensagens Index', component: UcpMessagesIndexView },
+						{ path: 'ver/:msgid', name: 'Ver Mensagens', component: UcpMessageDetailsView },
+						{ path: 'nova/:username?', name: 'Nova Mensagem', component: UcpNewMessageView },
+						{ path: 'responder/:msgid', name: 'Responder Mensagem', component: UcpReplyMessageView },
 					]
 				},
 				{ path: 'perfil', name: 'Perfil', component: UcpProfileView },
 			]
 		},
-		{ path: '/jogador/:username', name: 'Perfil', component: UserProfileView },
+		{ path: '/jogador/:username', name: 'Perfil Público', component: UserProfileView },
 		{ path: '*', component: NotFoundView },
 	]
 })

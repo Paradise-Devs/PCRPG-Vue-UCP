@@ -1,5 +1,5 @@
 <template>
-    <div class="comp__userAvatar">
+    <div class="comp__userAvatar" :class="{'comp__userAvatar--editable': editable }">
         <img :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
         <div class="comp__userAvatar--empty" v-else> ? </div>
         <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">

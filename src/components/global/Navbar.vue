@@ -323,13 +323,6 @@ import { setTimeout, setInterval } from 'timers';
 				this.userLoggedIn = true;
 			}
 
-			if(this.userLoggedIn) { this.getUserUnreadedMessages(); }
-
-			let e = this;
-			this.$root.$on('refreshNotReadedMessages', function() {
-				e.getUserUnreadedMessages();
-			});
-
 			this.$root.$on('logout', function() {
 				store.dispatch('logout').then(() => {
 					e.user = store.state.user;
@@ -344,9 +337,17 @@ import { setTimeout, setInterval } from 'timers';
 				})
 			});
 
-			setInterval(function() {
+			//Messaging calls
+			if(this.userLoggedIn) {
+				setInterval(function() {
+					e.getUserUnreadedMessages();
+				}, 5000);
+			}
+
+			let e = this;
+			this.$root.$on('refreshNotReadedMessages', function() {
 				e.getUserUnreadedMessages();
-			}, 5000);
+			});
 		},
         created() {
             window.addEventListener('scroll', this.handleScroll);

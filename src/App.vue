@@ -45,8 +45,8 @@
 		methods: {
 			appLoaded: function() {
 				let token = localStorage.getItem("token");
-
-				if(token != null) {
+				
+				if(token != null && token != 'undefined') {
 					ServerService.getToken(token)
 					.then(response => {
 						if(response.data.error) {

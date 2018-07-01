@@ -2,7 +2,9 @@
 	<div class="forum__post">
 		<vue-spinner :loading="postP.loading" color="#303846" size="10px"></vue-spinner>
 		<div v-if="postP.processed">
-			<img class="forum__post__img" :src="user.forumAtt.attributes.avatarUrl"/>
+			<a :href="'https://forum.pc-rpg.com.br/u/' + user.forumAtt.attributes.username" target="_blank">
+				<img class="forum__post__img" :src="user.forumAtt.attributes.avatarUrl"/>
+			</a>
 			<p class="forum__post__text">
 				<span class="forum__post__text__info">
 					Em <a :href="'https://forum.pc-rpg.com.br/d/' + userDiscussion.id + '-' + userDiscussion.attributes.slug + '/' + post.attributes.number" target="_blank">{{ userDiscussion.attributes.title }}</a> 

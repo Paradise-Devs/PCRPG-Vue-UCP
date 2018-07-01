@@ -4,6 +4,9 @@
 			<div class="preview markdown" v-html="marked"></div>
 			<div class="inputs">
 				<b-form-group>
+					Destinatário: <router-link :to="'/jogador/' + dest" class="router-link" @click="toggleUCPNav"><b>{{ dest }}</b></router-link>
+				</b-form-group>
+				<b-form-group>
 					<b-form-input 
 						type="text" 
 						v-model="assunto" 
@@ -15,7 +18,7 @@
 					/>
 					<div class="invalid-feedback" v-show="errors.has('assunto')">{{ errors.first('assunto') }}</div>
 				</b-form-group>
-				<b-form-group>
+				<b-form-group v-if="!this.$route.params.username">
 					<vue-autosuggest 
 						:suggestions="suggestions"
 						:inputProps="sugProps"
@@ -116,35 +119,53 @@
 			SendMessage: function() {
 				this.sendingMessage = true;
 
-				if(this.dest.toLowerCase() === this.user.username.toLowerCase()) {
-					this.errorUser = "Você não pode enviar mensagem para você mesmo."
-					this.sendingMessage = false;
-				} else {
-					ServerService.getPlayerData(this.dest)
-					.then(res => {
-						if(res === null) {
-							this.errorUser = "Usuário não existe."
-							this.sendingMessage = false;
-						} else {
-							MessagingService.sendMessage(this.user.username, this.dest, this.assunto, this.mensagem)
-							.then(res => {
+				if(!this.$route.params.username) {
+					if(this.dest.toLowerCase() === this.user.username.toLowerCase()) {
+						this.errorUser = "Você não pode enviar mensagem para você mesmo."
+						this.sendingMessage = false;
+					} else {
+						ServerService.getPlayerData(this.dest)
+						.then(res => {
+							if(res === null) {
+								this.errorUser = "Usuário não existe."
 								this.sendingMessage = false;
-								this.$router.push(this.$route.query.redirect || 'ver/' + res.data.message);
-								this.$notify({
-									group: 'main',
-									title: 'Mensagem enviada com sucesso!',
-									text: 'Você deve receber uma notificação assim que sua mensagem for respondida.',
-									type: 'success',
-									duration: 5000
+							} else {
+								MessagingService.sendMessage(this.user.username, this.dest, this.assunto, this.mensagem)
+								.then(res => {
+									this.sendingMessage = false;
+									this.$router.push(this.$route.query.redirect || '/ucp/mensagens');
+									this.$notify({
+										group: 'main',
+										title: 'Mensagem enviada com sucesso!',
+										text: 'Você deve receber uma notificação assim que sua mensagem for respondida.',
+										type: 'success',
+										duration: 5000
+									});
+								})
+								.catch(error => {
+									console.log(error);
 								});
-							})
-							.catch(error => {
-								console.log(error);
-							});
-						}
+							}
+						})
+						.catch(err => {
+							console.log(err);
+						});
+					}
+				} else {
+					MessagingService.sendMessage(this.user.username, this.dest, this.assunto, this.mensagem)
+					.then(res => {
+						this.sendingMessage = false;
+						this.$router.push(this.$route.query.redirect || '/ucp/mensagens');
+						this.$notify({
+							group: 'main',
+							title: 'Mensagem enviada com sucesso!',
+							text: 'Você deve receber uma notificação assim que sua mensagem for respondida.',
+							type: 'success',
+							duration: 5000
+						});
 					})
-					.catch(err => {
-						console.log(err);
+					.catch(error => {
+						console.log(error);
 					});
 				}
 			},
@@ -154,33 +175,6 @@
 
 				clearTimeout(this.timeout);
       			this.timeout = setTimeout(() => {
-					// const usersPromise = ForumService.getAllUsers();
-					// const groupsPromise = ForumService.getAllGroups();
-
-					// Promise.all([usersPromise, groupsPromise]).then(values => {
-					// 	this.suggestions = [];
-					// 	this.selected = null;
-
-					// 	let userData = [];
-					// 	let groupData = [];
-
-					// 	for(let i in values[0].data.data) {
-					// 		userData.push(values[0].data.data[i].attributes);
-					// 	}
-					// 	for(let j in values[1].data.data) {
-					// 		//groupData.push(values[1].data.data[j].attributes);
-					// 	}
-
-					// 	const users = this.filterResults(userData, val, "username");
-					// 	const groups = this.filterResults(groupData, val, "namePlural");
-						  
-					// 	users.length &&
-					// 		this.suggestions.push({ name: "users", data: users });
-						
-					// 	groups.length &&
-					// 		this.suggestions.push({ name: "groups", data: groups });
-					// });
-
 					const usersPromise = ForumService.getAllUsers()
 					.then(res => {
 						this.suggestions = [];
@@ -219,19 +213,6 @@
 				} else {
 					return suggestion.item.namePlural;
 				}
-				// if (suggestion.name == "users") {
-				// 	const image = suggestion.item;
-				// 	console.log(image);
-				// 	return (
-				// 	<div>
-				// 		<img class={{ avatar: true }} src={image.thumbnailUrl} />
-				// 		{image.title}
-				// 	</div>
-				// 	);
-				// } else {
-				// 	console.log(suggestion);
-				// 	return suggestion.item.name;
-				// }
 			},
 			sugValue: function(suggestion) {
 				let { name, item } = suggestion;
@@ -255,6 +236,14 @@
 					this.user = store.state.user;
 				}
 			);
+			if(this.$route.params.username) {
+				ForumService.getUserData(this.$route.params.username)
+				.then(res => {
+					this.dest = res.data.data.attributes.username;
+				})
+			}
+
+			console.log(this.dest);
 		},
 		components: {
 			'moonloader': moon,

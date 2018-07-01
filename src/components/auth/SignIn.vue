@@ -28,7 +28,7 @@
 			<b-form-group>
 				<b-form-input
 					type="password"
-					v-model="user.password"
+					v-model="fieldPassword"
 					required
 					:class="{ 'is-invalid': error }"
 					placeholder="Senha"
@@ -64,11 +64,12 @@
 
 				user: {
 					username: '',
-					password: '',
-					token: null,
-					forumAtt: [ ],
-					groups: [ ]
+					forumAtt: { },
+					groups: { }
 				},
+
+				token: null,
+				fieldPassword: '',
 				error: null,
 				loading: false,
 			}
@@ -88,11 +89,12 @@
 			login: function() {
 				this.loading = true;
 				var _this = this;
+				let allData = [ ];
 
-				ServerService.loginPlayer(this.user.username, this.user.password)
+				ServerService.loginPlayer(this.user.username, this.fieldPassword)
 				.then(response => {
-					_this.user.token = response.data.token;
-					_this.authUser();
+					_this.token = response.data.token;
+					_this.getUserData();
 				})
 				.catch(error => {
 					_this.error = error.response.data.error.message;
@@ -104,6 +106,18 @@
 					this.error = null;
 				}
 			},
+			getUserData: function() {
+				ServerService.getToken(this.token)
+				.then(res => {
+					this.user = res.data;
+					this.user.token = res.headers['token-refresh'];
+					this.authUser();
+				})
+				.catch(error => {
+					console.log(error);
+					this.loading = false;
+				})
+			},
 			authUser: function() {
 				var _this = this;
 
@@ -111,11 +125,16 @@
 				.then(response => {
 					this.user.forumAtt = response.data.data;
 
+					let groups = [];
+
 					for(var i in response.data.included) {
 						if(response.data.included[i].type == "groups") {
-							this.user.groups.push(response.data.included[i].attributes);
+							groups.push(response.data.included[i].attributes);
 						}
 					}
+
+					this.user.groups = groups;
+
 					this.dispatchLogin();
 				})
 				.catch(function (error) {

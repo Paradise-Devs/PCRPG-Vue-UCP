@@ -4,6 +4,11 @@
             <b-col class="user-profile__block" md="12">
                 <userAvatar :user="user" :editable="editable" />
                 <userContent :user="user" />
+                
+                <!-- buttons -->
+                <div class="action-buttons" v-if="localUserLoggedIn">
+                    <router-link :to="'/ucp/mensagens/nova/' + user.username" class="btn btn-primary" v-if="showMessageButton"><icon :icon="['fas', 'envelope']"/></router-link>
+                </div>
             </b-col>
         </b-row>
         <swiper :options="swiperOption" ref="charsSwiper" class="char__wrapper" v-if="isMobile && charsData.length >= 1">
@@ -49,7 +54,7 @@
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
     import { store } from '@/vuex/store';
 
-    import { code, bolt, support, briefcase, pencilAlt } from '@fortawesome/fontawesome-free-solid';
+    import { envelope } from '@fortawesome/fontawesome-free-solid';
 
     import userAvatar from './avatar'
     import userContent from './content'
@@ -66,6 +71,8 @@
 			return {
                 loading: true,
                 editable: false,
+                localUser: store.state.user,
+                localUserLoggedIn: false,
 
                 swiperOption: {
                     slidesPerView: 1,
@@ -74,8 +81,13 @@
                     pagination: {
                         el: '.swiper-pagination',
                     }
-                },       
-                charsData: [ ]
+                },
+                charsData: [ ],
+
+                //buttons
+                buttons: {
+                    message: false,
+                }
             }
         },
         computed: {
@@ -84,6 +96,13 @@
                     return true;
                 } else {
                     return false;
+                }
+            },
+            showMessageButton: function() {
+                if(this.user._id === this.localUser._id) {
+                    return false;
+                } else {
+                    return true;
                 }
             }
         },
@@ -106,9 +125,15 @@
             }
         },
         mounted() {
-            if(this.user._id == store.getters.getUserID) {
-                this.editable = true;
+            if(this.localUser.token == null) {
+                this.localUserLoggedIn = false;
+            } else {
+                this.localUserLoggedIn = true;
             }
+
+            console.log(this.user._id);
+            console.log(this.localUser._id);
+            
             this.getUserCharacters();
         },
         components: {
