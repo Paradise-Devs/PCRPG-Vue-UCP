@@ -1,10 +1,20 @@
 <template>
-    <div class="comp__userAvatar" :class="{'comp__userAvatar--editable': editable }">
-        <img :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
-        <div class="comp__userAvatar--empty" v-else> ? </div>
-        <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">
-            <label for='newAvatarField' class="button"><icon :icon="['fas', 'upload']" /></label>
-            <input id='newAvatarField' type='file' accept="image/jpeg, image/png" @change="onFileChanged">
+    <div class="comp__userAvatar" :class="{'comp__userAvatar--editable': editable }" :style="{ width: size, height: size }">
+        <router-link :to="'/jogador/' + username" class="router-link" v-if="clickable">
+            <img :src="url" v-if="url != null" />
+            <div class="comp__userAvatar--empty" v-else> ? </div>
+            <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">
+                <label for='newAvatarField' class="button"><icon :icon="['fas', 'upload']" /></label>
+                <input id='newAvatarField' type='file' accept="image/jpeg, image/png" @change="onFileChanged">
+            </div>
+        </router-link>
+        <div v-else>
+            <img :src="url" v-if="url != null" />
+            <div class="comp__userAvatar--empty" v-else> ? </div>
+            <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">
+                <label for='newAvatarField' class="button"><icon :icon="['fas', 'upload']" /></label>
+                <input id='newAvatarField' type='file' accept="image/jpeg, image/png" @change="onFileChanged">
+            </div>
         </div>
         <span 
             class="comp__userAvatar__uploader__status" 
@@ -28,6 +38,7 @@
     import axios from 'axios';
     import { store } from '@/vuex/store';
     import { TweenMax } from 'gsap'
+    import ForumService from '@/services/forum'
 
     import { upload } from '@fortawesome/fontawesome-free-solid';
 
@@ -35,11 +46,32 @@
 
     export default {
         props: {
-            user: Object,
-            editable: Boolean
+            username: {
+                type: String,
+                default: null
+            },
+            url: {
+                type: String,
+                default: null
+            },
+            size: {
+                type: String,
+                default: '80px'
+            },
+            editable: {
+                type: Boolean,
+                default: false
+            },
+            clickable: {
+                type: Boolean,
+                default: false
+            }
         },
         data() {
 			return {
+                user: [ ],
+                localUser: store.state.user,
+                userForumId: null,
                 processingStep: 0,
                 processingPerc: 0,
                 processingTweenedPerc: 0,
@@ -60,20 +92,20 @@
         },
         methods: {
             onFileChanged(event) {
-                this.user.forumAtt.attributes.avatarUrl = URL.createObjectURL(event.target.files[0]);
+                this.url = URL.createObjectURL(event.target.files[0]);
                 this.uploadAvatar(event.target.files[0]);
             },
             uploadAvatar: function(file) {
                 this.processingStep = 1;
                 const formData = new FormData();
                 formData.append('avatar', file, file.name);
-                let userId = this.user.forumAtt.id;
+
                 let tot = 0;
                 let perc = 0;
 
-                axios.post(usersBaseURI + userId + '/avatar', formData, {
+                axios.post(usersBaseURI + this.userForumId + '/avatar', formData, {
                     headers: {
-                        "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + userId
+                        "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + this.userForumId
                     },
                     onUploadProgress: ProgressEvent => {
                         perc = (ProgressEvent.loaded / ProgressEvent.total) * 100;
@@ -87,17 +119,31 @@
                     }
                 })
                 .then(response => {
-                    this.user.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
+                    this.url = response.data.data.attributes.avatarUrl;
                     this.processingStep = 4;
                     this.processingSuccess = true;
 
-                    store.dispatch('setData', this.user).then(() => {
-                        location.reload();
-                    });
+                    if(this.username.toLowerCase() === this.localUser.username) {
+                        this.localUser.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
+
+                        store.dispatch('setData', this.localUser).then(() => {
+                            location.reload();
+                        });
+                    }
                 })
                 .catch(error => {
                     this.processingStep = 5;
                     console.log(error);
+                })
+            }
+        },
+        mounted() {
+            if(this.username.toLowerCase() === this.localUser.username) {
+                this.userForumId = this.localUser.forumAtt.id;
+            } else {
+                ForumService.getUserData(this.username)
+                .then(res => {
+                    this.userForumId = res.data.data.id;
                 })
             }
         }

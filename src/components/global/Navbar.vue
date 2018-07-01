@@ -33,8 +33,7 @@
 								</b-dropdown>
 								<b-dropdown no-caret right class="profile">
 									<template slot="button-content">
-										<img class="navbar__menu__user__info__avatar" :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
-										<div class="navbar__menu__user__info__avatar--empty" v-else> ? </div>
+										<userAvatar class="avatar" :url="user.forumAtt.attributes.avatarUrl" :username="user.username" size="24px" />
 										<span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
 									</template>
 									<b-dropdown-item to="/ucp" exact><icon :icon="['fas', 'wrench']" />Painel do usuário</b-dropdown-item>
@@ -78,8 +77,7 @@
 			</div>
 			<div class="nav__mobile__menu__user" v-else>
 				<div class="nav__mobile__menu__user__info__avatar">
-					<img :src="user.forumAtt.attributes.avatarUrl" v-if="user.forumAtt.attributes.avatarUrl != null" />
-					<div class="nav__mobile__menu__user__info__avatar--empty" v-else> ? </div>
+					<userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" size="80px" clickable />
 				</div>
 				<div class="nav__mobile__menu__user__info__name">
 					Olá, {{ user.forumAtt.attributes.username }}!
@@ -125,6 +123,7 @@
 	import signin from '@/components/auth/SignIn';
 	import signup from '@/components/auth/SignUp';
 	import msgNotification from '@/components/messaging/notification';
+	import userAvatar from '@/components/user-profile/avatar'
 
 	import MessagingService from '@/services/messaging'
 
@@ -365,7 +364,7 @@ import { setTimeout, setInterval } from 'timers';
             window.removeEventListener('scroll', this.handleScroll);
         },
 		components: {
-			signin, signup, store, msgNotification
+			signin, signup, store, msgNotification, userAvatar
 		}
 	}
 

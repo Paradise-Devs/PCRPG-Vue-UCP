@@ -2,7 +2,7 @@
     <b-container class="page__user-profile">
         <b-row>
             <b-col class="user-profile__block" md="12">
-                <userAvatar :user="user" :editable="editable" />
+                <userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" :editable="editable" />
                 <userContent :user="user" />
                 
                 <!-- buttons -->
@@ -130,9 +130,6 @@
             } else {
                 this.localUserLoggedIn = true;
             }
-
-            console.log(this.user._id);
-            console.log(this.localUser._id);
             
             this.getUserCharacters();
         },

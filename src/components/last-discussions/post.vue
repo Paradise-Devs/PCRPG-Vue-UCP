@@ -2,7 +2,7 @@
     <div class="post">
         <a :href="'https://forum.pc-rpg.com.br/u/' + username" class="post__author">
             <avatar-spinner :loading="avatarLoading" color="#303846" size="38px" class="avatar__loader"></avatar-spinner> 
-            <img class="post__author__avatar" :src="useravatar">
+            <userAvatar class="avatar" :url="useravatar" :username="username" size="36px" v-if="avatarProcessed"/>
         </a>
         <a :href="'https://forum.pc-rpg.com.br/d/' + post.id + '-' + post.attributes.slug" class="post__content">
             <h3 class="post__content__title">{{ post.attributes.title }}</h3>
@@ -21,6 +21,7 @@
 <script>
     import ForumService from '@/services/forum';
     import moment from 'moment';
+    import userAvatar from '@/components/user-profile/avatar'
     
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
@@ -76,7 +77,7 @@
             })
         },
         components: {
-            'avatar-spinner': BounceLoader, 'dots-spinner': PulseLoader
+            'avatar-spinner': BounceLoader, 'dots-spinner': PulseLoader, userAvatar
         }
     }
 </script>
