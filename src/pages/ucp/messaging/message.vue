@@ -15,11 +15,11 @@
             <b-col md="12" sm="12" class="message__block">
                 <div class="message__header">
                     <div class="avatar">
-                        <img :src="userAvatar">
+                        <userAvatar size="70px" :url="userAvatar" :username="userName" clickable />
                     </div>
                     <div class="details">
                         <h3 class="title">{{ message.subject }}</h3>
-                        <span class="info">Enviado por <b>{{ userName }}</b> {{ message.sendDate | moment }} atrás.</span>
+                        <span class="info">Enviado por <b><router-link :to="'/jogador/' + userName" class="router-link"><b>{{ userName }}</b></router-link></b> {{ message.sendDate | moment }} atrás.</span>
                     </div>
                 </div>
                 <div class="message__content">
@@ -47,6 +47,7 @@
     import loader from 'vue-spinner/src/MoonLoader.vue'
     import moment from 'moment';
     import marked from 'marked';
+    import userAvatar from '@/components/user-profile/avatar'
 
     import { trashAlt, exclamationTriangle, angleLeft } from '@fortawesome/fontawesome-free-solid';
 
@@ -145,7 +146,7 @@
             }
 		},
         components: {
-            loader
+            loader, userAvatar
         }
     }
 </script>

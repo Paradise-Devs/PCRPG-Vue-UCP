@@ -8,7 +8,7 @@
 					<b-col md="12" class="ucp__block ucp__block--profile">
 						<h4 class="ucp__block__desc ucp__block--profile__desc">Seu perfil</h4>
 						<div class="ucp__block__content">
-							<userAvatar :user="user" :editable="true" />
+							<userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" editable />
 							<userContent :user="user" />
 							<router-link to="/ucp/perfil" exact class="btn btn-primary">Ver perfil completo</router-link>
 						</div>

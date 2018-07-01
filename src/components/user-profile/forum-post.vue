@@ -3,7 +3,7 @@
 		<vue-spinner :loading="postP.loading" color="#303846" size="10px"></vue-spinner>
 		<div v-if="postP.processed">
 			<a :href="'https://forum.pc-rpg.com.br/u/' + user.forumAtt.attributes.username" target="_blank">
-				<img class="forum__post__img" :src="user.forumAtt.attributes.avatarUrl"/>
+				<userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" size="45px" />
 			</a>
 			<p class="forum__post__text">
 				<span class="forum__post__text__info">
@@ -21,6 +21,7 @@
 	import moment from 'moment';
 	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 	import fontawesome from '@fortawesome/vue-fontawesome'
+	import userAvatar from './avatar'
 
     export default {
 		props: {
@@ -56,7 +57,7 @@
 			}
 		},
 		components: {
-			'vue-spinner': PulseLoader,
+			'vue-spinner': PulseLoader, userAvatar
 		}
     }
 </script>

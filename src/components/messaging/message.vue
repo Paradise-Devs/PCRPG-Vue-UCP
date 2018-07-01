@@ -7,7 +7,7 @@
         :data-msgid="msg._id"
     >
         <div class="avatar">
-            <img :src="sender.avatar">
+            <userAvatar :url="sender.avatar" :username="sender.username" size="60px" />
         </div>
         <div class="content">
             <h5 class="title">{{ msg.subject }}</h5>
@@ -19,6 +19,7 @@
 <script>
     import moment from 'moment';
     import ForumService from '@/services/forum'
+    import userAvatar from '@/components/user-profile/avatar'
 
     export default {
         props: {
@@ -53,6 +54,9 @@
                 this.sender.username = user.data.data.attributes.username;
                 this.sender.avatar = user.data.data.attributes.avatarUrl;
             })
+        },
+        components: {
+            userAvatar
         }
     }
 </script>
