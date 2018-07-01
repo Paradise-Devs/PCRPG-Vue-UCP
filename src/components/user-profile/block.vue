@@ -2,7 +2,7 @@
     <b-container class="page__user-profile">
         <b-row>
             <b-col class="user-profile__block" md="12">
-                <userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" editable />
+                <userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" :editable="editable" />
                 <userContent :user="user" />
                 
                 <!-- buttons -->
