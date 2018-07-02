@@ -1,9 +1,9 @@
 <template>
 	<div class="forum__post">
-		<vue-spinner :loading="postP.loading" color="#303846" size="10px"></vue-spinner>
+		<vue-spinner :loading="postP.loading" color="#303846" size="10px" ></vue-spinner>
 		<div v-if="postP.processed">
 			<a :href="'https://forum.pc-rpg.com.br/u/' + user.forumAtt.attributes.username" target="_blank">
-				<userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" size="45px" />
+				<userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" mobSize="40px" size="45px" />
 			</a>
 			<p class="forum__post__text">
 				<span class="forum__post__text__info">

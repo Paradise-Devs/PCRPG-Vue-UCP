@@ -7,7 +7,7 @@
         :data-msgid="msg._id"
     >
         <div class="avatar">
-            <userAvatar :url="sender.avatar" :username="sender.username" size="60px" />
+            <userAvatar :url="sender.avatar" :username="sender.username" size="60px" mobSize="62px" />
         </div>
         <div class="content">
             <h5 class="title">{{ msg.subject }}</h5>
