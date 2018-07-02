@@ -1,5 +1,5 @@
 <template>
-    <div class="comp__userAvatar" :class="{'comp__userAvatar--editable': editable }" :style="{ width: size, height: size }">
+    <div class="comp__userAvatar" :class="{'comp__userAvatar--editable': editable }" :style="autoStyle">
         <router-link :to="'/jogador/' + username" class="router-link" v-if="clickable">
             <img :src="url" v-if="url != null" />
             <div class="comp__userAvatar--empty" v-else> ? </div>
@@ -58,6 +58,10 @@
                 type: String,
                 default: '80px'
             },
+            mobSize: {
+                type: String,
+                default: '36px'
+            },
             editable: {
                 type: Boolean,
                 default: false
@@ -77,7 +81,10 @@
                 processingTweenedPerc: 0,
                 processingMax: 100,
                 processingSuccess: false,
-                processingError: false
+                processingError: false,
+
+                width: null,
+                height: null
             }
         },
         watch: {
@@ -88,6 +95,13 @@
         computed: {
             animatedProcessingValue: function() {
                 return this.processingTweenedPerc.toFixed();
+            },
+            autoStyle: function() {
+                if(window.innerWidth < 768) {
+                    return 'width: ' + this.mobSize + '; height: ' + this.mobSize;
+                } else {
+                    return 'width: ' + this.size + '; height: ' + this.size;
+                }
             }
         },
         methods: {
