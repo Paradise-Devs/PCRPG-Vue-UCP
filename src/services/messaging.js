@@ -9,7 +9,7 @@ if (
 ) {
 	baseUri = "http://dev.pc-rpg.com.br:3000/api/v1/messages/";
 } else {
-	baseUri = "https://prod.pc-rpg.com.br:3000/api/v1/messages/";
+	baseUri = "https://prod.pc-rpg.com.br/api/v1/messages/";
 }
 
 var auth = { Authorization: "Bearer " + localStorage.getItem("token") };
