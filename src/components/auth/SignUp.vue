@@ -239,6 +239,11 @@
 					_this.loading = false;
 				})
 			}
+		},
+		mounted() {
+			if(window.location.href.indexOf('signup') > -1) {
+				this.$refs.signup.show();
+			}
 		}
 	}
 </script>
