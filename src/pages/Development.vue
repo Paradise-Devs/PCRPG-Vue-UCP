@@ -27,7 +27,7 @@
 	import GitService from '@/services/gitlab'
 	import InfiniteLoading  from 'vue-infinite-loading';
 
-	import commits from '@/components/commits/commit.vue'
+	import commits from '@/components/commits/Commit.vue'
 
 	export default {
 		data() {
