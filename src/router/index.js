@@ -24,6 +24,7 @@ Vue.use(Router);
 
 // routes
 export default new Router({
+	mode: 'history',
 	routes: [
 		{ path: '/', name: 'Início', component: IndexView },
 		{ path: '/dev', name: 'Desenvolvimento', component: DevelopmentView },
