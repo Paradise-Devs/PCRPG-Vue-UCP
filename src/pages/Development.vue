@@ -92,7 +92,6 @@
 					GitService.getStats(this.projects[i].id)
 					.then(response => {
 						this.projects[i].commits = response.data.statistics.commit_count;
-						console.log(this.projects[i].name + ": " + this.projects[i].commits);
 					});
 				}
 
