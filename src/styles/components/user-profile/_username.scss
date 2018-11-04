@@ -1,19 +1,19 @@
 .comp__userName {
   font-weight: bold;
 
-  &.moderador a, &.moderador span {
+  &.Moderador a, &.Moderador span {
     color: $modColor;
   }
 
-  &.desenvolvedor a, &.desenvolvedor span {
+  &.Desenvolvedor a, &.Desenvolvedor span {
     color: $devColor;
   }
 
-  &.administrador a, &.administrador span {
+  &.Administrador a, &.Administrador span {
     color: $adminColor;
   }
 
-  &.suporte a, &.suporte span {
+  &.Suporte a, &.Suporte span {
     color: $supportColor;
   }
 

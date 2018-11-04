@@ -1,5 +1,5 @@
 <template>
-  <span class="comp__userName" :class="assignment.nameSingular.toLowerCase()" v-if="usernameProcessed">
+  <span class="comp__userName" :class="assignment.nameSingular" v-if="usernameProcessed">
     <router-link
       :to="'/jogador/' + username"
       v-if="linkable"

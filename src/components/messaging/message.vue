@@ -7,7 +7,7 @@
     :data-msgid="msg._id"
   >
     <div class="avatar">
-      <userAvatar :url="sender.avatar" :username="sender.username" size="60px" mobSize="62px" />
+      <userAvatar :url="sender.avatar" :username="sender.username" size="60px" mobSize="62px" v-if="userProcessed" />
     </div>
     <div class="content">
       <h5 class="title">{{ msg.subject }}</h5>
@@ -28,10 +28,10 @@
     },
     data() {
       return {
+        userProcessed: false,
         sender: {
           avatar: null,
-          username: null,
-          userProcessed: false
+          username: null
         }
       };
     },
