@@ -1,0 +1,23 @@
+.comp__userName {
+  font-weight: bold;
+
+  &.moderador a, &.moderador span {
+    color: $modColor;
+  }
+
+  &.desenvolvedor a, &.desenvolvedor span {
+    color: $devColor;
+  }
+
+  &.administrador a, &.administrador span {
+    color: $adminColor;
+  }
+
+  &.suporte a, &.suporte span {
+    color: $supportColor;
+  }
+
+  a:hover {
+    opacity: .6;
+  }
+}

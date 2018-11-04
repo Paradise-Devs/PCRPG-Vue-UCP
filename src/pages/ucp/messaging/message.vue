@@ -19,7 +19,7 @@
                     </div>
                     <div class="details">
                         <h3 class="title">{{ message.subject }}</h3>
-                        <span class="info">Enviado por <b><router-link :to="'/jogador/' + userName" class="router-link"><b>{{ userName }}</b></router-link></b> {{ message.sendDate | moment }} atrás.</span>
+                        <span class="info">Enviado por <user-name :username="userName" linkable /> {{ message.sendDate | moment }} atrás.</span>
                     </div>
                 </div>
                 <div class="message__content">
@@ -48,6 +48,7 @@
     import moment from 'moment';
     import marked from 'marked';
     import userAvatar from '@/components/user-profile/avatar'
+    import userName from '@/components/user-profile/username'
 
     import { trashAlt, exclamationTriangle, angleLeft } from '@fortawesome/fontawesome-free-solid';
 
@@ -146,7 +147,7 @@
             }
 		},
         components: {
-            loader, userAvatar
+            loader, userAvatar, userName
         }
     }
 </script>
