@@ -1,3 +1,5 @@
+#
+# build image files
 FROM alpine:latest AS intermediate
 
 WORKDIR /build
@@ -9,6 +11,8 @@ RUN apk add -qU nodejs-current npm git python make
 COPY . .
 RUN npm install && npm run build
 
+#
+# make actual image
 FROM nginx:1.15.5-alpine
 
 # set workdir
