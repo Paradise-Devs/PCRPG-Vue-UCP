@@ -1,19 +1,20 @@
 .page__development {
-    min-height: 63vh;
-    margin: 20px 0px;
-    text-align: center;
-
-    @include tablet {
-        text-align: left;
-        margin: 40px 0px;
+  min-height: 37vh;
+  margin: 20px 0px;
+  text-align: center;
+  @include tablet {
+    text-align: left;
+    margin: 40px 0px;
+  }
+  .row {
+    div[class^="col"] {
+      z-index: 0;
     }
-    .row {
-        div[class^="col"] {
-            z-index: 0;
-        }
-    }
-
-    .nomore {
-        color: $gray;
-    }
+  }
+  .v-spinner {
+    margin-top: 215px;
+  }
+  .nomore {
+    color: $gray;
+  }
 }

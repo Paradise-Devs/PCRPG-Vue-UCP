@@ -1,6 +1,7 @@
 <template>
 	<div class="page__development">
 		<b-container>
+			<spinner :loading="projectsLoading" color="#303846" size="90px"></spinner>
 			<b-row>
 				<b-col md="3">
 					<b-list-group v-if="projectsProcessed">
@@ -18,7 +19,6 @@
 					</b-list-group>
 				</b-col>
 				<b-col md="9">
-
 					<div infinite-wrapper>
 						<commits 
 							v-for="commit in commits" 
@@ -39,9 +39,10 @@
 <script>
 	import GitService from '@/services/gitlab'
 	import InfiniteLoading  from 'vue-infinite-loading';
+	import spinner from 'vue-spinner/src/MoonLoader.vue';
 
 	import commits from '@/components/commits/Commit.vue'
-import { setTimeout } from 'timers';
+	import { setTimeout } from 'timers';
 
 	export default {
 		data() {
@@ -50,6 +51,7 @@ import { setTimeout } from 'timers';
 				loading: false,
 				totalcommits: 2,
 				projectsProcessed: false,
+				projectsLoading: true,
 				commits: [ ],
 				projects: [ ],
 				defaultBranch: '',
@@ -97,6 +99,7 @@ import { setTimeout } from 'timers';
 				let self = this;
 				setTimeout(function() {
 					self.projectsProcessed = true;
+					self.projectsLoading = false;
 				}, 1000);
 			}
 		},
@@ -115,7 +118,7 @@ import { setTimeout } from 'timers';
 			});
 		},
 		components: {
-			InfiniteLoading, commits
+			InfiniteLoading, commits, 'spinner': spinner
 		},
 	}
 </script>

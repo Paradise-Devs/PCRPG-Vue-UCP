@@ -13,7 +13,7 @@ export default {
       }
     });
   },
-  getProjectCommits(project, page = 1, branch) {
+  getProjectCommits(project, page, branch) {
     return axios.get(baseUri + 'projects/' + project + '/repository/commits', { 
       params: { 
         page: page,
