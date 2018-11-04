@@ -7,7 +7,7 @@ if (
 	location.hostname != "pc-rpg.com.br" &&
 	location.hostname != "www.pc-rpg.com.br"
 ) {
-	baseUri = "http://dev.pc-rpg.com.br:3000/api/v1/messages/";
+	baseUri = "http://dev.pc-rpg.com.br:443/api/v1/messages/";
 } else {
 	baseUri = "https://prod.pc-rpg.com.br/api/v1/messages/";
 }
