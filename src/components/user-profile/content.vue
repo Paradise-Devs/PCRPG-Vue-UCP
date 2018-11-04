@@ -39,10 +39,6 @@
         let tmp = text.replace(/(?:\r\n|\r|\n)/g, " ");
         return tmp;
       }
-    },
-    mounted() {
-      console.log(this.user.forumAtt.attributes.bio == null);
-      
     }
   };
 </script>
