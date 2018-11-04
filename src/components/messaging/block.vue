@@ -3,13 +3,15 @@
     <div v-if="messages.length > 0">
       <paginate name="messages" :list="messages" :per="5" class="list">
         <li v-for="(msg, index) in paginated('messages')" :key="index" @click="getSelectedElements">
-          <message :msg="msg"/>
+          <message :msg="msg" :key="infiniteId"/>
         </li>
       </paginate>
       <paginate-links
         for="messages"
+        :async="true"
         :show-step-links="true"
         :hide-single-page="true"
+        @change="onPageChange"
       >
       </paginate-links>
     </div>
@@ -34,6 +36,7 @@
     data() {
       return {
         selected: {},
+        infiniteId: +new Date(),
         clickDisabled: false,
         paginate: ["messages"]
       };
@@ -68,10 +71,13 @@
               console.log(error.response);
             });
         }
+      },
+      onPageChange: function() {
+        this.infiniteId += 1;
       }
     },
     mounted() {
-      console.log(messages);
+      console.log(this.messages);
     },
     components: {
       message
