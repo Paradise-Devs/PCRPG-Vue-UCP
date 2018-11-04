@@ -11,7 +11,7 @@
     </div>
     <div class="content">
       <h5 class="title">{{ msg.subject }}</h5>
-      <span class="info">Enviado por <b>{{ sender.username }}</b> {{ msg.sendDate | moment }} atrás.</span>
+      <span class="info">Enviado por <user-name :username="sender.username" v-if="userProcessed" /> {{ msg.sendDate | moment }} atrás.</span>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@
   import moment from "moment";
   import ForumService from "@/services/forum";
   import userAvatar from "@/components/user-profile/avatar";
+  import userName from '@/components/user-profile/username'
 
   export default {
     props: {
@@ -29,7 +30,8 @@
       return {
         sender: {
           avatar: null,
-          username: null
+          username: null,
+          userProcessed: false
         }
       };
     },
@@ -56,10 +58,11 @@
       ForumService.getUserData(this.msg.sender.username).then(user => {
         this.sender.username = user.data.data.attributes.username;
         this.sender.avatar = user.data.data.attributes.avatarUrl;
+        this.userProcessed = true;
       });
     },
     components: {
-      userAvatar
+      userAvatar, userName
     }
   };
 </script>

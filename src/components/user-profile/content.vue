@@ -1,6 +1,6 @@
 <template>
   <div class="comp__userContent">
-    <h3 class="comp__userContent__username">{{ user.forumAtt.attributes.username }}</h3>
+    <user-name :username="user.forumAtt.attributes.username" class="comp__userContent__username"/>
     <p class="comp__userContent__bio" v-if="user.forumAtt.attributes.bio">{{ user.forumAtt.attributes.bio | bio }}</p>
     <p class="comp__userContent__bio" v-else>Bio não definida.</p>
     <div class="tags">
@@ -21,6 +21,7 @@
 <script>
   import Vue from "vue";
   import { store } from "@/vuex/store";
+  import userName from "@/components/user-profile/username";
 
   import {
     code,
@@ -39,6 +40,9 @@
         let tmp = text.replace(/(?:\r\n|\r|\n)/g, " ");
         return tmp;
       }
+    },
+    components: {
+      userName
     }
   };
 </script>

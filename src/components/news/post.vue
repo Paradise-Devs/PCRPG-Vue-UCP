@@ -1,4 +1,4 @@
-<template>
+w<template>
     <div class="post">
         <a :href="'https://forum.pc-rpg.com.br/u/' + username" class="post__author">
             <avatar-spinner :loading="avatarLoading" color="#303846" size="38px" class="avatar__loader"></avatar-spinner> 
@@ -9,7 +9,7 @@
             <ul class="post__content__info">
                 <li class="post__content__info__created">
                     <username-spinner :loading="avatarLoading" color="#303846" size="5px" class="username__loader"></username-spinner> 
-                    <span v-if="avatarProcessed"><b>{{ username }}</b> publicou {{ post.attributes.startTime | moment }}</span>
+                    <span v-if="avatarProcessed"><user-name :username="username" /> publicou {{ post.attributes.startTime | moment }}</span>
                 </li>
             </ul>
         </a>
@@ -21,6 +21,7 @@
     import ForumService from '@/services/forum'
     import moment from 'moment';
     import userAvatar from '@/components/user-profile/avatar'
+    import userName from '@/components/user-profile/username'
     
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
@@ -59,7 +60,7 @@
             })
         },
         components: {
-            'avatar-spinner': BounceLoader, 'username-spinner': PulseLoader, userAvatar
+            'avatar-spinner': BounceLoader, 'username-spinner': PulseLoader, userAvatar, userName
         }
     }
 </script>
