@@ -15,8 +15,9 @@ deploy_docker:
     - "docker save noderp/web-frontend:$CI_COMMIT_REF_NAME | gzip > ./latest.tar.gz"
     - "scp ./latest.tar.gz root@dev.pc-rpg.com.br:/tmp"
     - "ssh root@dev.pc-rpg.com.br \"docker load < /tmp/latest.tar.gz\""
+  after_script:
+    - "docker rmi noderp/web-frontend:$CI_COMMIT_REF_NAME"
   only: 
     - develop
 
-after_script:
-  - "docker rmi noderp/web-frontend:$CI_COMMIT_REF_NAME"
+
