@@ -5,15 +5,18 @@ stages:
 build_docker: 
   stage: build
   script: 
-    - "docker build --no-cache --rm -t noderp/web-frontend:$CI_COMMIT_SHA ."
+    - "docker build --no-cache --rm -t noderp/web-frontend:$CI_COMMIT_REF_NAME ."
   only: 
     - develop
   
 deploy_docker: 
   stage: deploy
   script: 
-    - "docker save noderp/web-frontend:$CI_COMMIT_SHA | gzip > ./latest.tar.gz"
+    - "docker save noderp/web-frontend:$CI_COMMIT_REF_NAME | gzip > ./latest.tar.gz"
     - "scp ./latest.tar.gz root@dev.pc-rpg.com.br:/tmp"
     - "ssh root@dev.pc-rpg.com.br \"docker load < /tmp/latest.tar.gz\""
   only: 
     - develop
+
+after_script:
+  - "docker rmi noderp/web-frontend:$CI_COMMIT_REF_NAME"
