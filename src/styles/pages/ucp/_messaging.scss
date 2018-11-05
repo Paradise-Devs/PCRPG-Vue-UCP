@@ -1,33 +1,28 @@
 .page__ucp {
-    &--messaging {
-        .column {
-            &--left {
-                padding-left: 0;
-                padding-right: 0;
-
-                @include tablet {
-                    padding-left: 0;
-                    padding-right: 15px;
-                }
-            }
-
-            &--right {
-                padding-left: 0;
-                padding-right: 0;
-                
-                @include tablet {
-                    padding-left: 15px;
-                    padding-right: 0;
-                }
-            }
+  &--messaging {
+    .column {
+      &--left {
+        padding-left: 0;
+        padding-right: 0;
+        @include tablet {
+          padding-left: 0;
+          padding-right: 15px;
         }
-    }
-
-    &--message-details {
-        padding: 0;
-        
-        .column {
-            padding: 0;
+      }
+      &--right {
+        padding-left: 0;
+        padding-right: 0;
+        @include tablet {
+          padding-left: 15px;
+          padding-right: 0;
         }
+      }
     }
+  }
+  &--message-details {
+    padding: 0 !important;
+    .column {
+      padding: 0;
+    }
+  }
 }

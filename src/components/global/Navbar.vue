@@ -53,7 +53,7 @@
 		<signup v-if="!userLoggedIn"/>
 		<overlay />
 		<div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav">
-			<b-dropdown no-caret right class="messages__dropdown" @click="getUserUnreadedMessages">
+			<b-dropdown no-caret right class="messages__dropdown" @click="getUserUnreadedMessages" v-if="userLoggedIn">
 				<template slot="button-content">
 					<icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
 					<span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
