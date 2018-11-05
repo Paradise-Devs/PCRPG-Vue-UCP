@@ -14,6 +14,6 @@ deploy_docker:
   script: 
     - "docker save noderp/web-frontend:$CI_COMMIT_SHA | gzip > ./latest.tar.gz"
     - "scp ./latest.tar.gz root@dev.pc-rpg.com.br:/tmp"
-    - "ssh root@dev.pc-rpg.com.br docker load < /tmp/latest.tar.gz"
+    - "ssh root@dev.pc-rpg.com.br \"docker load < /tmp/latest.tar.gz\""
   only: 
     - develop
