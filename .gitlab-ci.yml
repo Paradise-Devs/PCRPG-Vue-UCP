@@ -17,5 +17,6 @@ deploy_docker:
     - "ssh root@dev.pc-rpg.com.br \"docker load < /tmp/latest.tar.gz\""
   after_script:
     - "docker rmi noderp/web-frontend:$CI_COMMIT_REF_NAME"
+    - "curl -X POST -F token=$CI_JOB_TOKEN -F ref=$CI_COMMIT_REF_NAME https://gitlab.com/api/v4/projects/9203660/trigger/pipeline"
   only: 
     - develop
