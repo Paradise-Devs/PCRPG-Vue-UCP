@@ -4,7 +4,7 @@
 			<spinner :loading="projectsLoading" color="#303846" size="90px"></spinner>
 			<b-row>
 				<b-col md="3">
-					<b-list-group v-if="projectsProcessed">
+					<b-list-group v-if="projectsProcessed" class="list-group--custom">
 						<b-list-group-item
 							href="#"
 							v-for="project in projects"
