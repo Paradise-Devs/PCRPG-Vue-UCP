@@ -4,7 +4,7 @@ import axios from 'axios';
 var baseUri;
 
 if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-    baseUri = 'http://dev.pc-rpg.com.br:3000/api/v1/';
+    baseUri = 'https://api.dev.pc-rpg.com.br/api/v1/';
 } else {
     baseUri = 'https://prod.pc-rpg.com.br/api/v1/';
 }

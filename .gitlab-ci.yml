@@ -19,5 +19,3 @@ deploy_docker:
     - "docker rmi noderp/web-frontend:$CI_COMMIT_REF_NAME"
   only: 
     - develop
-
-
