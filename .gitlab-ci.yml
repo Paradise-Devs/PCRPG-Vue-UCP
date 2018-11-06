@@ -28,7 +28,7 @@ deploy_docker:
     - "scp ./latest.tar.gz $DEPLOY_SSH_URI:/tmp"
     - "ssh $DEPLOY_SSH_URI \"docker load < /tmp/latest.tar.gz\""
   after_script:
-    - "echo \"docker rmi $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT}\"""
+    - "echo \"docker rmi $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT}\""
     - "curl -X POST -F token=$CI_JOB_TOKEN -F ref=$CI_COMMIT_REF_NAME https://gitlab.com/api/v4/projects/$DOWNSTREAM_PROJECT_ID/trigger/pipeline"
   only: 
     - master
