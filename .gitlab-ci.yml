@@ -12,7 +12,7 @@ build_docker:
   before_script: 
     - export CI_COMMIT_SHA_SHORT=${CI_COMMIT_SHA::8}
   script: 
-    - "docker build --no-cache --rm -t noderp/web-frontend:${CI_COMMIT_SHA_SHORT} ."
+    - "docker build --build-arg SSH_KEY=\"$(cat ~/.ssh/id_rsa)\" --no-cache --rm -t $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT} ."
   only: 
     - master
     - develop
@@ -25,11 +25,12 @@ deploy_docker:
   before_script: 
     - export CI_COMMIT_SHA_SHORT=${CI_COMMIT_SHA::8}
   script: 
-    - "docker save $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT} | gzip > ./latest.tar.gz"
-    - "scp ./latest.tar.gz $DEPLOY_SSH_URI:/tmp"
-    - "ssh $DEPLOY_SSH_URI \"docker load < /tmp/latest.tar.gz\""
+    - "docker save $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT} | gzip > ./$CI_PROJECT_PATH_SLUG-${CI_COMMIT_SHA_SHORT}.tar.gz"
+    - "scp ./$CI_PROJECT_PATH_SLUG-${CI_COMMIT_SHA_SHORT}.tar.gz $DEPLOY_SSH_URI:/tmp"
+    - "ssh $DEPLOY_SSH_URI \"docker load < /tmp/$CI_PROJECT_PATH_SLUG-${CI_COMMIT_SHA_SHORT}.tar.gz && docker tag $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT} $DOCKER_IMAGE_NAME:latest\""
   after_script:
-    - "docker rmi $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA::8}"
+    - "docker rmi -f $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA::8}"
     - "curl -X POST -F token=$CI_JOB_TOKEN -F ref=$CI_COMMIT_REF_NAME https://gitlab.com/api/v4/projects/$DOWNSTREAM_PROJECT_ID/trigger/pipeline"
   only: 
     - master
+ 
