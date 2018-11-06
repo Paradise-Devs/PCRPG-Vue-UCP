@@ -50,7 +50,7 @@
             color: $gray !important;
             transition: ease-in 200ms;
 
-            &.active {
+            &.router-link-exact-active {
                 color: $white !important;
                 opacity: 1;
             }

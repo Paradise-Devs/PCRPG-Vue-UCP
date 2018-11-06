@@ -1,0 +1,45 @@
+.list-group {
+  &--custom {
+    .list-group {
+      &-item {
+        &-action {
+          background-color: $gray-dark;
+          color: $gray-lt;
+          border: none;
+          position: relative;
+          border: 1px solid $borderQuote;
+          min-height: 83px;
+        
+          &:hover:not(.active) {
+            background-color: $gray-hover;
+            color: $gray;
+          }
+        
+          &:active, &:focus {
+            background-color: inherit;
+            color: inherit;
+          }
+        
+          &:first-child {
+            border-radius: 4px 4px 0 0;
+          }
+        
+          &.active {
+            color: $white;
+            background-color: $blue;
+          }
+        
+          .title {
+            font-size: 14px;
+            margin: 0 0 5px;
+            font-weight: bold;
+          }
+        
+          .desc {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}

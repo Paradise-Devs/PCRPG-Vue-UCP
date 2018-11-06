@@ -2,7 +2,7 @@
     <div class="user">
         <userAvatar class="user__avatar" :url="user.avatarUrl" :username="user.username" size="36px" clickable/>
         <router-link :to="'/jogador/' + user.username" class="user__content">
-            <h3 class="user__name">{{ user.username }}</h3>
+            <user-name :username="user.username" class="user__name"/>
             <ul class="user__info">
                 <li>
                     Visto pela última vez {{ user.lastSeenTime | moment }}
@@ -15,6 +15,7 @@
 <script>
     import moment from 'moment';
     import userAvatar from '@/components/user-profile/avatar'
+    import userName from "@/components/user-profile/username";
 
     export default {
         props:['user'],
@@ -24,7 +25,7 @@
 			}
         },
         components: {
-            userAvatar
+            userAvatar, userName
         }
     }
 </script>
