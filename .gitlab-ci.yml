@@ -6,7 +6,7 @@ before_script:
  - export CI_COMMIT_SHA_SHORT=${CI_COMMIT_SHA::8}
 
 variables: 
-  DEPLOY_SSH_URI: root@pcrpg-br-prod-app-1
+  DEPLOY_SSH_URI: root@pcrpg-br-app-prod-1
   DOCKER_IMAGE_NAME: noderp/web-frontend
   DOWNSTREAM_PROJECT_ID: 9203660
 
