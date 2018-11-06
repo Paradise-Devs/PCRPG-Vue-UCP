@@ -1,0 +1,34 @@
+stages: 
+  - build
+  - deploy
+
+before_script:
+ - export CI_COMMIT_SHA_SHORT=${CI_COMMIT_SHA::8}
+
+variables: 
+  DEPLOY_SSH_URI: root@pcrpg-br-prod-app-1
+  DOCKER_IMAGE_NAME: noderp/web-frontend
+  DOWNSTREAM_PROJECT_ID: 9203660
+
+build_docker: 
+  stage: build
+  script: 
+    - "docker build --no-cache --rm -t noderp/web-frontend:${CI_COMMIT_SHA_SHORT} ."
+  only: 
+    - master
+    - develop
+    - tags
+    - triggers
+    - run
+  
+deploy_docker: 
+  stage: deploy
+  script: 
+    - "docker save $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT} | gzip > ./latest.tar.gz"
+    - "scp ./latest.tar.gz root@dev.pc-rpg.com.br:/tmp"
+    - "ssh $DEPLOY_SSH_URI \"docker load < /tmp/latest.tar.gz\""
+  after_script:
+    - "docker rmi $DOCKER_IMAGE_NAME:${CI_COMMIT_SHA_SHORT}"
+    - "curl -X POST -F token=$CI_JOB_TOKEN -F ref=$CI_COMMIT_REF_NAME https://gitlab.com/api/v4/projects/$DOWNSTREAM_PROJECT_ID/trigger/pipeline"
+  only: 
+    - master
