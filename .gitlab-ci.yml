@@ -19,6 +19,9 @@ build_docker:
     - tags
     - triggers
     - run
+  tags: 
+    - internal
+    - shell
   
 deploy_docker: 
   stage: deploy
@@ -33,4 +36,7 @@ deploy_docker:
     - "curl -X POST -F token=$CI_JOB_TOKEN -F ref=$CI_COMMIT_REF_NAME https://gitlab.com/api/v4/projects/$DOWNSTREAM_PROJECT_ID/trigger/pipeline"
   only: 
     - master
+  tags: 
+    - internal
+    - shell
  
