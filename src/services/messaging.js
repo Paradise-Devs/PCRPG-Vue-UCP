@@ -1,7 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
 
-var baseUri = 'https://api.pc-rpg.com.br/api/v1/';
+var baseUri = 'https://api.pc-rpg.com.br/api/v1/messages/';
 
 var auth = { Authorization: "Bearer " + localStorage.getItem("token") };
 
