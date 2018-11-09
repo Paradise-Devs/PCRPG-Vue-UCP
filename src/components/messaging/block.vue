@@ -76,9 +76,6 @@
         this.infiniteId += 1;
       }
     },
-    mounted() {
-      console.log(this.messages);
-    },
     components: {
       message
     }

@@ -55,7 +55,8 @@
       }
     },
     mounted() {
-      ForumService.getUserData(this.msg.sender.username).then(user => {
+      console.log(this.msg);
+      ForumService.getUserData(this.msg.sender).then(user => {
         this.sender.username = user.data.data.attributes.username;
         this.sender.avatar = user.data.data.attributes.avatarUrl;
         this.userProcessed = true;
