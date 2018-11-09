@@ -1,14 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 
-var baseUri;
-
-if((location.hostname != "pc-rpg.com.br") && (location.hostname != "www.pc-rpg.com.br")) {
-    baseUri = 'https://api.dev.pc-rpg.com.br/api/v1/';
-} else {
-    baseUri = 'https://api.pc-rpg.com.br/api/v1/';
-}
-
+var baseUri = 'https://api.pc-rpg.com.br/api/v1/';
 var authorizationKey = "4vvhw6rrkchEfUgnJLyGRc995ZVvB86PxxzYknUT";
 
 export default {
