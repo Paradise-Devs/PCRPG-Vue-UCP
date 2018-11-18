@@ -1,7 +1,7 @@
 .list-group {
   &--custom {
     @include mobile {
-      margin-bottom: 40px;
+      margin-bottom: 40px !important;
     }
 
     &.swiper-container {
@@ -21,18 +21,21 @@
           border: none;
           position: relative;
           border: 1px solid $borderQuote;
-          min-height: 83px;
+          min-height: 118px;
           @include transition-duration(.2s);
 
           @include mobile {
             @include border-radius(4px);
           }
           
+          &:active, &:focus, &:hover {
+            background-color: inherit;
+            color: inherit;
+          }
+
           @include tablet {
-            &:active, &:focus {
-              background-color: inherit;
-              color: inherit;
-            }
+            min-height: 83px;
+
             &:hover:not(.active) {
               background-color: $gray-hover;
               color: $gray;

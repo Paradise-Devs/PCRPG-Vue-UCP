@@ -1,7 +1,9 @@
-.swiper-container {
-  overflow: inherit;
+#pcrpg {
+  .swiper-container {
+    overflow: inherit;
 
-  .swiper-pagination {
-      bottom: -30px;
+    .swiper-pagination {
+        bottom: -30px;
+    }
   }
 }
