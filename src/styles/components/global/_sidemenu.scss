@@ -1,7 +1,20 @@
 .list-group {
   &--custom {
+    @include mobile {
+      margin-bottom: 40px;
+    }
+
+    &.swiper-container {
+      .swiper-pagination {
+        bottom: -28px;
+      }
+    }
+
     .list-group {
       &-item {
+        @include mobile {
+          padding: 20px 5px;
+        }
         &-action {
           background-color: $gray-dark;
           color: $gray-lt;
@@ -9,24 +22,33 @@
           position: relative;
           border: 1px solid $borderQuote;
           min-height: 83px;
-        
-          &:hover:not(.active) {
-            background-color: $gray-hover;
-            color: $gray;
+          @include transition-duration(.2s);
+
+          @include mobile {
+            @include border-radius(4px);
           }
-        
-          &:active, &:focus {
-            background-color: inherit;
-            color: inherit;
+          
+          @include tablet {
+            &:active, &:focus {
+              background-color: inherit;
+              color: inherit;
+            }
+            &:hover:not(.active) {
+              background-color: $gray-hover;
+              color: $gray;
+            }
           }
         
           &:first-child {
-            border-radius: 4px 4px 0 0;
+            @include tablet {
+              border-radius: 4px 4px 0 0;
+            }
           }
         
-          &.active {
+          &.active, &.swiper-slide-active {
             color: $white;
             background-color: $blue;
+            @include transition-duration(.2s);
           }
         
           .title {
