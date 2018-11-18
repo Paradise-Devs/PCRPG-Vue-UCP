@@ -149,38 +149,6 @@
       padding: 2px;
     }
 
-    .post {
-      padding-left: 62px;
-      padding-right: 0px;
-      
-      &__content {
-        &__title {
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 180px;
-        }
-      }
-  
-      .tag-loader {
-        width: 40px;
-        margin-right: 0;
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        max-width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        border-radius: 4px;
-        font-size: 9px;
-        background-color: transparent;
-        display: inline-block;
-        text-transform: none;
-        padding: 5px 5px;
-        color: $black;
-        font-weight: 600;
-      }
-    }
-
     .user {
       padding-left: 62px;
       padding-right: 80px;
