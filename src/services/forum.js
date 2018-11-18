@@ -1,7 +1,13 @@
 import Vue from 'vue';
 import axios from 'axios';
 
-var baseUri = 'https://forum.pc-rpg.com.br/api/';
+let devEnv = 'https://cors-anywhere.herokuapp.com/'
+
+if(window.location.href.indexOf('pc-rpg.com.br') > -1) {
+  devEnv = '';
+}
+
+var baseUri = devEnv + 'https://forum.pc-rpg.com.br/api/';
 var auth = { "Authorization": "Token jYtEGxXc66LzfnCHflISprQQRzZAU5ZODT63PAUx; userId=1" }
 
 export default {
@@ -38,9 +44,16 @@ export default {
     return new Promise(function(resolve, reject) {
       self.getUserData(user)
       .then(userdata => {
-        setTimeout(function() {
-          resolve(userdata.data.included[0].attributes);
-        }, 500);
+        if(userdata.data.included) {
+          setTimeout(function() {
+            resolve(userdata.data.included[0].attributes);
+          }, 500);
+        } else {
+          setTimeout(function() {
+            resolve(null);
+          }, 500);
+        }
+        
       })
       .catch(err => {
         reject(err);

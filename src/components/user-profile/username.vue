@@ -28,8 +28,13 @@
     mounted() {
       ForumService.getAssigment(this.username)
       .then(res => {
-        this.assignment = res;
-        this.usernameProcessed = true;
+        if(res) {
+          this.assignment = res;
+          this.usernameProcessed = true;
+        } else {
+          this.assignment.nameSingular = 'player';
+          this.usernameProcessed = true;
+        }
       })
     } 
   }

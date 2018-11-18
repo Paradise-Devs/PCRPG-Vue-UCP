@@ -24,8 +24,8 @@
         </div>
         <div class="message__content">
           <div class="oldmessage" v-if="quote">
-            <span v-if="quote.sender.username == user.username">Em resposta a sua mensagem anterior:</span>
-            <span v-else>Em resposta a mensagem de <user-name-comp :username="quote.sender.username" linkable v-if="quoteProcessed" />:</span>
+            <span v-if="quote.sender == user.username">Em resposta a sua mensagem anterior:</span>
+            <span v-else>Em resposta a mensagem de <user-name-comp :username="quote.sender" linkable v-if="quoteProcessed" />:</span>
             <div class="quote">
               <span class="title">{{ quote.subject }}</span>
               <div class="markdown" v-html="oldMarked" />
@@ -82,33 +82,33 @@
       }
 
       MessagingService.getMessageData(this.$route.params.msgid)
-        .then(response => {
-          this.message = response.data;
+      .then(response => {
+        this.message = response.data;
 
-          ForumService.getUserData(this.message.sender.username).then(user => {
-            this.userAvatar = user.data.data.attributes.avatarUrl;
-            this.userName = user.data.data.attributes.username;
-            this.senderProcessed = true;
-          });
-
-          if (this.message.reply) {
-            MessagingService.getMessageData(this.message.reply).then(res => {
-              this.quote = res.data;
-              this.quoteProcessed = true;
-            });
-          }
-
-          if (this.message.receiver.username == this.user.username) {
-            this.markAsRead(this.message._id);
-          } else {
-            this.loading = false;
-            this.$root.$emit("refreshNotReadedMessages");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          this.loading = false;
+        ForumService.getUserData(this.message.sender).then(user => {
+          this.userAvatar = user.data.data.attributes.avatarUrl;
+          this.userName = user.data.data.attributes.username;
+          this.senderProcessed = true;
         });
+
+        if (this.message.reply) {
+          MessagingService.getMessageData(this.message.reply).then(res => {
+            this.quote = res.data;
+            this.quoteProcessed = true;
+          });
+        }
+
+        if (this.message.receiver == this.user.username) {
+          this.markAsRead(this.message._id);
+        } else {
+          this.loading = false;
+          this.$root.$emit("refreshNotReadedMessages");
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        this.loading = false;
+      });
     },
     computed: {
       marked: function() {
