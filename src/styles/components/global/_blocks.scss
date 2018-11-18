@@ -99,6 +99,14 @@
       }
     }
   }
+  &--paged {
+    .loader {
+      height: 64px;
+    }
+    .body {
+      overflow: hidden;
+    }
+  }
   &__header {
     background-color: $gray-dark;
     padding: 8px 10px;

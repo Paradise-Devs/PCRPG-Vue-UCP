@@ -1,5 +1,5 @@
 <template>
-    <div class="block news">
+    <div class="block block--paged">
         <div class="block__header">
             <h3>Novidades</h3>
         </div>
