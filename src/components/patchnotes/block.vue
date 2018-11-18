@@ -1,5 +1,5 @@
 <template>
-    <div class="block patchnotes">
+    <div class="block block--no_img">
         <div class="block__header">
             <h3>Últimas atualizações</h3>
         </div>

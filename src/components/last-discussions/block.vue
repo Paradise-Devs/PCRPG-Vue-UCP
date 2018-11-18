@@ -1,5 +1,5 @@
 <template>
-    <div class="block lastposts">
+    <div class="block block--fullheight">
         <div class="block__header">
             <h3><icon :icon="['far', 'comments']" /> Últimas Discussões</h3>
         </div>
