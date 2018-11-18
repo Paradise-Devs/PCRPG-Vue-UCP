@@ -15,7 +15,7 @@
     <b-col md="12" sm="12" class="message__block">
         <div class="message__header">
           <div class="avatar">
-            <userAvatar size="70px" :url="userAvatar" :username="userName" clickable />
+            <userAvatar size="70px" :url="userAvatar" :username="userName" clickable v-if="senderProcessed" />
           </div>
           <div class="details">
             <h3 class="title">{{ message.subject }}</h3>
