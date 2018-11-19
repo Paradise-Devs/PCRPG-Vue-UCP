@@ -4,9 +4,9 @@
 		<b-row class="ucp">
 			<b-col md="8" sm="12" class="ucp__column--left">
 				<b-row>
-					<b-col md="12" class="ucp__block ucp__block--profile">
-						<h4 class="ucp__block__desc ucp__block--profile__desc">Seu perfil</h4>
-						<div class="ucp__block__content">
+					<b-col md="12" class="block-ucp">
+						<h4 class="desc">Seu perfil</h4>
+						<div class="content">
 							<userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" mobSize="80px" editable />
 							<userContent :user="user" />
 							<router-link to="/ucp/perfil" exact class="btn btn-primary">Ver perfil completo</router-link>
@@ -65,12 +65,12 @@
 		methods: {
 			getUserChars: function() {
 				ServerService.getPlayerCharacters(this.user.username)
-					.then(response => {
-						this.chars = response.data;
-					})
-					.catch(error => {
-						console.log(error);
-					});
+				.then(response => {
+					this.chars = response.data;
+				})
+				.catch(error => {
+					console.log(error);
+				});
 			}
 		},
 		mounted() {

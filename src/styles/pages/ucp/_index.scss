@@ -31,35 +31,8 @@
         padding: 0 20px;
       }
     }
+    //precisa refatorar depois quando tiver mais de um personagem
     &__block {
-      background-color: $gray-dark;
-      margin-bottom: 24px;
-      border-radius: 5px;
-      padding: 0;
-      &__desc {
-        color: $gray-lt;
-        text-transform: uppercase;
-        font-family: $font-roboto;
-        font-size: 12px;
-        font-weight: 700;
-        margin: 15px 20px 0;
-      }
-      &__content {
-        padding: 15px 20px;
-        position: relative;
-        width: 100%;
-        .btn {
-          display: none;
-          @include tablet {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            display: block;
-          }
-        }
-      }
-
-      //precisa refatorar depois quando tiver mais de um personagem
       &__character {
         .ucp__block {
           padding-bottom: 15px;
