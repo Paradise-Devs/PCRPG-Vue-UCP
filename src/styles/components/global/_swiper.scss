@@ -1,9 +1,56 @@
 #pcrpg {
-  .swiper-container {
-    overflow: inherit;
+  .swiper {
+    &-container {
+      overflow: inherit;
+    }
+    &-pagination {
+      //dev page
+      bottom: -30px;
 
-    .swiper-pagination {
-        bottom: -30px;
+      //char block
+      text-align: center;
+      width: 60px !important;
+      margin: 0 auto 0;
+      bottom: 0px;
+    }
+    &-arrow {
+      @include centerY(absolute);
+      width: 45px;
+      height: 45px;
+      margin-top: -20px;
+      z-index: 10;
+      border-radius: 100%;
+      cursor: pointer;
+      background-size: 27px 44px;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-size: 30px;
+      text-align: center;
+      &--prev {
+        left: 5px;
+        right: auto;
+      }
+      &--next {
+        right: 5px;
+        left: auto;
+      }
+      &:hover {
+        background-color: $gray-hover;
+        color: $blue;
+      }
+      &:active {
+        background-color: $gray-dark;
+        color: $blue-active;
+      }
+      &:focus {
+        outline: none;
+      }
+      &.swiper-button-disabled {
+        background-color: $bg-color !important;
+        color: $gray !important;
+        cursor: default;
+        opacity: .3;
+      }
     }
   }
 }

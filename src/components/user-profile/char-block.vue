@@ -1,5 +1,5 @@
 <template>
-  <div class="ucp__block__character">
+  <div class="block-ucp block-ucp--chars">
     <swiper :options="swiperOption" class="ucp__block__character-swiper" v-if="chars.length > 1">
       <swiper-slide v-for="char in chars" :key="char.id" class="char__wrapper--item">
         <b-col 
@@ -34,20 +34,18 @@
       </swiper-slide>
       <div class="ucp__block__character-swiper__pagination" slot="pagination"></div>
     </swiper>
-    <b-col 
-      md="12" 
-      offset-md="1" 
-      class="ucp__block ucp__block--empty"
+    <div
+      class="container container--empty"
       v-else-if="chars.length == 0"
     >
-      <div class="char__icon">
+      <div class="icon">
         <font-awesome-layers>
           <icon :icon="['fas', 'street-view']"/>
                   <icon :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
         </font-awesome-layers>
       </div>
-      <span class="char__text">Sem personagens</span>
-    </b-col>
+      <span class="text">Sem personagens</span>
+    </div>
     <b-col 
       md="12" 
       offset-md="1" 
@@ -85,7 +83,56 @@
 </template>
 
 <script>
+  import { FontAwesomeLayers } from "@fortawesome/vue-fontawesome";
+	import {
+		code,
+		bolt,
+		support,
+		briefcase,
+		pencilAlt,
+		angleLeft,
+		angleRight,
+		dollarSign
+  } from "@fortawesome/fontawesome-free-solid";
+  
   export default {
-    
+    //char data = player_id, firstName, lastName, position, property, cash, level, xp, gender [type, enum], pedModel, traits, logoutArea
+    props: {
+      chars: Array
+    },
+    data() {
+      return {
+        swiperOption: {
+					slidesPerView: 1,
+					init: true,
+					variableWidth: false,
+					navigation: {
+						nextEl: ".ucp__block__character-swiper__arrow--next",
+						prevEl: ".ucp__block__character-swiper__arrow--prev"
+					},
+					pagination: {
+						el: ".ucp__block__character-swiper__pagination"
+					}
+				},
+      }
+    },
+    filters: {
+			money: function(value) {
+				return value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+			}
+		},
+    methods: {
+      getNeededExp: function(level) {
+				return 8 + (level - 1) * 4;
+			},
+			getExpPercent: function(level, currentXP) {
+				let max = this.getNeededExp(level);
+				let res = (currentXP / max) * 100;
+				return res.toFixed();
+			},
+    },
+    components: {
+      FontAwesomeLayers
+    }
   }
 </script>

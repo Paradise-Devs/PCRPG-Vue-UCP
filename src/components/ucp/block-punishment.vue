@@ -125,8 +125,6 @@
 							}
 							this.getPunishmentData();
 						}
-
-						console.log(this.userActivatedStatus);
 					}
 				} else {
 					//desativado

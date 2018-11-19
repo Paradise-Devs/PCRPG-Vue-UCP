@@ -58,10 +58,9 @@
           }
         }
       }
+
+      //precisa refatorar depois quando tiver mais de um personagem
       &__character {
-        position: relative;
-        margin-bottom: 10px;
-        padding: 0;
         .ucp__block {
           padding-bottom: 15px;
           width: 85%;
@@ -69,27 +68,6 @@
           position: relative;
           &--single {
             width: 100%;
-          }
-          &--empty {
-            width: 100%;
-            height: 160px;
-            background-color: rgba($color: $gray-dark, $alpha: .2);
-            border: 1px dashed $gray-dark;
-            position: relative;
-            .char__icon {
-              position: absolute;
-              @include center(absolute);
-              top: 44%;
-              opacity: .5;
-              font-size: 80px;
-            }
-            .char__text {
-              position: absolute;
-              bottom: 10px;
-              font-size: 16px;
-              width: 100%;
-              text-align: center;
-            }
           }
           .character {
             &__id {
@@ -158,53 +136,6 @@
                   }
                 }
               }
-            }
-          }
-        }
-        &-swiper {
-          &__pagination {
-            text-align: center;
-            width: 60px !important;
-            margin: 0 auto 0;
-            bottom: 0px;
-          }
-          &__arrow {
-            @include centerY(absolute);
-            width: 45px;
-            height: 45px;
-            margin-top: -20px;
-            z-index: 10;
-            border-radius: 100%;
-            cursor: pointer;
-            background-size: 27px 44px;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-size: 30px;
-            text-align: center;
-            &--prev {
-              left: 5px;
-              right: auto;
-            }
-            &--next {
-              right: 5px;
-              left: auto;
-            }
-            &:hover {
-              background-color: $gray-hover;
-              color: $blue;
-            }
-            &:active {
-              background-color: $gray-dark;
-              color: $blue-active;
-            }
-            &:focus {
-              outline: none;
-            }
-            &.swiper-button-disabled {
-              background-color: $bg-color !important;
-              color: $gray !important;
-              cursor: default;
-              opacity: .3;
             }
           }
         }
