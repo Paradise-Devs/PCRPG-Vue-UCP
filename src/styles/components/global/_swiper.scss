@@ -4,14 +4,7 @@
       overflow: inherit;
     }
     &-pagination {
-      //dev page
-      bottom: -30px;
-
-      //char block
-      text-align: center;
-      width: 60px !important;
-      margin: 0 auto 0;
-      bottom: 0px;
+      bottom: -28px;
     }
     &-arrow {
       @include centerY(absolute);
