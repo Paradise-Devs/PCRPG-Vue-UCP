@@ -24,6 +24,7 @@
 				<b-row>
 					<block-punishment :user="user" />
 					<block-stats :user="user" />
+					<block-friends :user="user" />
 				</b-row>
 			</b-col>
 		</b-row>
@@ -39,9 +40,11 @@
 
 	import userAvatar from "@/components/user-profile/avatar";
 	import userContent from "@/components/user-profile/content";
+
 	import blockChars from "@/components/user-profile/char-block";
 	import blockStats from "@/components/ucp/block-accstats";
 	import blockPunishment from "@/components/ucp/block-punishment";
+	import blockFriends from "@/components/ucp/block-friends";
 
 	export default {
 		data() {
@@ -96,7 +99,8 @@
 			userContent,
 			blockStats,
 			blockChars,
-			blockPunishment
+			blockPunishment,
+			blockFriends
 		}
 	};
 </script>

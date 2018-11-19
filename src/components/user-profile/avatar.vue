@@ -35,131 +35,136 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import { store } from '@/vuex/store';
-    import { TweenMax } from 'gsap'
-    import ForumService from '@/services/forum'
+  import axios from "axios";
+  import { store } from "@/vuex/store";
+  import { TweenMax } from "gsap";
+  import ForumService from "@/services/forum";
 
-    import { upload } from '@fortawesome/fontawesome-free-solid';
+  import { upload } from "@fortawesome/fontawesome-free-solid";
 
-	var usersBaseURI = 'https://forum.pc-rpg.com.br/api/users/';
+  var usersBaseURI = "https://forum.pc-rpg.com.br/api/users/";
 
-    export default {
-        props: {
-            username: {
-                type: String,
-                default: null
-            },
-            url: {
-                type: String,
-                default: null
-            },
-            size: {
-                type: String,
-                default: '80px'
-            },
-            mobSize: {
-                type: String,
-                default: '36px'
-            },
-            editable: {
-                type: Boolean,
-                default: false
-            },
-            clickable: {
-                type: Boolean,
-                default: false
-            }
-        },
-        data() {
-			return {
-                user: [ ],
-                localUser: store.state.user,
-                userForumId: null,
-                processingStep: 0,
-                processingPerc: 0,
-                processingTweenedPerc: 0,
-                processingMax: 100,
-                processingSuccess: false,
-                processingError: false,
+  export default {
+    props: {
+      username: {
+        type: String,
+        default: null
+      },
+      url: {
+        type: String,
+        default: null
+      },
+      size: {
+        type: String,
+        default: "80px"
+      },
+      mobSize: {
+        type: String,
+        default: "36px"
+      },
+      editable: {
+        type: Boolean,
+        default: false
+      },
+      clickable: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data() {
+      return {
+        user: [],
+        localUser: store.state.user,
+        userForumId: null,
+        processingStep: 0,
+        processingPerc: 0,
+        processingTweenedPerc: 0,
+        processingMax: 100,
+        processingSuccess: false,
+        processingError: false,
 
-                width: null,
-                height: null
-            }
-        },
-        watch: {
-            processingPerc: function(newValue) {
-                TweenLite.to(this.$data, 0.5, { processingTweenedPerc: newValue });
-            }
-        },
-        computed: {
-            animatedProcessingValue: function() {
-                return this.processingTweenedPerc.toFixed();
-            },
-            autoStyle: function() {
-                if(window.innerWidth < 768) {
-                    return 'width: ' + this.mobSize + '; height: ' + this.mobSize;
-                } else {
-                    return 'width: ' + this.size + '; height: ' + this.size;
-                }
-            }
-        },
-        methods: {
-            onFileChanged(event) {
-                this.url = URL.createObjectURL(event.target.files[0]);
-                this.uploadAvatar(event.target.files[0]);
-            },
-            uploadAvatar: function(file) {
-                this.processingStep = 1;
-                const formData = new FormData();
-                formData.append('avatar', file, file.name);
-
-                let tot = 0;
-                let perc = 0;
-
-                axios.post(usersBaseURI + this.userForumId + '/avatar', formData, {
-                    headers: {
-                        "Authorization": "Token " + store.getters.getMasterToken + 'userId=' + this.userForumId
-                    },
-                    onUploadProgress: ProgressEvent => {
-                        perc = (ProgressEvent.loaded / ProgressEvent.total) * 100;
-                        this.processingStep = 2;
-                        this.processingPerc = perc;
-
-                        if(perc.toFixed() == 100) {
-                            this.processingStep = 3;
-                            this.processingSuccess = true;
-                        }
-                    }
-                })
-                .then(response => {
-                    this.url = response.data.data.attributes.avatarUrl;
-                    this.processingStep = 4;
-                    this.processingSuccess = true;
-
-                    if(this.username.toLowerCase() === this.localUser.username) {
-                        this.localUser.forumAtt.attributes.avatarUrl = response.data.data.attributes.avatarUrl;
-
-                        store.dispatch('setData', this.localUser).then(() => {
-                            location.reload();
-                        });
-                    }
-                })
-                .catch(error => {
-                    this.processingStep = 5;
-                    console.log(error);
-                })
-            }
-        },
-        mounted() {
-            if(this.username.toLowerCase() === this.localUser.username) {
-                this.userForumId = this.localUser.forumAtt.id;
-            } else {
-                ForumService.getUserData(this.username)
-                .then(res => {
-                    this.userForumId = res.data.data.id;
-                })
-            }
+        width: null,
+        height: null
+      };
+    },
+    watch: {
+      processingPerc: function(newValue) {
+        TweenLite.to(this.$data, 0.5, { processingTweenedPerc: newValue });
+      }
+    },
+    computed: {
+      animatedProcessingValue: function() {
+        return this.processingTweenedPerc.toFixed();
+      },
+      autoStyle: function() {
+        if (window.innerWidth < 768) {
+          return "width: " + this.mobSize + "; height: " + this.mobSize;
+        } else {
+          return "width: " + this.size + "; height: " + this.size;
         }
+      }
+    },
+    methods: {
+      onFileChanged(event) {
+        this.url = URL.createObjectURL(event.target.files[0]);
+        this.uploadAvatar(event.target.files[0]);
+      },
+      uploadAvatar: function(file) {
+        this.processingStep = 1;
+        const formData = new FormData();
+        formData.append("avatar", file, file.name);
+
+        let tot = 0;
+        let perc = 0;
+
+        axios
+          .post(usersBaseURI + this.userForumId + "/avatar", formData, {
+            headers: {
+              Authorization:
+                "Token " +
+                store.getters.getMasterToken +
+                "userId=" +
+                this.userForumId
+            },
+            onUploadProgress: ProgressEvent => {
+              perc = (ProgressEvent.loaded / ProgressEvent.total) * 100;
+              this.processingStep = 2;
+              this.processingPerc = perc;
+
+              if (perc.toFixed() == 100) {
+                this.processingStep = 3;
+                this.processingSuccess = true;
+              }
+            }
+          })
+          .then(response => {
+            this.url = response.data.data.attributes.avatarUrl;
+            this.processingStep = 4;
+            this.processingSuccess = true;
+
+            if (this.username.toLowerCase() === this.localUser.username) {
+              this.localUser.forumAtt.attributes.avatarUrl =
+                response.data.data.attributes.avatarUrl;
+
+              store.dispatch("setData", this.localUser).then(() => {
+                location.reload();
+              });
+            }
+          })
+          .catch(error => {
+            this.processingStep = 5;
+            console.log(error);
+          });
+      }
+    },
+    mounted() {
+      if (this.username.toLowerCase() === this.localUser.username) {
+        this.userForumId = this.localUser.forumAtt.id;
+      } else {
+        ForumService.getUserData(this.username).then(res => {
+          this.userForumId = res.data.data.id;
+        });
+      }
     }
+  };
 </script>

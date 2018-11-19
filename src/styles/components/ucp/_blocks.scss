@@ -83,4 +83,46 @@
       }
     }
   }
+  &--friendlist {
+    .content {
+      .friendlist {
+        display: inline-flex;
+        width: 100%;
+        flex-wrap: wrap;
+        margin-bottom: -15px;
+
+        .user {
+          flex-basis: 25%;
+          margin-bottom: 15px;
+          text-align: center;
+
+          .v-spinner {
+            margin-top: 0;
+          }
+
+          &--more {
+            .link {
+              background-color: rgba($color: $black, $alpha: .3);
+              border-radius: 100%;
+              width: 46px;
+              height: 47px;
+              display: flex;
+              position: relative;
+              margin: 0 auto;
+
+              span {
+                color: $white;
+                @include center(absolute);
+                font-family: $font-roboto;
+              }
+
+              &:hover {
+                background-color: rgba($color: $black, $alpha: .4);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
