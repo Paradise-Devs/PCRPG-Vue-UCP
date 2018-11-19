@@ -2,12 +2,18 @@
   <div class="block-ucp block-ucp--friendlist">
 		<h4 class="desc">Amigos</h4>
 		<ul class="content">
-      <div class="friendlist" v-if="user.friends.length > 0 && mounted">
-        <div class="user" v-for="(friend, index) in user.friends.slice(0, 7)" :key="index">
+      <div class="friendlist" v-if="user.friends.length > 0">
+        <div class="user" v-for="(friend, index) in user.friends.slice(0, 7)" :key="index" v-if="mounted"  v-b-tooltip.hover :title="friend.username">
           <avatar-spinner :loading="!friend.avatarProcessed" color="#303846" size="47px" class="avatar__loader" v-if="mounted"></avatar-spinner> 
-          <user-avatar :username="friend.username" :url="friend.avatarUrl" :size="'47px'" clickable v-if="friend.avatarProcessed"/>
+          <user-avatar 
+            :username="friend.username"
+            :url="friend.avatarUrl"
+            :size="'47px'"
+            clickable
+            v-if="friend.avatarProcessed"
+          />
         </div>
-        <div class="user user--more" v-if="user.friends.length > 7">
+        <div class="user user--more" v-if="user.friends.length > 7 && mounted">
           <router-link to="weqeq" exact class="link"><span>+ {{ user.friends.length | remaingFriends }}</span></router-link>
         </div>
       </div>
