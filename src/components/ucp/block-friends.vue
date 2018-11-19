@@ -14,7 +14,7 @@
           />
         </div>
         <div class="user user--more" v-if="user.friends.length > 7 && mounted">
-          <router-link to="weqeq" exact class="link"><span>+ {{ user.friends.length | remaingFriends }}</span></router-link>
+          <router-link to="weqeq" exact class="link"><span>+ {{ user.friends.length | remainingFriends }}</span></router-link>
         </div>
       </div>
       <span v-else>Você não tem amigos ainda. Eles vão ser importantes para você no servidor.</span>
@@ -35,93 +35,12 @@
       return {
         mounted: false,
         user: {
-          friends: [
-            {
-              username: "riad",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Victor",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Wuzi",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "ReDKiiL",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Preston",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Eddye",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "n0minal",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "jonasfaria",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "riad",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Victor",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Wuzi",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "ReDKiiL",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Preston",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "Eddye",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "n0minal",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            },
-            {
-              username: "jonasfaria",
-              friendship_start: Date.now(),
-              avatarProcessed: false
-            }
-          ]
+          friends: [ ]
         }
       }
     },
     filters: {
-      remaingFriends(friends) {
+      remainingFriends(friends) {
         return friends - 7;
       }
     },
