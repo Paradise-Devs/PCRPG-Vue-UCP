@@ -97,7 +97,7 @@
 					_this.getUserData();
 				})
 				.catch(error => {
-					_this.error = error.response.data.error.message;
+					_this.error = error.response.data;
 					_this.loading = false;
 				})
 			},

@@ -138,10 +138,11 @@
 						if (response.data) {
 							_this.errorUsername = 'Este nome de usuário já está em uso';
 							_this.usernameChecking = false;
-						} else {
-							_this.errorUsername = null;
-							_this.usernameChecking = false;
 						}
+					})
+					.catch(error => {
+						_this.errorUsername = null;
+						_this.usernameChecking = false;
 					})
 				} else {
 					this.errorUsername = null;
@@ -214,9 +215,8 @@
 					_this.user.token = response.data.token;
 					_this.saveUserData(usernameEx, passwordEx);
 				})
-				.catch(error => {
-					_this.error = response.data.error.message;
-					console.log(response.data.error);
+				.catch(error => { 
+					_this.error = error.response.data;
 					_this.loading = false;
 				})
 			},
