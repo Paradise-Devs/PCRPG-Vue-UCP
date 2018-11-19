@@ -1,7 +1,13 @@
 import Vue from "vue";
 import axios from "axios";
 
-var baseUri = 'https://api.pc-rpg.com.br/api/v1/messages/';
+let devEnv = "https://cors-anywhere.herokuapp.com/";
+
+if (window.location.href.indexOf("pc-rpg.com.br") > -1) {
+	devEnv = "";
+}
+
+var baseUri = devEnv + "https://api.pc-rpg.com.br/api/v1/messages/";
 
 var auth = { Authorization: "Bearer " + localStorage.getItem("token") };
 
@@ -24,7 +30,14 @@ export default {
 
 		return axios.post(
 			baseUri + "send",
-			{ from: from, to: to, subject: subject, body: body, sendDate: date, reply: msgid },
+			{
+				from: from,
+				to: to,
+				subject: subject,
+				body: body,
+				sendDate: date,
+				reply: msgid
+			},
 			{ headers: auth }
 		);
 	},
