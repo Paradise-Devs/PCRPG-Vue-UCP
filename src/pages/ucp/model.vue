@@ -11,7 +11,7 @@
 <script>
 import Vue from "vue";
 import { store } from "@/vuex/store";
-import ucpmenu from "@/components/ucp-menu/block";
+import ucpmenu from "@/components/ucp/menu";
 
 export default {
   data() {

@@ -15,8 +15,8 @@
     .block__content {
       min-height: 374px;
       max-height: 374px;
-			overflow-x: auto;
-		}
+      overflow-x: auto;
+    }
     .loader {
       min-height: 332px;
     }
@@ -26,20 +26,16 @@
       background-color: #181c24;
       padding: 5px 10px;
       cursor: pointer;
-
       &:hover {
         background-color: #171b22;
       }
-
       &:not(:last-child) {
         border-bottom: 1px solid #151920;
       }
-
-      &.collapsed > .opened,
-      &:not(.collapsed) > .closed {
+      &.collapsed>.opened,
+      &:not(.collapsed)>.closed {
         display: none;
       }
-
       .opened,
       .closed {
         float: right;
@@ -148,7 +144,6 @@
       border: 0;
       padding: 2px;
     }
-
     .user {
       padding-left: 62px;
       padding-right: 80px;
@@ -234,7 +229,7 @@
         }
       }
     }
-	}
+  }
   &__footer {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
