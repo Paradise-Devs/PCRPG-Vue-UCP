@@ -2,7 +2,7 @@
 <template>
 	<b-container class="ucp">
 		<div v-if="userLoggedIn">
-			<ucpmenu v-if="!firstTime" />
+			<ucpmenu />
 			<router-view/>
 		</div>
 	</b-container>
@@ -32,16 +32,6 @@ export default {
       deep: true
     }
   },
-  methods: {
-    firstTime: function() {
-      var timeSave = localStorage.getItem("firstTimeUCP");
-      if (timeSave === "true" || timeSave === null) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  },
   mounted() {
     if (this.user.token == null) {
       this.$router.push(this.$route.query.redirect || "/");
@@ -57,18 +47,6 @@ export default {
         this.user = store.state.user;
       }
     );
-
-    var timeSave = localStorage.getItem("firstTimeUCP");
-    if (timeSave === "true" || timeSave === null) {
-      this.firstTime = true;
-      localStorage.setItem("firstTimeUCP", true);
-    } else {
-      this.firstTime = false;
-    }
-
-    this.$root.$on("hideFirstTimeTut", res => {
-      this.firstTime = res;
-    });
   },
   components: {
     ucpmenu

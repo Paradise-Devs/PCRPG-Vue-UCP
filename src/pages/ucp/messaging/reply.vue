@@ -38,77 +38,86 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-	import { store } from "@/vuex/store";
-	import MessagingService from "@/services/messaging";
-	import ForumService from '@/services/forum';
-	import ServerService from '@/services/server';
-	import marked from "marked";
-	import moon from 'vue-spinner/src/MoonLoader.vue';
-	import { VueAutosuggest } from "vue-autosuggest";
+import Vue from "vue";
+import { store } from "@/vuex/store";
+import MessagingService from "@/services/messaging";
+import ForumService from "@/services/forum";
+import ServerService from "@/services/server";
+import marked from "marked";
+import moon from "vue-spinner/src/MoonLoader.vue";
+import { VueAutosuggest } from "vue-autosuggest";
 
-	export default {
-		data() {
-			return {
-				user: store.state.user,
-                mensagem: "",
-                sendingMessage: false,
-                originalMessage: "",
-                originalPoster: "",
-                originalTitle: "",
-			};
-        },
-		computed: {
-			marked: function() {
-				return marked(this.mensagem, { sanitize: true });
-            },
-            oldMarked: function() {
-				return marked(this.originalMessage, { sanitize: true });
-			}
-		},
-		methods: {
-			SendMessage: function() {
-				this.sendingMessage = true;
+export default {
+  data() {
+    return {
+      user: store.state.user,
+      mensagem: "",
+      sendingMessage: false,
+      originalMessage: "",
+      originalPoster: "",
+      originalTitle: ""
+    };
+  },
+  computed: {
+    marked: function() {
+      return marked(this.mensagem, { sanitize: true });
+    },
+    oldMarked: function() {
+      return marked(this.originalMessage, { sanitize: true });
+    }
+  },
+  methods: {
+    SendMessage: function() {
+      this.sendingMessage = true;
 
-				let title = this.originalTitle.replace('Re: ', '');
+      let title = this.originalTitle.replace("Re: ", "");
 
-                MessagingService.replyMessage(this.user.username, this.originalPoster, 'Re: ' + title, this.mensagem, this.$route.params.msgid)
-                .then(res => {
-                    this.sendingMessage = false;
-                    this.$router.push(this.$route.query.redirect || '/ucp/mensagens/ver/' + res.data.message);
-                    this.$notify({
-                        group: 'main',
-                        title: 'Mensagem respondida com sucesso!',
-                        text: 'Você deve receber uma notificação assim que sua mensagem for respondida.',
-                        type: 'success',
-                        duration: 5000
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-			},
-		},
-		mounted() {
-			store.watch(
-				state => {
-					return store.getters.getUserData;
-				},
-				(oldValue, newValue) => {
-					this.user = store.state.user;
-				}
-            );
-            
-            MessagingService.getMessageData(this.$route.params.msgid)
-            .then(res => {
-                this.originalPoster = res.data.sender.username;
-                this.originalTitle = res.data.subject;
-                this.originalMessage = res.data.body;
-            })
-		},
-		components: {
-			'moonloader': moon,
-			VueAutosuggest
-		}
-	}
+      MessagingService.replyMessage(
+        this.user.username,
+        this.originalPoster,
+        "Re: " + title,
+        this.mensagem,
+        this.$route.params.msgid
+      )
+        .then(res => {
+          this.sendingMessage = false;
+          this.$router.push(
+            this.$route.query.redirect ||
+              "/ucp/mensagens/ver/" + res.data.message
+          );
+          this.$notify({
+            group: "main",
+            title: "Mensagem respondida com sucesso!",
+            text:
+              "Você deve receber uma notificação assim que sua mensagem for respondida.",
+            type: "success",
+            duration: 5000
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  },
+  mounted() {
+    store.watch(
+      state => {
+        return store.getters.getUserData;
+      },
+      (oldValue, newValue) => {
+        this.user = store.state.user;
+      }
+    );
+
+    MessagingService.getMessageData(this.$route.params.msgid).then(res => {
+      this.originalPoster = res.data.sender.username;
+      this.originalTitle = res.data.subject;
+      this.originalMessage = res.data.body;
+    });
+  },
+  components: {
+    moonloader: moon,
+    VueAutosuggest
+  }
+};
 </script>

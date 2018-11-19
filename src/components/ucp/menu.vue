@@ -12,74 +12,85 @@
 </template>
 
 <script>
-    import { store } from '@/vuex/store'
-	import { bell, addressCard, cog, signOutAlt, bars, times, home, code, comments, wrench } from '@fortawesome/fontawesome-free-solid';
+import { store } from "@/vuex/store";
+import {
+  bell,
+  addressCard,
+  cog,
+  signOutAlt,
+  bars,
+  times,
+  home,
+  code,
+  comments,
+  wrench
+} from "@fortawesome/fontawesome-free-solid";
 
-    export default {
-        data() {
-            return {
-                currentRoute: this.$route.name,
-                ucpNavOpened: false,
-            }
-        },
-        computed: {
-            isMobile: function() {
-                if(window.innerWidth < 768) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        },
-        methods: {
-            showUCPNav: function() {
-                var menu = document.getElementById("navUCPMenu");
-                var selector = document.getElementsByClassName("current__route")[0];
-                var block = document.getElementById("navUCPBlock");
-                var navOverlay = document.getElementById("navOverlay");
-                var links = document.querySelectorAll('.router-link');
-                
-                selector.classList.remove('current__route--closed');
-                selector.classList.add('current__route--opened');
-                block.style.display = '';
-
-                this.ucpNavOpened = true;
-            },
-            hideUCPNav: function() {
-                var menu = document.getElementById("navUCPMenu");
-                var selector = document.getElementsByClassName("current__route")[0];
-                var block = document.getElementById("navUCPBlock");
-                var navOverlay = document.getElementById("navOverlay");
-                var links = document.querySelectorAll('.router-link');
-                
-                selector.classList.remove('current__route--opened');
-                selector.classList.add('current__route--closed');
-                block.style.display = 'none';
-
-                this.ucpNavOpened = false;
-            },
-            toggleUCPNav: function(e) {
-                e.preventDefault();
-                var selector = document.getElementsByClassName("current__route")[0];
-                if(selector.classList.contains('current__route--closed')) {
-                    this.showUCPNav();
-                } else {
-                    this.hideUCPNav();
-                }
-            },
-            
-            logout: function () {
-				this.$root.$emit('logout');
-			}
-        },
-        watch:{
-			$route (to, from){
-                this.currentRoute = this.$route.name;
-
-				if(window.innerWidth < 768 && this.ucpNavOpened) {
-                    this.hideUCPNav();
-				}
-            }
-        }
+export default {
+  data() {
+    return {
+      currentRoute: this.$route.name,
+      ucpNavOpened: false
+    };
+  },
+  computed: {
+    isMobile: function() {
+      if (window.innerWidth < 768) {
+        return true;
+      } else {
+        return false;
+      }
     }
+  },
+  methods: {
+    showUCPNav: function() {
+      var menu = document.getElementById("navUCPMenu");
+      var selector = document.getElementsByClassName("current__route")[0];
+      var block = document.getElementById("navUCPBlock");
+      var navOverlay = document.getElementById("navOverlay");
+      var links = document.querySelectorAll(".router-link");
+
+      selector.classList.remove("current__route--closed");
+      selector.classList.add("current__route--opened");
+      block.style.display = "";
+
+      this.ucpNavOpened = true;
+    },
+    hideUCPNav: function() {
+      var menu = document.getElementById("navUCPMenu");
+      var selector = document.getElementsByClassName("current__route")[0];
+      var block = document.getElementById("navUCPBlock");
+      var navOverlay = document.getElementById("navOverlay");
+      var links = document.querySelectorAll(".router-link");
+
+      selector.classList.remove("current__route--opened");
+      selector.classList.add("current__route--closed");
+      block.style.display = "none";
+
+      this.ucpNavOpened = false;
+    },
+    toggleUCPNav: function(e) {
+      e.preventDefault();
+      var selector = document.getElementsByClassName("current__route")[0];
+      if (selector.classList.contains("current__route--closed")) {
+        this.showUCPNav();
+      } else {
+        this.hideUCPNav();
+      }
+    },
+
+    logout: function() {
+      this.$root.$emit("logout");
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.currentRoute = this.$route.name;
+
+      if (window.innerWidth < 768 && this.ucpNavOpened) {
+        this.hideUCPNav();
+      }
+    }
+  }
+};
 </script>

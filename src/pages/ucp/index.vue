@@ -1,8 +1,7 @@
 <!--suppress ALL -->
 <template>
 	<b-container class="page__ucp--index">
-		<firsttime v-if="firstTime"/>
-		<b-row v-else class="ucp">
+		<b-row class="ucp">
 			<b-col md="8" sm="12" class="ucp__column--left">
 				<b-row>
 					<b-col md="12" class="ucp__block ucp__block--profile">
@@ -36,7 +35,6 @@
 	import ServerService from "@/services/server";
 	import moment from "moment";
 	import { store } from "@/vuex/store";
-	import firsttime from "@/components/first-time/block";
 	import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 	import userAvatar from "@/components/user-profile/avatar";
@@ -120,14 +118,6 @@
 					.catch(error => {
 						console.log(error);
 					});
-			},
-			firstTime: function() {
-				var timeSave = localStorage.getItem("firstTimeUCP");
-				if (timeSave === "true" || timeSave === null) {
-					return true;
-				} else {
-					return false;
-				}
 			}
 		},
 		mounted() {
@@ -143,25 +133,13 @@
 				}
 			);
 
-			var timeSave = localStorage.getItem("firstTimeUCP");
-			if (timeSave === "true" || timeSave === null) {
-				this.firstTime = true;
-			} else {
-				this.firstTime = false;
-			}
-
 			if (this.user.token == null) {
 				this.userLoggedIn = false;
 			} else {
 				this.userLoggedIn = true;
 			}
-
-			this.$root.$on("hideFirstTimeTut", res => {
-				this.firstTime = res;
-			});
 		},
 		components: {
-			firsttime,
 			FontAwesomeLayers,
 			userAvatar,
 			userContent,

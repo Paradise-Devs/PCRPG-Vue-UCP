@@ -28,119 +28,123 @@
 </template>
 
 <script>
-	import Vue from 'vue';
-    import messagingList from '@/components/messaging/block'
+import Vue from "vue";
+import messagingList from "@/components/messaging/block";
 
-    import loader from 'vue-spinner/src/MoonLoader.vue'
-    
-    import MessagingService from '@/services/messaging'
-    import { store } from '@/vuex/store'
+import loader from "vue-spinner/src/MoonLoader.vue";
 
-	export default {
-        data() {
-			return {
-                user: store.state.user,
-                messages: [ ],
-                messagesClickable: true,
-                btnActivated: 1,
-                loading: true
-            }
-        },
-        computed: {
-            sortedInOutMessages: function() {
-                return this.messages.sort((a, b) => new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime());
-            },
-            sortedTrashMessages: function() {
-                return this.messages.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-            },
-            isMobile: function() {
-                if(window.innerWidth < 768) { return true; } 
-                else { return false; }
-            }
-        },
-        methods: {
-            getInbox: function() {
-                this.btnActivated = 1;
+import MessagingService from "@/services/messaging";
+import { store } from "@/vuex/store";
 
-                this.loading = true;
-                this.messages = []
+export default {
+  data() {
+    return {
+      user: store.state.user,
+      messages: [],
+      messagesClickable: true,
+      btnActivated: 1,
+      loading: true
+    };
+  },
+  computed: {
+    sortedInOutMessages: function() {
+      return this.messages.sort(
+        (a, b) =>
+          new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime()
+      );
+    },
+    sortedTrashMessages: function() {
+      return this.messages.sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      );
+    },
+    isMobile: function() {
+      if (window.innerWidth < 768) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
+  methods: {
+    getInbox: function() {
+      this.btnActivated = 1;
 
-                MessagingService.getMessagesTo(this.user.username)
-                .then(res =>{
-                    this.messages = res.data;
-                    this.messagesClickable = true;
-                    this.loading = false;
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                })
-            },
-            getOutbox: function() {
-                this.btnActivated = 2;
+      this.loading = true;
+      this.messages = [];
 
-                this.loading = true;
-                this.messages = []
-                
-                MessagingService.getMessagesFrom(this.user.username)
-                .then(res =>{
-                    this.messages = res.data;
-                    this.messagesClickable = true;
-                    this.loading = false;
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                })
-            },
-            getTrashbox: function() {
-                this.btnActivated = 3;
+      MessagingService.getMessagesTo(this.user.username)
+        .then(res => {
+          this.messages = res.data;
+          this.messagesClickable = true;
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    getOutbox: function() {
+      this.btnActivated = 2;
 
-                this.loading = true;
-                this.messages = []
+      this.loading = true;
+      this.messages = [];
 
-                MessagingService.getDeletedMessages(this.user.username)
-                .then(res =>{
-                    this.messages = res.data;
-                    this.messagesClickable = false;
-                    this.loading = false;
-                })
-                .catch(err => {
-                    console.log(err);
-                    this.loading = false;
-                })
-            }
-        },
-        mounted() {
-            MessagingService.getMessagesTo(this.user.username)
-            .then(res =>{
-                this.messages = res.data;
-                this.loading = false;
-            })
-            .catch(err => {
-                console.log(err);
-                this.loading = false;
-            })
+      MessagingService.getMessagesFrom(this.user.username)
+        .then(res => {
+          this.messages = res.data;
+          this.messagesClickable = true;
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+          this.loading = false;
+        });
+    },
+    getTrashbox: function() {
+      this.btnActivated = 3;
 
-            let e = this;
-            this.$root.$on('reloadInbox', function() {
-                e.getInbox();
-            });
-            
-            var timeSave = localStorage.getItem('firstTimeUCP');
-			if(timeSave === "true") {
-				this.$router.push(this.$route.query.redirect || '/ucp');
-			}
-        },
-		components: {
-            messagingList,
-            'loader': loader,
-		}
-	}
+      this.loading = true;
+      this.messages = [];
+
+      MessagingService.getDeletedMessages(this.user.username)
+        .then(res => {
+          this.messages = res.data;
+          this.messagesClickable = false;
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log(err);
+          this.loading = false;
+        });
+    }
+  },
+  mounted() {
+    MessagingService.getMessagesTo(this.user.username)
+      .then(res => {
+        this.messages = res.data;
+        this.loading = false;
+      })
+      .catch(err => {
+        console.log(err);
+        this.loading = false;
+      });
+
+    let e = this;
+    this.$root.$on("reloadInbox", function() {
+      e.getInbox();
+    });
+  },
+  components: {
+    messagingList,
+    loader: loader
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-    .v-spinner {
-        margin-top: 70px;
-    }
+.v-spinner {
+  margin-top: 70px;
+}
 </style>

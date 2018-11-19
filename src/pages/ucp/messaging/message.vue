@@ -40,48 +40,43 @@
 </template>
 
 <script>
-  import { store } from "@/vuex/store";
+import { store } from "@/vuex/store";
 
-  import MessagingService from "@/services/messaging";
-  import ForumService from "@/services/forum";
-  import loader from "vue-spinner/src/MoonLoader.vue";
-  import moment from "moment";
-  import marked from "marked";
-  import userAvatar from "@/components/user-profile/avatar";
-  import userNameComp from "@/components/user-profile/username";
+import MessagingService from "@/services/messaging";
+import ForumService from "@/services/forum";
+import loader from "vue-spinner/src/MoonLoader.vue";
+import moment from "moment";
+import marked from "marked";
+import userAvatar from "@/components/user-profile/avatar";
+import userNameComp from "@/components/user-profile/username";
 
-  import {
-    trashAlt,
-    exclamationTriangle,
-    angleLeft
-  } from "@fortawesome/fontawesome-free-solid";
+import {
+  trashAlt,
+  exclamationTriangle,
+  angleLeft
+} from "@fortawesome/fontawesome-free-solid";
 
-  export default {
-    data() {
-      return {
-        user: store.state.user,
-        userAvatar: null,
-        userName: null,
-        message: [],
-        quote: null,
-        loading: true,
+export default {
+  data() {
+    return {
+      user: store.state.user,
+      userAvatar: null,
+      userName: null,
+      message: [],
+      quote: null,
+      loading: true,
 
-        senderProcessed: false,
-        quoteProcessed: false
-      };
-    },
-    mounted() {
-      var timeSave = localStorage.getItem("firstTimeUCP");
-      if (timeSave === "true") {
-        this.$router.push(this.$route.query.redirect || "/ucp");
-      }
+      senderProcessed: false,
+      quoteProcessed: false
+    };
+  },
+  mounted() {
+    let messagesDropdown = document.getElementsByClassName("show");
+    for (let i = 0; i < messagesDropdown.length; i++) {
+      messagesDropdown[i].classList.remove("show");
+    }
 
-      let messagesDropdown = document.getElementsByClassName("show");
-      for (let i = 0; i < messagesDropdown.length; i++) {
-        messagesDropdown[i].classList.remove("show");
-      }
-
-      MessagingService.getMessageData(this.$route.params.msgid)
+    MessagingService.getMessageData(this.$route.params.msgid)
       .then(response => {
         this.message = response.data;
 
@@ -109,65 +104,65 @@
         console.log(error);
         this.loading = false;
       });
+  },
+  computed: {
+    marked: function() {
+      return marked(this.message.body, { sanitize: true });
     },
-    computed: {
-      marked: function() {
-        return marked(this.message.body, { sanitize: true });
-      },
-      oldMarked: function() {
-        return marked(this.quote.body, { sanitize: true });
-      },
-      isMobile: function() {
-        if (window.innerWidth < 768) {
-          return true;
-        } else {
-          return false;
-        }
+    oldMarked: function() {
+      return marked(this.quote.body, { sanitize: true });
+    },
+    isMobile: function() {
+      if (window.innerWidth < 768) {
+        return true;
+      } else {
+        return false;
       }
-    },
-    methods: {
-      confirmDelete: function() {
-        var r = confirm(
-          "Você tem certeza que deseja deletar esta mensagem? A mensagem será movida para a pasta lixeira."
-        );
-        if (r == true) {
-          var e = [];
-          e.push(this.message._id);
-          MessagingService.deleteMessage(e)
-            .then(res => {
-              this.$router.push(this.$route.query.redirect || "/ucp/mensagens");
-            })
-            .catch(error => {
-              console.log(error.response);
-            });
-        }
-      },
-      markAsRead: function(msgid) {
-        MessagingService.markMessageAsRead(msgid)
+    }
+  },
+  methods: {
+    confirmDelete: function() {
+      var r = confirm(
+        "Você tem certeza que deseja deletar esta mensagem? A mensagem será movida para a pasta lixeira."
+      );
+      if (r == true) {
+        var e = [];
+        e.push(this.message._id);
+        MessagingService.deleteMessage(e)
           .then(res => {
-            this.loading = false;
-            this.$root.$emit("refreshNotReadedMessages");
+            this.$router.push(this.$route.query.redirect || "/ucp/mensagens");
           })
           .catch(error => {
-            console.log(error);
+            console.log(error.response);
           });
       }
     },
-    filters: {
-      moment: function(time) {
-        return moment(time).fromNow();
-      }
-    },
-    components: {
-      loader,
-      userAvatar,
-      userNameComp
+    markAsRead: function(msgid) {
+      MessagingService.markMessageAsRead(msgid)
+        .then(res => {
+          this.loading = false;
+          this.$root.$emit("refreshNotReadedMessages");
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
-  };
+  },
+  filters: {
+    moment: function(time) {
+      return moment(time).fromNow();
+    }
+  },
+  components: {
+    loader,
+    userAvatar,
+    userNameComp
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .v-spinner {
-    margin-top: 70px;
-  }
+.v-spinner {
+  margin-top: 70px;
+}
 </style>
