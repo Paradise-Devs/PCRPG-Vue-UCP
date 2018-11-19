@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="block-ucp">
 		<h4 class="desc">Sua conta</h4>
 		<ul class="content">
 			<li class="item">
@@ -7,10 +7,10 @@
 				<span 
 					class="item__stats"
 					:class="{ 
-						'deactivated': userActivatedStatus == 0,
-						'normal': userActivatedStatus == 1,
-						'tempbanned': userActivatedStatus == 2,
-						'permbanned': userActivatedStatus == 3,
+						'item__stats--deactivated': userActivatedStatus == 0,
+						'item__stats--normal': userActivatedStatus == 1,
+						'item__stats--tempbanned': userActivatedStatus == 2,
+						'item__stats--permbanned': userActivatedStatus == 3,
 					}"
 				>
 					{{ userActivatedStatus | userAccountStatusText }}

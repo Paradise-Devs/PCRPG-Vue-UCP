@@ -25,24 +25,38 @@
         display: block;
       }
     }
-  }
-  &--account {
     .item {
       margin-bottom: 2px;
       &__stats {
         float: right;
-        text-transform: uppercase;
-        &.deactivated,
-        &.permbanned {
+        &--deactivated,
+        &--permbanned {
           color: $red;
         }
-        &.tempbanned {
+        &--tempbanned {
           color: $orange;
         }
-        &.normal {
+        &--normal {
           color: $green;
         }
       }
+    }
+    .info {
+      margin-top: 15px;
+    }
+  }
+  &--permbanned {
+    border: 1px solid $red;
+
+    .desc {
+      color: $red;
+    }
+  }
+  &--tempbanned {
+    border: 1px solid $orange;
+
+    .desc {
+      color: $orange;
     }
   }
 }

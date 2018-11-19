@@ -22,8 +22,8 @@
 			</b-col>
 			<b-col md="3" class="ucp__column--right">
 				<b-row>
-					<block-punishment :user="user" class="block-ucp block-ucp--punishment" />
-					<block-stats :user="user" class="block-ucp block-ucp--account" />
+					<block-punishment :user="user" />
+					<block-stats :user="user" />
 				</b-row>
 			</b-col>
 		</b-row>
@@ -97,11 +97,6 @@
 			}
 		},
 		methods: {
-			getUserAvatar: function() {
-				if (this.user.forumAtt.attributes.avatarUrl != null) {
-					this.userAvatar = this.user.forumAtt.attributes.avatarUrl;
-				}
-			},
 			getNeededExp: function(level) {
 				return 8 + (level - 1) * 4;
 			},
@@ -121,7 +116,6 @@
 			}
 		},
 		mounted() {
-			this.getUserAvatar();
 			this.getUserChars();
 
 			store.watch(

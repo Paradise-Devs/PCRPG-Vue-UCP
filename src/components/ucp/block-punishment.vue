@@ -1,27 +1,28 @@
 <template>
   <div
+	 	class="block-ucp"
     :class="{
-      'tempbanned': userActivatedStatus == 2,
-      'permbanned': userActivatedStatus == 3,
+      'block-ucp--tempbanned': userActivatedStatus == 2,
+      'block-ucp--permbanned': userActivatedStatus == 3,
     }"
     v-if="userActivatedStatus >= 2"
   >
-    <h4 class="ucp__block__desc ucp__block--punishment__desc">Punição</h4>
-    <ul class="ucp__block__content">
-      <b>{{ this.user.forumAtt.attributes.username }}</b>, você possui uma punição ativa no momento. <br/>Veja maiores detalhes abaixo:
-      <ul class="ucp__block--punishment__info">
-        <li class="punishment__item">
+    <h4 class="desc">Punição</h4>
+    <ul class="content">
+			<user-name :username="user.forumAtt.attributes.username" />, você possui uma punição ativa no momento. <br/>Veja maiores detalhes abaixo:
+      <ul class="info">
+        <li class="item">
           Administrador resp. 
-          <span class="punishment__item__desc">
-            <router-link :to="{ name: 'user', params: { username: punishment.admin}}"><b>{{ punishment.admin }}</b></router-link>
+          <span class="item__stats item__stats--username">
+						<user-name :username="punishment.admin" linkable />
           </span>
         </li>
-        <li class="punishment__item">Data <span class="punishment__item__desc">{{ punishment.date }}</span></li>
-        <li class="punishment__item">Hora <span class="punishment__item__desc">{{ punishment.time }}</span></li>
-        <li class="punishment__item">Motivo <span class="punishment__item__desc">{{ punishment.reason }}</span></li>
-        <li class="punishment__item punishment__item--expires" v-if="userActivatedStatus == 2">
+        <li class="item">Data <span class="item__stats">{{ punishment.date }}</span></li>
+        <li class="item">Hora <span class="item__stats">{{ punishment.time }}</span></li>
+        <li class="item">Motivo <span class="item__stats">{{ punishment.reason }}</span></li>
+        <li class="item item--expires" v-if="userActivatedStatus == 2">
           Expira em
-          <span class="punishment__item__desc">
+          <span class="item__stats">
           <span v-if="expireDays > 0">{{ expireDays | twoDigits }}d</span>
           <span v-if="expireHours > 0">{{ expireHours | twoDigits }}h</span>
           <span v-if="expireMinutes > 0">{{ expireMinutes | twoDigits }}m</span>
@@ -30,33 +31,12 @@
         </li>
       </ul>
     </ul>
-    <div class="ucp__block ucp__block--account">
-      <h4 class="ucp__block__desc">Sua conta</h4>
-      <ul class="ucp__block__content">
-        <li class="account__item">
-          Status atual 
-          <span 
-            class="account__item__stats"
-            :class="{ 
-              'deactivated': userActivatedStatus == 0,
-              'normal': userActivatedStatus == 1,
-              'tempbanned': userActivatedStatus == 2,
-              'permbanned': userActivatedStatus == 3,
-            }"
-          >
-            {{ userActivatedStatus | userAccountStatusText }}
-          </span>
-        </li>
-        <li class="account__item">Punições no histórico <span class="account__item__stats">0</span></li>
-        <li class="account__item">Tempo total jogando <span class="account__item__stats">0h</span></li>
-        <li class="account__item">Membro desde <span class="account__item__stats">{{ this.user.forumAtt.attributes.joinTime | normalDateFilter }}</span></li>
-      </ul>
-    </div>
   </div>
 </template>
 
 <script>
-  import moment from "moment";
+	import moment from "moment";
+	import userName from "@/components/user-profile/username";
 
   export default {
     props: {
@@ -64,7 +44,8 @@
     },
     data() {
 			return {
-				punishment: [],
+				userActivatedStatus: 0,
+				punishment: { },
 
 				counting: {
 					now: Math.trunc(new Date().getTime() / 1000),
@@ -144,6 +125,8 @@
 							}
 							this.getPunishmentData();
 						}
+
+						console.log(this.userActivatedStatus);
 					}
 				} else {
 					//desativado
@@ -159,11 +142,15 @@
 			}
     },
     mounted() {
-      this.checkUserAccountStatus();
+			this.checkUserAccountStatus();
+			this.getPunishmentData();
 
       window.setInterval(() => {
 				this.counting.now = Math.trunc(new Date().getTime() / 1000);
 			}, 1000);
-    }
+		},
+		components: {
+			userName
+		}
   }
 </script>
