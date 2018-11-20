@@ -59,6 +59,7 @@
 
 <script>
   import ServerService from "@/services/server";
+  import FriendsService from "@/services/friendship";
   import moment from "moment";
   import spinner from "vue-spinner/src/MoonLoader.vue";
   import "swiper/dist/css/swiper.css";
@@ -71,6 +72,7 @@
   import forumlog from "./forum-log";
   import serverlog from "./server-log";
   import history from "./history";
+import { setTimeout } from 'timers';
 
   export default {
     props: {
@@ -82,7 +84,7 @@
         editable: false,
         localUser: store.state.user,
         localUserLoggedIn: false,
-        friendshipStatus: 3,
+        friendshipStatus: 0,
 
         swiperOption: {
           slidesPerView: 1,
@@ -135,19 +137,35 @@
       },
       addFriend: function() {
         //lógica pra adicionar amigo
-        this.friendshipStatus = 1;
+        FriendsService.addFriend(this.user.username)
+        .then(res => { 
+          this.friendshipStatus = 1;
+        })
+        .catch(err => {
+          console.log(err.data.response);
+        })
       },
       removeFriend: function() {
-        //lógica pra remover amigo
-        this.friendshipStatus = 0;
+        FriendsService.removeFriend(this.localUser.username, this.user.username)
+        .then(res => { 
+          this.friendshipStatus = 0;
+        })
+        .catch(err => {
+          console.log(err.data.response);
+        })
       },
       cancelFriendshipRequest: function() {
         var r = confirm(
           "Você tem certeza que deseja cancelar a solicitação de amizade?"
         );
         if (r == true) {
-          //lógica pra cancelar solicitação de amizade
-          this.friendshipStatus = 0;
+          FriendsService.removeFriend(this.localUser.username, this.user.username)
+          .then(res => { 
+            this.friendshipStatus = 0;
+          })
+          .catch(err => {
+            console.log(err.data.response);
+          })
         }
       }
     },
@@ -159,6 +177,26 @@
       }
 
       //checar status de amizade e setar friendshipstatus
+      let friendFound = false;
+
+      FriendsService.getUserFriends(this.user.username)
+      .then(res => {
+        for(let i in res.data) {
+          if(res.data[i].username == this.localUser.username) {
+            this.friendshipStatus = 2;
+            friendFound = true;
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err.data.response);
+      })
+
+      setTimeout(function() {
+        if(!friendFound) {
+          this.friendshipStatus = 0;
+        }
+      }, 500);
 
       this.getUserCharacters();
     },
