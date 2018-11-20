@@ -1,4 +1,46 @@
-.btn {
+#pcrpg {
+  .button_group {
+    position: absolute;
+    bottom: 15px;
+    right: -1px;
+    .btn {
+      max-height: 40px;
+      border-radius: 0;
+      margin-left: -2px;
+      padding: 10px 13px;
+      svg {
+        font-size: 18px;
+        color: $gray;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+
+      &:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+
+      &:hover, &:hover svg {
+        color: $white;
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid $gray-dark;
+      }
+
+      &:last-child {
+        padding-right: 20px;
+      }
+    }
+
+    &--profile {
+      .btn {
+        &-secondary {
+          background-color: $bg-color;
+        }
+      }
+    }
+  }
+  .btn {
     display: inline-block;
     margin-bottom: 0;
     text-align: center;
@@ -6,112 +48,100 @@
     cursor: pointer;
     white-space: nowrap;
     line-height: 20px;
-    padding: 8px 13px !important;
+    padding: 8px 13px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     color: $gray;
     background-color: $gray-dark;
-    border: 0 !important;
+    border: 0;
     font-family: $font-open;
-    font-size: inherit !important;
+    font-size: inherit;
     position: relative;
     padding-left: 20px;
-    font-weight: bold !important;
-
+    font-weight: bold;
     &-secondary {
-        color: $gray !important;
-        background-color: $gray-dark !important;
-
-        &:hover {
-            color: $gray !important;
-            background-color: $gray-hover !important;
-        }
-
-        &:not(:disabled):not(.disabled):active,
-        &:not(:disabled):not(.disabled).active, 
-        .show > &.dropdown-toggle {
-            color: $gray !important;
-            background-color: $gray-hover !important;
-        }
+      color: $gray;
+      background-color: $gray-dark;
+      &:hover {
+        color: $gray;
+        background-color: $gray-hover;
+      }
+      &:not(:disabled):not(.disabled):active,
+      &:not(:disabled):not(.disabled).active,
+      .show>&.dropdown-toggle {
+        color: $gray;
+        background-color: $gray-hover;
+      }
     }
-
     &-primary {
-        color: $bg-color !important;
-        background-color: $blue !important;
-
-        &:not([disabled]), &:not(.disabled) {
-            &:hover {
-                background-color: $blue-hover !important;
-            }
-
-            &:active, &.active {
-                background-color: $blue-active !important;
-                color: $bg-color !important;
-            }
+      color: $bg-color;
+      background-color: $blue;
+      &:not([disabled]),
+      &:not(.disabled) {
+        &:hover {
+          background-color: $blue-hover;
         }
-
-        &.disabled, &[disabled] {
-            background-color: $blue !important;
+        &:active,
+        &.active {
+          background-color: $blue-active;
+          color: $bg-color;
         }
+      }
+      &.disabled,
+      &[disabled] {
+        background-color: $blue;
+      }
     }
-
     &-success {
-        color: $white !important;
-        background-color: $green !important;
-        
-        &:hover {
-            color: $white !important;
-        }
+      color: $white;
+      background-color: $green;
+      &:hover {
+        color: $white;
+      }
     }
-
     &-warning {
-        color: $white !important;
-        background-color: $orange !important;
-        
-        &:hover {
-            color: $white !important;
-            background-color: $orange-hover !important;
-        }
+      color: $white;
+      background-color: $orange;
+      &:hover {
+        color: $white;
+        background-color: $orange-hover;
+      }
     }
-
     &-danger {
-        color: $white !important;
-        background-color: $red;
-        
-        &:hover {
-            color: $white !important;
-        }
+      color: $white;
+      background-color: $red;
+      &:hover {
+        color: $white;
+      }
     }
-
-    &.disabled, &[disabled] {
-        cursor: default;
-        opacity: 0.65;
-        box-shadow: none;
+    &.disabled,
+    &[disabled] {
+      cursor: default;
+      opacity: 0.65;
+      box-shadow: none;
     }
-
     &:hover {
-        z-index: inherit !important;
+      z-index: inherit;
     }
-
-    &:active, &.active {
-        -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-        outline: none;
-        border-color: transparent;
+    &:active,
+    &.active {
+      -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      outline: none;
+      border-color: transparent;
     }
-
     &-block {
-        display: block;
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-
     .icon {
-        right: 13px;
-        font-size: 19px;
-        @include centerY(absolute);
+      right: 13px;
+      font-size: 19px;
+      @include centerY(absolute);
     }
+  }
 }

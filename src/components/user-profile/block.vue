@@ -6,8 +6,20 @@
         <userContent :user="user" />
         
         <!-- buttons -->
-        <div class="action-buttons" v-if="localUserLoggedIn">
-          <router-link :to="'/ucp/mensagens/nova/' + user.username" class="btn btn-primary" v-if="showMessageButton"><icon :icon="['fas', 'envelope']"/></router-link>
+        <div class="button_group button_group--profile" v-if="localUserLoggedIn">
+          <router-link 
+            :to="'/ucp/mensagens/nova/' + user.username"
+            class="btn btn-secondary"
+            v-if="showMessageButton"
+          >
+            <icon :icon="['fas', 'envelope']"/> Enviar mensagem
+          </router-link>
+          <!-- se não for amigo -->
+          <button class="btn btn-secondary" @click="addFriend"><icon :icon="['fas', 'user-plus']"/> Adicionar como amigo</button>
+          <!-- amizade pendente -->
+          <button class="btn btn-secondary" @click="addFriend"><icon :icon="['fas', 'user-clock']"/> Adicionar como amigo</button>
+          <!-- se for amigo -->
+          <button class="btn btn-secondary" @click="addFriend"><icon :icon="['fas', 'user-minus']"/> Remover amigo</button>
         </div>
       </b-col>
     </b-row>
@@ -54,7 +66,7 @@
   import { swiper, swiperSlide } from "vue-awesome-swiper";
   import { store } from "@/vuex/store";
 
-  import { envelope } from "@fortawesome/fontawesome-free-solid";
+  import { envelope, userPlus, userMinus, userClock } from "@fortawesome/fontawesome-free-solid";
 
   import userAvatar from "./avatar";
   import userContent from "./content";
@@ -122,6 +134,9 @@
           .catch(error => {
             console.log(error);
           });
+      },
+      addFriend: function() {
+        alert('caiu aqui');
       }
     },
     mounted() {
