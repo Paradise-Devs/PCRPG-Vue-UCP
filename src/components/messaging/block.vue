@@ -18,7 +18,7 @@
     <div class="empty" v-else>
       <h3>Nenhuma mensagem encontrada</h3>
     </div>
-    <b-button variant="danger" @click="confirmDelete()" class="deleteMessagesBtn" v-if="selected.length >= 1"><icon :icon="['fas', 'trash-alt']"/> Deletar {{ selected.length }} <span v-if="selected.length == 1">mensagem</span><span v-else>mensagens</span></b-button>
+    <b-button variant="danger" @click="confirmDelete()" class="deleteMessagesBtn" v-if="selected.length >= 1"><fa-icon icon="trash-alt"/> Deletar {{ selected.length }} <span v-if="selected.length == 1">mensagem</span><span v-else>mensagens</span></b-button>
   </div>
 </template>
 

@@ -24,43 +24,40 @@
 </template>
 
 <script>
-    import Vue from 'vue'
-    import ForumService from '@/services/forum'
-    import moment from 'moment';
-    import fontawesome from '@fortawesome/vue-fontawesome'
-	import comments from '@fortawesome/fontawesome-free-regular';
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import post from './post.vue'
-    
-    export default {
-		data() {
-			return {
-				news: {
-					loading: false,
-                    processed: false,
-                    posts: [ ]
-				},
-				paginate: ['news']
-			}
-        },
-        mounted() {
-			this.news.processed = false;
-            this.news.loading = true;
+  import Vue from "vue";
+  import ForumService from "@/services/forum";
+  import moment from "moment";
+  import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+  import post from "./post.vue";
 
-            ForumService.getForumNews()
-			.then(response => {
-				this.news.posts = response.data.data;
-				this.news.processed = true;
-				this.news.loading = false;
-            })
-            .catch(error => {
-                console.log(error);
-            })
+  export default {
+    data() {
+      return {
+        news: {
+          loading: false,
+          processed: false,
+          posts: []
         },
-        components: {
-			'vue-spinner': PulseLoader,
-            'fa': fontawesome,
-            post
-		}
+        paginate: ["news"]
+      };
+    },
+    mounted() {
+      this.news.processed = false;
+      this.news.loading = true;
+
+      ForumService.getForumNews()
+        .then(response => {
+          this.news.posts = response.data.data;
+          this.news.processed = true;
+          this.news.loading = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    components: {
+      "vue-spinner": PulseLoader,
+      post
     }
+  };
 </script>

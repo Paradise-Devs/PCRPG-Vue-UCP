@@ -65,8 +65,6 @@
   import { swiper, swiperSlide } from "vue-awesome-swiper";
   import { store } from "@/vuex/store";
 
-  import { envelope, userPlus, userMinus, userClock } from "@fortawesome/fontawesome-free-solid";
-
   import userAvatar from "./avatar";
   import userContent from "./content";
   import char from "./char-card";

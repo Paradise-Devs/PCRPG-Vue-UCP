@@ -1,6 +1,6 @@
 <template>
     <nav class="ucp__menu" id="navUCPMenu">
-        <a href="#" class="router-link current__route current__route--closed" v-if="isMobile" @click="toggleUCPNav">{{ currentRoute }} <icon :icon="['fas', 'bars']" class="route__bars" /></a>
+        <a href="#" class="router-link current__route current__route--closed" v-if="isMobile" @click="toggleUCPNav">{{ currentRoute }} <fa-icon icon="bars" class="route__bars" /></a>
         <div class="ucp__menu__block" style="display: none" id="navUCPBlock">
             <router-link to="/ucp" class="router-link" exact @click="toggleUCPNav">Início</router-link>
             <router-link to="/ucp/perfil" class="router-link" exact @click="toggleUCPNav">Perfil</router-link>
@@ -13,18 +13,6 @@
 
 <script>
 import { store } from "@/vuex/store";
-import {
-  bell,
-  addressCard,
-  cog,
-  signOutAlt,
-  bars,
-  times,
-  home,
-  code,
-  comments,
-  wrench
-} from "@fortawesome/fontawesome-free-solid";
 
 export default {
   data() {

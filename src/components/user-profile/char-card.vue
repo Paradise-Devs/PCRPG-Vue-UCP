@@ -26,8 +26,8 @@
     <div v-else-if="empty" class="char__card char__card--empty">
         <div class="card__icon">
             <font-awesome-layers>
-                <icon :icon="['fas', 'street-view']"/>
-                <icon :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
+                <fa-icon icon="street-view"/>
+                <fa-icon icon="plus" transform="shrink-12 right-5 up-9" />
             </font-awesome-layers>
         </div>
         <span class="card__text">Espaço de personagem vazio</span>
@@ -35,23 +35,20 @@
 </template>
 
 <script>
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import { FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
-	import { streetView, plus } from '@fortawesome/fontawesome-free-solid';
+  import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
-    export default {
-        props: {
-            char: Object,
-            empty: Boolean
-        },
-        data() {
-			return {
-                username: this.$route.params.username,
-            }
-        },
-        components: {
-            FontAwesomeLayers,
-            'vue-spinner': PulseLoader
-        }
+  export default {
+    props: {
+      char: Object,
+      empty: Boolean
+    },
+    data() {
+      return {
+        username: this.$route.params.username
+      };
+    },
+    components: {
+      "vue-spinner": PulseLoader
     }
+  };
 </script>

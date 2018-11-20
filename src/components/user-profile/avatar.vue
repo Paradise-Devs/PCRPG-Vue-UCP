@@ -4,7 +4,7 @@
             <img :src="url" v-if="url != null" />
             <div class="comp__userAvatar--empty" v-else> ? </div>
             <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">
-                <label for='newAvatarField' class="button"><icon :icon="['fas', 'upload']" /></label>
+                <label for='newAvatarField' class="button"><fa-icon icon="upload" /></label>
                 <input id='newAvatarField' type='file' accept="image/jpeg, image/png" @change="onFileChanged">
             </div>
         </router-link>
@@ -12,7 +12,7 @@
             <img :src="url" v-if="url != null" />
             <div class="comp__userAvatar--empty" v-else> ? </div>
             <div class="comp__userAvatar__uploader" v-if="editable && processingStep == 0">
-                <label for='newAvatarField' class="button"><icon :icon="['fas', 'upload']" /></label>
+                <label for='newAvatarField' class="button"><fa-icon icon="upload" /></label>
                 <input id='newAvatarField' type='file' accept="image/jpeg, image/png" @change="onFileChanged">
             </div>
         </div>
@@ -39,8 +39,6 @@
   import { store } from "@/vuex/store";
   import { TweenMax } from "gsap";
   import ForumService from "@/services/forum";
-
-  import { upload } from "@fortawesome/fontawesome-free-solid";
 
   var usersBaseURI = "https://forum.pc-rpg.com.br/api/users/";
 

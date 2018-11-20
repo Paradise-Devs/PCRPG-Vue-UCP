@@ -10,7 +10,7 @@
         :style="{ borderColor: group.color }"
       >
         <span class="icon" :style="{ backgroundColor: group.color }"> 
-          <icon :icon="['fas', group.icon]" />
+          <fa-icon :icon="group.icon" />
         </span>
         <span :style="{ color: group.color }">{{ group.nameSingular}}</span>
       </b-badge>
@@ -22,14 +22,6 @@
   import Vue from "vue";
   import { store } from "@/vuex/store";
   import userName from "@/components/user-profile/username";
-
-  import {
-    code,
-    bolt,
-    support,
-    briefcase,
-    pencilAlt
-  } from "@fortawesome/fontawesome-free-solid";
 
   export default {
     props: {

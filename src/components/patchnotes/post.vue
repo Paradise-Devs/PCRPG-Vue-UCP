@@ -10,13 +10,12 @@
         </li>
       </ul>
     </a>
-    <span class="post__comments"><icon :icon="['far', 'comments']" /> {{ patch.attributes.commentsCount }}</span>
+    <span class="post__comments"><fa-icon icon="comments" /> {{ patch.attributes.commentsCount }}</span>
   </div>
 </template>
 
 <script>
   import moment from "moment";
-  import { comments } from "@fortawesome/fontawesome-free-regular";
 
   export default {
     props: {

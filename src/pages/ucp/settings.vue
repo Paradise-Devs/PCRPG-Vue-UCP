@@ -4,7 +4,7 @@
 		<b-row>
 			<b-card class="col-12 card--bordered">
 				<div class="card__icon">
-					<icon :icon="['fas', 'info-circle']"/>
+					<fa-icon icon="info-circle" />
 				</div>
 				No UCP não é possível alterar configurações de privacidade do Fórum. Utilize a <a href="https://forum.pc-rpg.com.br/settings" target="_blank">página de configurações</a> da sua conta do Fórum para isto.
 			</b-card>
@@ -43,7 +43,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="emailChanged">E-mail alterado! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="emailChanged">E-mail alterado! <fa-icon icon="check-circle" class="icon"/></span>
 								<span v-else>Alterar e-mail</span>
 							</transition>
 
@@ -111,7 +111,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="passwordChanged">Senha alterada! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="passwordChanged">Senha alterada! <fa-icon icon="check-circle" class="icon"/></span>
 								<span v-else>Alterar senha</span>
 							</transition>
 
@@ -153,7 +153,7 @@
 							block
 						>
 							<transition name="fade">
-								<span v-if="usernameChanged">Apelido alterado! <icon :icon="['fas', 'check-circle']" class="icon"/></span>
+								<span v-if="usernameChanged">Apelido alterado! <fa-icon icon="check-circle" class="icon"/></span>
 								<span v-else>Alterar apelido</span>
 							</transition>
 							
@@ -167,286 +167,284 @@
 </template>
 
 <script>
-import Vue from "vue";
-import ServerService from "@/services/server";
-import ForumService from "@/services/forum";
-import { store } from "@/vuex/store";
+  import Vue from "vue";
+  import ServerService from "@/services/server";
+  import ForumService from "@/services/forum";
+  import { store } from "@/vuex/store";
 
-import beat from "vue-spinner/src/BeatLoader.vue";
-import moon from "vue-spinner/src/MoonLoader.vue";
+  import beat from "vue-spinner/src/BeatLoader.vue";
+  import moon from "vue-spinner/src/MoonLoader.vue";
 
-import { infoCircle, checkCircle } from "@fortawesome/fontawesome-free-solid";
+  export default {
+    data() {
+      return {
+        user: store.state.user,
+        userLoggedIn: null,
 
-export default {
-  data() {
-    return {
-      user: store.state.user,
-      userLoggedIn: null,
+        newEmail: "",
+        oldPassword: "",
+        newPassword: "",
+        confPassword: "",
+        newUsername: "",
 
-      newEmail: "",
-      oldPassword: "",
-      newPassword: "",
-      confPassword: "",
-      newUsername: "",
+        emailChecking: false,
+        passChecking: false,
+        usernameChecking: false,
 
-      emailChecking: false,
-      passChecking: false,
-      usernameChecking: false,
+        loadingEmail: false,
+        loadingPassword: false,
+        loadingUsername: false,
 
-      loadingEmail: false,
-      loadingPassword: false,
-      loadingUsername: false,
+        errorEmail: null,
+        errorPassword: null,
+        errorNewPassword: null,
+        errorUsername: null,
 
-      errorEmail: null,
-      errorPassword: null,
-      errorNewPassword: null,
-      errorUsername: null,
+        emailChanged: false,
+        passwordChanged: false,
+        usernameChanged: false
+      };
+    },
+    methods: {
+      checkUsername: function() {
+        if (
+          this.fields.$userScope.username.changed &&
+          this.fields.$userScope.username.valid
+        ) {
+          this.usernameChecking = true;
 
-      emailChanged: false,
-      passwordChanged: false,
-      usernameChanged: false
-    };
-  },
-  methods: {
-    checkUsername: function() {
-      if (
-        this.fields.$userScope.username.changed &&
-        this.fields.$userScope.username.valid
-      ) {
-        this.usernameChecking = true;
+          if (this.user.username === this.newUsername.toLowerCase()) {
+            this.errorUsername =
+              "O seu novo username precisa ser diferente do antigo.";
+            this.usernameChecking = false;
+          } else {
+            ServerService.getPlayers().then(response => {
+              for (var i = 0; i < response.data.length; i++) {
+                if (response.data[i].username == this.newUsername.toLowerCase()) {
+                  this.errorUsername = "Esse username já está em uso";
+                  this.usernameChecking = false;
+                  break;
+                } else {
+                  this.errorUsername = false;
+                  this.usernameChecking = false;
+                }
+              }
+            });
+          }
+        }
+      },
+      checkEmail: function() {
+        if (
+          this.fields.$emailScope.email.changed &&
+          this.fields.$emailScope.email.valid
+        ) {
+          this.emailChecking = true;
 
-        if (this.user.username === this.newUsername.toLowerCase()) {
-          this.errorUsername =
-            "O seu novo username precisa ser diferente do antigo.";
-          this.usernameChecking = false;
-        } else {
           ServerService.getPlayers().then(response => {
             for (var i = 0; i < response.data.length; i++) {
-              if (response.data[i].username == this.newUsername.toLowerCase()) {
-                this.errorUsername = "Esse username já está em uso";
-                this.usernameChecking = false;
+              if (response.data[i].email == this.newEmail) {
+                this.errorEmail = "Esse e-mail já está em uso";
+                this.emailChecking = false;
                 break;
               } else {
-                this.errorUsername = false;
-                this.usernameChecking = false;
+                this.errorEmail = false;
+                this.emailChecking = false;
               }
             }
           });
         }
-      }
-    },
-    checkEmail: function() {
-      if (
-        this.fields.$emailScope.email.changed &&
-        this.fields.$emailScope.email.valid
-      ) {
-        this.emailChecking = true;
+      },
+      checkPassword: function() {
+        if (
+          this.fields.$passScope.oldPassword.changed &&
+          this.fields.$passScope.oldPassword.valid
+        ) {
+          this.passChecking = true;
+          var _t = this;
 
-        ServerService.getPlayers().then(response => {
-          for (var i = 0; i < response.data.length; i++) {
-            if (response.data[i].email == this.newEmail) {
-              this.errorEmail = "Esse e-mail já está em uso";
-              this.emailChecking = false;
-              break;
-            } else {
-              this.errorEmail = false;
-              this.emailChecking = false;
-            }
-          }
-        });
-      }
-    },
-    checkPassword: function() {
-      if (
-        this.fields.$passScope.oldPassword.changed &&
-        this.fields.$passScope.oldPassword.valid
-      ) {
-        this.passChecking = true;
-        var _t = this;
-
-        ServerService.loginPlayer(this.user.username, this.oldPassword)
-          .then(response => {
-            _t.user.token = response.data.token;
-            store.dispatch("setData", _t.user).then(() => {
-              _t.errorPassword = false;
+          ServerService.loginPlayer(this.user.username, this.oldPassword)
+            .then(response => {
+              _t.user.token = response.data.token;
+              store.dispatch("setData", _t.user).then(() => {
+                _t.errorPassword = false;
+                _t.passChecking = false;
+              });
+            })
+            .catch(error => {
+              _t.errorPassword = error.response.data.error.message;
               _t.passChecking = false;
             });
-          })
-          .catch(error => {
-            _t.errorPassword = error.response.data.error.message;
-            _t.passChecking = false;
-          });
-      } else {
-        this.passChecking = false;
-      }
-
-      if (this.oldPassword === this.newPassword) {
-        this.errorNewPassword = "A senha nova precisa ser diferente da antiga.";
-      } else {
-        this.errorNewPassword = false;
-      }
-    },
-    changeEmail: function() {
-      this.loadingEmail = true;
-      this.checkEmail();
-
-      if (!this.errorEmail) {
-        ServerService.updatePlayerEmail(this.user.username, this.newEmail)
-          .then(response => {
-            this.user.token = response.data.token;
-            this.updateUserForumData("email");
-          })
-          .catch(error => {
-            console.log(error);
-            this.loadingEmail = false;
-          });
-      }
-    },
-    changePassword: function() {
-      this.loadingPassword = true;
-      this.checkPassword();
-
-      if (!this.errorPassword && !this.errorNewPassword) {
-        ServerService.updatePlayerPassword(this.user.username, this.newPassword)
-          .then(response => {
-            this.user.token = response.data.token;
-            this.updateUserForumData("password");
-          })
-          .catch(error => {
-            console.log(error);
-            this.loadingPassword = false;
-          });
-      }
-    },
-    changeUsername: function() {
-      this.loadingUsername = true;
-      this.checkUsername();
-
-      if (!this.errorUsername) {
-        ServerService.updatePlayerUsername(this.user.username, this.newUsername)
-          .then(response => {
-            this.user.username = this.newUsername.toLowerCase();
-            this.user.token = response.data.token;
-            this.updateUserForumData("username");
-          })
-          .catch(error => {
-            console.log(error);
-            this.loadingUsername = false;
-          });
-      }
-    },
-    updateUserForumData: function(data) {
-      var sendData = {};
-
-      if (data == "email") {
-        sendData = { attributes: { email: this.newEmail } };
-      } else if (data == "username") {
-        sendData = { attributes: { username: this.newUsername } };
-      } else if (data == "password") {
-        sendData = { attributes: { password: this.newPassword } };
-      }
-
-      ForumService.updateUserData(this.user.forumAtt.id, sendData)
-        .then(response => {
-          this.user.forumAtt = response.data.data;
-
-          if (data == "email") {
-            this.user.email = this.newEmail;
-            this.emailChanged = true;
-            this.newEmail = "";
-          } else if (data == "username") {
-            this.user.username = this.newUsername;
-            this.user.forumAtt.attributes.username = this.newUsername;
-            this.usernameChanged = true;
-            this.newUsername = "";
-          } else if (data == "password") {
-            this.passwordChanged = true;
-            this.oldPassword = "";
-            this.newPassword = "";
-            this.confPassword = "";
-          }
-
-          store.dispatch("setData", this.user).then(() => {
-            this.loadingEmail = false;
-            this.loadingPassword = false;
-            this.loadingUsername = false;
-          });
-        })
-        .catch(function(error) {
-          console.log(error);
-          this.loadingEmail = false;
-          this.loadingPassword = false;
-          this.loadingUsername = false;
-        });
-    }
-  },
-  computed: {
-    isFormDirty() {
-      return Object.keys(this.fields).some(key => this.fields[key].dirty);
-    },
-    isFormPristine() {
-      return Object.keys(this.fields).every(key => this.fields[key].pristine);
-    },
-    isFormValid() {
-      return Object.keys(this.fields).every(key => this.fields[key].valid);
-    },
-    isFormInvalid() {
-      return Object.keys(this.fields).some(key => this.fields[key].invalid);
-    },
-    isFormTouched() {
-      return Object.keys(this.fields).some(key => this.fields[key].touched);
-    },
-    isFormUntouched() {
-      return Object.keys(this.fields).every(key => this.fields[key].untouched);
-    }
-  },
-  watch: {
-    user: {
-      handler: function(val, oldVal) {
-        if (this.user.token == null) {
-          this.userLoggedIn = false;
         } else {
-          this.userLoggedIn = true;
+          this.passChecking = false;
+        }
+
+        if (this.oldPassword === this.newPassword) {
+          this.errorNewPassword = "A senha nova precisa ser diferente da antiga.";
+        } else {
+          this.errorNewPassword = false;
         }
       },
-      deep: true
-    },
-    newEmail: function() {
-      if (this.emailChanged && this.newEmail.length > 0) {
-        this.emailChanged = false;
+      changeEmail: function() {
+        this.loadingEmail = true;
+        this.checkEmail();
+
+        if (!this.errorEmail) {
+          ServerService.updatePlayerEmail(this.user.username, this.newEmail)
+            .then(response => {
+              this.user.token = response.data.token;
+              this.updateUserForumData("email");
+            })
+            .catch(error => {
+              console.log(error);
+              this.loadingEmail = false;
+            });
+        }
+      },
+      changePassword: function() {
+        this.loadingPassword = true;
+        this.checkPassword();
+
+        if (!this.errorPassword && !this.errorNewPassword) {
+          ServerService.updatePlayerPassword(this.user.username, this.newPassword)
+            .then(response => {
+              this.user.token = response.data.token;
+              this.updateUserForumData("password");
+            })
+            .catch(error => {
+              console.log(error);
+              this.loadingPassword = false;
+            });
+        }
+      },
+      changeUsername: function() {
+        this.loadingUsername = true;
+        this.checkUsername();
+
+        if (!this.errorUsername) {
+          ServerService.updatePlayerUsername(this.user.username, this.newUsername)
+            .then(response => {
+              this.user.username = this.newUsername.toLowerCase();
+              this.user.token = response.data.token;
+              this.updateUserForumData("username");
+            })
+            .catch(error => {
+              console.log(error);
+              this.loadingUsername = false;
+            });
+        }
+      },
+      updateUserForumData: function(data) {
+        var sendData = {};
+
+        if (data == "email") {
+          sendData = { attributes: { email: this.newEmail } };
+        } else if (data == "username") {
+          sendData = { attributes: { username: this.newUsername } };
+        } else if (data == "password") {
+          sendData = { attributes: { password: this.newPassword } };
+        }
+
+        ForumService.updateUserData(this.user.forumAtt.id, sendData)
+          .then(response => {
+            this.user.forumAtt = response.data.data;
+
+            if (data == "email") {
+              this.user.email = this.newEmail;
+              this.emailChanged = true;
+              this.newEmail = "";
+            } else if (data == "username") {
+              this.user.username = this.newUsername;
+              this.user.forumAtt.attributes.username = this.newUsername;
+              this.usernameChanged = true;
+              this.newUsername = "";
+            } else if (data == "password") {
+              this.passwordChanged = true;
+              this.oldPassword = "";
+              this.newPassword = "";
+              this.confPassword = "";
+            }
+
+            store.dispatch("setData", this.user).then(() => {
+              this.loadingEmail = false;
+              this.loadingPassword = false;
+              this.loadingUsername = false;
+            });
+          })
+          .catch(function(error) {
+            console.log(error);
+            this.loadingEmail = false;
+            this.loadingPassword = false;
+            this.loadingUsername = false;
+          });
       }
     },
-    oldPassword: function() {
-      if (this.passwordChanged && this.oldPassword.length > 0) {
-        this.passwordChanged = false;
+    computed: {
+      isFormDirty() {
+        return Object.keys(this.fields).some(key => this.fields[key].dirty);
+      },
+      isFormPristine() {
+        return Object.keys(this.fields).every(key => this.fields[key].pristine);
+      },
+      isFormValid() {
+        return Object.keys(this.fields).every(key => this.fields[key].valid);
+      },
+      isFormInvalid() {
+        return Object.keys(this.fields).some(key => this.fields[key].invalid);
+      },
+      isFormTouched() {
+        return Object.keys(this.fields).some(key => this.fields[key].touched);
+      },
+      isFormUntouched() {
+        return Object.keys(this.fields).every(key => this.fields[key].untouched);
       }
     },
-    newPassword: function() {
-      if (this.passwordChanged && this.newPassword.length > 0) {
-        this.passwordChanged = false;
+    watch: {
+      user: {
+        handler: function(val, oldVal) {
+          if (this.user.token == null) {
+            this.userLoggedIn = false;
+          } else {
+            this.userLoggedIn = true;
+          }
+        },
+        deep: true
+      },
+      newEmail: function() {
+        if (this.emailChanged && this.newEmail.length > 0) {
+          this.emailChanged = false;
+        }
+      },
+      oldPassword: function() {
+        if (this.passwordChanged && this.oldPassword.length > 0) {
+          this.passwordChanged = false;
+        }
+      },
+      newPassword: function() {
+        if (this.passwordChanged && this.newPassword.length > 0) {
+          this.passwordChanged = false;
+        }
+      },
+      confPassword: function() {
+        if (this.passwordChanged && this.confPassword.length > 0) {
+          this.passwordChanged = false;
+        }
+      },
+      newUsername: function() {
+        if (this.usernameChanged && this.newUsername.length > 0) {
+          this.usernameChanged = false;
+        }
       }
     },
-    confPassword: function() {
-      if (this.passwordChanged && this.confPassword.length > 0) {
-        this.passwordChanged = false;
+    mounted() {
+      if (this.user.token == null) {
+        this.userLoggedIn = false;
+      } else {
+        this.userLoggedIn = true;
       }
     },
-    newUsername: function() {
-      if (this.usernameChanged && this.newUsername.length > 0) {
-        this.usernameChanged = false;
-      }
+    components: {
+      beatloader: beat,
+      moonloader: moon
     }
-  },
-  mounted() {
-    if (this.user.token == null) {
-      this.userLoggedIn = false;
-    } else {
-      this.userLoggedIn = true;
-    }
-  },
-  components: {
-    beatloader: beat,
-    moonloader: moon
-  }
-};
+  };
 </script>

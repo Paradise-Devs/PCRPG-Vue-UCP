@@ -22,11 +22,19 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import { 
-	faUserPlus, faUserMinus, faUserClock, faEnvelope
+	faUserPlus, faUserMinus, faUserClock, faEnvelope, faComments, faUsers,
+	faAngleUp, faAngleDown, faCommentAlt, faWrench, faAddressCard, faCog,
+	faSignOutAlt, faBars, faTimes, faHome, faCode, faBolt, faLifeRing,
+	faTrashAlt, faUpload, faDollarSign, faStreetView, faPlus, faExclamationTriangle,
+	faAngleLeft, faInfoCircle, faCheckCircle
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
-	faUserPlus, faUserMinus, faUserClock, faEnvelope
+	faUserPlus, faUserMinus, faUserClock, faEnvelope, faComments, faUsers,
+	faAngleUp, faAngleDown, faCommentAlt, faWrench, faAddressCard, faCog,
+	faSignOutAlt, faBars, faTimes, faHome, faCode, faBolt, faLifeRing,
+	faTrashAlt, faUpload, faDollarSign, faStreetView, faPlus, faExclamationTriangle,
+	faAngleLeft, faInfoCircle, faCheckCircle
 )
 
 Validator.localize('pt_BR', ptbr);

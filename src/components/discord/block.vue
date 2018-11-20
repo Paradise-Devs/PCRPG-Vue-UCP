@@ -1,7 +1,7 @@
 <template>
   <div class="block block--fullheight block--discord">
     <div class="block__header">
-      <h3><icon :icon="['fab', 'discord']" /> {{ name }}</h3>
+      <h3><fa-icon :icon="['fab', 'discord']" /> {{ name }}</h3>
     </div>
     <div class="block__content">
       <vue-spinner :loading="loading" color="#303846" size="10px" class="loader" />
@@ -30,9 +30,9 @@
 
 <script>
   import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-  import fontawesome from "@fortawesome/vue-fontawesome";
-  import discord from "@fortawesome/fontawesome-free-brands";
   import DiscordService from "@/services/discord";
+
+  import discord from "@fortawesome/fontawesome-free-brands";
 
   export default {
     data() {
@@ -67,8 +67,7 @@
         });
     },
     components: {
-      "vue-spinner": PulseLoader,
-      fa: fontawesome
+      "vue-spinner": PulseLoader
     }
   };
 </script>

@@ -1,15 +1,15 @@
 <template>
   <div class="block team block--fullheight block--accordion">
     <div class="block__header">
-      <h3><icon :icon="['fas', 'users']" /> A equipe</h3>
+      <h3><fa-icon icon="users" /> A equipe</h3>
     </div>
     <div class="block__content">
       <vue-spinner :loading="lc.loading" color="#303846" size="10px" class="loader"></vue-spinner>
       <div role="tablist" v-if="lc.processed">
         <div class="toggler" v-b-toggle.devs>
           Desenvolvedores
-          <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
-          <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
+          <span class="opened"><fa-icon icon="angle-up" /></span>
+          <span class="closed"><fa-icon icon="angle-down" /></span>
         </div>
         <b-collapse accordion="team" id="devs">
           <user
@@ -21,8 +21,8 @@
 
         <div class="toggler" v-b-toggle.admin>
           Administradores
-          <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
-          <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
+          <span class="opened"><fa-icon icon="angle-up" /></span>
+          <span class="closed"><fa-icon icon="angle-down" /></span>
         </div>
         <b-collapse accordion="team" id="admin">
           <user
@@ -34,8 +34,8 @@
 
         <div class="toggler" v-b-toggle.mods>
           Moderadores
-          <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
-          <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
+          <span class="opened"><fa-icon icon="angle-up" /></span>
+          <span class="closed"><fa-icon icon="angle-down" /></span>
         </div>
         <b-collapse accordion="team" id="mods">
           <user
@@ -47,8 +47,8 @@
 
         <div class="toggler" v-b-toggle.support>
           Suporte
-          <span class="opened"><icon :icon="['fas', 'angle-up']" /></span>
-          <span class="closed"><icon :icon="['fas', 'angle-down']" /></span>
+          <span class="opened"><fa-icon icon="angle-up" /></span>
+          <span class="closed"><fa-icon icon="angle-down" /></span>
         </div>
         <b-collapse accordion="team" id="support">
           <user
@@ -65,10 +65,6 @@
 <script>
   import ForumService from "@/services/forum";
   import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-  import fontawesome from "@fortawesome/vue-fontawesome";
-
-  import angleDown from "@fortawesome/fontawesome-free-solid";
-  import angleUp from "@fortawesome/fontawesome-free-solid";
 
   import user from "./user";
 
@@ -129,7 +125,6 @@
     },
     components: {
       "vue-spinner": PulseLoader,
-      fa: fontawesome,
       user
     }
   };

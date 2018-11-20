@@ -18,7 +18,7 @@
           </div>
           <div class="character__stats">
             <ul class="stats__list">
-              <li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><icon :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+              <li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa-icon icon="dollar-sign" /></span> {{ char.cash | money }}</li>
             </ul>
           </div>
           <div class="character__exp">
@@ -40,8 +40,8 @@
     >
       <div class="icon">
         <font-awesome-layers>
-          <icon :icon="['fas', 'street-view']"/>
-                  <icon :icon="['fas', 'plus']" transform="shrink-12 right-5 up-9" />
+          <fa-icon icon="street-view" />
+          <fa-icon icon="plus" transform="shrink-12 right-5 up-9" />
         </font-awesome-layers>
       </div>
       <span class="text">Sem personagens</span>
@@ -64,7 +64,7 @@
       </div>
       <div class="character__stats">
         <ul class="stats__list">
-          <li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><icon :icon="['fas', 'dollar-sign']" /></span> {{ char.cash | money }}</li>
+          <li class="item" :class="{'item--positive': char.cash > 0, 'item--negative': char.cash < 0}"><span class="icon"><fa-icon icon="dollar-sign" /></span> {{ char.cash | money }}</li>
         </ul>
       </div>
       <div class="character__exp">
@@ -77,23 +77,13 @@
         </b-progress>
       </div>
     </b-col>
-    <div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--prev" v-if="chars.length > 1"><icon :icon="['fas', 'angle-left']" /></div>
-    <div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--next" v-if="chars.length > 1"><icon :icon="['fas', 'angle-right']" /></div>  
+    <div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--prev" v-if="chars.length > 1"><fa-icon icon="angle-left" /></div>
+    <div class="ucp__block__character-swiper__arrow ucp__block__character-swiper__arrow--next" v-if="chars.length > 1"><fa-icon icon="angle-right" /></div>  
   </div>
 </template>
 
 <script>
   import { FontAwesomeLayers } from "@fortawesome/vue-fontawesome";
-	import {
-		code,
-		bolt,
-		support,
-		briefcase,
-		pencilAlt,
-		angleLeft,
-		angleRight,
-		dollarSign
-  } from "@fortawesome/fontawesome-free-solid";
   
   export default {
     //char data = player_id, firstName, lastName, position, property, cash, level, xp, gender [type, enum], pedModel, traits, logoutArea

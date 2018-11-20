@@ -21,52 +21,49 @@
 </template>
 
 <script>
-    import Vue from 'vue'
-	import ForumService from '@/services/forum';
-    import moment from 'moment';
-    import fontawesome from '@fortawesome/vue-fontawesome'
-	import comments from '@fortawesome/fontawesome-free-regular';
-    import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-    import post from './post.vue'
+  import Vue from "vue";
+  import ForumService from "@/services/forum";
+  import moment from "moment";
+  import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+  import post from "./post.vue";
 
-    export default {
-		data() {
-			return {
-				patches: {
-					loading: false,
-                    processed: false,
-                    posts: [ ]
-				}
-			}
-        },
-        mounted() {
-			this.patches.processed = false;
-            this.patches.loading = true;
+  export default {
+    data() {
+      return {
+        patches: {
+          loading: false,
+          processed: false,
+          posts: []
+        }
+      };
+    },
+    mounted() {
+      this.patches.processed = false;
+      this.patches.loading = true;
 
-            ForumService.getPatchnotes()
-			.then(response => {
-				this.patches.posts = response.data.data;
-				this.patches.processed = true;
-                this.patches.loading = false;
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        },
-        components: {
-			'vue-spinner': PulseLoader,
-            'fa': fontawesome,
-            post
-		}
+      ForumService.getPatchnotes()
+        .then(response => {
+          this.patches.posts = response.data.data;
+          this.patches.processed = true;
+          this.patches.loading = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    components: {
+      "vue-spinner": PulseLoader,
+      post
     }
-</script>
+  };
+  </script>
 
-<style lang="scss" scoped>
-    .patchnotes {
-		p {
-			padding: 10px;
-			text-align: center;
-			margin: 0px;
-		}
-	}
+  <style lang="scss" scoped>
+  .patchnotes {
+    p {
+      padding: 10px;
+      text-align: center;
+      margin: 0px;
+    }
+  }
 </style>

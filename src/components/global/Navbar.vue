@@ -22,7 +22,7 @@
               <div class="navbar__menu__user" v-else>
                 <b-dropdown no-caret right class="messages__dropdown" @click="getUserUnreadedMessages">
                   <template slot="button-content">
-                    <icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
+                    <fa-icon icon="comment-alt" :class="{ 'active': messagesNotReaded.length > 0 }"/>
                     <span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
                   </template>
                   <msg-notification v-for="message in sortedMessages" :key="message._id" :msg="message"/>
@@ -36,11 +36,11 @@
                     <userAvatar class="avatar" :url="user.forumAtt.attributes.avatarUrl" :username="user.username" size="24px" />
                     <span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
                   </template>
-                  <b-dropdown-item to="/ucp" exact><icon :icon="['fas', 'wrench']" />Painel do usuário</b-dropdown-item>
-                  <b-dropdown-item :to="'/jogador/' + user.username" exact><icon :icon="['fas', 'address-card']" /> Perfil</b-dropdown-item>
-                  <b-dropdown-item to="/ucp/configuracoes" exact><icon :icon="['fas', 'cog']" /> Configurações</b-dropdown-item>
+                  <b-dropdown-item to="/ucp" exact><fa-icon icon="wrench" />Painel do usuário</b-dropdown-item>
+                  <b-dropdown-item :to="'/jogador/' + user.username" exact><fa-icon icon="address-card" /> Perfil</b-dropdown-item>
+                  <b-dropdown-item to="/ucp/configuracoes" exact><fa-icon icon="cog" /> Configurações</b-dropdown-item>
                   <b-dropdown-divider/>
-                  <b-dropdown-item @click="logout"><icon :icon="['fas', 'sign-out-alt']" /> Sair</b-dropdown-item>
+                  <b-dropdown-item @click="logout"><fa-icon icon="sign-out-alt" /> Sair</b-dropdown-item>
                 </b-dropdown>
               </div>
             </b-col>
@@ -55,7 +55,7 @@
     <div class="nav__menu--mobile nav__menu--mobile--closed" id="toggleMobNav">
       <b-dropdown no-caret right class="messages__dropdown" @click="getUserUnreadedMessages" v-if="userLoggedIn">
         <template slot="button-content">
-          <icon :icon="['fas', 'comment-alt']" :class="{ 'active': messagesNotReaded.length > 0 }"/>
+          <fa-icon icon="comment-alt" :class="{ 'active': messagesNotReaded.length > 0 }"/>
           <span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
         </template>
         <msg-notification v-for="message in sortedMessages" :key="message._id" :msg="message"/>
@@ -65,8 +65,8 @@
         <b-dropdown-item to="/ucp/mensagens" exact class="all">Ver todas as mensagens...</b-dropdown-item>
       </b-dropdown>
       <div class="navbar__menu__button">
-        <icon :icon="['fas', 'bars']" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
-        <icon :icon="['fas', 'times']" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav()"/>
+        <fa-icon icon="bars" class="navbar__menu__icon navbar__menu__icon--open"  id="openNav" @click="openMobNav"/>
+        <fa-icon icon="times" class="navbar__menu__icon navbar__menu__icon--hidden navbar__menu__icon--close" id="closeNav" @click="closeMobNav()"/>
       </div>
     </div>
     <div class="nav__mobile__menu" id="navMenu">
@@ -89,7 +89,7 @@
             :style="{ borderColor: group.color }"
           >
             <span class="icon" :style="{ backgroundColor: group.color }"> 
-              <icon :icon="['fas', group.icon]" />
+              <fa-icon :icon="group.icon" />
             </span>
             <span :style="{ color: group.color }">{{ group.nameSingular}}</span>
           </b-badge>
@@ -97,19 +97,19 @@
       </div>
       <div class="nav__mobile__menu__links">
         <h6 class="separator separator--general">Navegação geral</h6>
-        <router-link to="/" @click="closeMobNav"><icon :icon="['fas', 'home']"/>Início</router-link>
-        <router-link to="/dev"><icon :icon="['fas', 'code']"/>Desenvolvimento</router-link>
-        <a href="https://forum.pc-rpg.com.br"><icon :icon="['fas', 'comments']"/>Fórum</a>
+        <router-link to="/" @click="closeMobNav"><fa-icon icon="home" />Início</router-link>
+        <router-link to="/dev"><fa-icon icon="code" />Desenvolvimento</router-link>
+        <a href="https://forum.pc-rpg.com.br"><fa-icon icon="comments" />Fórum</a>
         <div class="nav__mobile__menu__links__user" v-if="userLoggedIn">
           <h6 class="separator">Sua conta</h6>
-          <router-link to="/ucp" @click="closeMobNav" exact><icon :icon="['fas', 'wrench']"/>Painel do usuário</router-link>
-          <router-link to="/ucp/perfil" @click="closeMobNav" exact><icon :icon="['fas', 'address-card']"/>Seu perfil</router-link>
-          <router-link to="/ucp/mensagens" @click="closeMobNav" exact :class="{ 'unreaded': messagesNotReaded.length > 0 }"><icon :icon="['fas', 'comment-alt']"/>
+          <router-link to="/ucp" @click="closeMobNav" exact><fa-icon icon="wrench" />Painel do usuário</router-link>
+          <router-link to="/ucp/perfil" @click="closeMobNav" exact><fa-icon icon="address-card" />Seu perfil</router-link>
+          <router-link to="/ucp/mensagens" @click="closeMobNav" exact :class="{ 'unreaded': messagesNotReaded.length > 0 }"><fa-icon icon="comment-alt" />
             Mensagens
             <b-badge :class="{ 'unreaded': messagesNotReaded.length > 0 }">{{ messagesNotReaded.length }}</b-badge>
           </router-link>
-          <router-link to="/ucp/configuracoes" @click="closeMobNav" exact><icon :icon="['fas', 'cog']"/>Configurações</router-link>
-          <a href="#" @click="logout"><icon :icon="['fas', 'sign-out-alt']"/>Sair</a>
+          <router-link to="/ucp/configuracoes" @click="closeMobNav" exact><fa-icon icon="cog" />Configurações</router-link>
+          <a href="#" @click="logout"><fa-icon icon="sign-out-alt" />Sair</a>
         </div>
       </div>
     </div>
@@ -127,19 +127,6 @@
 
   import MessagingService from "@/services/messaging";
 
-  import {
-    bell,
-    addressCard,
-    cog,
-    signOutAlt,
-    bars,
-    times,
-    home,
-    code,
-    comments,
-    wrench,
-    commentAlt
-  } from "@fortawesome/fontawesome-free-solid";
   import { setTimeout, setInterval } from "timers";
 
   export default {

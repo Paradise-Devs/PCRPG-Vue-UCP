@@ -20,7 +20,6 @@
 	import ForumService from "@/services/forum";
 	import moment from "moment";
 	import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-	import fontawesome from "@fortawesome/vue-fontawesome";
 	import userAvatar from "./avatar";
 
 	export default {
