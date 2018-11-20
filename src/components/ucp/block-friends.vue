@@ -25,12 +25,13 @@
 <script>
   import userAvatar from "@/components/user-profile/avatar";
   import ForumService from "@/services/forum";
+  import FriendsService from "@/services/friendship";
   import BounceLoader from 'vue-spinner/src/BounceLoader.vue';
 
   export default {
-    /*props: {
-      user: Object
-    }*/
+    props: {
+      propUser: Object
+    },
     data() {
       return {
         mounted: false,
@@ -44,13 +45,22 @@
         return friends - 7;
       }
     },
-    mounted() {
-      for(let i = 0; i < this.user.friends.length; i++) {
-        ForumService.getUserData(this.user.friends[i].username).then(res => {
-          this.user.friends[i].avatarUrl = res.data.data.attributes.avatarUrl;
-          this.user.friends[i].avatarProcessed = true;
-        });
+    methods: {
+      processFriends: function() {
+        for(let i = 0; i < this.user.friends.length; i++) {
+          ForumService.getUserData(this.user.friends[i].username).then(res => {
+            this.user.friends[i].avatarUrl = res.data.data.attributes.avatarUrl;
+            this.user.friends[i].avatarProcessed = true;
+          });
+        }
       }
+    },
+    mounted() {
+      FriendsService.getUserFriends(this.propUser.username)
+      .then(res => {
+        this.user.friends = res.data;
+        this.processFriends();
+      });
 
       let e = this;
       setTimeout(function() {
