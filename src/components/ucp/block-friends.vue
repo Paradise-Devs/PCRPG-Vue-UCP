@@ -17,7 +17,7 @@
           <router-link to="weqeq" exact class="link"><span>+ {{ user.friends.length | remainingFriends }}</span></router-link>
         </div>
       </div>
-      <span v-else>Você não tem amigos ainda. Eles vão ser importantes para você no servidor.</span>
+      <span v-else>Você não tem amigos ainda.</span>
     </ul>
   </div>
 </template>
