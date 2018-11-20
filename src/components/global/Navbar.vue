@@ -20,7 +20,7 @@
                 <a href="#" v-b-modal.signinModal>Entrar</a>
               </div>
               <div class="navbar__menu__user" v-else>
-                <b-dropdown no-caret right class="messages__dropdown" @click="getUserUnreadedMessages">
+                <b-dropdown no-caret right class="nav_notification nav_notification--messages" @click="getUserUnreadedMessages">
                   <template slot="button-content">
                     <fa-icon icon="comment-alt" :class="{ 'active': messagesNotReaded.length > 0 }"/>
                     <span v-if="messagesNotReaded.length > 0" class="number">{{ messagesNotReaded.length }}</span>
@@ -30,6 +30,16 @@
                     Não há mensagens não lidas
                   </div>
                   <b-dropdown-item to="/ucp/mensagens" exact class="all">Ver todas as mensagens...</b-dropdown-item>
+                </b-dropdown>
+                <b-dropdown no-caret right class="nav_notification nav_notification--friendship" @click="getUserUnreadedMessages">
+                  <template slot="button-content">
+                    <fa-icon icon="users" :class="{ 'active': friendReqNotReaded.length > 0 }"/>
+                    <span v-if="friendReqNotReaded.length > 0" class="number">{{ friendReqNotReaded.length }}</span>
+                  </template>
+                  <friend-notification v-for="friendreq in friendReqNotReaded" :key="friendreq._id" :request="friendreq"/>
+                  <div v-if="friendReqNotReaded.length == 0" class="dropdown-item empty">
+                    Não há novas solicitações de amizade
+                  </div>
                 </b-dropdown>
                 <b-dropdown no-caret right class="profile">
                   <template slot="button-content">
@@ -123,6 +133,7 @@
   import signin from "@/components/auth/SignIn";
   import signup from "@/components/auth/SignUp";
   import msgNotification from "@/components/messaging/notification";
+  import friendNotification from "@/components/friendship/notification";
   import userAvatar from "@/components/user-profile/avatar";
 
   import MessagingService from "@/services/messaging";
@@ -134,7 +145,34 @@
       return {
         user: store.state.user,
         groups: [],
-        messagesNotReaded: [],
+        messagesNotReaded: [ ],
+        friendReqNotReaded: [
+          {
+            username: 'Wuzi',
+            requestDate: Date.now(),
+            avatar: 'https://forum.pc-rpg.com.br/assets/avatars/r0mjmjriqwh2rnir.png'
+          },
+          {
+            username: 'riad',
+            requestDate: Date.now(),
+            avatar: 'https://forum.pc-rpg.com.br/assets/avatars/otpbkrbypnbkx9yr.png'
+          },
+          {
+            username: 'Victor',
+            requestDate: Date.now(),
+            avatar: 'https://forum.pc-rpg.com.br/assets/avatars/wgxadffwflletq3g.png'
+          },
+          {
+            username: 'Preston',
+            requestDate: Date.now(),
+            avatar: 'https://forum.pc-rpg.com.br/assets/avatars/fsitaiw0zkdxibqm.png'
+          },
+          {
+            username: 'Eddye',
+            requestDate: Date.now(),
+            avatar: null
+          }
+        ],
         userLoggedIn: null,
         scrolled: false,
         value: 500,
@@ -145,6 +183,12 @@
     computed: {
       sortedMessages: function() {
         return this.messagesNotReaded.sort(
+          (a, b) =>
+            new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime()
+        );
+      },
+      sortedFriendRequest: function() {
+        return this.friendReqNotReaded.sort(
           (a, b) =>
             new Date(b.sendDate).getTime() - new Date(a.sendDate).getTime()
         );
@@ -378,7 +422,7 @@
       signin,
       signup,
       store,
-      msgNotification,
+      msgNotification, friendNotification,
       userAvatar
     }
   };

@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="dropdown-item notification__message" 
+        class="dropdown-item message" 
         @click="openMessage(msg)"
     >
         <div class="header">
