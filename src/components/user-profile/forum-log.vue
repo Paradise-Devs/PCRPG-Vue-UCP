@@ -16,37 +16,36 @@
 </template>
 
 <script>
-	import ForumService from '@/services/forum';
-	import moment from 'moment';
-	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-	import fontawesome from '@fortawesome/vue-fontawesome'
+	import ForumService from "@/services/forum";
+	import moment from "moment";
+	import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+	import fontawesome from "@fortawesome/vue-fontawesome";
 
-	import post from './forum-post'
+	import post from "./forum-post";
 
-    export default {
+	export default {
 		props: {
-            user: Object,
+			user: Object
 		},
-		
+
 		data() {
 			return {
-				lastPosts: { },
+				lastPosts: {},
 				forum: {
 					loading: false,
 					processed: false
 				}
-			}
+			};
 		},
 		mounted() {
 			this.forum.loading = true;
 
-			ForumService.getLastestPostsByUser(this.user.forumAtt.id)
-			.then(response => {
+			ForumService.getLastestPostsByUser(this.user.forumAtt.id).then(response => {
 				let posts = response.data.data;
 
-				let validPosts = [ ];
-				for(let i = 0; i < posts.length; i++) {
-					if(posts[i].attributes.contentType === 'comment') {
+				let validPosts = [];
+				for (let i = 0; i < posts.length; i++) {
+					if (posts[i].attributes.contentType === "comment") {
 						validPosts.push(posts[i]);
 					}
 				}
@@ -67,23 +66,23 @@
 			}
 		},
 		components: {
-			'vue-spinner': PulseLoader,
+			"vue-spinner": PulseLoader,
 			post
 		}
-    }
+	};
 </script>
 
 <style scoped>
-	.avatar {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border-top-left-radius: 0.25rem;
-		border-bottom-left-radius: 0.25rem;
-	}
-	.avatar img {
-		border-radius: 100px;
-		width: 40px;
-		height: 100%;
-	}
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.avatar img {
+  border-radius: 100px;
+  width: 40px;
+  height: 100%;
+}
 </style>

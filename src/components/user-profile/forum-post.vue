@@ -17,30 +17,31 @@
 </template>
 
 <script>
-	import ForumService from '@/services/forum';
-	import moment from 'moment';
-	import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-	import fontawesome from '@fortawesome/vue-fontawesome'
-	import userAvatar from './avatar'
+	import ForumService from "@/services/forum";
+	import moment from "moment";
+	import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+	import fontawesome from "@fortawesome/vue-fontawesome";
+	import userAvatar from "./avatar";
 
-    export default {
+	export default {
 		props: {
 			user: Object,
-            post: Object,
+			post: Object
 		},
-		
+
 		data() {
 			return {
-				userDiscussion: { },
+				userDiscussion: {},
 				postP: {
 					loading: true,
 					processed: false
 				}
-			}
+			};
 		},
 		mounted() {
-			ForumService.getDiscussionData(this.post.relationships.discussion.data.id)
-			.then(response => {
+			ForumService.getDiscussionData(
+				this.post.relationships.discussion.data.id
+			).then(response => {
 				this.userDiscussion = response.data.data;
 				this.postP.loading = false;
 				this.postP.processed = true;
@@ -57,22 +58,23 @@
 			}
 		},
 		components: {
-			'vue-spinner': PulseLoader, userAvatar
+			"vue-spinner": PulseLoader,
+			userAvatar
 		}
-    }
+	};
 </script>
 
 <style scoped>
-	.avatar {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border-top-left-radius: 0.25rem;
-		border-bottom-left-radius: 0.25rem;
-	}
-	.avatar img {
-		border-radius: 100px;
-		width: 40px;
-		height: 100%;
-	}
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.avatar img {
+  border-radius: 100px;
+  width: 40px;
+  height: 100%;
+}
 </style>
