@@ -6,20 +6,19 @@
         <userContent :user="user" />
         
         <!-- buttons -->
-        <div class="button_group button_group--profile" v-if="localUserLoggedIn">
+        <div class="button_group button_group--profile" v-if="localUserLoggedIn && hideLocalUser">
           <router-link 
             :to="'/ucp/mensagens/nova/' + user.username"
             class="btn btn-secondary"
-            v-if="showMessageButton"
           >
-            <icon :icon="['fas', 'envelope']"/> Enviar mensagem
+            <fa-icon icon="envelope" /> Enviar mensagem
           </router-link>
           <!-- se não for amigo -->
-          <button class="btn btn-secondary" @click="addFriend"><icon :icon="['fas', 'user-plus']"/> Adicionar como amigo</button>
+          <button class="btn btn-secondary" @click="addFriend" v-if="friendshipStatus == 0"><fa-icon icon="user-plus" /> Adicionar como amigo</button>
           <!-- amizade pendente -->
-          <button class="btn btn-secondary" @click="addFriend"><icon :icon="['fas', 'user-clock']"/> Adicionar como amigo</button>
+          <button class="btn btn-secondary"  @click="cancelFriendshipRequest" v-if="friendshipStatus == 1"><fa-icon icon="user-clock" /> Solicitação pendente</button>
           <!-- se for amigo -->
-          <button class="btn btn-secondary" @click="addFriend"><icon :icon="['fas', 'user-minus']"/> Remover amigo</button>
+          <button class="btn btn-secondary" @click="removeFriend" v-if="friendshipStatus == 3"><fa-icon icon="user-minus" /> Remover amigo</button>
         </div>
       </b-col>
     </b-row>
@@ -85,6 +84,7 @@
         editable: false,
         localUser: store.state.user,
         localUserLoggedIn: false,
+        friendshipStatus: 3,
 
         swiperOption: {
           slidesPerView: 1,
@@ -110,7 +110,7 @@
           return false;
         }
       },
-      showMessageButton: function() {
+      hideLocalUser: function() {
         if (this.user._id === this.localUser._id) {
           return false;
         } else {
@@ -136,7 +136,21 @@
           });
       },
       addFriend: function() {
-        alert('caiu aqui');
+        //lógica pra adicionar amigo
+        this.friendshipStatus = 1;
+      },
+      removeFriend: function() {
+        //lógica pra remover amigo
+        this.friendshipStatus = 0;
+      },
+      cancelFriendshipRequest: function() {
+        var r = confirm(
+          "Você tem certeza que deseja cancelar a solicitação de amizade?"
+        );
+        if (r == true) {
+          //lógica pra cancelar solicitação de amizade
+          this.friendshipStatus = 0;
+        }
       }
     },
     mounted() {
@@ -145,6 +159,8 @@
       } else {
         this.localUserLoggedIn = true;
       }
+
+      //checar status de amizade e setar friendshipstatus
 
       this.getUserCharacters();
     },

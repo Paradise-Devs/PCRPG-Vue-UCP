@@ -17,7 +17,17 @@ import VeeValidate, { Validator } from 'vee-validate';
 import ptbr from 'vee-validate/dist/locale/pt_BR';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import Notifications from 'vue-notification'
-import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome';
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+import { 
+	faUserPlus, faUserMinus, faUserClock, faEnvelope
+} from '@fortawesome/free-solid-svg-icons'
+
+library.add(
+	faUserPlus, faUserMinus, faUserClock, faEnvelope
+)
 
 Validator.localize('pt_BR', ptbr);
 
@@ -39,7 +49,7 @@ Vue.use(VueMoment, {
 	locale
 });
 
-Vue.component('icon', FontAwesomeIcon);
+Vue.component('fa-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false
 

@@ -19,7 +19,7 @@
         border-radius: 4px 0 0 4px;
       }
 
-      &:hover, &:hover svg {
+      &:not(:disabled):hover, &:not(:disabled):hover svg {
         color: $white;
       }
 
@@ -61,10 +61,11 @@
     position: relative;
     padding-left: 20px;
     font-weight: bold;
+    outline: none;
     &-secondary {
       color: $gray;
       background-color: $gray-dark;
-      &:hover {
+      &:not(:disabled):hover {
         color: $gray;
         background-color: $gray-hover;
       }
