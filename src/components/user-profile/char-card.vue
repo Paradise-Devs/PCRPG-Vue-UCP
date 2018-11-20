@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import { FontAwesomeLayers } from "@fortawesome/vue-fontawesome";
   import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
   export default {
@@ -48,7 +49,8 @@
       };
     },
     components: {
-      "vue-spinner": PulseLoader
+      "vue-spinner": PulseLoader,
+      FontAwesomeLayers
     }
   };
 </script>
