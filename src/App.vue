@@ -49,20 +49,15 @@
 				if(token != null && token != 'undefined') {
 					ServerService.getToken(token)
 					.then(response => {
-						if(response.data.error) {
-							console.log(response.data.error);
-							this.dataLoaded = true;
-							this.fullyLoaded = true;
-							reject()
-						} else {
-							this.siteLoaded = true;
-							this.user = response.data;
-							this.user.token = response.headers['token-refresh'];
-							this.getForumData();
-						}
+						this.siteLoaded = true;
+						this.user.username = response.data.username;
+						this.user.token = response.headers['token-refresh'];
+						this.getForumData();
 					})
 					.catch(error => {
-						console.log(error);
+						console.log(error.response.data);
+						this.dataLoaded = true;
+						this.fullyLoaded = true;
 					})
 				} else {
 					this.siteLoaded = true;
