@@ -24,7 +24,7 @@
 
 	export default {
 		props: {
-			user: Array,
+			user: Object,
 			post: Object
 		},
 
