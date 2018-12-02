@@ -10,16 +10,18 @@ if (window.location.href.indexOf("pc-rpg.com.br") > -1) {
 var baseUri = devEnv + "https://api.pc-rpg.com.br/api/v1/";
 var authorizationKey = "4vvhw6rrkchEfUgnJLyGRc995ZVvB86PxxzYknUT";
 
+var auth = { Authorization: "Bearer " + localStorage.getItem("token") };
+
 export default {
 	//get data
 	getPlayers() {
 		return axios.get(baseUri + "players");
 	},
 	getPlayerCharacters(user) {
-		return axios.get(baseUri + "players/" + user + "/characters");
+		return axios.get(baseUri + "player/" + user + "/characters");
 	},
 	getPlayerData(user) {
-		return axios.get(baseUri + "players/" + user);
+		return axios.get(baseUri + "player/", { headers: auth });
 	},
 	getStats() {
 		return axios.get(baseUri + "statistics");
@@ -27,19 +29,19 @@ export default {
 
 	//update data
 	updatePlayerEmail(user, newEmail) {
-		return axios.patch(baseUri + "players/" + user, {
+		return axios.patch(baseUri + "player/" + user, {
 			masterkey: authorizationKey,
 			email: newEmail
 		});
 	},
 	updatePlayerPassword(user, newPassword) {
-		return axios.patch(baseUri + "players/" + user, {
+		return axios.patch(baseUri + "player/" + user, {
 			masterkey: authorizationKey,
 			password: newPassword
 		});
 	},
 	updatePlayerUsername(user, newUsername) {
-		return axios.patch(baseUri + "players/" + user, {
+		return axios.patch(baseUri + "player/" + user, {
 			masterkey: authorizationKey,
 			username: newUsername
 		});

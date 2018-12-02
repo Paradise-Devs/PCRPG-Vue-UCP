@@ -14,9 +14,6 @@
 		<div class="modal-alert" v-if="errorEmail && !errorUsername" ref="errorAlert">
 			<b-alert variant="danger" show>{{ errorEmail }}</b-alert>
 		</div>
-		<div class="modal-alert" v-if="errorEmail && errorUsername" ref="errorAlert">
-			<b-alert variant="danger" show>Este usuário e este email já estão em uso.</b-alert>
-		</div>
 		<button class="modal-close" @click="hideModal"><fa-icon icon="times" /></button>
 		<form class="form--auth" v-on:submit.prevent="register()">
 			<b-form-group :state="null" >
@@ -29,11 +26,9 @@
 					name="username"
 					:class="{ 'is-invalid': errors.has('username') || errorUsername, 'is-valid': !errors.has('username') && user.username.length != 0 }"
 					:state="null"
-					@change="checkIfUserExists"
 					autocomplete="on"
-					:disabled="usernameChecking"
+					:disabled="loading"
 				/>
-				<beatloader :loading="usernameChecking" color="#303846" size="5px" class="registering"></beatloader>
 				<div class="invalid-feedback" v-show="errors.has('username')">{{ errors.first('username') }}</div>
 			</b-form-group>
 			<b-form-group :state="null" >
@@ -41,15 +36,13 @@
 					type="email"
 					v-model="user.email"
 					placeholder="Email"
-					v-validate="'required|email'"
+					v-validate="{ required: true, email: '', min: 3}"
 					name="email"
 					:class="{ 'is-invalid': errors.has('email') || errorEmail, 'is-valid': !errors.has('email') && user.email.length != 0 }"
 					:state="null"
-					@change="checkIfEmailExists"
 					autocomplete="on"
-					:disabled="emailChecking"
+					:disabled="loading"
 				/>
-				<beatloader :loading="emailChecking" color="#303846" size="5px" class="registering"></beatloader>
 				<div class="invalid-feedback" v-show="errors.has('email')">{{ errors.first('email') }}</div>
 			</b-form-group>
 			<b-form-group :state="null" >
@@ -63,6 +56,7 @@
 					:class="{ 'is-invalid': errors.has('password'), 'is-valid': !errors.has('password') && user.password.length != 0 }"
 					:state="null"
 					autocomplete="on"
+					:disabled="loading"
 				/>
 				<div class="invalid-feedback" v-show="errors.has('password')">{{ errors.first('password') }}</div>
 			</b-form-group>
@@ -70,10 +64,9 @@
 				<b-button
 					type="submit"
 					variant="primary"
-					:disabled="	loading || errorUsername != null || errorUsername != null ||
+					:disabled="loading || errorUsername != null || errorUsername != null ||
 								errors.has('password') || errors.has('email') || errors.has('username') ||
-								user.password.length === 0 ||user.email.length === 0 || user.username.length === 0 ||
-								emailChecking || usernameChecking"
+								user.password.length === 0 ||user.email.length === 0 || user.username.length === 0"
 					block
 					class="loginButton"
 				>
@@ -94,7 +87,6 @@
 
 	import signin from '@/components/auth/SignIn'
 	import moon from 'vue-spinner/src/MoonLoader.vue';
-	import beat from 'vue-spinner/src/BeatLoader.vue';
 
 	export default {
 		data() {
@@ -115,7 +107,6 @@
 		},
 		components: {
 			'moonloader': moon,
-			'beatloader': beat,
 			signin,
 			store
 		},
@@ -126,69 +117,26 @@
 			modalShowed: function () {
 				this.$refs.usernameField.focus();
 			},
-			checkIfUserExists: function () {
-				if(this.user.username.length >= 5) {
-					let _this = this;
-
-					_this.usernameChecking = true;
-
-					ServerService.getPlayerData(this.user.username)
-					.then(response => {
-						if (response.data) {
-							_this.errorUsername = 'Este nome de usuário já está em uso';
-							_this.usernameChecking = false;
-						}
-					})
-					.catch(error => {
-						_this.errorUsername = null;
-						_this.usernameChecking = false;
-					})
-				} else {
-					this.errorUsername = null;
-				}
-			},
-			checkIfEmailExists: function () {
-				if(this.user.email.length >= 3) {
-					let _this = this;
-
-					_this.emailChecking = true;
-
-					ServerService.getPlayers()
-					.then(response => {
-						for (var i = 0; i < response.data.length; i++) {
-							if (response.data[i].email == _this.user.email) {
-								_this.errorEmail = 'Este e-mail já está em uso';
-								_this.emailChecking = false;
-							} else {
-								_this.errorEmail = null;
-								_this.emailChecking = false;
-							}
-						}
-					})
-				} else {
-					this.errorEmail = null;
-				}
-			},
 			register: function () {
 				this.loading = true;
-
-				this.checkIfUserExists();
-				this.checkIfEmailExists();
+				let self = this;
 
 				let localUsername = this.user.username;
 				let localPassword = this.user.password;
 				let localEmail = this.user.email;
 
 				if(this.errorEmail === null && this.errorUsername === null) {
-					let _this = this;
-
 					ServerService.registerPlayer(localUsername, localPassword, localEmail)
 					.then(response => {						
-						_this.registerUserForumAccount(localUsername, localPassword, localEmail);
+						self.registerUserForumAccount(localUsername, localPassword, localEmail);
 					})
 					.catch(function (error) {
-						console.log(error);
+						console.log(error.response.data);
+						self.errorEmail = error.response.data;
+						self.loading = false;
 					})
+				} else {
+					self.loading = false;
 				}
 			},
 			registerUserForumAccount: function(usernameEx, passwordEx, emailEx) {
