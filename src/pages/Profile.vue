@@ -40,32 +40,21 @@
       let username = this.$route.params.username;
 
       if(this.localUser.username != username) {
-        ServerService.getPlayerData(username)
+        ForumService.getUserData(username)
           .then(res => {
-            if (res === null) {
-              this.userLoading = false;
-              this.userFound = false;
-              this.$router.push(this.$route.query.redirect || "/jogador");
-            } else {
-              this.user = res.data.player;
-              this.user.forumAtt = {};
-              this.user.groups = {};
-              this.userFound = true;
+            this.user.forumAtt = res.data.data;
+            this.user.groups = {};
 
-              ForumService.getUserData(username).then(response => {
-                this.user.forumAtt = response.data.data;
-                let groups = [];
-
-                for (var i in response.data.included) {
-                  if (response.data.included[i].type == "groups") {
-                    groups.push(response.data.included[i].attributes);
-                  }
-                }
-
-                this.user.groups = groups;
-                this.userLoading = false;
-              });
+            let groups = [];
+            for (var i in res.data.included) {
+              if (res.data.included[i].type == "groups") {
+                groups.push(res.data.included[i].attributes);
+              }
             }
+              
+            this.user.groups = groups;
+            this.userLoading = false;
+            this.userFound = true;
           })
           .catch(err => {
             console.log(err);
