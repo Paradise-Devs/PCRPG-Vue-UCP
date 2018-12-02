@@ -68,7 +68,7 @@
 			getForumData: function(){
 				ForumService.getUserData(this.user.username)
 				.then(response => {
-					this.user.forumAtt = response.data.data;
+					this.user = response.data.data.attributes;
 
 					let v = [ ];
 

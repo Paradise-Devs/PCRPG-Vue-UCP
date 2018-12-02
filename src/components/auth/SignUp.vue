@@ -100,8 +100,7 @@
 					username: '',
 					password: '',
 					email: '',
-					token: null,
-					forumAtt: [ ]
+					token: null
 				},
 				errorUsername: null,
 				errorEmail: null,
@@ -165,7 +164,7 @@
 
 				ForumService.registerUser(sendData)
 				.then(response => {
-					_this.user.forumAtt = response.data.data;
+					_this.user = response.data.data.attributes;
 					_this.login(usernameEx, passwordEx);
 				})
 				.catch(error => {

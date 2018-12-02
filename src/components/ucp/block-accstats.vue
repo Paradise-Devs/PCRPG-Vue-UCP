@@ -18,7 +18,7 @@
 			</li>
 			<li class="item">Punições no histórico <span class="item__stats">0</span></li>
 			<li class="item">Tempo total jogando <span class="item__stats">0h</span></li>
-			<li class="item">Membro desde <span class="item__stats">{{ this.user.forumAtt.attributes.joinTime | normalDateFilter }}</span></li>
+			<li class="item">Membro desde <span class="item__stats">{{ this.user.joinTime | normalDateFilter }}</span></li>
 		</ul>
 	</div>
 </template>
@@ -61,8 +61,8 @@
     methods: {
 			checkUserAccountStatus: function() {
 				let userActivated;
-				let suspendDate = this.user.forumAtt.attributes.suspendUntil;
-				if (this.user.forumAtt.attributes.isActivated) {
+				let suspendDate = this.user.suspendUntil;
+				if (this.user.isActivated) {
 					this.userActivatedStatus = 1;
 
 					if (suspendDate) {

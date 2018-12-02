@@ -15,7 +15,7 @@
 				<p class="setting__block__text">Você pode alterar os seus dados de acesso sempre que quiser. Lembre-se de ter sempre um email válido, pois é ele que você vai utilizar para validar qualquer operação importante no servidor.</p>
 				<form class="form--small" v-on:submit.prevent="changeEmail()">
 					<b-form-group label="Email atual:">
-						<b-form-input type="email" :value="user.forumAtt.attributes.email" name="oldEmail" disabled></b-form-input>
+						<b-form-input type="email" :value="user.email" name="oldEmail" disabled></b-form-input>
 					</b-form-group>
 					<b-form-group>
 						<b-form-input 
@@ -125,7 +125,7 @@
 				<p class="setting__block__text">Seu apelido é único e é como você gostaria de ser chamado fora do jogo, também é o seu login para autenticar-se. Lembre-se de respeitar a política de apelidos que encontra-se nas <a href="#" target="_blank">regras</a>.</p>
 				<form class="form--small" v-on:submit.prevent="changeUsername()">
 					<b-form-group label="Apelido atual:">
-						<b-form-input type="text" :value="user.forumAtt.attributes.username" disabled></b-form-input>
+						<b-form-input type="text" :value="user.username" disabled></b-form-input>
 					</b-form-group>
 					<b-form-group>
 						<b-form-input 
@@ -354,7 +354,7 @@
               this.newEmail = "";
             } else if (data == "username") {
               this.user.username = this.newUsername;
-              this.user.forumAtt.attributes.username = this.newUsername;
+              this.user.username = this.newUsername;
               this.usernameChanged = true;
               this.newUsername = "";
             } else if (data == "password") {

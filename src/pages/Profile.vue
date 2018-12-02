@@ -42,7 +42,8 @@
       if(this.localUser.username != username) {
         ForumService.getUserData(username)
           .then(res => {
-            this.user.forumAtt = res.data.data;
+            this.user = res.data.data.attributes;
+            this.user.id = res.data.data.id;
             this.user.groups = {};
 
             let groups = [];

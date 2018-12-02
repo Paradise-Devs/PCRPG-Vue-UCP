@@ -63,7 +63,6 @@
 
 				user: {
 					username: '',
-					forumAtt: { },
 					groups: { }
 				},
 
@@ -108,8 +107,8 @@
 			getUserData: function() {
 				ServerService.getToken(this.token)
 				.then(res => {
-					this.user = res.data;
-					this.user.token = res.headers['token-refresh'];
+					this.user.username = res.data.username;
+					this.token = res.headers['token-refresh'];
 					this.authUser();
 				})
 				.catch(error => {
@@ -122,7 +121,8 @@
 
 				ForumService.getUserData(this.user.username)
 				.then(response => {
-					this.user.forumAtt = response.data.data;
+					this.user = response.data.data.attributes;
+					this.user.token = this.token;
 
 					let groups = [];
 

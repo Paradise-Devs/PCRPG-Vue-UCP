@@ -7,7 +7,7 @@
 					<b-col md="12" class="block-ucp">
 						<h4 class="desc">Seu perfil</h4>
 						<div class="content">
-							<userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" mobSize="80px" editable />
+							<userAvatar :url="user.avatarUrl" :username="user.username" mobSize="80px" editable />
 							<userContent :user="user" />
 							<router-link to="/ucp/perfil" exact class="btn btn-primary">Ver perfil completo</router-link>
 						</div>

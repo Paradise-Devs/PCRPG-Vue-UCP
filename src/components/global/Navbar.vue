@@ -43,8 +43,8 @@
                 </b-dropdown>
                 <b-dropdown no-caret right class="profile">
                   <template slot="button-content">
-                    <userAvatar class="avatar" :url="user.forumAtt.attributes.avatarUrl" :username="user.username" size="24px" />
-                    <span class="Button-label">{{ user.forumAtt.attributes.username }}</span>
+                    <userAvatar class="avatar" :url="user.avatarUrl" :username="user.username" size="24px" />
+                    <span class="Button-label">{{ user.username }}</span>
                   </template>
                   <b-dropdown-item to="/ucp" exact><fa-icon icon="wrench" />Painel do usuário</b-dropdown-item>
                   <b-dropdown-item :to="'/jogador/' + user.username" exact><fa-icon icon="address-card" /> Perfil</b-dropdown-item>
@@ -87,10 +87,10 @@
       </div>
       <div class="nav__mobile__menu__user" v-else>
         <div class="nav__mobile__menu__user__info__avatar">
-          <userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" size="80px" clickable />
+          <userAvatar :url="user.avatarUrl" :username="user.username" size="80px" clickable />
         </div>
         <div class="nav__mobile__menu__user__info__name">
-          Olá, {{ user.forumAtt.attributes.username }}!
+          Olá, {{ user.username }}!
         </div>
         <div class="nav__mobile__menu__user__info__tags">
           <b-badge 

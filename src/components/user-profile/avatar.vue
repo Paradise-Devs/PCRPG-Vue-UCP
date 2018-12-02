@@ -140,8 +140,8 @@
             this.processingStep = 4;
             this.processingSuccess = true;
 
-            if (this.username.toLowerCase() === this.localUser.username) {
-              this.localUser.forumAtt.attributes.avatarUrl =
+            if (this.username === this.localUser.username) {
+              this.localUser.avatarUrl =
                 response.data.data.attributes.avatarUrl;
 
               store.dispatch("setData", this.localUser).then(() => {
@@ -156,7 +156,7 @@
       }
     },
     mounted() {
-      if (this.username.toLowerCase() === this.localUser.username) {
+      if (this.username === this.localUser.username) {
         this.userForumId = this.localUser.forumAtt.id;
       } else {
         ForumService.getUserData(this.username).then(res => {

@@ -2,7 +2,7 @@
   <b-container class="page__user-profile">
     <b-row>
       <b-col class="user-profile__block" md="12">
-        <userAvatar :url="user.forumAtt.attributes.avatarUrl" :username="user.username" mobSize="80px" :editable="editable" />
+        <userAvatar :url="user.avatarUrl" :username="user.username" mobSize="80px" :editable="editable" />
         <userContent :user="user" />
         
         <!-- buttons -->
@@ -179,8 +179,6 @@ import { setTimeout } from 'timers';
       //checar status de amizade e setar friendshipstatus
       let friendFound = false;
 
-      console.log(this.user.username);
-
       FriendsService.getUserFriends(this.user.username)
       .then(res => {
         for(let i in res.data) {
@@ -191,7 +189,7 @@ import { setTimeout } from 'timers';
         }
       })
       .catch(err => {
-        console.log(err.data.response);
+        console.log(err);
       })
 
       setTimeout(function() {

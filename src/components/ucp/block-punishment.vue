@@ -9,7 +9,7 @@
   >
     <h4 class="desc">Punição</h4>
     <ul class="content">
-			<user-name :username="user.forumAtt.attributes.username" />, você possui uma punição ativa no momento. <br/>Veja maiores detalhes abaixo:
+			<user-name :username="user.username" />, você possui uma punição ativa no momento. <br/>Veja maiores detalhes abaixo:
       <ul class="info">
         <li class="item">
           Administrador resp. 
@@ -91,11 +91,11 @@
     methods: {
 			checkUserAccountStatus: function() {
 				let userActivated;
-				let suspendDate = this.user.forumAtt.attributes.suspendUntil;
-				if (this.user.forumAtt.attributes.isActivated) {
+				let suspendDate = this.user.suspendUntil;
+				if (this.user.isActivated) {
 					//ativado
 					this.userActivatedStatus = 1;
-					this.counting.punishmentEnd = this.user.forumAtt.attributes.suspendUntil;
+					this.counting.punishmentEnd = this.user.suspendUntil;
 
 					if (suspendDate) {
 						if (

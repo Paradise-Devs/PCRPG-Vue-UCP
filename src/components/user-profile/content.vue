@@ -1,7 +1,7 @@
 <template>
   <div class="comp__userContent">
-    <user-name :username="user.forumAtt.attributes.username" class="comp__userContent__username"/>
-    <p class="comp__userContent__bio" v-if="user.forumAtt.attributes.bio">{{ user.forumAtt.attributes.bio | bio }}</p>
+    <user-name :username="user.username" class="comp__userContent__username"/>
+    <p class="comp__userContent__bio" v-if="user.bio">{{ user.bio | bio }}</p>
     <p class="comp__userContent__bio" v-else>Bio não definida.</p>
     <div class="tags">
       <b-badge 

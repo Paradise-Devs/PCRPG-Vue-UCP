@@ -39,7 +39,7 @@
 		mounted() {
 			this.forum.loading = true;
 
-			ForumService.getLastestPostsByUser(this.user.forumAtt.id).then(response => {
+			ForumService.getLastestPostsByUser(this.user.id).then(response => {
 				let posts = response.data.data;
 
 				let validPosts = [];
