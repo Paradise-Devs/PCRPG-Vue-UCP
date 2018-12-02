@@ -179,6 +179,8 @@ import { setTimeout } from 'timers';
       //checar status de amizade e setar friendshipstatus
       let friendFound = false;
 
+      console.log(this.user.username);
+
       FriendsService.getUserFriends(this.user.username)
       .then(res => {
         for(let i in res.data) {

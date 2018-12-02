@@ -43,22 +43,18 @@
       }
     },
     methods: {
-      openMessage: function(msg) {
-        this.$router.push(this.$route.query.redirect || "/");
-        let e = this;
-        setTimeout(function() {
-          e.$router.push(
-            e.$route.query.redirect || "/ucp/mensagens/ver/" + msg._id
-          );
-        });
-
-        this.$root.$emit("refreshNotReadedMessages");
+      accept: function() {
+        //
+      },
+      reject: function() {
+        //
       }
     },
     mounted() {
-      ForumService.getUserData(this.msg.sender.username).then(user => {
-        this.sender.username = user.data.data.attributes.username;
-        this.sender.avatar = user.data.data.attributes.avatarUrl;
+      let self = this;
+      ForumService.getUserData(this.request.username).then(user => {
+        self.sender.username = user.data.data.attributes.username;
+        self.sender.avatar = user.data.data.attributes.avatarUrl;
       });
     },
     components: {
