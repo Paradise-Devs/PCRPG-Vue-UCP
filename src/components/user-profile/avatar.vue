@@ -157,7 +157,7 @@
     },
     mounted() {
       if (this.username === this.localUser.username) {
-        this.userForumId = this.localUser.forumAtt.id;
+        this.userForumId = this.localUser.id;
       } else {
         ForumService.getUserData(this.username).then(res => {
           this.userForumId = res.data.data.id;

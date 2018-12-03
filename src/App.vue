@@ -71,6 +71,7 @@
 				.then(response => {
 					this.user = response.data.data.attributes;
 					this.user.token = this.tempToken;
+					this.user.id = response.data.data.id;
 
 					let v = [ ];
 
