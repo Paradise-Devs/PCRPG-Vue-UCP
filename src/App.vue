@@ -39,7 +39,8 @@
 				loading: true,
 				siteLoaded: false,
 				dataLoaded: false,
-				fullyLoaded: false
+				fullyLoaded: false,
+				tempToken: ''
 			}
 		},
 		methods: {
@@ -51,7 +52,7 @@
 					.then(response => {
 						this.siteLoaded = true;
 						this.user.username = response.data.username;
-						this.user.token = response.headers['token-refresh'];
+						this.tempToken = response.headers['token-refresh'];
 						this.getForumData();
 					})
 					.catch(error => {
@@ -69,6 +70,7 @@
 				ForumService.getUserData(this.user.username)
 				.then(response => {
 					this.user = response.data.data.attributes;
+					this.user.token = this.tempToken;
 
 					let v = [ ];
 
