@@ -107,7 +107,8 @@
 				errorPassword: null,
 				loading: false,
 				usernameChecking: false,
-				emailChecking: false
+				emailChecking: false,
+				tempToken: null
 			}
 		},
 		components: {
@@ -131,7 +132,8 @@
 				let localEmail = this.user.email;
 
 				ServerService.registerPlayer(localUsername, localPassword, localEmail)
-				.then(response => {						
+				.then(response => {
+					self.tempToken = response.data.token;
 					self.registerUserForumAccount(localUsername, localPassword, localEmail);
 				})
 				.catch(function (error) {
@@ -165,45 +167,23 @@
 				ForumService.registerUser(sendData)
 				.then(response => {
 					_this.user = response.data.data.attributes;
-					_this.login(usernameEx, passwordEx);
+					_this.user.id = response.data.data.id;
+					_this.user.token = _this.tempToken;
+					_this.saveUserData(usernameEx, passwordEx);
 				})
 				.catch(error => {
 					console.log(error);
 					_this.loading = false;
 				})
 			},
-			login: function(usernameEx, passwordEx) {
-				this.loading = true;
-				var _this = this;
-
-				ServerService.loginPlayer(usernameEx, passwordEx)
-				.then(response => {
-					_this.user.token = response.data.token;
-					_this.saveUserData(usernameEx, passwordEx);
-				})
-				.catch(error => { 
-					_this.error = error.response.data;
-					_this.loading = false;
-				})
-			},
 			saveUserData: function(usernameEx, passwordEx) {
 				let _this = this;
-				
-				ForumService.getUserToken(usernameEx, passwordEx)
-				.then(response => {
-					_this.user.forumToken = response.data.token;
-					
-					store.dispatch('login', this.user).then(() => {
-						_this.loading = false;
-						localStorage.setItem('firstTimeUCP', 'true');
-						this.$router.push(this.$route.query.redirect || '/ucp');
-						_this.hideModal();
-					});
-				})
-				.catch(function (error) {
-					console.log(error);
+				store.dispatch('login', this.user).then(() => {
 					_this.loading = false;
-				})
+					localStorage.setItem('firstTimeUCP', 'true');
+					this.$router.push(this.$route.query.redirect || '/ucp');
+					_this.hideModal();
+				});
 			}
 		},
 		mounted() {
